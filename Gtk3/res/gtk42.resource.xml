@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="gtk42">
+    <file>icon.png</file>
+    <file>audacious.png</file>
+    <file>gedit.png</file>
+    <file>vlc.png</file>
+    <file>user-home.png</file>
+    <file>icon.jpg</file>
+    <file>graphics.png</file>
+    <file>system.png</file>
+    <file>log-out.png</file>
+    <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">leftpanel.ui</file>
+    <file preprocess="xml-stripblanks">toppanel.ui</file>
+    <file preprocess="xml-stripblanks">win_size.ui</file>
+    <file preprocess="xml-stripblanks">win1.ui</file>
+    <file preprocess="xml-stripblanks">game1.ui</file>
+  </gresource>
+</gresources>
