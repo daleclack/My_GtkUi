@@ -11,12 +11,14 @@ void fileopen(GtkWidget *widget,GtkBuilder *builder){
     "OK",GTK_RESPONSE_OK,"Cancel",GTK_RESPONSE_CANCEL,NULL);
     //Use GtkFileFilter to select image file
     GtkFileFilter *filter=gtk_file_filter_new();
-    gtk_file_filter_add_pattern(filter,"*.png");
-    gtk_file_filter_add_pattern(filter,"*.jpg");
-    gtk_file_filter_add_pattern(filter,"*.jpeg");
-    gtk_file_filter_add_pattern(filter,"*.bmp");
-    gtk_file_filter_add_pattern(filter,"*.xpm");
-    gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog),filter);
+    gtk_file_filter_set_name(filter,"Image Files");
+    gtk_file_filter_add_mime_type(filter,"image/*");
+    gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog),filter);
+    //Filter For All Files
+    filter=gtk_file_filter_new();
+    gtk_file_filter_set_name(filter,"All Files");
+    gtk_file_filter_add_pattern(filter,"*");
+    gtk_file_chooser_add_filter((GtkFileChooser*)dialog,filter);
     gtk_widget_show(dialog);
     g_signal_connect(dialog,"response",G_CALLBACK(dialog_response),builder);
 }
