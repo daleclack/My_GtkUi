@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <menu id="app-menu">
+        <section>
+            <item>
+                <attribute name='label'>Change background</attribute>
+                <attribute name='action'>win.back</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Default background</attribute>
+                <attribute name='action'>win.default</attribute>
+            </item>
+            <item>
+                <attribute name='label'>About</attribute>
+                <attribute name="action">win.about</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Exit</attribute>
+                <attribute name='action'>win.quit</attribute>
+            </item>
+        </section>
+    </menu>
+</interface>
