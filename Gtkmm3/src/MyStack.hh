@@ -5,6 +5,7 @@
 class MyStack{
 public:
     MyStack();
+    void add_stack(Gtk::Box &vbox);
     Gtk::Stack *stack;
 private:
     //Main builder

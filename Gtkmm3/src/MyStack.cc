@@ -16,6 +16,10 @@ MyStack::MyStack(){
     login_overlay->add_overlay(*user_box);
 }
 
+void MyStack::add_stack(Gtk::Box &vbox){
+    vbox.pack_start(*stack);
+}
+
 void MyStack::btnlogin_clicked(){
     stack->set_visible_child(*main_overlay);
 }

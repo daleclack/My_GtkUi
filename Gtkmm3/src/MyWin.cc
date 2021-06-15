@@ -34,7 +34,7 @@ main_box(Gtk::ORIENTATION_VERTICAL)
     //Add Toppanel
     
     //Add Stack
-    main_box.pack_start(*(main_stack.stack));
+    main_stack.add_stack(main_box);
     overlay.add_overlay(main_box);
 
     //Add Overlay to window and show everything
