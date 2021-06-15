@@ -32,14 +32,14 @@ main_box(Gtk::ORIENTATION_VERTICAL)
     gesture->signal_pressed().connect(sigc::mem_fun(*this,&MyWin::btn_pressed));
 
     //Add Toppanel
-    
+
     //Add Stack
     main_stack.add_stack(main_box);
+    
+    //Final Initalize
     overlay.add_overlay(main_box);
-
-    //Add Overlay to window and show everything
     add(overlay);
-    show_all();
+    show_all_children();
 }
 
 void MyWin::btn_pressed(int n_press,double x,double y){
