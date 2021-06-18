@@ -3,6 +3,7 @@
 #include "panel2.h"
 #include "win1.h"
 #include "game.h"
+#include "TextEditor.h"
 
 void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
     //Get Left panel
@@ -52,6 +53,10 @@ void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
     GObject *btngame=gtk_builder_get_object(panel2,"btngame");
     g_signal_connect(btngame,"clicked",G_CALLBACK(gamemain),window);
     g_signal_connect_swapped(btngame,"clicked",G_CALLBACK(gtk_widget_hide),popover);
+    //Text Editor(Gtk86)
+    GObject *btnedit=gtk_builder_get_object(panel2,"btneditor");
+    g_signal_connect(btnedit,"clicked",G_CALLBACK(text_editor),window);
+    g_signal_connect_swapped(btnedit,"clicked",G_CALLBACK(gtk_widget_hide),popover);
     //About window
     GObject *btn_about=gtk_builder_get_object(panel2,"btnabout");
     g_signal_connect(btn_about,"clicked",G_CALLBACK(win1_init),window);

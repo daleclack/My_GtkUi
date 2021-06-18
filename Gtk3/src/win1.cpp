@@ -11,7 +11,7 @@ void win1_init(GtkWidget *widget,GtkWindow *parent){
     gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(window1),logo_sized);
     //Add version information
     char *version;
-    version=g_strdup_printf("2.1\nRunning Against Gtk %d.%d.%d",
+    version=g_strdup_printf("2.2\nRunning Against Gtk %d.%d.%d",
                             gtk_get_major_version(),
                             gtk_get_minor_version(),
                             gtk_get_micro_version());
