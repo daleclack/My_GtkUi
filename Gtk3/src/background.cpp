@@ -2,6 +2,26 @@
 #include "winconf.h"
 #include "winpe.xpm"
 
+static void dialog_response(GtkWidget *widget,int response,GtkBuilder *builder){
+    //Handle file chooser response and set background
+    int width=640,height=360;
+    get_config(&width,&height);
+    GObject *background=gtk_builder_get_object(builder,"background");
+    const gchar *filename;
+    GFile *file;
+    //g_print("%s\n",filename);
+    if(response==GTK_RESPONSE_OK){
+        file=gtk_file_chooser_get_file(GTK_FILE_CHOOSER(widget));
+        filename=g_file_get_path(file);
+        GdkPixbuf *pixbuf=gdk_pixbuf_new_from_file(filename,NULL);
+        GdkPixbuf *sized=gdk_pixbuf_scale_simple(pixbuf,width,height,GDK_INTERP_BILINEAR);
+        gtk_image_set_from_pixbuf(GTK_IMAGE(background),sized);
+        g_object_unref(pixbuf);
+        g_object_unref(sized);
+    }
+    gtk_widget_destroy(widget);
+}
+
 void fileopen(GtkWidget *widget,GtkBuilder *builder){
     GObject *parent=gtk_builder_get_object(builder,"window");
     //Change background
@@ -21,26 +41,6 @@ void fileopen(GtkWidget *widget,GtkBuilder *builder){
     gtk_file_chooser_add_filter((GtkFileChooser*)dialog,filter);
     gtk_widget_show(dialog);
     g_signal_connect(dialog,"response",G_CALLBACK(dialog_response),builder);
-}
-
-void dialog_response(GtkWidget *widget,int response,GtkBuilder *builder){
-    //Handle file chooser response and set background
-    int width=640,height=360;
-    get_config(&width,&height);
-    GObject *background=gtk_builder_get_object(builder,"background");
-    const gchar *filename;
-    GFile *file;
-    //g_print("%s\n",filename);
-    if(response==GTK_RESPONSE_OK){
-        file=gtk_file_chooser_get_file(GTK_FILE_CHOOSER(widget));
-        filename=g_file_get_path(file);
-        GdkPixbuf *pixbuf=gdk_pixbuf_new_from_file(filename,NULL);
-        GdkPixbuf *sized=gdk_pixbuf_scale_simple(pixbuf,width,height,GDK_INTERP_BILINEAR);
-        gtk_image_set_from_pixbuf(GTK_IMAGE(background),sized);
-        g_object_unref(pixbuf);
-        g_object_unref(sized);
-    }
-    gtk_widget_destroy(widget);
 }
 
 void default_background(GtkBuilder *builder){

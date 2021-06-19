@@ -3,7 +3,7 @@
 
 #include <gtk/gtk.h>
 
-gboolean change_time(gpointer data);
+//gboolean change_time(gpointer data);
 
 void add_toppanel(GtkBuilder *builder,GtkFixed *fixed);
 

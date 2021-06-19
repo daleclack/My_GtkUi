@@ -7,7 +7,7 @@ void default_background(GtkBuilder *builder);
 
 void fileopen(GtkWidget *widget,GtkBuilder *builder);
 
-void dialog_response(GtkWidget *widget,int response,GtkBuilder *builder);
+//void dialog_response(GtkWidget *widget,int response,GtkBuilder *builder);
 
 
 #endif

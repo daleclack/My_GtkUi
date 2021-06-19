@@ -6,11 +6,11 @@
 #include <cstdlib>
 #include <cstring>
 
-void btn_click(GtkWidget *widget,gpointer data);
+//void btn_click(GtkWidget *widget,gpointer data);
 
-void buttons_init(GtkBuilder *builder);
+//void buttons_init(GtkBuilder *builder);
 
-void btngo_click(GtkWidget *widget,gpointer data);
+//void btngo_click(GtkWidget *widget,gpointer data);
 
 void gamemain(GtkWidget *widget,GtkWindow *parent);
 

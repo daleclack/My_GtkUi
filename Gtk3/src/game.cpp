@@ -5,7 +5,7 @@ GObject *label;
 const char *btn_index[4]={"0","1","2","3"};
 int flag;
 
-void btn_click(GtkWidget *widget,gpointer data){
+static void btn_click(GtkWidget *widget,gpointer data){
     //Get image
     GdkPixbuf *pixbuf=gdk_pixbuf_new_from_resource("/gtk42/icon.jpg",NULL);
     GdkPixbuf *sized=gdk_pixbuf_scale_simple(pixbuf,50,50,GDK_INTERP_BILINEAR);
@@ -25,7 +25,7 @@ void btn_click(GtkWidget *widget,gpointer data){
     }
 }
 
-void buttons_init(GtkBuilder *builder){
+static void buttons_init(GtkBuilder *builder){
     //Initalize buttons
     for(int i=0;i<4;i++){
         char str[6];
@@ -36,7 +36,7 @@ void buttons_init(GtkBuilder *builder){
     }
 }
 
-void btngo_click(GtkWidget *widget,gpointer data){
+static void btngo_click(GtkWidget *widget,gpointer data){
     //Reinitalize the buttons and the flag
     gtk_label_set_label(GTK_LABEL(label),"Select a button");
     for(int i=0;i<4;i++){

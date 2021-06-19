@@ -3,7 +3,7 @@
 #include "winconf.h"
 #include "background.h"
 
-gboolean change_time(gpointer data){
+static gboolean change_time(gpointer data){
     //Get local time
     time_t t;
     struct tm *local;

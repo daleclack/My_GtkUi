@@ -5,6 +5,31 @@
 #include "game.h"
 #include "TextEditor.h"
 
+static void btnvlc_clicked(GtkWidget *widget,gpointer data){
+    std::thread first(system,"vlc");
+    first.detach();
+}
+
+static void btngedit_clicked(GtkWidget *widget,gpointer data){
+    std::thread second(system,"gedit");
+    second.detach();
+}
+
+static void btnaud_clicked(GtkWidget *widget,gpointer data){
+    std::thread third(system,"audacious");
+    third.detach();
+}
+
+static void btnnote_clicked(GtkWidget *widget,gpointer data){
+    std::thread fourth(system,"start notepad");
+    fourth.detach();
+}
+
+static void btnvlc_win32(GtkWidget *widget,gpointer data){
+    std::thread fifth(system,"start ..\\vlc\\vlc.exe");
+    fifth.detach();
+}
+
 void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
     //Get Left panel
     GtkBuilder *panel2=gtk_builder_new_from_resource("/gtk42/leftpanel.ui");
@@ -64,29 +89,4 @@ void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
     gtk_fixed_put(fixed,GTK_WIDGET(panel),0,25);
     g_object_unref(pixbuf);
     g_object_unref(sized);
-}
-
-void btnvlc_clicked(GtkWidget *widget,gpointer data){
-    std::thread first(system,"vlc");
-    first.detach();
-}
-
-void btngedit_clicked(GtkWidget *widget,gpointer data){
-    std::thread second(system,"gedit");
-    second.detach();
-}
-
-void btnaud_clicked(GtkWidget *widget,gpointer data){
-    std::thread third(system,"audacious");
-    third.detach();
-}
-
-void btnnote_clicked(GtkWidget *widget,gpointer data){
-    std::thread fourth(system,"start notepad");
-    fourth.detach();
-}
-
-void btnvlc_win32(GtkWidget *widget,gpointer data){
-    std::thread fifth(system,"start ..\\vlc\\vlc.exe");
-    fifth.detach();
 }
