@@ -63,14 +63,9 @@ void MyWin::default_background(){
 
 void MyWin::back_dialog(){
     //Initalize dialog
-    auto dialog=new Gtk::FileChooserDialog("Open Image File",
-                                           Gtk::FILE_CHOOSER_ACTION_OPEN);
-    dialog->set_transient_for(*this);
-    dialog->signal_response().connect(sigc::bind(
-        sigc::mem_fun(*this,&MyWin::change_background),dialog));
-    //Add button for dialog
-    dialog->add_button("OK",Gtk::RESPONSE_OK);
-    dialog->add_button("Cancel",Gtk::RESPONSE_CANCEL);
+    dialog=Gtk::FileChooserNative::create("Open a image file",*this,Gtk::FILE_CHOOSER_ACTION_OPEN,
+                                          "OK","Cancel");
+    dialog->signal_response().connect(sigc::mem_fun(*this,&MyWin::change_background));
     //Add Filter
     auto filter=Gtk::FileFilter::create();
     filter->set_name("Image Files");
@@ -94,12 +89,12 @@ void MyWin::back_dialog(){
     filter2->add_pattern("*");
     dialog->add_filter(filter2);
 
-    dialog->show_all();
+    dialog->show();
     filter.reset();
     filter2.reset();
 }
 
-void MyWin::change_background(int response,Gtk::FileChooserDialog *dialog){
+void MyWin::change_background(int response){
     Glib::ustring filename;
     if(response==Gtk::RESPONSE_OK){
         filename=dialog->get_filename();
@@ -112,7 +107,7 @@ void MyWin::change_background(int response,Gtk::FileChooserDialog *dialog){
         pixbuf.reset();
         sized.reset();
     }
-    delete dialog;
+    dialog.reset();
 }
 
 void MyWin::about_dialog(){

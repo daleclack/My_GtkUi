@@ -15,6 +15,7 @@ private:
     Gtk::Box main_box;
     Gtk::PopoverMenu popover;
     Gtk::Image background;
+    Glib::RefPtr<Gtk::FileChooserNative> dialog;
 
     //Main Pages
     MyStack main_stack;
@@ -26,7 +27,7 @@ private:
     //Signal Handlers
     void default_background();
     void back_dialog();
-    void change_background(int response,Gtk::FileChooserDialog *dialog);
+    void change_background(int response);
     void about_dialog();
     void win_quit();
 };
