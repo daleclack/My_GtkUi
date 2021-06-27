@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "TopPanel.hh"
 
 class MyStack{
 public:
@@ -15,6 +16,7 @@ private:
     Gtk::Box *user_box;
     Gtk::Image *user_image;
     Gtk::Button *login_btn;
+    TopPanel panel1;
     //Signal Handlers
     void btnlogin_clicked();
 };

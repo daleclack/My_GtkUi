@@ -32,8 +32,6 @@ main_box(Gtk::ORIENTATION_VERTICAL)
     gesture->set_button(GDK_BUTTON_SECONDARY);
     gesture->signal_pressed().connect(sigc::mem_fun(*this,&MyWin::btn_pressed));
 
-    //Add Toppanel
-
     //Add Stack
     main_stack.add_stack(main_box);
     
