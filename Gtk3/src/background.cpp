@@ -1,6 +1,7 @@
 #include "background.h"
 #include "winconf.h"
 #include "winpe.xpm"
+#include "image_types.h"
 
 static void dialog_response(GtkNativeDialog *widget,int response,GtkBuilder *builder){
     //Handle file chooser response and set background
@@ -22,15 +23,6 @@ static void dialog_response(GtkNativeDialog *widget,int response,GtkBuilder *bui
     //gtk_widget_destroy(widget);
     gtk_native_dialog_destroy(widget);
 }
-
-static const char * const supported_globs[]={
-    "*.jpg",
-    "*.jpeg",
-    "*.png",
-    "*.bmp",
-    "*.xpm",
-    NULL
-};
 
 void fileopen(GtkWidget *widget,GtkBuilder *builder){
     GObject *parent=gtk_builder_get_object(builder,"window");
