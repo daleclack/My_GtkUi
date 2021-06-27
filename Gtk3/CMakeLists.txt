@@ -16,5 +16,10 @@ include_directories (${GTK3_INCLUDE_DIRS})
 link_directories (${GTK3_LIBRARY_DIRS})
 add_executable(My_GtkUi src/main.cpp src/background.cpp src/game.cpp src/TextEditor.cpp 
 src/panel1.cpp src/panel2.cpp src/win1.cpp src/winconf.cpp src/resources.cpp)
+
+IF(WIN32)
+    SET(CMAKE_EXE_LINKER_FLAGS -mwindows)
+ENDIF(WIN32)
+
 add_definitions (${GTK3_CFLAGS_OTHER})
 target_link_libraries (${PROJECT_NAME} ${GTK3_LIBRARIES} -lpthread -lm)

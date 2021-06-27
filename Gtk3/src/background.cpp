@@ -2,7 +2,7 @@
 #include "winconf.h"
 #include "winpe.xpm"
 
-static void dialog_response(GtkWidget *widget,int response,GtkBuilder *builder){
+static void dialog_response(GtkNativeDialog *widget,int response,GtkBuilder *builder){
     //Handle file chooser response and set background
     int width=640,height=360;
     get_config(&width,&height);
@@ -10,7 +10,7 @@ static void dialog_response(GtkWidget *widget,int response,GtkBuilder *builder){
     const gchar *filename;
     GFile *file;
     //g_print("%s\n",filename);
-    if(response==GTK_RESPONSE_OK){
+    if(response==GTK_RESPONSE_ACCEPT){
         file=gtk_file_chooser_get_file(GTK_FILE_CHOOSER(widget));
         filename=g_file_get_path(file);
         GdkPixbuf *pixbuf=gdk_pixbuf_new_from_file(filename,NULL);
@@ -19,27 +19,58 @@ static void dialog_response(GtkWidget *widget,int response,GtkBuilder *builder){
         g_object_unref(pixbuf);
         g_object_unref(sized);
     }
-    gtk_widget_destroy(widget);
+    //gtk_widget_destroy(widget);
+    gtk_native_dialog_destroy(widget);
 }
+
+static const char * const supported_globs[]={
+    "*.jpg",
+    "*.jpeg",
+    "*.png",
+    "*.bmp",
+    "*.xpm",
+    NULL
+};
 
 void fileopen(GtkWidget *widget,GtkBuilder *builder){
     GObject *parent=gtk_builder_get_object(builder,"window");
+
     //Change background
-    GtkWidget *dialog;
+    GtkFileChooserNative *dialog;
     GtkFileChooserAction action=GTK_FILE_CHOOSER_ACTION_OPEN;
-    dialog=gtk_file_chooser_dialog_new("Choose a image File",GTK_WINDOW(parent),action,
-    "OK",GTK_RESPONSE_OK,"Cancel",GTK_RESPONSE_CANCEL,NULL);
+    dialog=gtk_file_chooser_native_new("Choose a Image file",GTK_WINDOW(parent),action,"OK","Cancel");
+    
     //Use GtkFileFilter to select image file
     GtkFileFilter *filter=gtk_file_filter_new();
     gtk_file_filter_set_name(filter,"Image Files");
+
+    /*
+    Microsoft Windows doesn't support mine types,
+    For Microsoft Windows,I use a list to store image extenstions;
+    And For Linux,just use the image/* mime type
+    */
+
+#ifdef G_OS_WIN32
+    int i;
+    for (i = 0; supported_globs != NULL && supported_globs[i] != NULL; i++)
+		{
+			const char *glob = supported_globs[i];
+
+			gtk_file_filter_add_pattern (filter, glob);
+		}
+
+#else
     gtk_file_filter_add_mime_type(filter,"image/*");
+#endif
+
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog),filter);
     //Filter For All Files
     filter=gtk_file_filter_new();
     gtk_file_filter_set_name(filter,"All Files");
     gtk_file_filter_add_pattern(filter,"*");
     gtk_file_chooser_add_filter((GtkFileChooser*)dialog,filter);
-    gtk_widget_show(dialog);
+    //Show Dialog and wait for response
+    gtk_native_dialog_show(GTK_NATIVE_DIALOG(dialog));
     g_signal_connect(dialog,"response",G_CALLBACK(dialog_response),builder);
 }
 
