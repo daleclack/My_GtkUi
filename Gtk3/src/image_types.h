@@ -8,6 +8,7 @@ static const char * const supported_globs[]={
     "*.jpg",
     "*.jfif",
     "*.svg",
+    "*.png",
     "*.tif",
     "*.tiff",
     "*.ras",
