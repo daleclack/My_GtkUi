@@ -67,18 +67,16 @@ void MyWin::back_dialog(){
     //Add Filter
     auto filter=Gtk::FileFilter::create();
     filter->set_name("Image Files");
-#ifdef G_OS_WIN32
 
-    for(int i=0 ; supported_globs[i] != NULL && supported_globs != NULL ; i++){
-        Glib::ustring glob = supported_globs[i];
-        filter->add_pattern(glob);
+    //Windows doesn't support mime types
+    if(mime_type_supported()){
+        filter->add_mime_type("image/*");
+    }else{
+        for(int i=0 ; supported_globs[i] != NULL && supported_globs != NULL ; i++){
+            Glib::ustring glob = supported_globs[i];
+            filter->add_pattern(glob);
+        }
     }
-
-#else
-
-    filter->add_mime_type("image/*");
-
-#endif
 
     dialog->add_filter(filter);
 

@@ -26,3 +26,11 @@ static const char * const supported_globs[]={
     "*.xwd",
     NULL
 };
+
+static inline bool mime_type_supported(){
+    #ifdef G_OS_WIN32
+        return false;
+    #else
+        return true;
+    #endif
+}
