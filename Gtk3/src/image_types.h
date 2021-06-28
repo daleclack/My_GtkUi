@@ -30,9 +30,9 @@ static const char * const supported_globs[]={
 };
 
 static inline gboolean mime_type_supported(){
-#ifdef G_OS_WIN32
-    return FALSE;
-#else 
-    return TRUE;
-#endif
+    #ifdef G_OS_WIN32
+        return FALSE;
+    #else 
+        return TRUE;
+    #endif
 }
