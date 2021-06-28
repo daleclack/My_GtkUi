@@ -26,6 +26,7 @@ Makefile
 
 #Gresource prebuild file
 */src/resources.cpp
+resources.cc
 
 #backend source
 backend/*

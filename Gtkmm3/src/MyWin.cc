@@ -6,7 +6,7 @@ MyWin::MyWin():
 main_box(Gtk::ORIENTATION_VERTICAL)
 {
     //Initalize Window
-    set_icon_name("org.gtk.daleclack");
+    set_icon_name("My_GtkUI");
     set_default_size(800,450);
     overlay.add_overlay(draw_area);
     default_background();

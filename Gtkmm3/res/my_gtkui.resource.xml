@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="org/gtk/daleclack">
+        <file>icons/16x16/actions/audacious.png</file>
+        <file>icons/16x16/actions/gedit.png</file>
+        <file>icons/16x16/actions/graphics.png</file>
+        <file>icons/16x16/actions/log-out.png</file>
+        <file>icons/16x16/actions/open-menu.png</file>
+        <file>icons/16x16/actions/system.png</file>
+        <file>icons/16x16/actions/vlc.png</file>
+        <file>icons/48x48/actions/My_GtkUI.png</file>
+        <file>icons/48x48/actions/user-home.png</file>
+        <file>icons/scalable/status/graphics.svg</file>
+        <file>icons/scalable/status/log-out.svg</file>
+        <file>icons/scalable/status/system.svg</file>
+    </gresource>
+</gresources>
