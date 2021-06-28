@@ -108,7 +108,7 @@ void MyWin::change_background(int response){
 
 void MyWin::about_dialog(){
     char *version;
-    Gtk::AboutDialog about_dialog(true);
+    Gtk::AboutDialog about_dialog;
     about_dialog.set_transient_for(*this);
     //Create Comments
     version=g_strdup_printf("3.0\nRunning against Gtkmm %d.%d.%d",

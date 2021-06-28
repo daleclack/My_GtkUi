@@ -13,7 +13,7 @@ MyStack::MyStack(){
     ref_builder->get_widget("main_overlay",main_overlay);
 
     //Initalize Interface
-    user_image->set_from_icon_name("My_GtkUI",Gtk::ICON_SIZE_DIALOG);
+    user_image->set_from_icon_name("my_user",Gtk::ICON_SIZE_DIALOG);
     login_btn->signal_clicked().connect(sigc::mem_fun(*this,&MyStack::btnlogin_clicked));
     login_overlay->add_overlay(*user_box);
 
