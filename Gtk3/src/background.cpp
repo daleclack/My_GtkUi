@@ -42,18 +42,17 @@ void fileopen(GtkWidget *widget,GtkBuilder *builder){
     And For Linux,just use the image/* mime type
     */
 
-#ifdef G_OS_WIN32
-    int i;
-    for (i = 0; supported_globs != NULL && supported_globs[i] != NULL; i++)
+    if(mime_type_supported()){
+         gtk_file_filter_add_mime_type(filter,"image/*");
+    }else{
+        int i;
+        for (i = 0; supported_globs != NULL && supported_globs[i] != NULL; i++)
 		{
 			const char *glob = supported_globs[i];
 
 			gtk_file_filter_add_pattern (filter, glob);
 		}
-
-#else
-    gtk_file_filter_add_mime_type(filter,"image/*");
-#endif
+    }
 
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog),filter);
     //Filter For All Files

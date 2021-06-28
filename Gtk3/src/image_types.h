@@ -1,3 +1,7 @@
+#pragma once
+
+#include <glib.h>
+
 static const char * const supported_globs[]={
     "*.bmp",
     "*.cod",
@@ -24,3 +28,11 @@ static const char * const supported_globs[]={
     "*.xwd",
     NULL
 };
+
+static inline gboolean mime_type_supported(){
+#ifdef G_OS_WIN32
+    return FALSE;
+#else 
+    return TRUE;
+#endif
+}
