@@ -92,7 +92,7 @@ void MyWin::back_dialog(){
 
 void MyWin::change_background(int response){
     Glib::ustring filename;
-    if(response==Gtk::RESPONSE_OK){
+    if(response==Gtk::RESPONSE_ACCEPT){
         filename=dialog->get_filename();
         //Default background
         Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_file(filename.c_str());
