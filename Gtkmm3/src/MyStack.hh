@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include "TopPanel.hh"
+#include "LeftPanel.hh"
 
 class MyStack{
 public:
@@ -16,7 +17,9 @@ private:
     Gtk::Box *user_box;
     Gtk::Image *user_image;
     Gtk::Button *login_btn;
+    //TopPanel and LeftPanel
     TopPanel panel1;
+    LeftPanel panel2;
     //Signal Handlers
     void btnlogin_clicked();
 };

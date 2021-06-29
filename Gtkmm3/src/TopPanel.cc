@@ -4,7 +4,7 @@
 
 TopPanel::TopPanel():
 Gtk::Box(Gtk::ORIENTATION_HORIZONTAL,5),
-time_label("21:00 2021/6/13"),
+time_label("21:00:00 2021/6/13"),
 timer_value(1000)
 {
     //Initalize Timer
@@ -42,8 +42,8 @@ bool TopPanel::on_timeout(){
     struct tm *local;
     local=localtime(&t);
     //Show time
-    sprintf(time_string,"%02d:%02d %04d/%02d/%02d",
-    local->tm_hour,local->tm_min,local->tm_year+1900,local->tm_mon+1,local->tm_mday);
+    sprintf(time_string,"%02d:%02d:%02d %04d/%02d/%02d",
+    local->tm_hour,local->tm_min,local->tm_sec,local->tm_year+1900,local->tm_mon+1,local->tm_mday);
     time_label.set_label(time_string);
     return true;
 }

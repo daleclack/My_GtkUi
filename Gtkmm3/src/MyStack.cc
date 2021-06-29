@@ -21,6 +21,9 @@ MyStack::MyStack(){
     panel1.set_halign(Gtk::ALIGN_END);
     panel1.set_valign(Gtk::ALIGN_START);
     main_overlay->add_overlay(panel1);
+
+    //Add LeftPanel
+    panel2.add_panel(*main_overlay);
 }
 
 void MyStack::add_stack(Gtk::Box &vbox){
