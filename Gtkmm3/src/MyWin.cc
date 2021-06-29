@@ -1,17 +1,16 @@
 #include "MyWin.hh"
 #include "winpe.xpm"
 #include "image_types.hh"
-#include "winconf.hh"
 
 MyWin::MyWin():
 main_box(Gtk::ORIENTATION_VERTICAL),
+conf_dlg(this),
 width(800),
 height(450)
 {
     //Initalize Window
     set_icon_name("My_GtkUI");
-    get_config(&width,&height);
-    set_default_size(width,height);
+    conf_dlg.get_config(&width,&height);
     overlay.add_overlay(draw_area);
     default_background();
     overlay.add(background);
@@ -25,6 +24,7 @@ height(450)
     add_action("quit",sigc::mem_fun(*this,&MyWin::win_quit));
     add_action("default",sigc::mem_fun(*this,&MyWin::default_background));
     add_action("back",sigc::mem_fun(*this,&MyWin::back_dialog));
+    add_action("size",sigc::mem_fun(*this,&MyWin::size_dialog));
     add_action("about",sigc::mem_fun(*this,&MyWin::about_dialog));
 
     //Set Popover Menu
@@ -50,6 +50,10 @@ void MyWin::btn_pressed(int n_press,double x,double y){
     Gdk::Rectangle point{(int)x,(int)y,1,1};
     popover.set_pointing_to(point);
     popover.popup();
+}
+
+void MyWin::size_dialog(){
+    conf_dlg.show_dialog();
 }
 
 void MyWin::default_background(){

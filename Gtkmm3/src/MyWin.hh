@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include "MyStack.hh"
+#include "winconf.hh"
 
 class MyWin : public Gtk::ApplicationWindow{
 public:
@@ -22,6 +23,7 @@ private:
     
     //Window Proprties
     int width,height;
+    WinConf conf_dlg;
     
     //Gesture Widgets
     Glib::RefPtr<Gtk::GestureMultiPress> gesture;
@@ -30,6 +32,7 @@ private:
     //Signal Handlers
     void default_background();
     void back_dialog();
+    void size_dialog();
     void change_background(int response);
     void about_dialog();
     void win_quit();
