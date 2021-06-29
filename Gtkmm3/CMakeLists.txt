@@ -19,4 +19,4 @@ link_directories (${GTKMM3_LIBRARY_DIRS})
 add_executable(My_GtkUI src/main.cc src/MyWin.cc src/MyStack.cc 
 src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/resources.cc)
 add_definitions (${GTKMM3_CFLAGS_OTHER})
-target_link_libraries (${PROJECT_NAME} ${GTKMM3_LIBRARIES})
+target_link_libraries (${PROJECT_NAME} ${GTKMM3_LIBRARIES} -lpthread)
