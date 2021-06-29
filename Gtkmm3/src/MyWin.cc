@@ -30,6 +30,7 @@ height(450)
     add_action("back",sigc::mem_fun(*this,&MyWin::back_dialog));
     add_action("size",sigc::mem_fun(*this,&MyWin::size_dialog));
     add_action("about",sigc::mem_fun(*this,&MyWin::about_dialog));
+    add_action("logout",sigc::mem_fun(*this,&MyWin::win_logout));
 
     //Set Popover Menu
     popover.bind_model(gmenu);
@@ -146,6 +147,10 @@ void MyWin::about_dialog(){
     about_dialog.set_title("About Gtk UI");
     about_dialog.run();
     g_free(version);
+}
+
+void MyWin::win_logout(){
+    main_stack.logout();
 }
 
 void MyWin::win_quit(){

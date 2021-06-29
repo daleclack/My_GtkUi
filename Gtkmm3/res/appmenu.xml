@@ -33,6 +33,11 @@
                 <attribute name='action'>win.size</attribute>
             </item>
             <item>
+                <attribute name='label'>Log Out</attribute>
+                <attribute name='icon'>log_out</attribute>
+                <attribute name='action'>win.logout</attribute>
+            </item>
+            <item>
                 <attribute name='label'>Exit</attribute>
                 <attribute name='icon'>log_out</attribute>
                 <attribute name='action'>win.quit</attribute>

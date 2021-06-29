@@ -44,3 +44,7 @@ void MyStack::add_stack(Gtk::Box &vbox){
 void MyStack::btnlogin_clicked(){
     stack->set_visible_child(*main_overlay);
 }
+
+void MyStack::logout(){
+    stack->set_visible_child(*login_overlay);
+}

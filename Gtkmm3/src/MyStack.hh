@@ -8,6 +8,7 @@ class MyStack{
 public:
     MyStack(Gtk::Window *parent1);
     void add_stack(Gtk::Box &vbox);
+    void logout();
     Gtk::Stack *stack;
 private:
     //Parent Window

@@ -36,5 +36,6 @@ private:
     void size_dialog();
     void change_background(int response);
     void about_dialog();
+    void win_logout();
     void win_quit();
 };
