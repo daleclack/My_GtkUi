@@ -20,6 +20,7 @@
         <file preprocess="xml-stripblanks">appmenu.xml</file>
         <file preprocess="xml-stripblanks">main_stack.ui</file>
         <file preprocess="xml-stripblanks">toppanel.ui</file>
+        <file preprocess="xml-stripblanks">leftpanel.ui</file>
         <file preprocess="xml-stripblanks">win_size.ui</file>
     </gresource>
 </gresources>

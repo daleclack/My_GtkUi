@@ -6,6 +6,7 @@
 MyWin::MyWin():
 main_box(Gtk::ORIENTATION_VERTICAL),
 conf_dlg(this),
+main_stack(this),
 width(800),
 height(450)
 {
