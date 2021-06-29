@@ -30,7 +30,8 @@ private:
     void btn_pressed(int n_press,double x,double y);
 
     //Signal Handlers
-    void default_background();
+    void default_background1();
+    void default_background2();
     void back_dialog();
     void size_dialog();
     void change_background(int response);

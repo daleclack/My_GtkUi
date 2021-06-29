@@ -10,6 +10,7 @@ WinConf::WinConf(Gtk::Window *window){
     conf_builder->get_widget("height_spin",height_spin);
     conf_builder->get_widget("btnGet",btnget);
     conf_builder->get_widget("btn_default",btn_default);
+    dialog->set_transient_for(*window);
     btnget->signal_clicked().connect(sigc::mem_fun(*this,&WinConf::get_size));
     dialog->signal_response().connect(sigc::mem_fun(*this,&WinConf::dialog_response));
     btn_default->signal_clicked().connect(sigc::mem_fun(*this,&WinConf::default_size));

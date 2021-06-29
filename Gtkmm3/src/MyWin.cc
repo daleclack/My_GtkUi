@@ -1,5 +1,6 @@
 #include "MyWin.hh"
 #include "winpe.xpm"
+#include "img7.xpm"
 #include "image_types.hh"
 
 MyWin::MyWin():
@@ -12,7 +13,7 @@ height(450)
     set_icon_name("My_GtkUI");
     conf_dlg.get_config(&width,&height);
     overlay.add_overlay(draw_area);
-    default_background();
+    default_background1();
     overlay.add(background);
 
     //Initalize menu
@@ -22,7 +23,8 @@ height(450)
 
     //Menu actions
     add_action("quit",sigc::mem_fun(*this,&MyWin::win_quit));
-    add_action("default",sigc::mem_fun(*this,&MyWin::default_background));
+    add_action("default1",sigc::mem_fun(*this,&MyWin::default_background1));
+    add_action("default2",sigc::mem_fun(*this,&MyWin::default_background2));
     add_action("back",sigc::mem_fun(*this,&MyWin::back_dialog));
     add_action("size",sigc::mem_fun(*this,&MyWin::size_dialog));
     add_action("about",sigc::mem_fun(*this,&MyWin::about_dialog));
@@ -56,9 +58,20 @@ void MyWin::size_dialog(){
     conf_dlg.show_dialog();
 }
 
-void MyWin::default_background(){
-    //Default background
+void MyWin::default_background1(){
+    //Default background 1
     Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_xpm_data(winpe);
+    Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
+    gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
+
+    //Free Memory of pixbufs
+    pixbuf.reset();
+    sized.reset();
+}
+
+void MyWin::default_background2(){
+    //Default background 2
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_xpm_data(img7);
     Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
 
