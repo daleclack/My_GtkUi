@@ -20,6 +20,9 @@ private:
     //Main Pages
     MyStack main_stack;
     
+    //Window Proprties
+    int width,height;
+    
     //Gesture Widgets
     Glib::RefPtr<Gtk::GestureMultiPress> gesture;
     void btn_pressed(int n_press,double x,double y);

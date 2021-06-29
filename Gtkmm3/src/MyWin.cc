@@ -1,19 +1,23 @@
 #include "MyWin.hh"
 #include "winpe.xpm"
 #include "image_types.hh"
+#include "winconf.hh"
 
 MyWin::MyWin():
-main_box(Gtk::ORIENTATION_VERTICAL)
+main_box(Gtk::ORIENTATION_VERTICAL),
+width(800),
+height(450)
 {
     //Initalize Window
     set_icon_name("My_GtkUI");
-    set_default_size(800,450);
+    get_config(&width,&height);
+    set_default_size(width,height);
     overlay.add_overlay(draw_area);
     default_background();
     overlay.add(background);
 
     //Initalize menu
-    menu_builder=Gtk::Builder::create_from_file("../res/appmenu.xml");
+    menu_builder=Gtk::Builder::create_from_resource("/GtkUI/appmenu.xml");
     auto object=menu_builder->get_object("app-menu");
     auto gmenu=Glib::RefPtr<Gio::Menu>::cast_dynamic(object);
 
@@ -51,7 +55,7 @@ void MyWin::btn_pressed(int n_press,double x,double y){
 void MyWin::default_background(){
     //Default background
     Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_xpm_data(winpe);
-    Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(800,450,Gdk::INTERP_BILINEAR);
+    Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
 
     //Free Memory of pixbufs
@@ -96,7 +100,7 @@ void MyWin::change_background(int response){
         filename=dialog->get_filename();
         //Default background
         Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_file(filename.c_str());
-        Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(800,450,Gdk::INTERP_BILINEAR);
+        Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
         gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
 
         //Free Memory of pixbufs

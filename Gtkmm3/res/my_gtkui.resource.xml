@@ -15,4 +15,10 @@
         <file>icons/scalable/status/log-out.svg</file>
         <file>icons/scalable/status/system.svg</file>
     </gresource>
+    <gresource prefix="GtkUI">
+        <file preprocess="xml-stripblanks">appmenu.xml</file>
+        <file preprocess="xml-stripblanks">main_stack.ui</file>
+        <file preprocess="xml-stripblanks">toppanel.ui</file>
+        <file preprocess="xml-stripblanks">win_size.ui</file>
+    </gresource>
 </gresources>

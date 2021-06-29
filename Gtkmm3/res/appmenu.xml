@@ -18,6 +18,10 @@
                 <attribute name="action">win.about</attribute>
             </item>
             <item>
+                <attribute name='label'>WinSize Config</attribute>
+                <attribute name='action'>win.size</attribute>
+            </item>
+            <item>
                 <attribute name='label'>Exit</attribute>
                 <attribute name='action'>win.quit</attribute>
             </item>

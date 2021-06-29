@@ -2,7 +2,7 @@
 
 MyStack::MyStack(){
     //Create a builder
-    ref_builder=Gtk::Builder::create_from_file("../res/main_stack.ui");
+    ref_builder=Gtk::Builder::create_from_resource("/GtkUI/main_stack.ui");
     
     //Get widgets
     ref_builder->get_widget("main_stack",stack);

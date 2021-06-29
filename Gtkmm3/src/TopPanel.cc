@@ -12,7 +12,7 @@ timer_value(1000)
     pack_start(time_label,Gtk::PACK_SHRINK);
 
     //Initalize menu
-    menu_builder=Gtk::Builder::create_from_file("../res/appmenu.xml");
+    menu_builder=Gtk::Builder::create_from_resource("/GtkUI/appmenu.xml");
     auto object=menu_builder->get_object("app-menu");
     auto gmenu=Glib::RefPtr<Gio::Menu>::cast_dynamic(object);
 
@@ -23,7 +23,7 @@ timer_value(1000)
     menubtn.set_relief(Gtk::RELIEF_NONE);
 
     //Other things
-    panel_builder=Gtk::Builder::create_from_file("../res/toppanel.ui");
+    panel_builder=Gtk::Builder::create_from_resource("/GtkUI/toppanel.ui");
     panel_builder->get_widget("volumebtn",volume1);
     panel_builder->get_widget("spin1",spin1);
     panel_builder->get_widget("lockbtn",lockbtn);
