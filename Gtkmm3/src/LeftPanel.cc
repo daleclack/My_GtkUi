@@ -43,6 +43,7 @@ void LeftPanel::btngedit_clicked(){
 void LeftPanel::btnvlc_clicked(){
     std::thread third(system,"vlc");
     third.detach();
+    popover->popdown();
 }
 
 void LeftPanel::btnnote_clicked(){
