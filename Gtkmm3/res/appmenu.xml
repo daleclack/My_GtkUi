@@ -34,7 +34,7 @@
             </item>
             <item>
                 <attribute name='label'>Exit</attribute>
-                <attribute name='icon'>log-out</attribute>
+                <attribute name='icon'>log_out</attribute>
                 <attribute name='action'>win.quit</attribute>
             </item>
         </section>

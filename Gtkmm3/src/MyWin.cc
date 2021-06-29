@@ -12,6 +12,7 @@ height(450)
 {
     //Initalize Window
     set_icon_name("My_GtkUI");
+    set_title("My GtkUI 3.0");
     conf_dlg.get_config(&width,&height);
     overlay.add_overlay(draw_area);
     default_background1();
@@ -139,7 +140,7 @@ void MyWin::about_dialog(){
                             GTKMM_MICRO_VERSION);
     about_dialog.set_program_name("My Gtk UI");
     about_dialog.set_version(version);
-    about_dialog.set_logo_icon_name("org.gtk.daleclack");
+    about_dialog.set_logo_icon_name("My_GtkUI");
     about_dialog.set_copyright("© 2019—2021 The Xe Project");
     about_dialog.set_comments("A test program for menu and background in gtkmm");
     about_dialog.set_title("About Gtk UI");

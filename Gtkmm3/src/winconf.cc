@@ -1,7 +1,10 @@
 #include "winconf.hh"
 #include <cstdio>
 
-WinConf::WinConf(Gtk::Window *window){
+WinConf::WinConf(Gtk::Window *window)
+:width(800),
+height(450)
+{
     //Ininalize the Config Dialog
     confwin=window;
     conf_builder=Gtk::Builder::create_from_resource("/GtkUI/win_size.ui");
@@ -11,6 +14,7 @@ WinConf::WinConf(Gtk::Window *window){
     conf_builder->get_widget("btnGet",btnget);
     conf_builder->get_widget("btn_default",btn_default);
     dialog->set_transient_for(*window);
+    dialog->set_icon_name("My_GtkUI");
     btnget->signal_clicked().connect(sigc::mem_fun(*this,&WinConf::get_size));
     dialog->signal_response().connect(sigc::mem_fun(*this,&WinConf::dialog_response));
     btn_default->signal_clicked().connect(sigc::mem_fun(*this,&WinConf::default_size));
