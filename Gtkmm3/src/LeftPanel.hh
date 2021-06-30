@@ -1,24 +1,30 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "Game.hh"
 
 class LeftPanel{
 public:
-    LeftPanel(Gtk::Window *parent1);
-    void add_panel(Gtk::Overlay &overlay);
+    LeftPanel();
+    void add_panel(Gtk::Window *parent,Gtk::Overlay &overlay);
 private:
     //LeftPanel Builder
     Glib::RefPtr<Gtk::Builder> panel_builder;
     //Child widgets
     Gtk::Box *btnbox;
     Gtk::Popover *popover;
-    Gtk::Button *btnaud,*btngedit,*btnvlc,*btnnote,*btnvlc_win32;
+    Gtk::Button *btnaud,*btngedit,*btnvlc,*btnnote,*btnvlc_win32,*btngame,*panelgame;
     //Parent Window
     Gtk::Window *parent;
+    Game game1;
+    //Timer for panel monitor
+    sigc::connection paneltimer;
+    bool on_timeout();
     //Signal Handlers for application start
     void btnaud_clicked();
     void btngedit_clicked();
     void btnvlc_clicked();
     void btnnote_clicked();
     void winvlc_clicked();
+    void btngame_clicked();
 };

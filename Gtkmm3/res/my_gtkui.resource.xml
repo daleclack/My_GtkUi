@@ -9,6 +9,11 @@
         <file>icons/16x16/actions/open-menu.png</file>
         <file>icons/16x16/actions/system.png</file>
         <file>icons/16x16/actions/vlc.png</file>
+        <file>icons/16x16/actions/game.png</file>
+        <file>icons/16x16/actions/window-close.png</file>
+        <file>icons/16x16/actions/window-minimize.png</file>
+        <file>icons/48x48/actions/game.png</file>
+        <file>icons/48x48/actions/game_running.png</file>
         <file>icons/48x48/actions/My_GtkUI.png</file>
         <file>icons/48x48/actions/user_home.png</file>
         <file>icons/48x48/actions/my_user.png</file>
@@ -19,6 +24,7 @@
     <gresource prefix="GtkUI">
         <file preprocess="xml-stripblanks">appmenu.xml</file>
         <file preprocess="xml-stripblanks">main_stack.ui</file>
+        <file preprocess="xml-stripblanks">game1.ui</file>
         <file preprocess="xml-stripblanks">toppanel.ui</file>
         <file preprocess="xml-stripblanks">leftpanel.ui</file>
         <file preprocess="xml-stripblanks">win_size.ui</file>

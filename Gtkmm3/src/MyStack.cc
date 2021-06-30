@@ -2,8 +2,7 @@
 
 MyStack::MyStack(Gtk::Window *parent1)
 :toplabel("My GtkUI Desktop"),
-labelbox(Gtk::ORIENTATION_HORIZONTAL,5),
-panel2(parent)
+labelbox(Gtk::ORIENTATION_HORIZONTAL,5)
 {
     //Create a builder
     ref_builder=Gtk::Builder::create_from_resource("/GtkUI/main_stack.ui");
@@ -31,7 +30,7 @@ panel2(parent)
     main_overlay->add_overlay(panel1);
 
     //Add LeftPanel
-    panel2.add_panel(*main_overlay);
+    panel2.add_panel(parent1,*main_overlay);
 
     //Bind Parent Window
     parent=parent1;
