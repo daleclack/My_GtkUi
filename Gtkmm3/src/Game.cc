@@ -31,6 +31,7 @@ game_index{0,1,2,3}
 }
 
 void Game::gamebtn_clicked(int *index){
+    //Get Current button
     int flag;
     srand((unsigned)time(NULL));
     flag=rand()%4;
@@ -40,11 +41,17 @@ void Game::gamebtn_clicked(int *index){
     }else{
         game_label->set_label("The Button is here!");
     }
+    //Disable Buttons
+    for(int i=0;i<4;i++){
+        game_btn[i]->set_sensitive(false);
+    }
 }
 
 void Game::btngo_clicked(){
+    //Clean Icons showed in button and enable buttons
      for(int i=0;i<4;i++){
         game_btn[i]->set_image_from_icon_name("");
+        game_btn[i]->set_sensitive();
     }
     game_label->set_label("Select a button");
 }
