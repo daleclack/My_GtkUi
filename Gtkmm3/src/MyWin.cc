@@ -134,6 +134,9 @@ void MyWin::about_dialog(){
     char *version;
     Gtk::AboutDialog about_dialog;
     about_dialog.set_transient_for(*this);
+    //Create Authors
+    std::vector<Glib::ustring> authors;
+    authors.push_back("Dale Clack");
     //Create Comments
     version=g_strdup_printf("3.0\nRunning against Gtkmm %d.%d.%d",
                             GTKMM_MAJOR_VERSION,
@@ -142,7 +145,9 @@ void MyWin::about_dialog(){
     about_dialog.set_program_name("My Gtk UI");
     about_dialog.set_version(version);
     about_dialog.set_logo_icon_name("My_GtkUI");
+    about_dialog.set_authors(authors);
     about_dialog.set_copyright("© 2019—2021 The Xe Project");
+    about_dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
     about_dialog.set_comments("A test program for menu and background in gtkmm");
     about_dialog.set_title("About Gtk UI");
     about_dialog.run();
