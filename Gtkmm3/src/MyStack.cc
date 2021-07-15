@@ -1,8 +1,8 @@
 #include "MyStack.hh"
 
 MyStack::MyStack(Gtk::Window *parent1)
-:toplabel("My GtkUI Desktop"),
-labelbox(Gtk::ORIENTATION_HORIZONTAL,5)
+:labelbox(Gtk::ORIENTATION_HORIZONTAL,5),
+toplabel("My GtkUI Desktop")
 {
     //Create a builder
     ref_builder=Gtk::Builder::create_from_resource("/GtkUI/main_stack.ui");

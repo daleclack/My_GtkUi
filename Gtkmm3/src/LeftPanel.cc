@@ -14,6 +14,7 @@ LeftPanel::LeftPanel(){
     panel_builder->get_widget("btn_vlc",btnvlc_win32);
     panel_builder->get_widget("btngame",btngame);
     panel_builder->get_widget("panel_game",panelgame);
+    panel_builder->get_widget("btnrun",btnrun);
     
     //Add timer
     paneltimer=Glib::signal_timeout().connect(sigc::mem_fun(*this,&LeftPanel::on_timeout),100);

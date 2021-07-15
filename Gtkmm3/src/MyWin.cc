@@ -5,10 +5,10 @@
 
 MyWin::MyWin():
 main_box(Gtk::ORIENTATION_VERTICAL),
-conf_dlg(this),
 main_stack(this),
 width(800),
-height(450)
+height(450),
+conf_dlg(this)
 {
     //Initalize Window
     set_icon_name("My_GtkUI");

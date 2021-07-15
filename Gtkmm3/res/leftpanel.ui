@@ -209,6 +209,21 @@
               </packing>
             </child>
             <child>
+              <object class="GtkButton" id="btnrun">
+                <property name="label" translatable="yes">Run</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="relief">none</property>
+                <property name="always-show-image">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkButton" id="btnabout">
                 <property name="label" translatable="yes">About</property>
                 <property name="visible">True</property>
@@ -221,11 +236,8 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
             <child>
               <placeholder/>
