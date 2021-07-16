@@ -27,6 +27,7 @@ LeftPanel::LeftPanel(){
     btnvlc_win32->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::winvlc_clicked));
     btngame->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btngame_clicked));
     panelgame->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btngame_clicked));
+    btnrun->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnrun_clicked));
 }
 
 void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
@@ -36,6 +37,7 @@ void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
     overlay.add_overlay(*btnbox); 
     //Set Parent Window
     parent=parent1;
+    runner1.set_transient_for(*parent1);
 }
 
 void LeftPanel::btnaud_clicked(){
@@ -86,4 +88,8 @@ bool LeftPanel::on_timeout(){
         panelgame->set_image_from_icon_name("game",Gtk::ICON_SIZE_DIALOG);
     }
     return true;
+}
+
+void LeftPanel::btnrun_clicked(){
+    runner1.show_all();
 }

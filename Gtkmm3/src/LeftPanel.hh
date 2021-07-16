@@ -30,4 +30,5 @@ private:
     void btnnote_clicked();
     void winvlc_clicked();
     void btngame_clicked();
+    void btnrun_clicked();
 };
