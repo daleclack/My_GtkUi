@@ -90,6 +90,37 @@ static void infobar_response(GtkWidget *widget,gpointer data){
     gtk_widget_hide(widget);
 }
 
+static void btncopy_clicked(GtkWidget *widget,gpointer data){
+    //Get Text or selected text
+    const char *contents;
+    GtkTextIter start,end;
+    if(gtk_text_buffer_get_has_selection(textbuffer)){
+        gtk_text_buffer_get_bounds(textbuffer,&start,&end);
+        contents=gtk_text_buffer_get_text(textbuffer,&start,&end,TRUE);
+    }else{
+        gtk_text_buffer_get_start_iter(textbuffer,&start);
+        gtk_text_buffer_get_end_iter(textbuffer,&end);
+        //Get Contents
+        contents=gtk_text_buffer_get_text(textbuffer,&start,&end,TRUE);    
+    }
+
+    //Get Clipboard and put text
+    GtkClipboard *clipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+    gtk_clipboard_set_text(clipboard,contents,-1);
+
+}
+
+static void get_text(GtkClipboard * clipboard,const char * text,gpointer data){
+    //Paste text
+    gtk_text_buffer_insert_at_cursor(textbuffer,text,-1);
+}
+
+static void btnpaste_clicked(GtkWidget *widget,gpointer data){
+    //Get ClipBoard and paste text
+    GtkClipboard * clipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+    gtk_clipboard_request_text(clipboard,get_text,NULL);
+}
+
 void text_editor(GtkWidget *widget,GtkWindow *parent){
     //Initalize window
     GtkWidget *window,*hbox;
@@ -124,17 +155,23 @@ void text_editor(GtkWidget *widget,GtkWindow *parent){
 
     //Add Buttons
     GtkWidget *btn_box=gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
-    GtkWidget *btnopen,*btnsave,*btnclear,*btnexit;
-    btnopen=gtk_button_new_with_label("Open File");
+    GtkWidget *btnopen,*btnsave,*btnclear,*btncopy,*btnpaste,*btnexit;
+    btnopen=gtk_button_new_with_label("Open");
     g_signal_connect(btnopen,"clicked",G_CALLBACK(openfile_dialog),window);
-    btnsave=gtk_button_new_with_label("Save File");
+    btnsave=gtk_button_new_with_label("Save");
     g_signal_connect(btnsave,"clicked",G_CALLBACK(savefile_dialog),window);
     btnclear=gtk_button_new_with_label("Clear");
     g_signal_connect(btnclear,"clicked",G_CALLBACK(textbuffer_clear),textbuffer);
+    btncopy=gtk_button_new_with_label("Copy");
+    g_signal_connect(btncopy,"clicked",G_CALLBACK(btncopy_clicked),NULL);
+    btnpaste=gtk_button_new_with_label("Paste");
+    g_signal_connect(btnpaste,"clicked",G_CALLBACK(btnpaste_clicked),NULL);
     btnexit=gtk_button_new_with_label("Exit");
     g_signal_connect_swapped(btnexit,"clicked",G_CALLBACK(gtk_widget_destroy),window);
     gtk_widget_set_valign(btn_box,GTK_ALIGN_CENTER);
     gtk_box_pack_end((GtkBox*)btn_box,btnexit,FALSE,FALSE,0);
+    gtk_box_pack_end((GtkBox*)btn_box,btnpaste,FALSE,FALSE,0);
+    gtk_box_pack_end((GtkBox*)btn_box,btncopy,FALSE,FALSE,0);
     gtk_box_pack_end((GtkBox*)btn_box,btnclear,FALSE,FALSE,0);
     gtk_box_pack_end((GtkBox*)btn_box,btnsave,FALSE,FALSE,0);
     gtk_box_pack_end((GtkBox*)btn_box,btnopen,FALSE,FALSE,0);
