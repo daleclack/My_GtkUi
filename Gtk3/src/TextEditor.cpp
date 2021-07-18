@@ -92,14 +92,14 @@ static void infobar_response(GtkWidget *widget,gpointer data){
 
 void text_editor(GtkWidget *widget,GtkWindow *parent){
     //Initalize window
-    GtkWidget *window,*vbox;
+    GtkWidget *window,*hbox;
     //window=gtk_application_window_new(app);
     window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_transient_for((GtkWindow*)window,parent);
     gtk_window_set_title((GtkWindow*)window,"Simple Text Editor");
     gtk_window_set_icon_name((GtkWindow*)window,"org.gtk.daleclack");
     gtk_window_set_default_size((GtkWindow*)window,800,450);
-    vbox=gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
+    hbox=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,5);
 
     //Initalize infobar
     infobar=gtk_info_bar_new_with_buttons("OK",GTK_RESPONSE_OK,NULL);
@@ -107,7 +107,7 @@ void text_editor(GtkWidget *widget,GtkWindow *parent){
     GtkWidget *label=gtk_label_new("Cleared the text");
     g_signal_connect(infobar,"response",G_CALLBACK(infobar_response),NULL);
     gtk_container_add((GtkContainer*)content_area,label);
-    gtk_box_pack_start((GtkBox*)vbox,infobar,TRUE,FALSE,0);
+    gtk_box_pack_start((GtkBox*)hbox,infobar,TRUE,FALSE,0);
 
     //Ininalize TextView
     GtkWidget *scrolled;
@@ -118,12 +118,12 @@ void text_editor(GtkWidget *widget,GtkWindow *parent){
                                   GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
     textview=gtk_text_view_new();
     textbuffer=gtk_text_view_get_buffer((GtkTextView*)textview);
-    gtk_widget_set_size_request(scrolled,800,440);
+    //gtk_widget_set_size_request(scrolled,800,440);
     gtk_container_add((GtkContainer*)scrolled,textview);
-    gtk_box_pack_start((GtkBox*)vbox,scrolled,TRUE,TRUE,0);
+    gtk_box_pack_start((GtkBox*)hbox,scrolled,TRUE,TRUE,0);
 
     //Add Buttons
-    GtkWidget *btn_box=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,5);
+    GtkWidget *btn_box=gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
     GtkWidget *btnopen,*btnsave,*btnclear,*btnexit;
     btnopen=gtk_button_new_with_label("Open File");
     g_signal_connect(btnopen,"clicked",G_CALLBACK(openfile_dialog),window);
@@ -133,14 +133,15 @@ void text_editor(GtkWidget *widget,GtkWindow *parent){
     g_signal_connect(btnclear,"clicked",G_CALLBACK(textbuffer_clear),textbuffer);
     btnexit=gtk_button_new_with_label("Exit");
     g_signal_connect_swapped(btnexit,"clicked",G_CALLBACK(gtk_widget_destroy),window);
+    gtk_widget_set_valign(btn_box,GTK_ALIGN_CENTER);
     gtk_box_pack_end((GtkBox*)btn_box,btnexit,FALSE,FALSE,0);
     gtk_box_pack_end((GtkBox*)btn_box,btnclear,FALSE,FALSE,0);
     gtk_box_pack_end((GtkBox*)btn_box,btnsave,FALSE,FALSE,0);
     gtk_box_pack_end((GtkBox*)btn_box,btnopen,FALSE,FALSE,0);
-    gtk_box_pack_end((GtkBox*)vbox,btn_box,TRUE,FALSE,0);
+    gtk_box_pack_end((GtkBox*)hbox,btn_box,FALSE,FALSE,0);
 
     //Add widgets and show everything
-    gtk_container_add((GtkContainer*)window,vbox);
+    gtk_container_add((GtkContainer*)window,hbox);
     gtk_widget_show_all(window);
     gtk_widget_hide(infobar);
 }
