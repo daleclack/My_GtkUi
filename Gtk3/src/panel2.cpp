@@ -4,6 +4,7 @@
 #include "win1.h"
 #include "game.h"
 #include "TextEditor.h"
+#include "drawing.h"
 
 static void btnvlc_clicked(GtkWidget *widget,gpointer data){
     std::thread first(system,"vlc");
@@ -82,6 +83,10 @@ void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
     GObject *btnedit=gtk_builder_get_object(panel2,"btneditor");
     g_signal_connect(btnedit,"clicked",G_CALLBACK(text_editor),window);
     g_signal_connect_swapped(btnedit,"clicked",G_CALLBACK(gtk_widget_hide),popover);
+    //Drawing application
+    GObject *btndraw=gtk_builder_get_object(panel2,"btndraw");
+    g_signal_connect(btndraw,"clicked",G_CALLBACK(drawing_main),window);
+    g_signal_connect_swapped(btndraw,"clicked",G_CALLBACK(gtk_widget_hide),popover);
     //About window
     GObject *btn_about=gtk_builder_get_object(panel2,"btnabout");
     g_signal_connect(btn_about,"clicked",G_CALLBACK(win1_init),window);
