@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUI VERSION 3.0.0)
+project(My_GtkUI VERSION 3.1.0)
 
 include(CTest)
 enable_testing()
@@ -51,10 +51,12 @@ if(WIN32)
         OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
 	add_executable(My_GtkUI WIN32 ${app_WINRC} src/main.cc src/MyWin.cc src/MyStack.cc src/Runner.cc 
-	src/Game.cc src/TopPanel.cc src/LeftPanel.cc src/winconf.cc ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+	src/Game.cc src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc 
+    ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 else()
 	add_executable(My_GtkUI src/main.cc src/MyWin.cc src/MyStack.cc src/Game.cc src/Runner.cc 
-	src/TopPanel.cc src/LeftPanel.cc src/winconf.cc ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+	src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc 
+    ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 
 endif(WIN32)
 

@@ -15,6 +15,7 @@ LeftPanel::LeftPanel(){
     panel_builder->get_widget("btngame",btngame);
     panel_builder->get_widget("panel_game",panelgame);
     panel_builder->get_widget("btnrun",btnrun);
+    panel_builder->get_widget("btneditor",btneditor);
     
     //Add timer
     paneltimer=Glib::signal_timeout().connect(sigc::mem_fun(*this,&LeftPanel::on_timeout),100);
@@ -28,6 +29,7 @@ LeftPanel::LeftPanel(){
     btngame->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btngame_clicked));
     panelgame->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btngame_clicked));
     btnrun->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnrun_clicked));
+    btneditor->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnedit_clicked));
 }
 
 void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
@@ -38,6 +40,7 @@ void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
     //Set Parent Window
     parent=parent1;
     runner1.set_transient_for(*parent1);
+    editor1.set_transient_for(*parent1);
 }
 
 void LeftPanel::btnaud_clicked(){
@@ -78,6 +81,7 @@ void LeftPanel::btngame_clicked(){
         game1.hide_game_window();
         game1.minimized=true;
     }
+    popover->popdown();
 }
 
 bool LeftPanel::on_timeout(){
@@ -92,4 +96,10 @@ bool LeftPanel::on_timeout(){
 
 void LeftPanel::btnrun_clicked(){
     runner1.show_all();
+    popover->popdown();
+}
+
+void LeftPanel::btnedit_clicked(){
+    editor1.show();
+    popover->popdown();
 }
