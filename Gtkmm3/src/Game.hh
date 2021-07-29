@@ -6,9 +6,11 @@ class Game{
 public:
     Game();
     bool running;
-    bool minimized;
     void show_game_window(Gtk::Window &parent);
-    void hide_game_window();
+    Glib::RefPtr<Gdk::Window> get_window();
+    //Behaver like Gtk::Window::iconify and Gtk::Window::deiconify
+    void iconify();
+    void deiconify();
 private:
     //The main builder
     Glib::RefPtr<Gtk::Builder> game_builder;
@@ -21,7 +23,7 @@ private:
     //Signal Handlers
     void gamebtn_clicked(int *index);
     void btngo_clicked();
-    void win_minimized();
-    void win_closed();
     void btnexit_clicked();
+    void win_closed();
+    bool on_delete_event(GdkEventAny *event);
 };

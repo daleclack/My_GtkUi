@@ -16,6 +16,7 @@ LeftPanel::LeftPanel(){
     panel_builder->get_widget("panel_game",panelgame);
     panel_builder->get_widget("btnrun",btnrun);
     panel_builder->get_widget("btneditor",btneditor);
+    panel_builder->get_widget("panel_editor",panel_editor);
     
     //Add timer
     paneltimer=Glib::signal_timeout().connect(sigc::mem_fun(*this,&LeftPanel::on_timeout),100);
@@ -30,6 +31,7 @@ LeftPanel::LeftPanel(){
     panelgame->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btngame_clicked));
     btnrun->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnrun_clicked));
     btneditor->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnedit_clicked));
+    panel_editor->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnedit_clicked));
 }
 
 void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
@@ -74,12 +76,23 @@ void LeftPanel::winvlc_clicked(){
 }
 
 void LeftPanel::btngame_clicked(){
-    if(game1.minimized==true||game1.running==false){
-        game1.show_game_window(*parent);
-        game1.minimized=false;
+    //Simulate the panel by Gdk::Window Proprties
+    auto game_win=game1.get_window();
+    if(game_win){
+        auto state=game_win->get_state();
+        switch(state){
+            case Gdk::WINDOW_STATE_ICONIFIED:
+                game1.deiconify();
+                break;
+            case Gdk::WINDOW_STATE_WITHDRAWN:
+                game1.show_game_window(*parent);
+                break;
+            default:
+                game1.iconify();
+        }
     }else{
-        game1.hide_game_window();
-        game1.minimized=true;
+        game1.show_game_window(*parent);
+        game1.running=true;
     }
     popover->popdown();
 }
@@ -91,6 +104,11 @@ bool LeftPanel::on_timeout(){
     }else{
         panelgame->set_image_from_icon_name("game",Gtk::ICON_SIZE_DIALOG);
     }
+    if(editor1.running){
+        panel_editor->set_image_from_icon_name("gedit_running",Gtk::ICON_SIZE_DIALOG);
+    }else{
+        panel_editor->set_image_from_icon_name("gedit",Gtk::ICON_SIZE_DIALOG);
+    }
     return true;
 }
 
@@ -100,6 +118,24 @@ void LeftPanel::btnrun_clicked(){
 }
 
 void LeftPanel::btnedit_clicked(){
-    editor1.show();
+    //Simulate the panel by Gdk::Window Proprties
+    auto editor_win=editor1.get_window();
+    if(editor_win){
+        auto state=editor_win->get_state();
+        switch(state){
+            case Gdk::WINDOW_STATE_ICONIFIED:
+                editor1.deiconify();
+                break;
+            case Gdk::WINDOW_STATE_WITHDRAWN:
+                editor1.show();
+                editor1.running=true;
+                break;
+            default:
+                editor1.iconify();
+        }
+    }else{
+        editor1.show();
+        editor1.running=true;
+    }
     popover->popdown();
 }

@@ -15,7 +15,8 @@ private:
     //Child widgets
     Gtk::Box *btnbox;
     Gtk::Popover *popover;
-    Gtk::Button *btnaud,*btngedit,*btnvlc,*btnnote,*btnvlc_win32,*btngame,*panelgame,*btnrun,*btneditor;
+    Gtk::Button *btnaud,*btngedit,*btnvlc,*btnnote,*btnvlc_win32,*btngame,
+                *panelgame,*btnrun,*btneditor,*panel_editor;
     //Parent Window
     Gtk::Window *parent;
     Game game1;

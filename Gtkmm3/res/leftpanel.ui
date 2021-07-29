@@ -342,7 +342,7 @@
       </packing>
     </child>
     <child>
-      <object class="GtkButton">
+      <object class="GtkButton" id="panel_editor">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
         <property name="receives-default">True</property>

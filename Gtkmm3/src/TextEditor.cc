@@ -3,7 +3,8 @@
 #include <fstream>
 
 TextEditor::TextEditor()
-:vbox(Gtk::ORIENTATION_VERTICAL,5),
+:running(false),
+vbox(Gtk::ORIENTATION_VERTICAL,5),
 hbox(Gtk::ORIENTATION_HORIZONTAL,5),
 btnbox(Gtk::ORIENTATION_VERTICAL,5),
 btn_copy("Copy"),
@@ -189,4 +190,9 @@ void TextEditor::btnclear_clicked(){
 
 void TextEditor::infobar_response(int response){
     infobar.hide();
+}
+
+bool TextEditor::on_delete_event(GdkEventAny *event){
+    running=false;
+    return false;
 }

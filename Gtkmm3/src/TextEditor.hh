@@ -5,6 +5,7 @@
 class TextEditor : public Gtk::Window{
 public:
     TextEditor();
+    bool running;
 private:
     //Child widgets
     Gtk::Box vbox,hbox,btnbox,*infobox;
@@ -27,4 +28,5 @@ private:
     void buffer1_changed();
     void clipboard_receive(const Glib::ustring &text);
     void infobar_response(int response);
+    bool on_delete_event(GdkEventAny *event);
 };

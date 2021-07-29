@@ -5,14 +5,11 @@
 
 Game::Game()
 :running(false),
-minimized(false),
 game_index{0,1,2,3}
 {
     //Ininalize Window
     game_builder=Gtk::Builder::create_from_resource("/GtkUI/game1.ui");
     game_builder->get_widget("window",game_window);
-    game_builder->get_widget("win_mini",win_mini);
-    game_builder->get_widget("win_close",win_close);
     game_builder->get_widget("btn_exit",btnexit);
     game_builder->get_widget("btn_go",btngo);
     game_builder->get_widget("label",game_label);
@@ -25,9 +22,8 @@ game_index{0,1,2,3}
     }
     //Link Signals
     btngo->signal_clicked().connect(sigc::mem_fun(*this,&Game::btngo_clicked));
-    win_mini->signal_clicked().connect(sigc::mem_fun(*this,&Game::win_minimized));
-    win_close->signal_clicked().connect(sigc::mem_fun(*this,&Game::win_closed));
     btnexit->signal_clicked().connect(sigc::mem_fun(*this,&Game::win_closed));
+    game_window->signal_delete_event().connect(sigc::mem_fun(*this,&Game::on_delete_event));
 }
 
 void Game::gamebtn_clicked(int *index){
@@ -56,23 +52,30 @@ void Game::btngo_clicked(){
     game_label->set_label("Select a button");
 }
 
-void Game::hide_game_window(){
-    minimized=true;
-    game_window->hide();
-}
-
-void Game::win_minimized(){
-    minimized=true;
-    game_window->hide();
-}
-
-void Game::win_closed(){
-    game_window->hide();
-    running=false;
-}
-
 void Game::show_game_window(Gtk::Window &parent){
     game_window->set_transient_for(parent);
     running=true;
     game_window->show_all();
+}
+
+Glib::RefPtr<Gdk::Window> Game::get_window(){
+    return game_window->get_window();
+}
+
+void Game::iconify(){
+    game_window->iconify();
+}
+
+void Game::deiconify(){
+    game_window->deiconify();
+}
+
+void Game::win_closed(){
+    //Change State and close
+    game_window->close();
+}
+
+bool Game::on_delete_event(GdkEventAny *event){
+    running=false;
+    return false;
 }
