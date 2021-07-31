@@ -12,7 +12,7 @@ conf_dlg(this)
 {
     //Initalize Window
     set_icon_name("My_GtkUI");
-    set_title("My GtkUI 3.1");
+    set_title("My GtkUI 3.2");
     conf_dlg.get_config(&width,&height);
     overlay.add_overlay(draw_area);
     default_background1();
@@ -138,7 +138,7 @@ void MyWin::about_dialog(){
     std::vector<Glib::ustring> authors;
     authors.push_back("Dale Clack");
     //Create Comments
-    version=g_strdup_printf("3.1\nRunning against Gtkmm %d.%d.%d",
+    version=g_strdup_printf("3.2\nRunning against Gtkmm %d.%d.%d",
                             GTKMM_MAJOR_VERSION,
                             GTKMM_MINOR_VERSION,
                             GTKMM_MICRO_VERSION);

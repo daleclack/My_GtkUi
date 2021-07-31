@@ -15,7 +15,8 @@ btn_clear("Clear")
 {
     //Initalize Window
     set_default_size(800,450);
-    set_icon_name("org.gtk.daleclack");
+    set_icon_name("My_GtkUI");
+    set_title("Simple Text Editor");
     
     //Initalize Text Buffers
     buffer1=textview1.get_buffer();
