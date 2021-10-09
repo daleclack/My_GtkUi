@@ -10,6 +10,11 @@
     <file>graphics.png</file>
     <file>system.png</file>
     <file>log-out.png</file>
+    <file>gnome-fs-directory.png</file>
+    <file>gnome-fs-regular.png</file>
+    <file>view-grid-symbolic.png</file>
+    <file>view-list-symbolic.png</file>
+    <file>dialog-error.png</file>
     <file preprocess="xml-stripblanks">window.ui</file>
     <file preprocess="xml-stripblanks">leftpanel.ui</file>
     <file preprocess="xml-stripblanks">toppanel.ui</file>

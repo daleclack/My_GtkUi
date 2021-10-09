@@ -10,6 +10,11 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
   </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="stock">gtk-about</property>
+  </object>
   <object class="GtkPopover" id="popover1">
     <property name="width-request">300</property>
     <property name="height-request">400</property>
@@ -156,11 +161,12 @@
             <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkButton" id="btngame">
-                <property name="label" translatable="yes">Guess Game</property>
+              <object class="GtkButton" id="btnabout">
+                <property name="label" translatable="yes">About</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="image">image3</property>
                 <property name="relief">none</property>
               </object>
               <packing>
@@ -170,8 +176,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btneditor">
-                <property name="label" translatable="yes">Simple Text Editor</property>
+              <object class="GtkButton" id="btnfiles">
+                <property name="label" translatable="yes">File Manager</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -198,12 +204,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnabout">
-                <property name="label" translatable="yes">About</property>
+              <object class="GtkButton" id="btngame">
+                <property name="label" translatable="yes">Guess Game</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="image">image3</property>
                 <property name="relief">none</property>
               </object>
               <packing>
@@ -213,7 +218,18 @@
               </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkButton" id="btneditor">
+                <property name="label" translatable="yes">Simple Text Editor</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="relief">none</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -270,10 +286,5 @@
     <child>
       <placeholder/>
     </child>
-  </object>
-  <object class="GtkImage" id="image3">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="stock">gtk-about</property>
   </object>
 </interface>

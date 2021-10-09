@@ -5,6 +5,7 @@
 #include "game.h"
 #include "TextEditor.h"
 #include "drawing.h"
+#include "FileWindow.h"
 
 static void btnvlc_clicked(GtkWidget *widget,gpointer data){
     std::thread first(system,"vlc");
@@ -29,6 +30,12 @@ static void btnnote_clicked(GtkWidget *widget,gpointer data){
 static void btnvlc_win32(GtkWidget *widget,gpointer data){
     std::thread fifth(system,"start ..\\vlc\\vlc.exe");
     fifth.detach();
+}
+
+void btnfiles_clicked(GtkWidget *widget,GtkWindow *parent){
+    FileWindow * window1 = file_window_new();
+    gtk_window_set_transient_for(GTK_WINDOW(window1),parent);
+    gtk_widget_show_all(GTK_WIDGET(window1));
 }
 
 void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
@@ -91,6 +98,10 @@ void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
     GObject *btn_about=gtk_builder_get_object(panel2,"btnabout");
     g_signal_connect(btn_about,"clicked",G_CALLBACK(win1_init),window);
     g_signal_connect_swapped(btn_about,"clicked",G_CALLBACK(gtk_widget_hide),popover);
+    //File Manager
+    GObject *btnfiles=gtk_builder_get_object(panel2,"btnfiles");
+    g_signal_connect(btnfiles,"clicked",G_CALLBACK(btnfiles_clicked),window);
+    g_signal_connect_swapped(btnfiles,"clicked",G_CALLBACK(gtk_widget_hide),popover);
     gtk_fixed_put(fixed,GTK_WIDGET(panel),0,25);
     g_object_unref(pixbuf);
     g_object_unref(sized);

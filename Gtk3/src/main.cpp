@@ -17,6 +17,8 @@ static void gtkmain(GtkApplication *app,gpointer user_data){
     //Home button
     GObject *img_home=gtk_builder_get_object(builder,"image1");
     gtk_image_set_from_resource(GTK_IMAGE(img_home),"/gtk42/user-home.png");
+    GObject *btn_home=gtk_builder_get_object(builder,"btn_home");
+    g_signal_connect(btn_home,"clicked",G_CALLBACK(btnfiles_clicked),window);
     
     //Get button for change background(moved to panel 1)
     /*GObject *btn_back=gtk_builder_get_object(builder,"btnback");

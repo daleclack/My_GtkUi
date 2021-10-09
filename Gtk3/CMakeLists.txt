@@ -48,11 +48,11 @@ if(WIN32)
         )
     add_executable(My_GtkUi WIN32 ${app_WINRC} src/main.cpp src/background.cpp src/game.cpp 
     src/TextEditor.cpp src/panel1.cpp src/panel2.cpp src/win1.cpp src/winconf.cpp src/drawing.cpp 
-    ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+    src/FileWindow.cpp ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 else()
     add_executable(My_GtkUi src/main.cpp src/background.cpp src/game.cpp src/TextEditor.cpp 
     src/panel1.cpp src/panel2.cpp src/win1.cpp src/winconf.cpp src/drawing.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+    src/FileWindow.cpp ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 endif(WIN32)
 
 set_source_files_properties(

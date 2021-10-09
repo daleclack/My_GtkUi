@@ -5,6 +5,8 @@
 
 void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed);
 
+void btnfiles_clicked(GtkWidget *widget,GtkWindow *parent);
+
 //void btnvlc_clicked(GtkWidget *widget,gpointer data);
 
 //void btngedit_clicked(GtkWidget *widget,gpointer data);
