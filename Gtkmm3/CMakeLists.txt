@@ -51,11 +51,11 @@ if(WIN32)
         OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
 	add_executable(My_GtkUI WIN32 ${app_WINRC} src/main.cc src/MyWin.cc src/MyStack.cc src/Runner.cc 
-	src/Game.cc src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc 
+	src/Game.cc src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc src/drawing.cc 
     ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 else()
 	add_executable(My_GtkUI src/main.cc src/MyWin.cc src/MyStack.cc src/Game.cc src/Runner.cc 
-	src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc 
+	src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc src/drawing.cc 
     ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 
 endif(WIN32)

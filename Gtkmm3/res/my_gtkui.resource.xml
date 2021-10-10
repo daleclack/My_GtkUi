@@ -12,6 +12,7 @@
         <file>icons/16x16/actions/game.png</file>
         <file>icons/16x16/actions/window-close.png</file>
         <file>icons/16x16/actions/window-minimize.png</file>
+        <file>icons/16x16/actions/drawing_app.png</file>
         <file>icons/48x48/actions/game.png</file>
         <file>icons/48x48/actions/game_running.png</file>
         <file>icons/48x48/actions/My_GtkUI.png</file>
@@ -19,6 +20,8 @@
         <file>icons/48x48/actions/my_user.png</file>
         <file>icons/48x48/actions/gedit.png</file>
         <file>icons/48x48/actions/gedit_running.png</file>
+        <file>icons/48x48/actions/drawing_app.png</file>
+        <file>icons/48x48/actions/drawing_app_running.png</file>
         <file>icons/scalable/status/graphics.svg</file>
         <file>icons/scalable/status/log_out.svg</file>
         <file>icons/scalable/status/system.svg</file>

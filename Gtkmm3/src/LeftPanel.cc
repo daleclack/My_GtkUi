@@ -17,6 +17,8 @@ LeftPanel::LeftPanel(){
     panel_builder->get_widget("btnrun",btnrun);
     panel_builder->get_widget("btneditor",btneditor);
     panel_builder->get_widget("panel_editor",panel_editor);
+    panel_builder->get_widget("btndraw",btndraw);
+    panel_builder->get_widget("panel_draw",panel_draw);
     
     //Add timer
     paneltimer=Glib::signal_timeout().connect(sigc::mem_fun(*this,&LeftPanel::on_timeout),100);
@@ -32,6 +34,8 @@ LeftPanel::LeftPanel(){
     btnrun->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnrun_clicked));
     btneditor->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnedit_clicked));
     panel_editor->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnedit_clicked));
+    btndraw->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btndraw_clicked));
+    panel_draw->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btndraw_clicked));
 }
 
 void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
@@ -43,6 +47,7 @@ void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
     parent=parent1;
     runner1.set_transient_for(*parent1);
     editor1.set_transient_for(*parent1);
+    drawing_app.set_transient_for(*parent1);
 }
 
 void LeftPanel::btnaud_clicked(){
@@ -109,6 +114,11 @@ bool LeftPanel::on_timeout(){
     }else{
         panel_editor->set_image_from_icon_name("gedit",Gtk::ICON_SIZE_DIALOG);
     }
+    if(drawing_app.running){
+        panel_draw->set_image_from_icon_name("drawing_app_running",Gtk::ICON_SIZE_DIALOG);
+    }else{
+        panel_draw->set_image_from_icon_name("drawing_app",Gtk::ICON_SIZE_DIALOG);
+    }
     return true;
 }
 
@@ -136,6 +146,29 @@ void LeftPanel::btnedit_clicked(){
     }else{
         editor1.show();
         editor1.running=true;
+    }
+    popover->popdown();
+}
+
+void LeftPanel::btndraw_clicked(){
+    //Simulate the panel by Gdk::Window Proprties
+    auto draw_win=drawing_app.get_window();
+    if(draw_win){
+        auto state=draw_win->get_state();
+        switch(state){
+            case Gdk::WINDOW_STATE_ICONIFIED:
+                drawing_app.deiconify();
+                break;
+            case Gdk::WINDOW_STATE_WITHDRAWN:
+                drawing_app.show();
+                drawing_app.running=true;
+                break;
+            default:
+                drawing_app.iconify();
+        }
+    }else{
+        drawing_app.show();
+        drawing_app.running=true;
     }
     popover->popdown();
 }

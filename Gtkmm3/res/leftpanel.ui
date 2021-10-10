@@ -13,6 +13,17 @@
     <property name="icon-name">gedit</property>
     <property name="icon_size">6</property>
   </object>
+  <object class="GtkImage" id="image11">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">drawing_app</property>
+  </object>
+  <object class="GtkImage" id="image12">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">drawing_app</property>
+    <property name="icon_size">6</property>
+  </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -204,6 +215,22 @@
             <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
+              <object class="GtkButton" id="btnabout">
+                <property name="label" translatable="yes">About</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="action-name">win.about</property>
+                <property name="image">image3</property>
+                <property name="relief">none</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkButton" id="btngame">
                 <property name="label" translatable="yes">Guess Game</property>
                 <property name="visible">True</property>
@@ -216,22 +243,22 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btneditor">
-                <property name="label" translatable="yes">Simple Text Editor</property>
+              <object class="GtkButton" id="btndraw">
+                <property name="label" translatable="yes">Drawing</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="image">image8</property>
+                <property name="image">image11</property>
                 <property name="relief">none</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -246,23 +273,22 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnabout">
-                <property name="label" translatable="yes">About</property>
+              <object class="GtkButton" id="btneditor">
+                <property name="label" translatable="yes">Simple Text Editor</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="action-name">win.about</property>
-                <property name="image">image3</property>
+                <property name="image">image8</property>
                 <property name="relief">none</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child>
@@ -353,6 +379,20 @@
         <property name="expand">False</property>
         <property name="fill">True</property>
         <property name="position">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="panel_draw">
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="image">image12</property>
+        <property name="relief">none</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">4</property>
       </packing>
     </child>
   </object>

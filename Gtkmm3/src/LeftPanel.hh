@@ -4,6 +4,7 @@
 #include "Game.hh"
 #include "Runner.hh"
 #include "TextEditor.hh"
+#include "drawing.hh"
 
 class LeftPanel{
 public:
@@ -16,7 +17,7 @@ private:
     Gtk::Box *btnbox;
     Gtk::Popover *popover;
     Gtk::Button *btnaud,*btngedit,*btnvlc,*btnnote,*btnvlc_win32,*btngame,
-                *panelgame,*btnrun,*btneditor,*panel_editor;
+                *panelgame,*btnrun,*btneditor,*panel_editor,*btndraw,*panel_draw;
     //Parent Window
     Gtk::Window *parent;
     Game game1;
@@ -27,6 +28,8 @@ private:
     GtkRunner runner1;
     //Text Editor
     TextEditor editor1;
+    //Drawing App
+    Drawing drawing_app;
     //Signal Handlers for application start
     void btnaud_clicked();
     void btngedit_clicked();
@@ -36,4 +39,5 @@ private:
     void btngame_clicked();
     void btnrun_clicked();
     void btnedit_clicked();
+    void btndraw_clicked();
 };
