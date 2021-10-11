@@ -2,15 +2,11 @@
 
 #include <gtkmm.h>
 
-class Game{
+class Game : public Gtk::Window{
 public:
-    Game();
+    Game(BaseObjectType *cobject,Glib::RefPtr<Gtk::Builder> &tmp_builder);
+    static Game * create();
     bool running;
-    void show_game_window(Gtk::Window &parent);
-    Glib::RefPtr<Gdk::Window> get_window();
-    //Behaver like Gtk::Window::iconify and Gtk::Window::deiconify
-    void iconify();
-    void deiconify();
 private:
     //The main builder
     Glib::RefPtr<Gtk::Builder> game_builder;
@@ -25,5 +21,4 @@ private:
     void btngo_clicked();
     void btnexit_clicked();
     void win_closed();
-    bool on_delete_event(GdkEventAny *event);
 };

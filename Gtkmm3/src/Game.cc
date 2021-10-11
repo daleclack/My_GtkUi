@@ -3,12 +3,13 @@
 #include <cstdlib>
 #include <cstdio>
 
-Game::Game()
-:running(false),
+Game::Game(BaseObjectType *cobject,Glib::RefPtr<Gtk::Builder> &tmp_builder)
+:Gtk::Window(cobject),
+game_builder(tmp_builder),
+running(false),
 game_index{0,1,2,3}
 {
     //Ininalize Window
-    game_builder=Gtk::Builder::create_from_resource("/GtkUI/game1.ui");
     game_builder->get_widget("window",game_window);
     game_builder->get_widget("btn_exit",btnexit);
     game_builder->get_widget("btn_go",btngo);
@@ -23,7 +24,7 @@ game_index{0,1,2,3}
     //Link Signals
     btngo->signal_clicked().connect(sigc::mem_fun(*this,&Game::btngo_clicked));
     btnexit->signal_clicked().connect(sigc::mem_fun(*this,&Game::win_closed));
-    game_window->signal_delete_event().connect(sigc::mem_fun(*this,&Game::on_delete_event));
+    signal_hide().connect(sigc::mem_fun(*this,&Game::win_closed));
 }
 
 void Game::gamebtn_clicked(int *index){
@@ -52,30 +53,16 @@ void Game::btngo_clicked(){
     game_label->set_label("Select a button");
 }
 
-void Game::show_game_window(Gtk::Window &parent){
-    game_window->set_transient_for(parent);
-    running=true;
-    game_window->show_all();
-}
-
-Glib::RefPtr<Gdk::Window> Game::get_window(){
-    return game_window->get_window();
-}
-
-void Game::iconify(){
-    game_window->iconify();
-}
-
-void Game::deiconify(){
-    game_window->deiconify();
-}
-
 void Game::win_closed(){
-    //Change State and close
-    game_window->close();
+    running=false;
 }
 
-bool Game::on_delete_event(GdkEventAny *event){
-    running=false;
-    return false;
+Game * Game::create(){
+    // Load the Builder file and instantiate its widgets.
+    auto builder = Gtk::Builder::create_from_resource("/GtkUI/game1.ui");
+
+    Game * window = nullptr;
+    builder->get_widget_derived("window",window);
+
+    return window;
 }

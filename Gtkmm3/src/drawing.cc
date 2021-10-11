@@ -51,6 +51,11 @@ void Drawing::color_set(){
     m_color=color_btn.get_rgba();
 }
 
+void Drawing::on_hide(){
+    running=false;
+    hide();
+}
+
 Drawing::Drawing()
 :main_label("Select a color"),
 size_label("Pen Size"),

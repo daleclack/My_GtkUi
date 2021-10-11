@@ -9,6 +9,7 @@
 class LeftPanel{
 public:
     LeftPanel();
+    ~LeftPanel();
     void add_panel(Gtk::Window *parent,Gtk::Overlay &overlay);
 private:
     //LeftPanel Builder
@@ -20,7 +21,7 @@ private:
                 *panelgame,*btnrun,*btneditor,*panel_editor,*btndraw,*panel_draw;
     //Parent Window
     Gtk::Window *parent;
-    Game game1;
+    Game *game1;
     //Timer for panel monitor
     sigc::connection paneltimer;
     bool on_timeout();
@@ -30,6 +31,8 @@ private:
     TextEditor editor1;
     //Drawing App
     Drawing drawing_app;
+    //Window Control Func
+    void window_ctrl(Gtk::Window &ctrled_win,bool &running);
     //Signal Handlers for application start
     void btnaud_clicked();
     void btngedit_clicked();

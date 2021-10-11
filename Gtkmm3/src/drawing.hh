@@ -6,6 +6,8 @@ class Drawing : public Gtk::Window{
     public:
         Drawing();
         bool running;
+    protected:
+        void on_hide() override;
     private:
         //Child Widgets
         Gtk::DrawingArea draw_area;
