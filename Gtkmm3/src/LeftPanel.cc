@@ -19,6 +19,8 @@ LeftPanel::LeftPanel(){
     panel_builder->get_widget("panel_editor",panel_editor);
     panel_builder->get_widget("btndraw",btndraw);
     panel_builder->get_widget("panel_draw",panel_draw);
+    panel_builder->get_widget("btnfile",btnfile);
+    panel_builder->get_widget("panel_file",panel_file);
 
     //Create Game
     game1=Game::create();
@@ -39,6 +41,8 @@ LeftPanel::LeftPanel(){
     panel_editor->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnedit_clicked));
     btndraw->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btndraw_clicked));
     panel_draw->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btndraw_clicked));
+    btnfile->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnfile_clicked));
+    panel_file->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnfile_clicked));
 }
 
 LeftPanel::~LeftPanel(){
@@ -137,6 +141,11 @@ bool LeftPanel::on_timeout(){
     }else{
         panel_draw->set_image_from_icon_name("drawing_app",Gtk::ICON_SIZE_DIALOG);
     }
+    if(file_app.running){
+        panel_file->set_image_from_icon_name("file-app-running",Gtk::ICON_SIZE_DIALOG);
+    }else{
+        panel_file->set_image_from_icon_name("file-app",Gtk::ICON_SIZE_DIALOG);
+    }
     return true;
 }
 
@@ -151,4 +160,8 @@ void LeftPanel::btnedit_clicked(){
 
 void LeftPanel::btndraw_clicked(){
     window_ctrl(drawing_app,drawing_app.running);
+}
+
+void LeftPanel::btnfile_clicked(){
+    window_ctrl(file_app,file_app.running);
 }

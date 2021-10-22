@@ -51,9 +51,9 @@ void Drawing::color_set(){
     m_color=color_btn.get_rgba();
 }
 
-void Drawing::on_hide(){
+bool Drawing::on_delete_event(GdkEventAny * event){
     running=false;
-    hide();
+    return false;
 }
 
 Drawing::Drawing()

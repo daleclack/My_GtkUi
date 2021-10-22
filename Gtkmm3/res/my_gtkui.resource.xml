@@ -13,6 +13,10 @@
         <file>icons/16x16/actions/window-close.png</file>
         <file>icons/16x16/actions/window-minimize.png</file>
         <file>icons/16x16/actions/drawing_app.png</file>
+        <file>icons/16x16/actions/file-app.png</file>
+        <file>icons/24x24/actions/view-grid-symbolic.png</file>
+        <file>icons/24x24/actions/view-list-symbolic.png</file>
+        <file>icons/48x48/actions/dialog-error.png</file>
         <file>icons/48x48/actions/game.png</file>
         <file>icons/48x48/actions/game_running.png</file>
         <file>icons/48x48/actions/My_GtkUI.png</file>
@@ -22,9 +26,13 @@
         <file>icons/48x48/actions/gedit_running.png</file>
         <file>icons/48x48/actions/drawing_app.png</file>
         <file>icons/48x48/actions/drawing_app_running.png</file>
+        <file>icons/48x48/actions/file-app.png</file>
+        <file>icons/48x48/actions/file-app-running.png</file>
         <file>icons/scalable/status/graphics.svg</file>
         <file>icons/scalable/status/log_out.svg</file>
         <file>icons/scalable/status/system.svg</file>
+        <file>gnome-fs-directory.png</file>
+        <file>gnome-fs-regular.png</file>
     </gresource>
     <gresource prefix="GtkUI">
         <file preprocess="xml-stripblanks">appmenu.xml</file>
