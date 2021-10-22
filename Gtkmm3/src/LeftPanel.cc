@@ -49,6 +49,11 @@ LeftPanel::~LeftPanel(){
     delete game1;
 }
 
+void LeftPanel::file_manager(){
+    btnfile_clicked();
+    file_app.go_home();
+}
+
 void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
     //Pack the panel
     btnbox->set_halign(Gtk::ALIGN_START);

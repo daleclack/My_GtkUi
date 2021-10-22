@@ -12,6 +12,7 @@ public:
     LeftPanel();
     ~LeftPanel();
     void add_panel(Gtk::Window *parent,Gtk::Overlay &overlay);
+    void file_manager();
 private:
     //LeftPanel Builder
     Glib::RefPtr<Gtk::Builder> panel_builder;

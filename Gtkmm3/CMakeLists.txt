@@ -22,7 +22,7 @@ link_directories (${GTKMM3_LIBRARY_DIRS})
 # Step 1:
 find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
 
-set(GRESOURCE_C   resource.c)
+set(GRESOURCE_C   resource.cpp)
 set(GRESOURCE_XML my_gtkui.resource.xml)
 
 # Step 2:

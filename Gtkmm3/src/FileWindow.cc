@@ -92,6 +92,10 @@ show_hidden("Show hidden files")
     m_infobar.hide();
 }
 
+void FileWindow::go_home(){
+    btnhome_clicked();
+}
+
 int FileWindow::sort_func(const Gtk::TreeModel::iterator &a,const Gtk::TreeModel::iterator &b){
     bool is_dir_a,is_dir_b;
     Glib::ustring name_a,name_b;

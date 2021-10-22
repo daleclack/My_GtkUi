@@ -19,7 +19,7 @@ private:
     Gtk::Overlay *main_overlay,*login_overlay;
     Gtk::Box *user_box;
     Gtk::Image *user_image;
-    Gtk::Button *login_btn;
+    Gtk::Button *login_btn,*home_btn;
     //TopPanel and LeftPanel
     Gtk::Box labelbox;
     Gtk::Label toplabel;
@@ -27,4 +27,5 @@ private:
     LeftPanel panel2;
     //Signal Handlers
     void btnlogin_clicked();
+    void btnhome_clicked();
 };

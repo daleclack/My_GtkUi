@@ -13,11 +13,13 @@ toplabel("My GtkUI Desktop")
     ref_builder->get_widget("user_box",user_box);
     ref_builder->get_widget("user_image",user_image);
     ref_builder->get_widget("login_btn",login_btn);
+    ref_builder->get_widget("home_btn",home_btn);
     ref_builder->get_widget("main_overlay",main_overlay);
 
     //Initalize Interface
     user_image->set_from_icon_name("my_user",Gtk::ICON_SIZE_DIALOG);
     login_btn->signal_clicked().connect(sigc::mem_fun(*this,&MyStack::btnlogin_clicked));
+    home_btn->signal_clicked().connect(sigc::mem_fun(*this,&MyStack::btnhome_clicked));
     login_overlay->add_overlay(*user_box);
 
     //Add Toppanel
@@ -46,4 +48,8 @@ void MyStack::btnlogin_clicked(){
 
 void MyStack::logout(){
     stack->set_visible_child(*login_overlay);
+}
+
+void MyStack::btnhome_clicked(){
+    panel2.file_manager();
 }

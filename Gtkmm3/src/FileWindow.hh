@@ -11,6 +11,7 @@ class FileWindow : public Gtk::Window{
 public:
     FileWindow();
     ~FileWindow();
+    void go_home();
     //App State
     bool running;
 protected:
