@@ -54,7 +54,8 @@ set(RESOURCE_LIST
     icons/scalable/status/system.svg
     gnome-fs-directory.png
     gnome-fs-regular.png
-    STRIPBLANKS appmenu.xml)
+    STRIPBLANKS appmenu.xml
+    STRIPBLANKS stack.ui)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
@@ -67,7 +68,7 @@ compile_gresources(RESOURCE_FILE
 # It depends on the output RESOURCE_FILE.
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
-set(SOURCES src/main.cpp src/MainWin.cpp)
+set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)

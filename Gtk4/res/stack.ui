@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkImage" id="imghome">
+    <property name="visible">1</property>
+    <property name="icon-name">user_home</property>
+    <property name="pixel-size">48</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+      <object class="GtkStack" id="stack">
+        <property name="visible">1</property>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">login_page</property>
+            <property name="title" translatable="yes">page1</property>
+            <property name="child">
+              <object class="GtkBox" id="login_box">
+                <property name="visible">1</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkImage" id="imglogin">
+                    <property name="visible">1</property>
+                    <property name="icon-name">My_GtkUI</property>
+                    <property name="pixel-size">48</property>
+                  </object>
+                </child>
+                <child>
+                      <object class="GtkLabel" id="label_user">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">dale</property>
+                      </object>
+                    </child>
+                <child>
+                  <object class="GtkButton" id="btnlogin">
+                    <property name="visible">1</property>
+                    <property name="label" translatable="yes">login</property>
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="has-frame">0</property>
+                  </object>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">main_page</property>
+            <property name="title" translatable="yes">page0</property>
+            <property name="child">
+              <object class="GtkBox" id="main_box">
+                <property name="visible">1</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkBox" id="top_panel">
+                    <property name="visible">1</property>
+                    <child>
+                      <object class="GtkLabel" id="label_app">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">My GtkUI Desktop</property>
+                      </object>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="notice_box">
+                        <property name="visible">1</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="seprator_label">
+                            <property name="visible">1</property>
+                            <property name="hexpand">1</property>
+                            <property name="label" translatable="yes">  </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label_time">
+                            <property name="visible">1</property>
+                            <property name="hexpand">0</property>
+                            <property name="label" translatable="yes">20:00 2021/2/14</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="help_button">
+                            <property name="visible">1</property>
+                            <property name="hexpand">0</property>
+                            <property name="focusable">1</property>
+                            <property name="receives-default">1</property>
+                            <property name="icon-name">system-help</property>
+                            <property name="has-frame">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="ac_button">
+                            <property name="visible">1</property>
+                            <property name="hexpand">0</property>
+                            <property name="focusable">1</property>
+                            <property name="receives-default">1</property>
+                            <property name="icon-name">ac-adapter-symbolic</property>
+                            <property name="has-frame">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="volume_button">
+                            <property name="visible">1</property>
+                            <property name="focusable">1</property>
+                            <property name="receives-default">1</property>
+                            <property name="icon-name">audio-volume-high-symbolic</property>
+                            <property name="has-frame">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkMenuButton" id="menu_button">
+                            <property name="visible">1</property>
+                            <property name="focusable">1</property>
+                            <property name="focus-on-click">0</property>
+                            <property name="receives-default">1</property>
+                            <property name="has-frame">0</property>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="desktop_box">
+                    <property name="visible">1</property>
+                    <child>
+                      <object class="GtkBox" id="leftbox">
+                        <property name="visible">1</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkGrid">
+                        <property name="visible">1</property>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="visible">1</property>
+                            <property name="label" translatable="yes">Home</property>
+                            <property name="focusable">1</property>
+                            <property name="has-frame">0</property>
+                            <property name="child">imghome</property>
+                            <property name="receives-default">1</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="home_label">
+                            <property name="visible">1</property>
+                            <property name="hexpand">0</property>
+                            <property name="label" translatable="yes">Home</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">1</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+</interface>
