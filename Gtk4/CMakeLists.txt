@@ -53,7 +53,8 @@ set(RESOURCE_LIST
     icons/scalable/status/log_out.svg
     icons/scalable/status/system.svg
     gnome-fs-directory.png
-    gnome-fs-regular.png)
+    gnome-fs-regular.png
+    STRIPBLANKS appmenu.xml)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

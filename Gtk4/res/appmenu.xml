@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <menu id="app-menu">
+        <section>
+            <attribute name='display-hints'>inline-buttons</attribute>
+            <submenu>
+                <attribute name='label'>Background</attribute>
+                <attribute name='icon'>graphics</attribute>
+                <item>
+                    <attribute name='label'>Change background</attribute>
+                    <attribute name='icon'>graphics</attribute>
+                    <attribute name='action'>win.back</attribute>
+                </item>
+                <item>
+                    <attribute name='label'>Default background1</attribute>
+                    <attribute name='icon'>graphics</attribute>
+                    <attribute name='action'>win.default1</attribute>
+                </item>
+                <item>
+                    <attribute name='label'>Default background2</attribute>
+                    <attribute name='icon'>graphics</attribute>
+                    <attribute name='action'>win.default2</attribute>
+                </item>
+            </submenu>
+            <item>
+                <attribute name='label'>About</attribute>
+                <attribute name='icon'>mygtkui_about</attribute>
+                <attribute name="action">win.about</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Refresh</attribute>
+                <attribute name='icon'>mygtkui_about</attribute>
+                <attribute name="action">win.refresh</attribute>
+            </item>
+            <item>
+                <attribute name='label'>WinSize Config</attribute>
+                <attribute name='icon'>system</attribute>
+                <attribute name='action'>win.size</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Log Out</attribute>
+                <attribute name='icon'>log_out</attribute>
+                <attribute name='action'>win.logout</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Exit</attribute>
+                <attribute name='icon'>log_out</attribute>
+                <attribute name='action'>win.quit</attribute>
+            </item>
+        </section>
+    </menu>
+</interface>
