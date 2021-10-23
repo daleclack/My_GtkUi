@@ -27,6 +27,7 @@ conf_dlg(this)
     add_action("quit",sigc::mem_fun(*this,&MyWin::win_quit));
     add_action("default1",sigc::mem_fun(*this,&MyWin::default_background1));
     add_action("default2",sigc::mem_fun(*this,&MyWin::default_background2));
+    add_action("refresh",sigc::mem_fun(*this,&MyWin::win_refresh));
     add_action("back",sigc::mem_fun(*this,&MyWin::back_dialog));
     add_action("size",sigc::mem_fun(*this,&MyWin::size_dialog));
     add_action("about",sigc::mem_fun(*this,&MyWin::about_dialog));
@@ -67,6 +68,8 @@ void MyWin::default_background1(){
     Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
 
+    background_mode = BackMode::DEFAULT_1;
+
     //Free Memory of pixbufs
     pixbuf.reset();
     sized.reset();
@@ -77,6 +80,8 @@ void MyWin::default_background2(){
     Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_xpm_data(img7);
     Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
+
+    background_mode = BackMode::DEFAULT_2;
 
     //Free Memory of pixbufs
     pixbuf.reset();
@@ -115,13 +120,14 @@ void MyWin::back_dialog(){
 }
 
 void MyWin::change_background(int response){
-    Glib::ustring filename;
     if(response==Gtk::RESPONSE_ACCEPT){
         filename=dialog->get_filename();
         //Default background
-        Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_file(filename.c_str());
+        Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_file(filename);
         Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
         gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
+
+        background_mode = BackMode::CUSTOM;
 
         //Free Memory of pixbufs
         pixbuf.reset();
@@ -152,6 +158,30 @@ void MyWin::about_dialog(){
     about_dialog.set_title("About Gtk UI");
     about_dialog.run();
     g_free(version);
+}
+
+void MyWin::win_refresh(){
+    //Refresh Background when window size changed
+    get_size(width,height);
+    switch(background_mode){
+        case BackMode::DEFAULT_1:
+            default_background1();
+            break;
+        case BackMode::DEFAULT_2:
+            default_background2();
+            break;
+        case BackMode::CUSTOM:
+
+            //Redraw background
+            Glib::RefPtr<Gdk::Pixbuf> pixbuf=Gdk::Pixbuf::create_from_file(filename);
+            Glib::RefPtr<Gdk::Pixbuf> sized=pixbuf->scale_simple(width,height,Gdk::INTERP_BILINEAR);
+            gtk_image_set_from_pixbuf(background.gobj(),sized->gobj());
+
+            //Free Memory of pixbufs
+            pixbuf.reset();
+            sized.reset();
+            break;
+    }
 }
 
 void MyWin::win_logout(){
