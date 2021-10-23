@@ -1,4 +1,12 @@
 #include "MainWin.h"
+#include "winpe.xpm"
+#include "img7.xpm"
+
+enum class BackMode{
+    DEFAULT_1,
+    DEFAULT_2,
+    CUSTOM
+};
 
 struct _MainWin{
     GtkApplicationWindow parent;
@@ -7,6 +15,7 @@ struct _MainWin{
     GtkGesture * gesture;
     GtkWidget * popover;
     int width,height;
+    BackMode back_mode;
 };
 
 G_DEFINE_TYPE(MainWin,main_win,GTK_TYPE_APPLICATION_WINDOW)
@@ -15,14 +24,59 @@ static void change_background(GtkWindow * dialog,int response,MainWin *win){
     gtk_window_destroy(dialog);
 }
 
-static void background_dialog(GSimpleAction * action, GVariant * parmeter, MainWin *win){
+static void background_dialog(GSimpleAction * action, GVariant * parmeter, gpointer data){
 }
 
-static void default_background1(GSimpleAction * action, GVariant * parmeter, MainWin *win){}
+static void default_background1(GSimpleAction * action, GVariant * parmeter, gpointer data){
+    //Set the background by pixbuf
+    MainWin * win = MAIN_WIN(data);
+    GdkPixbuf * pixbuf, * sized;
+    pixbuf = gdk_pixbuf_new_from_xpm_data(winpe);
+    sized = gdk_pixbuf_scale_simple(pixbuf,win->width,win->height,GDK_INTERP_BILINEAR);
+    gtk_picture_set_pixbuf(GTK_PICTURE(win->background),sized);
 
-static void default_background2(GSimpleAction * action, GVariant * parmeter, MainWin *win){}
+    //Change Mode and free memory
+    win->back_mode = BackMode::DEFAULT_1;
+    g_object_unref(pixbuf);
+    g_object_unref(sized);
+}
 
-static void gesture_pressed(GtkGestureClick *self,int n_press,double x,double y,MainWin *win){
+static void default_background2(GSimpleAction * action, GVariant * parmeter, gpointer data){
+    //Set the background by pixbuf
+    MainWin * win = MAIN_WIN(data);
+    GdkPixbuf * pixbuf, * sized;
+    pixbuf = gdk_pixbuf_new_from_xpm_data(img7);
+    sized = gdk_pixbuf_scale_simple(pixbuf,win->width,win->height,GDK_INTERP_BILINEAR);
+    gtk_picture_set_pixbuf(GTK_PICTURE(win->background),sized);
+
+    //Change Mode and free memory
+    win->back_mode = BackMode::DEFAULT_2;
+    g_object_unref(pixbuf);
+    g_object_unref(sized);
+}
+
+static void refresh_activated(GSimpleAction * action, GVariant * parmeter, gpointer data){
+    MainWin * win = MAIN_WIN(data);
+    //Redraw background image
+    switch(win->back_mode){
+        case BackMode::DEFAULT_1:
+            default_background1(action,parmeter,data);
+            break;
+        case BackMode::DEFAULT_2:
+            default_background2(action,parmeter,data);
+            break;
+        case BackMode::CUSTOM:
+            break;
+    }
+}
+
+static void about_activated(GSimpleAction * action, GVariant * parmeter, gpointer data){
+    GtkWindow * win =GTK_WINDOW(data);
+    
+}
+
+static void gesture_pressed(GtkGestureClick *self,int n_press,double x,double y,MainWin * win){
+    //When third button is pressed, show popover menu
     GdkRectangle rect;
     rect.x=x;
     rect.y=y;
@@ -33,7 +87,10 @@ static void gesture_pressed(GtkGestureClick *self,int n_press,double x,double y,
 }
 
 static GActionEntry entries[] = {
-    {"back",background_dialog,NULL,NULL,NULL}
+    {"back",background_dialog,NULL,NULL,NULL},
+    {"default1",default_background1,NULL,NULL,NULL},
+    {"default2",default_background2,NULL,NULL,NULL},
+    {"refresh",refresh_activated,NULL,NULL,NULL}
 };
 
 static void main_win_init(MainWin * win){
@@ -53,6 +110,7 @@ static void main_win_init(MainWin * win){
     win->overlay = gtk_overlay_new();
     win->background = gtk_picture_new();
     gtk_overlay_set_child(GTK_OVERLAY(win->overlay),win->background);
+    default_background1(NULL,NULL,win);
 
     //Add Menu
     GtkBuilder * menu_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/appmenu.xml");
@@ -68,6 +126,7 @@ static void main_win_init(MainWin * win){
     gtk_widget_add_controller(win->overlay,GTK_EVENT_CONTROLLER(win->gesture));
 
     gtk_window_set_child(GTK_WINDOW(win),win->overlay);
+    g_object_unref(menu_builder);
 }
 
 static void main_win_class_init(MainWinClass * klass){}
