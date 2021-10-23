@@ -16,18 +16,44 @@ include_directories(.)
 include_directories(..)
 
 find_package (PkgConfig REQUIRED)
-pkg_check_modules (GTK3 REQUIRED gtk+-3.0)
-include_directories (${GTK3_INCLUDE_DIRS})
-link_directories (${GTK3_LIBRARY_DIRS})
+pkg_check_modules (GTK4 REQUIRED gtk4)
+include_directories (${GTK4_INCLUDE_DIRS})
+link_directories (${GTK4_LIBRARY_DIRS})
 
 #Compile Resource
 set(RESOURCE_LIST
-    gnome-fs-directory.png
-    gnome-fs-regular.png
+    icons/16x16/actions/audacious.png
+    icons/16x16/actions/gedit.png
+    icons/16x16/actions/graphics.png
+    icons/16x16/actions/log_out.png
+    icons/16x16/actions/mygtkui_about.png
+    icons/16x16/actions/open-menu.png
+    icons/16x16/actions/system.png
+    icons/16x16/actions/vlc.png
+    icons/16x16/actions/game.png
+    icons/16x16/actions/window-close.png
+    icons/16x16/actions/window-minimize.png
+    icons/16x16/actions/drawing_app.png
+    icons/16x16/actions/file-app.png
     icons/24x24/actions/view-grid-symbolic.png
     icons/24x24/actions/view-list-symbolic.png
     icons/48x48/actions/dialog-error.png
-    icons/48x48/actions/My_GtkUI.png)
+    icons/48x48/actions/game.png
+    icons/48x48/actions/game_running.png
+    icons/48x48/actions/My_GtkUI.png
+    icons/48x48/actions/user_home.png
+    icons/48x48/actions/my_user.png
+    icons/48x48/actions/gedit.png
+    icons/48x48/actions/gedit_running.png
+    icons/48x48/actions/drawing_app.png
+    icons/48x48/actions/drawing_app_running.png
+    icons/48x48/actions/file-app.png
+    icons/48x48/actions/file-app-running.png
+    icons/scalable/status/graphics.svg
+    icons/scalable/status/log_out.svg
+    icons/scalable/status/system.svg
+    gnome-fs-directory.png
+    gnome-fs-regular.png)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
@@ -58,5 +84,5 @@ add_custom_command(TARGET ${PROJECT_NAME}
                    COMMAND echo \"*\" > ${CMAKE_BINARY_DIR}/.gitignore
                    COMMAND echo \"**/*\" > ${CMAKE_BINARY_DIR}/.hgignore)
 
-SET (CMAKE_EXTRA_CXX_FLAGS ${GTK3_CFLAGS_OTHER})
-target_link_libraries (${PROJECT_NAME} ${GTK3_LIBRARIES} -lpthread -lm)
+SET (CMAKE_EXTRA_CXX_FLAGS ${GTK4_CFLAGS_OTHER})
+target_link_libraries (${PROJECT_NAME} ${GTK4_LIBRARIES} -lpthread -lm)

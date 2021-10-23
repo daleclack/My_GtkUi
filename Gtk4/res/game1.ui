@@ -5,7 +5,7 @@
   <object class="GtkWindow" id="window">
     <property name="can-focus">False</property>
     <property name="border-width">15</property>
-    <property name="title" translatable="yes">gtk31-guess</property>
+    <property name="title" translatable="yes">GTK41-guess</property>
     <property name="destroy-with-parent">True</property>
     <child>
       <!-- n-columns=5 n-rows=7 -->
