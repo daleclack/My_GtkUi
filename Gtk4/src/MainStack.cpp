@@ -1,4 +1,5 @@
 #include "MainStack.h"
+#include "LeftPanel.h"
 
 static gboolean change_time(gpointer data){
     //Get local time
@@ -19,7 +20,7 @@ static void stack_login(GtkWidget *widget,GtkStack * stack){
     gtk_stack_set_visible_child_name(stack,"main_page");
 }
 
-GtkWidget * create_main_stack(GtkWidget * left_box,GMenuModel * model){
+GtkWidget * create_main_stack(MainWin * win,GMenuModel * model){
     GtkBuilder * stack_builder;
     stack_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/stack.ui");
 
@@ -42,7 +43,10 @@ GtkWidget * create_main_stack(GtkWidget * left_box,GMenuModel * model){
     gtk_menu_button_set_popover(GTK_MENU_BUTTON(menubtn),popover);
 
     //Box for LeftPanel
-    left_box = (GtkWidget*)gtk_builder_get_object(stack_builder,"leftbox");
+    GtkWidget * left_box = (GtkWidget*)gtk_builder_get_object(stack_builder,"leftbox");
+    LeftPanel * panel = left_panel_new();
+    left_panel_set_parent(panel,GTK_WINDOW(win));
+    gtk_box_append(GTK_BOX(left_box),GTK_WIDGET(panel));
 
     return main_stack;
 }

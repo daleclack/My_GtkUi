@@ -55,7 +55,8 @@ set(RESOURCE_LIST
     gnome-fs-directory.png
     gnome-fs-regular.png
     STRIPBLANKS appmenu.xml
-    STRIPBLANKS stack.ui)
+    STRIPBLANKS stack.ui
+    STRIPBLANKS leftpanel.ui)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

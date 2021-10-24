@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <thread>
 #include "LeftPanel.h"
+#include "MainWin.h"
 // #include "game.h"
 // #include "TextEditor.h"
 // #include "drawing.h"
@@ -8,6 +9,20 @@
 
 struct _LeftPanel{
     GtkBox parent;
+    GtkWindow * parent_win;
+    GtkWidget * popover1;
+    GtkWidget * btnstart;
+    GtkWidget * btnaud;
+    GtkWidget * btngedit;
+    GtkWidget * btnvlc;
+    GtkWidget * btn_vlc;
+    GtkWidget * btn_note;
+    GtkWidget * btnabout;
+    GtkWidget * btnfiles;
+    GtkWidget * btndraw;
+    GtkWidget * btngame;
+    GtkWidget * btnrun;
+    GtkWidget * btneditor;
 };
 
 G_DEFINE_TYPE(LeftPanel,left_panel,GTK_TYPE_BOX)
@@ -37,9 +52,49 @@ static void btnvlc_win32(GtkWidget *widget,gpointer data){
     fifth.detach();
 }
 
-static void left_panel_init(LeftPanel * panel){}
+void left_panel_set_parent(LeftPanel * self,GtkWindow * parent_win1){
+    self->parent_win = parent_win1;
+}
 
-static void left_panel_class_init(LeftPanelClass * klass){}
+static void left_panel_init(LeftPanel * panel){
+    gtk_widget_init_template(GTK_WIDGET(panel));
+
+    //Set Image for start button
+    gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
+
+    //Connect Signals
+    g_signal_connect(panel->btnaud,"clicked",G_CALLBACK(btnaud_clicked),NULL);
+    g_signal_connect_swapped(panel->btnaud,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    g_signal_connect(panel->btnvlc,"clicked",G_CALLBACK(btnvlc_clicked),NULL);
+    g_signal_connect_swapped(panel->btnvlc,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    g_signal_connect(panel->btngedit,"clicked",G_CALLBACK(btngedit_clicked),NULL);
+    g_signal_connect_swapped(panel->btngedit,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    g_signal_connect(panel->btn_note,"clicked",G_CALLBACK(btnnote_clicked),NULL);
+    g_signal_connect_swapped(panel->btn_note,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    g_signal_connect(panel->btn_vlc,"clicked",G_CALLBACK(btnvlc_win32),NULL);
+    g_signal_connect_swapped(panel->btn_vlc,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    g_signal_connect(panel->btnabout,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
+    g_signal_connect_swapped(panel->btnabout,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+}
+
+static void left_panel_class_init(LeftPanelClass * klass){
+    gtk_widget_class_set_template_from_resource(GTK_WIDGET_CLASS(klass),
+                                                "/org/gtk/daleclack/leftpanel.ui");
+    
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,popover1);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnstart);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnaud);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btngedit);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnvlc);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btn_vlc);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btn_note);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnabout);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btndraw);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnfiles);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btngame);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnrun);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btneditor);
+}
 
 LeftPanel * left_panel_new(){
     return (LeftPanel*)g_object_new(left_panel_get_type(),NULL);
@@ -52,49 +107,6 @@ LeftPanel * left_panel_new(){
 // }
 
 // void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
-//     //Get Left panel
-//     GtkBuilder *panel2=gtk_builder_new_from_resource("/gtk42/leftpanel.ui");
-//     GObject *panel=gtk_builder_get_object(panel2,"left_panel");
-//     //Set start button and image
-//     GObject *btn_image=gtk_builder_get_object(panel2,"btn_image");
-//     GdkPixbuf *pixbuf=gdk_pixbuf_new_from_resource("/gtk42/icon.png",NULL);
-//     GdkPixbuf *sized=gdk_pixbuf_scale_simple(pixbuf,40,40,GDK_INTERP_BILINEAR);
-//     gtk_image_set_from_pixbuf(GTK_IMAGE(btn_image),sized);
-//     //Get popover window
-//     GObject *popover=gtk_builder_get_object(panel2,"popover1");
-//     //Button image
-//     GtkWidget *img_vlc=gtk_image_new_from_resource("/gtk42/vlc.png");
-//     GtkWidget *img_aud=gtk_image_new_from_resource("/gtk42/audacious.png");
-//     GtkWidget *img_gedit=gtk_image_new_from_resource("/gtk42/gedit.png");
-//     //Audacious bin exec
-//     GObject *btn_audacious=gtk_builder_get_object(panel2,"btnaud");
-//     gtk_button_set_image(GTK_BUTTON(btn_audacious),img_aud);
-//     g_signal_connect(btn_audacious,"clicked",G_CALLBACK(btnaud_clicked),NULL);
-//     g_signal_connect_swapped(btn_audacious,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //vlc exec button for linux
-//     GObject *btnvlc=gtk_builder_get_object(panel2,"btnvlc");
-//     GObject *img_vlc1=gtk_builder_get_object(panel2,"image1");
-//     gtk_image_set_from_resource(GTK_IMAGE(img_vlc1),"/gtk42/vlc.png");
-//     g_signal_connect(btnvlc,"clicked",G_CALLBACK(btnvlc_clicked),NULL);
-//     g_signal_connect_swapped(btnvlc,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //Start Gedit Text Editor
-//     GObject *btngedit=gtk_builder_get_object(panel2,"btngedit");
-//     GObject *img_gedit1=gtk_builder_get_object(panel2,"image2");
-//     gtk_image_set_from_resource(GTK_IMAGE(img_gedit1),"/gtk42/gedit.png");
-//     g_signal_connect(btngedit,"clicked",G_CALLBACK(btngedit_clicked),NULL);
-//     g_signal_connect_swapped(btngedit,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //Notepad on windows
-//     GObject *btnnote=gtk_builder_get_object(panel2,"btn_note");
-//     gtk_button_set_image(GTK_BUTTON(btnnote),img_gedit);
-//     g_signal_connect(btnnote,"clicked",G_CALLBACK(btnnote_clicked),NULL);
-//     g_signal_connect_swapped(btnnote,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //VLC on windows
-//     GObject *btn_vlc=gtk_builder_get_object(panel2,"btn_vlc");
-//     gtk_button_set_image(GTK_BUTTON(btn_vlc),img_vlc);
-//     g_signal_connect(btn_vlc,"clicked",G_CALLBACK(btnvlc_win32),NULL);
-//     g_signal_connect_swapped(btn_vlc,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //Get main window
-//     GObject *window=gtk_builder_get_object(builder,"window");
 //     //Gtk31 application
 //     GObject *btngame=gtk_builder_get_object(panel2,"btngame");
 //     g_signal_connect(btngame,"clicked",G_CALLBACK(gamemain),window);

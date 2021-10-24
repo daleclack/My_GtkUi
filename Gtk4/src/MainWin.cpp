@@ -17,7 +17,6 @@ struct _MainWin{
     GtkGesture * gesture;
     GtkWidget * popover;
     GtkWidget * stack;
-    GtkWidget * leftbox;
     int width,height;
     BackMode back_mode;
 };
@@ -143,13 +142,17 @@ static void about_activated(GSimpleAction * action, GVariant * parmeter, gpointe
     "program-name","My_GtkUI",
     "version",version,
     "copyright", "© 2019—2021 The Xe Project",
-    "comments", "A program that simulates desktop",
+    "comments", "A program that simulates desktop (Gtk4 Version)",
     "authors",authors,
     "license-type",GTK_LICENSE_GPL_3_0,
     "logo-icon-name","My_GtkUI",
     "title","About My GtkUI (Gtk4 Version)",
     NULL);
     g_free(version);
+}
+
+void btnabout_clicked(GtkWidget * widget,gpointer data){
+    about_activated(NULL,NULL,data);
 }
 
 static void gesture_pressed(GtkGestureClick *self,int n_press,double x,double y,MainWin * win){
@@ -207,7 +210,7 @@ static void main_win_init(MainWin * win){
     gtk_widget_add_controller(win->overlay,GTK_EVENT_CONTROLLER(win->gesture));
 
     //Add Main Page
-    win->stack = create_main_stack(win->leftbox,model);
+    win->stack = create_main_stack(win,model);
     gtk_widget_set_halign(GTK_WIDGET(win->stack),GTK_ALIGN_FILL);
     gtk_widget_set_valign(GTK_WIDGET(win->stack),GTK_ALIGN_FILL);
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay),GTK_WIDGET(win->stack));
