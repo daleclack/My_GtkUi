@@ -68,7 +68,7 @@ compile_gresources(RESOURCE_FILE
 # It depends on the output RESOURCE_FILE.
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
-set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp)
+set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
