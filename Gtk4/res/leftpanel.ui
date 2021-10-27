@@ -344,10 +344,60 @@
       </object>
     </child>
     <child>
-      <placeholder/>
+      <object class="GtkButton" id="panel_file">
+        <property name="visible">1</property>
+        <property name="focusable">1</property>
+        <property name="receives-default">1</property>
+        <property name="has-frame">0</property>
+        <child>
+          <object class="GtkImage" id="file_image">
+            <property name="pixel-size">48</property>
+            <property name="icon-name">file-app</property>
+          </object>
+        </child>
+      </object>
     </child>
     <child>
-      <placeholder/>
+        <object class="GtkButton">
+          <property name="visible">1</property>
+          <property name="focusable">1</property>
+          <property name="receives-default">1</property>
+          <property name="has-frame">0</property>
+          <child>
+            <object class="GtkImage">
+              <property name="pixel-size">48</property>
+              <property name="icon-name">game</property>
+            </object>
+          </child>
+        </object>
+      </child>
+      <child>
+      <object class="GtkButton">
+        <property name="visible">1</property>
+        <property name="focusable">1</property>
+        <property name="receives-default">1</property>
+        <property name="has-frame">0</property>
+        <child>
+          <object class="GtkImage">
+            <property name="pixel-size">48</property>
+            <property name="icon-name">gedit</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="visible">1</property>
+        <property name="focusable">1</property>
+        <property name="receives-default">1</property>
+        <property name="has-frame">0</property>
+        <child>
+          <object class="GtkImage">
+            <property name="pixel-size">48</property>
+            <property name="icon-name">drawing_app</property>
+          </object>
+        </child>
+      </object>
     </child>
   </template>
 </interface>

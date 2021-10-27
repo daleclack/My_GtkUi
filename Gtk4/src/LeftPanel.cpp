@@ -2,31 +2,33 @@
 #include <thread>
 #include "LeftPanel.h"
 #include "MainWin.h"
-// #include "game.h"
+#include "GameWin.h"
 // #include "TextEditor.h"
 // #include "drawing.h"
 // #include "FileWindow.h"
+
+typedef gboolean(*get_active_func)(gpointer ptr);
 
 struct _LeftPanel{
     GtkBox parent;
     GtkWindow * parent_win;
     GtkWidget * popover1;
     GtkWidget * btnstart;
-    GtkWidget * btnaud;
-    GtkWidget * btngedit;
-    GtkWidget * btnvlc;
-    GtkWidget * btn_vlc;
-    GtkWidget * btn_note;
-    GtkWidget * btnabout;
-    GtkWidget * btnfiles;
-    GtkWidget * btndraw;
-    GtkWidget * btngame;
-    GtkWidget * btnrun;
-    GtkWidget * btneditor;
+    //Button for linux applications
+    GtkWidget * btnaud, * btngedit, * btnvlc;
+    //Button for win32 applications
+    GtkWidget * btn_vlc, * btn_note;
+    //Integrated applications
+    GtkWidget * btnabout, * btnfiles, * btndraw, * btngame, * btnrun, * btneditor;
+    //Panel Buttons
+    GtkWidget * panel_file;
+    //Panel Images
+    GtkWidget * file_image;
 };
 
 G_DEFINE_TYPE(LeftPanel,left_panel,GTK_TYPE_BOX)
 
+//Just simply launch applications
 static void btnvlc_clicked(GtkWidget *widget,gpointer data){
     std::thread first(system,"vlc");
     first.detach();
@@ -56,6 +58,20 @@ void left_panel_set_parent(LeftPanel * self,GtkWindow * parent_win1){
     self->parent_win = parent_win1;
 }
 
+static void btngame_clicked(GtkWidget * widget,LeftPanel * parent_panel){
+    GameWin * game1 = game_win_new(parent_panel->parent_win);
+    gtk_window_present(GTK_WINDOW(game1));
+}
+
+static void window_ctrl(LeftPanel * self,GtkWindow * ctrled_win){
+}
+
+// void btnfiles_clicked(GtkWidget *widget,GtkWindow * parent){
+//     FileWindow * window1 = file_window_new();
+//     gtk_window_set_transient_for(GTK_WINDOW(window1),parent);
+//     gtk_widget_show(GTK_WIDGET(window1));
+// }
+
 static void left_panel_init(LeftPanel * panel){
     gtk_widget_init_template(GTK_WIDGET(panel));
 
@@ -75,12 +91,17 @@ static void left_panel_init(LeftPanel * panel){
     g_signal_connect_swapped(panel->btn_vlc,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     g_signal_connect(panel->btnabout,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
     g_signal_connect_swapped(panel->btnabout,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    g_signal_connect(panel->btnfiles,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
+    g_signal_connect_swapped(panel->btnfiles,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    g_signal_connect(panel->btngame,"clicked",G_CALLBACK(btngame_clicked),panel);
+    g_signal_connect_swapped(panel->btngame,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
 }
 
 static void left_panel_class_init(LeftPanelClass * klass){
     gtk_widget_class_set_template_from_resource(GTK_WIDGET_CLASS(klass),
                                                 "/org/gtk/daleclack/leftpanel.ui");
     
+    //Get Child widgets
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,popover1);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnstart);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnaud);
@@ -94,17 +115,13 @@ static void left_panel_class_init(LeftPanelClass * klass){
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btngame);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btnrun);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btneditor);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,panel_file);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,file_image);
 }
 
 LeftPanel * left_panel_new(){
     return (LeftPanel*)g_object_new(left_panel_get_type(),NULL);
 }
-
-// void btnfiles_clicked(GtkWidget *widget,GtkWindow *parent){
-//     FileWindow * window1 = file_window_new();
-//     gtk_window_set_transient_for(GTK_WINDOW(window1),parent);
-//     gtk_widget_show_all(GTK_WIDGET(window1));
-// }
 
 // void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
 //     //Gtk31 application

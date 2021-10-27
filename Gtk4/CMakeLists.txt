@@ -56,7 +56,8 @@ set(RESOURCE_LIST
     gnome-fs-regular.png
     STRIPBLANKS appmenu.xml
     STRIPBLANKS stack.ui
-    STRIPBLANKS leftpanel.ui)
+    STRIPBLANKS leftpanel.ui
+    STRIPBLANKS game1.ui)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
@@ -69,7 +70,7 @@ compile_gresources(RESOURCE_FILE
 # It depends on the output RESOURCE_FILE.
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
-set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp)
+set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
