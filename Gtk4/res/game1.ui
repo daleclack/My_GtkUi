@@ -4,9 +4,14 @@
   <template class="GameWin" parent="GtkWindow">
     <property name="can-focus">0</property>
     <property name="destroy-with-parent">1</property>
+    <property name="title">Game</property>
     <property name="child">
       <object class="GtkGrid">
         <property name="can-focus">0</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
         <child>
           <object class="GtkLabel" id="label_status">
             <property name="can-focus">0</property>
@@ -19,11 +24,29 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="btn_1">
-            <property name="label" translatable="yes">1</property>
+          <object class="GtkToggleButton" id="btn_1">
             <property name="width-request">100</property>
             <property name="height-request">100</property>
             <property name="receives-default">1</property>
+            <child>
+              <object class = "GtkBox">
+              <property name="orientation">vertical</property>
+              <property name="halign">3</property>
+              <property name="valign">3</property>
+                <child>
+                  <object class = "GtkImage" id="image_btn1">
+                    <property name="icon-name">My_GtkUI</property>
+                    <property name="visible">0</property>
+                    <property name="pixel-size">48</property>
+                  </object>
+                </child>
+                <child>
+                  <object class = "GtkLabel">
+                    <property name="label" translatable="yes">1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
             <layout>
               <property name="column">1</property>
               <property name="row">2</property>
@@ -31,11 +54,29 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="btn_2">
-            <property name="label" translatable="yes">2</property>
+          <object class="GtkToggleButton" id="btn_2">
             <property name="width-request">100</property>
             <property name="height-request">100</property>
             <property name="receives-default">1</property>
+            <child>
+              <object class = "GtkBox">
+              <property name="orientation">vertical</property>
+              <property name="halign">3</property>
+              <property name="valign">3</property>
+              <child>
+                <object class = "GtkImage" id="image_btn2">
+                  <property name="icon-name">My_GtkUI</property>
+                  <property name="visible">0</property>
+                  <property name="pixel-size">48</property>
+                </object>
+              </child>
+              <child>
+                  <object class = "GtkLabel">
+                    <property name="label" translatable="yes">2</property>
+                  </object>
+                </child>
+              </object>
+            </child>
             <layout>
               <property name="column">3</property>
               <property name="row">2</property>
@@ -43,11 +84,29 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="btn_3">
-            <property name="label" translatable="yes">3</property>
+          <object class="GtkToggleButton" id="btn_3">
             <property name="width-request">100</property>
             <property name="height-request">100</property>
             <property name="receives-default">1</property>
+            <child>
+              <object class = "GtkBox">
+              <property name="orientation">vertical</property>
+              <property name="halign">3</property>
+              <property name="valign">3</property>
+              <child>
+                <object class = "GtkImage" id="image_btn3">
+                  <property name="icon-name">My_GtkUI</property>
+                  <property name="visible">0</property>
+                  <property name="pixel-size">48</property>
+                </object>
+              </child>
+              <child>
+                  <object class = "GtkLabel">
+                    <property name="label" translatable="yes">3</property>
+                  </object>
+                </child>
+              </object>
+            </child>
             <layout>
               <property name="column">1</property>
               <property name="row">4</property>
@@ -55,11 +114,29 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="btn_4">
-            <property name="label" translatable="yes">4</property>
+          <object class="GtkToggleButton" id="btn_4">
             <property name="width-request">100</property>
             <property name="height-request">100</property>
             <property name="receives-default">1</property>
+            <child>
+              <object class = "GtkBox">
+              <property name="orientation">vertical</property>
+              <property name="halign">3</property>
+              <property name="valign">3</property>
+                <child>
+                    <object class = "GtkImage" id="image_btn4">
+                      <property name="icon-name">My_GtkUI</property>
+                      <property name="visible">0</property>
+                      <property name="pixel-size">48</property>
+                    </object>
+                  </child>
+                  <child>
+                  <object class = "GtkLabel">
+                    <property name="label" translatable="yes">4</property>
+                  </object>
+                </child>
+              </object>
+            </child>
             <layout>
               <property name="column">3</property>
               <property name="row">4</property>
