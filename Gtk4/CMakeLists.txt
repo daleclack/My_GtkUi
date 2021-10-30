@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUi VERSION 4.0.0)
+project(My_GtkUI VERSION 4.0.0)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
 include(GlibCompileResourcesSupport)
@@ -70,7 +70,8 @@ compile_gresources(RESOURCE_FILE
 # It depends on the output RESOURCE_FILE.
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
-set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp src/FileWindow.cpp)
+set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp 
+            src/FileWindow.cpp src/winconf.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
@@ -78,9 +79,9 @@ if(WIN32)
 	set_property(SOURCE icon.rc APPEND PROPERTY
         OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
-    add_executable(My_GtkUi WIN32 ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
+    add_executable(My_GtkUI WIN32 ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
 else()
-    add_executable(My_GtkUi ${SOURCES} ${RESOURCE_FILE})
+    add_executable(My_GtkUI ${SOURCES} ${RESOURCE_FILE})
 endif(WIN32)
 
 #Add command to generate .gitignore

@@ -1,5 +1,6 @@
 #include "MainWin.h"
 #include "MainStack.h"
+#include "winconf.h"
 #include "winpe.xpm"
 #include "img7.xpm"
 #include "image_types.h"
@@ -79,6 +80,9 @@ static void quit_activated(GSimpleAction * action, GVariant * parmeter, gpointer
     gtk_window_destroy(GTK_WINDOW(data));
 }
 static void winsize_activated(GSimpleAction * action, GVariant * parmeter, gpointer data){
+    MainWin * win = MAIN_WIN(data);
+    ConfDlg * dialog = conf_dlg_new(GTK_WINDOW(win));
+    gtk_window_present(GTK_WINDOW(dialog));
 }
 
 static void default_background1(GSimpleAction * action, GVariant * parmeter, gpointer data){
@@ -181,6 +185,8 @@ static void main_win_init(MainWin * win){
     //For Custom Window Size
     win->width=800;
     win->height=450;
+    get_config(&(win->width),&(win->height));
+    g_print("%d %d",win->width,win->height);
 
     //Initailze Window
     gtk_window_set_icon_name(GTK_WINDOW(win),"My_GtkUI");
