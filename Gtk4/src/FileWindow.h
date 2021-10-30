@@ -5,6 +5,6 @@
 
 G_DECLARE_FINAL_TYPE(FileWindow,file_window,FILE,WINDOW,GtkWindow)
 
-FileWindow * file_window_new();
+FileWindow * file_window_new(GtkWindow * parent);
 
 #endif

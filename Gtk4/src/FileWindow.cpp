@@ -1,10 +1,8 @@
 #include "FileWindow.h"
 
-#define FOLDER_NAME "/gtk42/gnome-fs-directory.png"
-#define FILE_NAME "/gtk42/gnome-fs-regular.png"
-#define ERROR_IMAGE "/gtk42/dialog-error.png"
-#define ICON_IMAGE "/gtk42/view-grid-symbolic.png"
-#define LIST_IMAGE "/gtk42/view-list-symbolic.png"
+#define FOLDER_NAME "/org/gtk/daleclack/gnome-fs-directory.png"
+#define FILE_NAME "/org/gtk/daleclack/gnome-fs-regular.png"
+#define ERROR_IMAGE "/org/gtk/daleclack/dialog-error.png"
 
 //IconView and TreeView Model
 enum{
@@ -24,7 +22,7 @@ struct _FileWindow{
     GtkWindow parent;
     GdkPixbuf *file_pixbuf, *folder_pixbuf;
     char *parent_dir;
-    GtkToolItem *up_button;
+    GtkWidget *up_button;
     GtkWidget *stack, *show_hidden, *view_button, *tree_view, *icon_view, *btn_image;
     GtkListStore *store;
     GtkTreeSelection *selection;
@@ -72,7 +70,7 @@ static void file_window_fill_store(FileWindow *win){
         gchar *path, *display_name;
         gboolean is_dir;
 
-        if(name[0]=='.' && !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->show_hidden))){
+        if(name[0]=='.' && !gtk_check_button_get_active(GTK_CHECK_BUTTON(win->show_hidden))){
             name=g_dir_read_name(dir);
             continue;
         }
@@ -195,7 +193,7 @@ static void item_activated(GtkIconView *view,GtkTreePath *tree_path,FileWindow *
     gtk_widget_set_sensitive(GTK_WIDGET(win->up_button),TRUE);
 }
 
-static void up_clicked(GtkToolItem *item,FileWindow *win){
+static void up_clicked(GtkWidget *item,FileWindow *win){
     gchar *dir_name;
 
     dir_name = g_path_get_dirname(win->parent_dir);
@@ -208,7 +206,7 @@ static void up_clicked(GtkToolItem *item,FileWindow *win){
     gtk_widget_set_sensitive(GTK_WIDGET(win->up_button),TRUE);
 }
 
-static void home_clicked(GtkToolItem *item,FileWindow *win){
+static void home_clicked(GtkWidget *item,FileWindow *win){
     g_free(win->parent_dir);
     win->parent_dir = g_strdup(g_get_home_dir());
 
@@ -220,11 +218,11 @@ static void home_clicked(GtkToolItem *item,FileWindow *win){
 
 static void btnview_clicked(GtkButton *widget,FileWindow *win){
     if(win->view_mode == MODE_ICON){
-        gtk_image_set_from_resource(GTK_IMAGE(win->btn_image),LIST_IMAGE);
+        gtk_image_set_from_icon_name(GTK_IMAGE(win->btn_image),"view-list-symbolic");
         gtk_stack_set_visible_child_name(GTK_STACK(win->stack),"List_view");
         win->view_mode = MODE_LIST;
     }else{
-        gtk_image_set_from_resource(GTK_IMAGE(win->btn_image),ICON_IMAGE);
+        gtk_image_set_from_icon_name(GTK_IMAGE(win->btn_image),"view-grid-symbolic");
         gtk_stack_set_visible_child_name(GTK_STACK(win->stack),"Icon_view");
         win->view_mode = MODE_ICON;
     }
@@ -234,7 +232,7 @@ static void make_directory(GtkWidget *widget,int response,GtkEntry *entry){
     //Make a new directory
     if(response == GTK_RESPONSE_OK){
         FileWindow *win=FILE_WINDOW(gtk_window_get_transient_for(GTK_WINDOW(widget)));
-        const char *folder=gtk_entry_get_text(entry);
+        const char *folder=gtk_editable_get_text(GTK_EDITABLE(entry));
         char *path, *parent_path;
         parent_path=win->parent_dir;
         if(strlen(parent_path) == 1 && parent_path[0] == '/'){
@@ -249,10 +247,10 @@ static void make_directory(GtkWidget *widget,int response,GtkEntry *entry){
         }
         g_free(path);
     }
-    gtk_widget_destroy(widget);
+    gtk_window_destroy(GTK_WINDOW(widget));
 }
 
-static void btnnew_clicked(GtkToolItem *item,GtkWindow *parent){
+static void btnnew_clicked(GtkWidget *item,GtkWindow *parent){
     //Create Dialog
     GtkWidget *dialog, *content_area, *entry;
     dialog = gtk_dialog_new_with_buttons("Create a folder",parent,
@@ -264,11 +262,11 @@ static void btnnew_clicked(GtkToolItem *item,GtkWindow *parent){
     content_area=gtk_dialog_get_content_area(GTK_DIALOG(dialog));
     entry=gtk_entry_new();
     gtk_entry_set_activates_default(GTK_ENTRY(entry),TRUE);
-    gtk_container_add(GTK_CONTAINER(content_area),entry);
+    gtk_box_append(GTK_BOX(content_area),entry);
 
     g_signal_connect(dialog,"response",G_CALLBACK(make_directory),entry);
 
-    gtk_widget_show_all(dialog);
+    gtk_widget_show(dialog);
 }
 
 static GtkWidget * create_list_view(FileWindow *win){
@@ -317,9 +315,9 @@ static GtkWidget * create_icon_view(FileWindow *win){
 
 static void create_view_button(FileWindow * win){
     win->view_button=gtk_button_new();
-    win->btn_image=gtk_image_new_from_resource(ICON_IMAGE);
-    gtk_button_set_relief(GTK_BUTTON(win->view_button),GTK_RELIEF_NONE);
-    gtk_button_set_image(GTK_BUTTON(win->view_button),win->btn_image);
+    win->btn_image=gtk_image_new_from_icon_name("view-grid-symbolic");
+    gtk_button_set_has_frame(GTK_BUTTON(win->view_button),FALSE);
+    gtk_button_set_child(GTK_BUTTON(win->view_button),win->btn_image);
 }
 
 static GtkWidget * create_delete_dialog(FileWindow *win,const char *msg){
@@ -343,71 +341,70 @@ static GtkWidget * create_delete_dialog(FileWindow *win,const char *msg){
     content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
 
     label1 = gtk_label_new("    ");
-    gtk_box_pack_start(GTK_BOX(vbox),label1,FALSE,FALSE,0);
+    gtk_box_append(GTK_BOX(vbox),label1);
 
     error_image = gtk_image_new_from_resource(ERROR_IMAGE);
-    gtk_box_pack_start(GTK_BOX(hbox),error_image,FALSE,FALSE,0);
+    gtk_box_append(GTK_BOX(hbox),error_image);
 
     label = gtk_label_new(msg_str);
-    gtk_box_pack_end(GTK_BOX(hbox),label,FALSE,FALSE,0);
+    gtk_box_append(GTK_BOX(hbox),label);
 
     gtk_widget_set_valign(hbox,GTK_ALIGN_CENTER);
     gtk_widget_set_halign(hbox,GTK_ALIGN_CENTER);
-    gtk_box_pack_start(GTK_BOX(vbox),hbox,FALSE,FALSE,0);
-    gtk_container_add(GTK_CONTAINER(content_area),vbox);
-    g_signal_connect_swapped(dialog,"response",G_CALLBACK(gtk_widget_destroy),dialog);
+    gtk_box_append(GTK_BOX(vbox),hbox);
+    gtk_box_append(GTK_BOX(content_area),vbox);
+    g_signal_connect_swapped(dialog,"response",G_CALLBACK(gtk_window_destroy),dialog);
 
     g_free(msg_str);
     return dialog;
 }
 
-static GtkToolItem * create_menubtn(FileWindow *win){
+static GtkWidget * create_menubtn(FileWindow *win){
     //Create Button and item for toolbar
-    GtkToolItem *menuitem;
     GtkWidget *menubtn, *popover, *vbox, *btnexit, *label_exit;
-    menuitem = gtk_tool_item_new();
     menubtn = gtk_menu_button_new();
-    gtk_button_set_relief(GTK_BUTTON(menubtn),GTK_RELIEF_NONE);
-    gtk_container_add(GTK_CONTAINER(menuitem),menubtn);
+    gtk_menu_button_set_has_frame(GTK_MENU_BUTTON(menubtn),FALSE);
 
     //Create Menu
-    popover = gtk_popover_new(menubtn);
-    gtk_popover_set_modal(GTK_POPOVER(popover),TRUE);
+    popover = gtk_popover_new();
+    gtk_popover_set_has_arrow(GTK_POPOVER(popover),FALSE);
     gtk_menu_button_set_popover(GTK_MENU_BUTTON(menubtn),popover);
 
     //CheckButton for show hidden dir and files
     win->show_hidden = gtk_check_button_new_with_label("Show Hidden Files");
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->show_hidden),FALSE);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(win->show_hidden),FALSE);
 
     //"Exit" Button
     btnexit = gtk_button_new();
     label_exit = gtk_label_new("Exit");
-    gtk_button_set_relief(GTK_BUTTON(btnexit),GTK_RELIEF_NONE);
+    gtk_button_set_has_frame(GTK_BUTTON(btnexit),FALSE);
     gtk_widget_set_halign(label_exit,GTK_ALIGN_START);
-    gtk_container_add(GTK_CONTAINER(btnexit),label_exit);
-    g_signal_connect_swapped(btnexit,"clicked",G_CALLBACK(gtk_widget_destroy),win);
+    gtk_button_set_child(GTK_BUTTON(btnexit),label_exit);
+    g_signal_connect_swapped(btnexit,"clicked",G_CALLBACK(gtk_window_close),win);
 
     //Add Widgets to popover
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
-    gtk_box_pack_start(GTK_BOX(vbox),win->show_hidden,TRUE,TRUE,0);
-    gtk_box_pack_start(GTK_BOX(vbox),btnexit,TRUE,TRUE,0);
-    gtk_container_add(GTK_CONTAINER(popover),vbox);
-    gtk_widget_show_all(vbox);
+    gtk_box_append(GTK_BOX(vbox),win->show_hidden);
+    gtk_box_append(GTK_BOX(vbox),btnexit);
+    gtk_popover_set_child(GTK_POPOVER(popover),vbox);
+    gtk_popover_set_autohide(GTK_POPOVER(popover),TRUE);
 
-    return menuitem;
+    return menubtn;
 }
 
-static void btndel_clicked(GtkToolItem *item,FileWindow *win){
+static void btndel_clicked(GtkWidget *item,FileWindow *win){
     GtkTreeIter iter;
     char * select_name = NULL;
     GtkWidget *dialog=NULL;
     switch(win->view_mode){
         case MODE_ICON:    //Iconfied Mode
             GList *list,*header;
+            //Get Selected items
             list = gtk_icon_view_get_selected_items(GTK_ICON_VIEW(win->icon_view));
             header=list;
             while(list!=NULL){
                 GtkTreePath *path = (GtkTreePath*)(list->data);
+                //Get Iter and show dialog
                 if(gtk_tree_model_get_iter(GTK_TREE_MODEL(win->store),&iter,path)){
                     gtk_tree_model_get(GTK_TREE_MODEL(win->store),&iter,COL_DISPLAY_NAME,&select_name,-1);
                     dialog = create_delete_dialog(win,select_name);
@@ -418,6 +415,7 @@ static void btndel_clicked(GtkToolItem *item,FileWindow *win){
             break;
         case MODE_LIST:    //Listed Mode
             GtkTreeModel * model = gtk_tree_view_get_model(GTK_TREE_VIEW(win->tree_view));
+            //Get Selected items
             if(gtk_tree_selection_get_selected(win->selection,&model,&iter)){
                 gtk_tree_model_get(model,&iter,COL_DISPLAY_NAME,&select_name,-1);
             }
@@ -426,25 +424,14 @@ static void btndel_clicked(GtkToolItem *item,FileWindow *win){
             break;
     }
     if(dialog){
-        gtk_widget_show_all(dialog);
+        gtk_widget_show(dialog);
     }
     g_free(select_name);
 }
 
-static void file_window_destroy(GtkWidget *widget){
-    gtk_widget_destroy(widget);
-    widget=NULL;
-
-    //g_object_unref(FILE_WINDOW(widget)->file_pixbuf);
-    //FILE_WINDOW(widget)->file_pixbuf=NULL;
-
-    //g_object_unref(FILE_WINDOW(widget)->folder_pixbuf);
-    //FILE_WINDOW(widget)->folder_pixbuf=NULL;
-}
-
 static void file_window_init(FileWindow *window){
-    GtkWidget *sw,*vbox,*tool_bar,*btnbox,*view_bar;
-    GtkToolItem *home_button,*new_button,*delete_button,*view_item;
+    GtkWidget *sw,*vbox,*btnbox,*view_bar;
+    GtkWidget *home_button,*new_button,*delete_button,*view_item;
 
     //Initalize window
     gtk_window_set_default_size(GTK_WINDOW(window),650,400);
@@ -456,57 +443,50 @@ static void file_window_init(FileWindow *window){
     //Create child widgets
     vbox=gtk_box_new(GTK_ORIENTATION_VERTICAL,0);
     btnbox=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
-    gtk_container_add(GTK_CONTAINER(vbox),btnbox);
-    gtk_container_add(GTK_CONTAINER(window),vbox);
-
-    tool_bar=gtk_toolbar_new();
-    gtk_toolbar_set_style(GTK_TOOLBAR(tool_bar),GTK_TOOLBAR_ICONS);
-    gtk_box_pack_start(GTK_BOX(btnbox),tool_bar,FALSE,FALSE,0);
+    gtk_box_append(GTK_BOX(vbox),btnbox);
+    gtk_window_set_child(GTK_WINDOW(window),vbox);
 
     //"Up" Button
-    window->up_button=gtk_tool_button_new(NULL,NULL);
-    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(window->up_button),"go-up");
-    gtk_tool_item_set_is_important(window->up_button,TRUE);
-    gtk_widget_set_sensitive(GTK_WIDGET(window->up_button),FALSE);
-    gtk_toolbar_insert(GTK_TOOLBAR(tool_bar),window->up_button,-1);
+    window->up_button=gtk_button_new();
+    gtk_button_set_icon_name(GTK_BUTTON(window->up_button),"go-up");
+    gtk_box_append(GTK_BOX(btnbox),window->up_button);
 
     //"Home" Button
-    home_button = gtk_tool_button_new(NULL,NULL);
-    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(home_button),"go-home");
-    gtk_tool_item_set_is_important(home_button,TRUE);
-    gtk_toolbar_insert(GTK_TOOLBAR(tool_bar),home_button,-1);
+    home_button = gtk_button_new();
+    gtk_button_set_icon_name(GTK_BUTTON(home_button),"go-home");
+    gtk_box_append(GTK_BOX(btnbox),home_button);
 
     //"New Folder" Button
-    new_button = gtk_tool_button_new(NULL,NULL);
-    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(new_button),"folder-new");
-    gtk_tool_item_set_is_important(new_button,TRUE);
-    gtk_toolbar_insert(GTK_TOOLBAR(tool_bar),new_button,-1);
+    new_button = gtk_button_new();
+    gtk_button_set_icon_name(GTK_BUTTON(new_button),"folder-new");
+    gtk_box_append(GTK_BOX(btnbox),new_button);
 
     //"Delete" Button
-    delete_button = gtk_tool_button_new(NULL,NULL);
-    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(delete_button),"edit-delete");
-    gtk_tool_item_set_is_important(delete_button,TRUE);
-    gtk_toolbar_insert(GTK_TOOLBAR(tool_bar),delete_button,-1);
+    delete_button = gtk_button_new();
+    gtk_button_set_icon_name(GTK_BUTTON(delete_button),"edit-delete");
+    gtk_box_append(GTK_BOX(btnbox),delete_button);
+
+    //Separtor
+    GtkWidget * label = gtk_label_new(" ");
+    gtk_widget_set_hexpand(label,TRUE);
+    gtk_box_append(GTK_BOX(btnbox),label);
 
     //"View Mode" Button
-    view_bar = gtk_toolbar_new();
-    view_item = gtk_tool_item_new();
     window->view_mode = MODE_ICON;
     create_view_button(window);
-    gtk_container_add(GTK_CONTAINER(view_item),window->view_button);
-    gtk_toolbar_insert(GTK_TOOLBAR(view_bar),view_item,-1);
+    gtk_box_append(GTK_BOX(btnbox),window->view_button);
     
     //Menu Button
-    GtkToolItem *menubtn = create_menubtn(window);
-    gtk_toolbar_insert(GTK_TOOLBAR(view_bar),menubtn,-1);
-    gtk_toolbar_set_style(GTK_TOOLBAR(view_bar),GTK_TOOLBAR_ICONS);
-    gtk_box_pack_end(GTK_BOX(btnbox),view_bar,FALSE,FALSE,0);
+    GtkWidget *menubtn = create_menubtn(window);
+    gtk_box_append(GTK_BOX(btnbox),menubtn);
 
     //Folder Container
-    sw = gtk_scrolled_window_new(NULL,NULL);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(sw),GTK_SHADOW_ETCHED_IN);
+    sw = gtk_scrolled_window_new();
+    //gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(sw),GTK_SHADOW_ETCHED_IN);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (sw),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
-    gtk_box_pack_start(GTK_BOX(vbox),sw,TRUE,TRUE,0);
+    gtk_widget_set_hexpand(sw,TRUE);
+    gtk_widget_set_vexpand(sw,TRUE);
+    gtk_box_append(GTK_BOX(vbox),sw);
 
     window->stack=gtk_stack_new();
     
@@ -538,7 +518,7 @@ static void file_window_init(FileWindow *window){
                      G_CALLBACK (btnview_clicked), window);
 
     /* Connect to the "clicked" signal of the "Show hidden files" tool button */
-    g_signal_connect_swapped(window->show_hidden, "clicked",
+    g_signal_connect_swapped(window->show_hidden, "toggled",
                              G_CALLBACK (file_window_fill_store), window);
 
     /* Connect to the "clicked" signal of the "New Directory" tool button */
@@ -549,13 +529,12 @@ static void file_window_init(FileWindow *window){
     g_signal_connect(delete_button, "clicked",
                      G_CALLBACK (btndel_clicked), window);
 
-    gtk_container_add(GTK_CONTAINER(sw),window->stack);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(sw),window->stack);
 }
 
 static void file_window_class_init(FileWindowClass *win_class){
-    GTK_WIDGET_CLASS(file_window_parent_class)->destroy=file_window_destroy;
 }
 
-FileWindow * file_window_new(){
-    return (FileWindow*)g_object_new(file_window_get_type(),NULL);
+FileWindow * file_window_new(GtkWindow * parent){
+    return (FileWindow*)g_object_new(file_window_get_type(),"transient-for",parent,NULL);
 }

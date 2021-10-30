@@ -5,7 +5,7 @@
 #include "GameWin.h"
 // #include "TextEditor.h"
 // #include "drawing.h"
-// #include "FileWindow.h"
+#include "FileWindow.h"
 
 typedef gboolean(*get_active_func)(gpointer ptr);
 
@@ -26,8 +26,9 @@ struct _LeftPanel{
     GtkWidget * file_image, * game_image;
     //Application Windows
     GameWin * game1;
+    FileWindow * file_win;
     //Status
-    gboolean game_running;
+    gboolean game_running,file_running;
 };
 
 G_DEFINE_TYPE(LeftPanel,left_panel,GTK_TYPE_BOX)
@@ -82,8 +83,9 @@ static void window_ctrl(LeftPanel * self,GtkWindow * ctrled_win){
 
 //Functions for game app window
 
-static gboolean game_window_closed(GtkWindow * window,LeftPanel * self){
-    self->game_running = FALSE;
+static gboolean game_window_closed(GtkWindow * window,LeftPanel * parent_panel){
+    parent_panel->game_running = FALSE;
+    gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->game_image),"game");
     gtk_window_destroy(window);
     return TRUE;
 }
@@ -96,20 +98,46 @@ static void btngame_clicked(GtkWidget * widget,LeftPanel * parent_panel){
         //Connect to the close signal for window
         g_signal_connect(parent_panel->game1,"close-request",G_CALLBACK(game_window_closed),parent_panel);
 
+        //Change Panel Status
+        gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->game_image),"game_running");
+        parent_panel->game_running = TRUE;
+
         //Show Window
         gtk_window_present(GTK_WINDOW(parent_panel->game1));
-        parent_panel->game_running = TRUE;
     }else{
         //The Game Window is running, control the window
         window_ctrl(parent_panel,GTK_WINDOW(parent_panel->game1));
     }
 }
 
-// void btnfiles_clicked(GtkWidget *widget,GtkWindow * parent){
-//     FileWindow * window1 = file_window_new();
-//     gtk_window_set_transient_for(GTK_WINDOW(window1),parent);
-//     gtk_widget_show(GTK_WIDGET(window1));
-// }
+//Functions for game app window
+
+static gboolean file_window_closed(GtkWindow * window,LeftPanel * parent_panel){
+    parent_panel->file_running = FALSE;
+    gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->file_image),"file-app");
+    gtk_window_destroy(window);
+    return TRUE;
+}
+
+static void btnfile_clicked(GtkWidget * widget,LeftPanel * parent_panel){
+    if(!parent_panel->file_running){
+        //Create a window
+        parent_panel->file_win = file_window_new(parent_panel->parent_win);
+
+        //Connect to the close signal for window
+        g_signal_connect(parent_panel->file_win,"close-request",G_CALLBACK(file_window_closed),parent_panel);
+
+        //Change Panel Status
+        gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->file_image),"file-app-running");
+        parent_panel->file_running = TRUE;
+
+        //Show Window
+        gtk_window_present(GTK_WINDOW(parent_panel->file_win));
+    }else{
+        //The Files Window is running, control the window
+        window_ctrl(parent_panel,GTK_WINDOW(parent_panel->file_win));
+    }
+}
 
 static void left_panel_init(LeftPanel * panel){
     gtk_widget_init_template(GTK_WIDGET(panel));
@@ -137,13 +165,14 @@ static void left_panel_init(LeftPanel * panel){
     g_signal_connect(panel->btnabout,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
     g_signal_connect_swapped(panel->btnabout,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //File Manager
-    g_signal_connect(panel->btnfiles,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
+    g_signal_connect(panel->btnfiles,"clicked",G_CALLBACK(btnfile_clicked),panel->parent_win);
     g_signal_connect_swapped(panel->btnfiles,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //A guess game
     g_signal_connect(panel->btngame,"clicked",G_CALLBACK(btngame_clicked),panel);
     g_signal_connect_swapped(panel->btngame,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //Panel Buttons
     g_signal_connect(panel->panel_game,"clicked",G_CALLBACK(btngame_clicked),panel);
+    g_signal_connect(panel->panel_file,"clicked",G_CALLBACK(btnfile_clicked),panel);
 }
 
 static void left_panel_class_init(LeftPanelClass * klass){

@@ -37,7 +37,6 @@ set(RESOURCE_LIST
     icons/16x16/actions/file-app.png
     icons/24x24/actions/view-grid-symbolic.png
     icons/24x24/actions/view-list-symbolic.png
-    icons/48x48/actions/dialog-error.png
     icons/48x48/actions/game.png
     icons/48x48/actions/game_running.png
     icons/48x48/actions/My_GtkUI.png
@@ -52,6 +51,7 @@ set(RESOURCE_LIST
     icons/scalable/status/graphics.svg
     icons/scalable/status/log_out.svg
     icons/scalable/status/system.svg
+    dialog-error.png
     gnome-fs-directory.png
     gnome-fs-regular.png
     STRIPBLANKS appmenu.xml
@@ -70,7 +70,7 @@ compile_gresources(RESOURCE_FILE
 # It depends on the output RESOURCE_FILE.
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
-set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp)
+set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp src/FileWindow.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
