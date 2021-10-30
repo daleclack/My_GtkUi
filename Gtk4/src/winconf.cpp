@@ -42,7 +42,7 @@ static void get_winsize(GtkWidget *widget,ConfDlg * dialog){
 
 static void conf_dlg_init(ConfDlg * self){
     //Initalize dialog
-    gtk_window_set_title(GTK_WINDOW(self),"Config");
+    gtk_window_set_title(GTK_WINDOW(self),"Window Size Config");
     gtk_dialog_add_buttons(GTK_DIALOG(self),"OK",GTK_RESPONSE_OK,"Cancel",GTK_RESPONSE_CANCEL,NULL);
     //gtk_window_set_default_size(GTK_WINDOW(self),320,150);
     gtk_window_set_icon_name(GTK_WINDOW(self),"My_GtkUI");
@@ -71,6 +71,8 @@ static void conf_dlg_init(ConfDlg * self){
     gtk_widget_set_halign(box_height,GTK_ALIGN_CENTER);
     gtk_widget_set_hexpand(center_box,TRUE);
     gtk_widget_set_vexpand(center_box,TRUE);
+    gtk_widget_set_valign(center_box,GTK_ALIGN_CENTER);
+    gtk_widget_set_vexpand(content_area,TRUE);
 
     //Create Widgets
     label_width = gtk_label_new("Width:");
