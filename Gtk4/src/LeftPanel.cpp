@@ -21,9 +21,13 @@ struct _LeftPanel{
     //Integrated applications
     GtkWidget * btnabout, * btnfiles, * btndraw, * btngame, * btnrun, * btneditor;
     //Panel Buttons
-    GtkWidget * panel_file;
+    GtkWidget * panel_file, * panel_game;
     //Panel Images
-    GtkWidget * file_image;
+    GtkWidget * file_image, * game_image;
+    //Application Windows
+    GameWin * game1;
+    //Status
+    gboolean game_running;
 };
 
 G_DEFINE_TYPE(LeftPanel,left_panel,GTK_TYPE_BOX)
@@ -58,12 +62,47 @@ void left_panel_set_parent(LeftPanel * self,GtkWindow * parent_win1){
     self->parent_win = parent_win1;
 }
 
-static void btngame_clicked(GtkWidget * widget,LeftPanel * parent_panel){
-    GameWin * game1 = game_win_new(parent_panel->parent_win);
-    gtk_window_present(GTK_WINDOW(game1));
-}
+//Window Control Function
 
 static void window_ctrl(LeftPanel * self,GtkWindow * ctrled_win){
+    GdkSurface * surface = gtk_native_get_surface(GTK_NATIVE(ctrled_win));
+    if(surface){
+        GdkToplevelState state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        switch(state){
+            case GDK_TOPLEVEL_STATE_MINIMIZED:
+                gtk_window_set_transient_for(ctrled_win,self->parent_win);
+                gtk_window_unminimize(ctrled_win);
+                break;
+            default:
+                gtk_window_set_transient_for(ctrled_win,NULL);
+                gtk_window_minimize(ctrled_win);
+        }
+    } 
+}
+
+//Functions for game app window
+
+static gboolean game_window_closed(GtkWindow * window,LeftPanel * self){
+    self->game_running = FALSE;
+    gtk_window_destroy(window);
+    return TRUE;
+}
+
+static void btngame_clicked(GtkWidget * widget,LeftPanel * parent_panel){
+    if(!parent_panel->game_running){
+        //Create a window
+        parent_panel->game1 = game_win_new(parent_panel->parent_win);
+
+        //Connect to the close signal for window
+        g_signal_connect(parent_panel->game1,"close-request",G_CALLBACK(game_window_closed),parent_panel);
+
+        //Show Window
+        gtk_window_present(GTK_WINDOW(parent_panel->game1));
+        parent_panel->game_running = TRUE;
+    }else{
+        //The Game Window is running, control the window
+        window_ctrl(parent_panel,GTK_WINDOW(parent_panel->game1));
+    }
 }
 
 // void btnfiles_clicked(GtkWidget *widget,GtkWindow * parent){
@@ -79,22 +118,32 @@ static void left_panel_init(LeftPanel * panel){
     gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
 
     //Connect Signals
+    //Audacious media player
     g_signal_connect(panel->btnaud,"clicked",G_CALLBACK(btnaud_clicked),NULL);
     g_signal_connect_swapped(panel->btnaud,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //Vlc Media Player
     g_signal_connect(panel->btnvlc,"clicked",G_CALLBACK(btnvlc_clicked),NULL);
     g_signal_connect_swapped(panel->btnvlc,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //Gedit Text Editor
     g_signal_connect(panel->btngedit,"clicked",G_CALLBACK(btngedit_clicked),NULL);
     g_signal_connect_swapped(panel->btngedit,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //Notepad in windows
     g_signal_connect(panel->btn_note,"clicked",G_CALLBACK(btnnote_clicked),NULL);
     g_signal_connect_swapped(panel->btn_note,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //VLC in windows
     g_signal_connect(panel->btn_vlc,"clicked",G_CALLBACK(btnvlc_win32),NULL);
     g_signal_connect_swapped(panel->btn_vlc,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //"About" window
     g_signal_connect(panel->btnabout,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
     g_signal_connect_swapped(panel->btnabout,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //File Manager
     g_signal_connect(panel->btnfiles,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
     g_signal_connect_swapped(panel->btnfiles,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //A guess game
     g_signal_connect(panel->btngame,"clicked",G_CALLBACK(btngame_clicked),panel);
     g_signal_connect_swapped(panel->btngame,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //Panel Buttons
+    g_signal_connect(panel->panel_game,"clicked",G_CALLBACK(btngame_clicked),panel);
 }
 
 static void left_panel_class_init(LeftPanelClass * klass){
@@ -117,34 +166,10 @@ static void left_panel_class_init(LeftPanelClass * klass){
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,btneditor);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,panel_file);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,file_image);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,panel_game);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,game_image);
 }
 
 LeftPanel * left_panel_new(){
     return (LeftPanel*)g_object_new(left_panel_get_type(),NULL);
 }
-
-// void add_leftpanel(GtkBuilder *builder,GtkFixed *fixed){
-//     //Gtk31 application
-//     GObject *btngame=gtk_builder_get_object(panel2,"btngame");
-//     g_signal_connect(btngame,"clicked",G_CALLBACK(gamemain),window);
-//     g_signal_connect_swapped(btngame,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //Text Editor(Gtk86)
-//     GObject *btnedit=gtk_builder_get_object(panel2,"btneditor");
-//     g_signal_connect(btnedit,"clicked",G_CALLBACK(text_editor),window);
-//     g_signal_connect_swapped(btnedit,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //Drawing application
-//     GObject *btndraw=gtk_builder_get_object(panel2,"btndraw");
-//     g_signal_connect(btndraw,"clicked",G_CALLBACK(drawing_main),window);
-//     g_signal_connect_swapped(btndraw,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //About window
-//     GObject *btn_about=gtk_builder_get_object(panel2,"btnabout");
-//     g_signal_connect(btn_about,"clicked",G_CALLBACK(win1_init),window);
-//     g_signal_connect_swapped(btn_about,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     //File Manager
-//     GObject *btnfiles=gtk_builder_get_object(panel2,"btnfiles");
-//     g_signal_connect(btnfiles,"clicked",G_CALLBACK(btnfiles_clicked),window);
-//     g_signal_connect_swapped(btnfiles,"clicked",G_CALLBACK(gtk_widget_hide),popover);
-//     gtk_fixed_put(fixed,GTK_WIDGET(panel),0,25);
-//     g_object_unref(pixbuf);
-//     g_object_unref(sized);
-// }

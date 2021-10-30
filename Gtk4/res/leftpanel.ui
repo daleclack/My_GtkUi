@@ -358,13 +358,13 @@
       </object>
     </child>
     <child>
-        <object class="GtkButton">
+        <object class="GtkButton" id="panel_game">
           <property name="visible">1</property>
           <property name="focusable">1</property>
           <property name="receives-default">1</property>
           <property name="has-frame">0</property>
           <child>
-            <object class="GtkImage">
+            <object class="GtkImage" id="game_image">
               <property name="pixel-size">48</property>
               <property name="icon-name">game</property>
             </object>

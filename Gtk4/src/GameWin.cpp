@@ -23,7 +23,7 @@ static void check_status(GtkToggleButton * togglebtn,GtkLabel * label){
     }
 }
 
-static void btn_click(GtkWidget *widget,GameWin * win){
+static void btn_click(GtkWidget * widget,GameWin * win){
     //When a button clicked, show image and check if the button with image is clicked
     switch(win->flag){
         case 1:
