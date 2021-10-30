@@ -262,6 +262,9 @@ static void btnnew_clicked(GtkWidget *item,GtkWindow *parent){
     content_area=gtk_dialog_get_content_area(GTK_DIALOG(dialog));
     entry=gtk_entry_new();
     gtk_entry_set_activates_default(GTK_ENTRY(entry),TRUE);
+    gtk_widget_set_valign(entry,GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand(entry,TRUE);
+    gtk_widget_set_vexpand(content_area,TRUE);
     gtk_box_append(GTK_BOX(content_area),entry);
 
     g_signal_connect(dialog,"response",G_CALLBACK(make_directory),entry);
@@ -344,15 +347,20 @@ static GtkWidget * create_delete_dialog(FileWindow *win,const char *msg){
     gtk_box_append(GTK_BOX(vbox),label1);
 
     error_image = gtk_image_new_from_resource(ERROR_IMAGE);
+    gtk_image_set_pixel_size(GTK_IMAGE(error_image),48);
+    gtk_widget_set_hexpand(error_image,TRUE);
     gtk_box_append(GTK_BOX(hbox),error_image);
 
     label = gtk_label_new(msg_str);
+    gtk_widget_set_hexpand(label,TRUE);
     gtk_box_append(GTK_BOX(hbox),label);
 
     gtk_widget_set_valign(hbox,GTK_ALIGN_CENTER);
     gtk_widget_set_halign(hbox,GTK_ALIGN_CENTER);
     gtk_box_append(GTK_BOX(vbox),hbox);
     gtk_box_append(GTK_BOX(content_area),vbox);
+    gtk_widget_set_hexpand(content_area,TRUE);
+    gtk_widget_set_vexpand(content_area,TRUE);
     g_signal_connect_swapped(dialog,"response",G_CALLBACK(gtk_window_destroy),dialog);
 
     g_free(msg_str);
@@ -482,13 +490,12 @@ static void file_window_init(FileWindow *window){
 
     //Folder Container
     sw = gtk_scrolled_window_new();
-    //gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(sw),GTK_SHADOW_ETCHED_IN);
+    gtk_scrolled_window_set_has_frame(GTK_SCROLLED_WINDOW(sw),TRUE);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (sw),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_hexpand(sw,TRUE);
-    gtk_widget_set_vexpand(sw,TRUE);
     gtk_box_append(GTK_BOX(vbox),sw);
 
     window->stack=gtk_stack_new();
+    gtk_widget_set_vexpand(window->stack,TRUE);
     
     //Create Store and fill it
     window->parent_dir=g_strdup("/");

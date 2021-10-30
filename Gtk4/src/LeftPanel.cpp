@@ -7,8 +7,6 @@
 // #include "drawing.h"
 #include "FileWindow.h"
 
-typedef gboolean(*get_active_func)(gpointer ptr);
-
 struct _LeftPanel{
     GtkBox parent;
     GtkWindow * parent_win;
@@ -143,6 +141,7 @@ static void left_panel_init(LeftPanel * panel){
     gtk_widget_init_template(GTK_WIDGET(panel));
 
     //Set Image for start button
+
     gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
 
     //Connect Signals
