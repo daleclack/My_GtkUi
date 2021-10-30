@@ -186,7 +186,7 @@ static void main_win_init(MainWin * win){
     win->width=800;
     win->height=450;
     get_config(&(win->width),&(win->height));
-    g_print("%d %d",win->width,win->height);
+    //g_print("%d %d",win->width,win->height);
 
     //Initailze Window
     gtk_window_set_icon_name(GTK_WINDOW(win),"My_GtkUI");
