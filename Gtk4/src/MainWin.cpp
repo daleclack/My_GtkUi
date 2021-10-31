@@ -170,6 +170,11 @@ static void gesture_pressed(GtkGestureClick *self,int n_press,double x,double y,
     gtk_popover_popup(GTK_POPOVER(win->popover));
 }
 
+GtkWidget * main_win_get_background(MainWin * win){
+    //Get Background widget, for window size config.
+    return win->background;
+}
+
 static GActionEntry entries[] = {
     {"back",background_dialog,NULL,NULL,NULL},
     {"default1",default_background1,NULL,NULL,NULL},
@@ -190,7 +195,6 @@ static void main_win_init(MainWin * win){
 
     //Initailze Window
     gtk_window_set_icon_name(GTK_WINDOW(win),"My_GtkUI");
-    gtk_window_set_default_size(GTK_WINDOW(win),win->width,win->height);
     gtk_window_set_title(GTK_WINDOW(win),"My GtkUI (Gtk4 Version)");
 
     //Add Actions
@@ -199,6 +203,7 @@ static void main_win_init(MainWin * win){
     //Add Overlay and background widget
     win->overlay = gtk_overlay_new();
     win->background = gtk_picture_new();
+    gtk_widget_set_size_request(win->background,win->width,win->height);
     gtk_overlay_set_child(GTK_OVERLAY(win->overlay),win->background);
     default_background1(NULL,NULL,win);
 

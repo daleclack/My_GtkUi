@@ -1,8 +1,5 @@
-#ifndef __DRAWING_H_
-#define __DRAWING_H_
+#pragma once
 
 #include <gtk/gtk.h>
 
-void drawing_main(GtkWidget *widget,GtkWindow *parent);
-
-#endif
+//void drawing_main(GtkWidget *widget,GtkWindow *parent);

@@ -7,9 +7,10 @@ typedef struct {
     double y;
 }MousePos;
 
-static cairo_surface_t *surface=cairo_image_surface_create(CAIRO_FORMAT_ARGB32,640,360);
-
-//static double start_x,start_y;
+struct _DrawingApp{
+    cairo_surface_t * cairo_surface;
+    MousePos pos;
+};
 
 static void clear_surface (void)
 {
@@ -27,7 +28,8 @@ static void clear_surface (void)
 static void resize_cb(GtkWidget *widget,int width,int height,gpointer data){
     cairo_surface_destroy (surface);
     cairo_surface_create_similar(surface,CAIRO_CONTENT_COLOR,width,height);
-}*/
+}
+*/
 
 static gboolean draw_cb(GtkWidget *widget,cairo_t *cr,gpointer data){
     cairo_set_source_surface(cr,surface,0,0);

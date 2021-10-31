@@ -1,5 +1,6 @@
 #include <cstdio>
 #include "winconf.h"
+#include "MainWin.h"
 
 struct _ConfDlg{
     GtkDialog parent_instance;
@@ -15,7 +16,7 @@ static void conf_dlg_response(GtkDialog * dialog,int response){
         width=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(CONF_DLG(dialog)->width_spin));
         height=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(CONF_DLG(dialog)->height_spin));
         freopen("winsize.conf","w",stdout);
-        g_print("width=%d\nheight=%d",width,height);
+        g_print("width=%d\nheight=%d\n",width,height);
         fclose(stdout);
     }
     gtk_window_destroy(GTK_WINDOW(dialog));
@@ -33,8 +34,9 @@ static void get_winsize(GtkWidget *widget,ConfDlg * dialog){
     //Get main window
     window = gtk_window_get_transient_for(GTK_WINDOW(dialog));
     //Get Window Size
-    width = gtk_widget_get_size(GTK_WIDGET(window),GTK_ORIENTATION_HORIZONTAL);
-    height = gtk_widget_get_size(GTK_WIDGET(window),GTK_ORIENTATION_VERTICAL);
+    GtkWidget * back = main_win_get_background(MAIN_WIN(window));
+    width = gtk_widget_get_size(back,GTK_ORIENTATION_HORIZONTAL);
+    height = gtk_widget_get_size(back,GTK_ORIENTATION_VERTICAL);
     //Set Value of spin buttons
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->width_spin),width);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->height_spin),height);
@@ -79,6 +81,12 @@ static void conf_dlg_init(ConfDlg * self){
     label_height = gtk_label_new("Height");
     btn_default = gtk_button_new_with_label("Reset to Default Size");
     btn_getsize = gtk_button_new_with_label("Get Current Size");
+
+    //Get Current Config
+    int width,height;
+    get_config(&width,&height);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(self->width_spin),width);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(self->height_spin),height);
 
     //Width
     gtk_box_append(GTK_BOX(box_width),label_width);
