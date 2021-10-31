@@ -94,7 +94,7 @@ static void game_win_init(GameWin * game_win){
     g_signal_connect(game_win->btn_3,"clicked",G_CALLBACK(btn_click),game_win);
     g_signal_connect(game_win->btn_4,"clicked",G_CALLBACK(btn_click),game_win);
     g_signal_connect(game_win->btn_go,"clicked",G_CALLBACK(btngo_click),game_win);
-    g_signal_connect_swapped(game_win->btn_exit,"clicked",G_CALLBACK(gtk_window_destroy),game_win);
+    g_signal_connect_swapped(game_win->btn_exit,"clicked",G_CALLBACK(gtk_window_close),game_win);
 }
 
 static void game_win_class_init(GameWinClass * klass){

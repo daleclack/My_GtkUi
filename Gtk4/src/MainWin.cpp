@@ -175,17 +175,6 @@ GtkWidget * main_win_get_background(MainWin * win){
     return win->background;
 }
 
-static GActionEntry entries[] = {
-    {"back",background_dialog,NULL,NULL,NULL},
-    {"default1",default_background1,NULL,NULL,NULL},
-    {"default2",default_background2,NULL,NULL,NULL},
-    {"refresh",refresh_activated,NULL,NULL,NULL},
-    {"about",about_activated,NULL,NULL,NULL},
-    {"logout",logout_activated,NULL,NULL,NULL},
-    {"quit",quit_activated,NULL,NULL,NULL},
-    {"size",winsize_activated,NULL,NULL,NULL}
-};
-
 static void main_win_init(MainWin * win){
     //For Custom Window Size
     win->width=800;
@@ -198,6 +187,16 @@ static void main_win_init(MainWin * win){
     gtk_window_set_title(GTK_WINDOW(win),"My GtkUI (Gtk4 Version)");
 
     //Add Actions
+    static GActionEntry entries[] = {
+        {"back",background_dialog,NULL,NULL,NULL},
+        {"default1",default_background1,NULL,NULL,NULL},
+        {"default2",default_background2,NULL,NULL,NULL},
+        {"refresh",refresh_activated,NULL,NULL,NULL},
+        {"about",about_activated,NULL,NULL,NULL},
+        {"logout",logout_activated,NULL,NULL,NULL},
+        {"quit",quit_activated,NULL,NULL,NULL},
+        {"size",winsize_activated,NULL,NULL,NULL}
+    };
     g_action_map_add_action_entries(G_ACTION_MAP(win),entries,G_N_ELEMENTS(entries),win);
 
     //Add Overlay and background widget

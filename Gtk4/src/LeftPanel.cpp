@@ -4,7 +4,7 @@
 #include "MainWin.h"
 #include "GameWin.h"
 // #include "TextEditor.h"
-// #include "drawing.h"
+#include "drawing.h"
 #include "FileWindow.h"
 
 struct _LeftPanel{
@@ -19,14 +19,15 @@ struct _LeftPanel{
     //Integrated applications
     GtkWidget * btnabout, * btnfiles, * btndraw, * btngame, * btnrun, * btneditor;
     //Panel Buttons
-    GtkWidget * panel_file, * panel_game;
+    GtkWidget * panel_file, * panel_game, * panel_editor, * panel_drawing;
     //Panel Images
-    GtkWidget * file_image, * game_image;
+    GtkWidget * file_image, * game_image, * editor_image, * drawing_image;
     //Application Windows
     GameWin * game1;
     FileWindow * file_win;
+    DrawingApp * draw_win;
     //Status
-    gboolean game_running,file_running;
+    gboolean game_running = FALSE,file_running = FALSE,drawapp_running = FALSE;
 };
 
 G_DEFINE_TYPE(LeftPanel,left_panel,GTK_TYPE_BOX)
@@ -108,7 +109,7 @@ static void btngame_clicked(GtkWidget * widget,LeftPanel * parent_panel){
     }
 }
 
-//Functions for game app window
+//Functions for file app window
 
 static gboolean file_window_closed(GtkWindow * window,LeftPanel * parent_panel){
     parent_panel->file_running = FALSE;
@@ -118,7 +119,7 @@ static gboolean file_window_closed(GtkWindow * window,LeftPanel * parent_panel){
 }
 
 static void btnfile_clicked(GtkWidget * widget,LeftPanel * parent_panel){
-    if(!parent_panel->file_running){
+    if(!(parent_panel->file_running)){
         //Create a window
         parent_panel->file_win = file_window_new(parent_panel->parent_win);
 
@@ -137,12 +138,44 @@ static void btnfile_clicked(GtkWidget * widget,LeftPanel * parent_panel){
     }
 }
 
+//Functions for drawing app window
+static gboolean draw_app_closed(GtkWindow * window,LeftPanel * parent_panel){
+    parent_panel->drawapp_running = FALSE;
+    gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->drawing_image),"drawing_app");
+    gtk_window_destroy(window);
+    return TRUE;
+}
+
+static void btndraw_clicked(GtkWidget * widget,LeftPanel * parent_panel){
+    if(!parent_panel->drawapp_running){
+        //Create a window
+        parent_panel->draw_win = drawing_app_new(parent_panel->parent_win);
+        //Connect to the close signal for window
+        g_signal_connect(parent_panel->draw_win,"close-request",G_CALLBACK(draw_app_closed),parent_panel);
+
+        //Change Panel Status
+        gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->drawing_image),"drawing_app_running");
+        parent_panel->drawapp_running = TRUE;
+
+        //Show Window
+        gtk_window_present(GTK_WINDOW(parent_panel->draw_win));
+    }else{
+        //The Files Window is running, control the window
+        window_ctrl(parent_panel,GTK_WINDOW(parent_panel->draw_win));
+    }
+}
+
 static void left_panel_init(LeftPanel * panel){
     gtk_widget_init_template(GTK_WIDGET(panel));
 
     //Set Image for start button
 
     gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
+
+    //All Apps are not in running mode
+    panel->file_running = FALSE;
+    panel->drawapp_running = FALSE;
+    panel->game_running = FALSE;
 
     //Connect Signals
     //Audacious media player
@@ -164,14 +197,19 @@ static void left_panel_init(LeftPanel * panel){
     g_signal_connect(panel->btnabout,"clicked",G_CALLBACK(btnabout_clicked),panel->parent_win);
     g_signal_connect_swapped(panel->btnabout,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //File Manager
-    g_signal_connect(panel->btnfiles,"clicked",G_CALLBACK(btnfile_clicked),panel->parent_win);
+    g_signal_connect(panel->btnfiles,"clicked",G_CALLBACK(btnfile_clicked),panel);
     g_signal_connect_swapped(panel->btnfiles,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //A guess game
     g_signal_connect(panel->btngame,"clicked",G_CALLBACK(btngame_clicked),panel);
     g_signal_connect_swapped(panel->btngame,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //Drawing App
+    g_signal_connect(panel->btndraw,"clicked",G_CALLBACK(btndraw_clicked),panel);
+    g_signal_connect_swapped(panel->btndraw,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //Panel Buttons
     g_signal_connect(panel->panel_game,"clicked",G_CALLBACK(btngame_clicked),panel);
     g_signal_connect(panel->panel_file,"clicked",G_CALLBACK(btnfile_clicked),panel);
+    //g_assert(panel->panel_drawing);
+    g_signal_connect(panel->panel_drawing,"clicked",G_CALLBACK(btndraw_clicked),panel);
 }
 
 static void left_panel_class_init(LeftPanelClass * klass){
@@ -196,6 +234,10 @@ static void left_panel_class_init(LeftPanelClass * klass){
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,file_image);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,panel_game);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,game_image);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,panel_editor);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,editor_image);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,panel_drawing);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass),LeftPanel,drawing_image);
 }
 
 LeftPanel * left_panel_new(){
