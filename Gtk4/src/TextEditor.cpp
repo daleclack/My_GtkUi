@@ -101,10 +101,10 @@ static void btncopy_clicked(GtkWidget *widget,TextEditor * editor){
     const char *contents;
     GtkTextIter start,end;
     if(gtk_text_buffer_get_has_selection(editor->textbuffer)){
-        gtk_text_buffer_get_bounds(editor->textbuffer,&start,&end);
+        gtk_text_buffer_get_selection_bounds(editor->textbuffer,&start,&end);
         contents=gtk_text_buffer_get_text(editor->textbuffer,&start,&end,TRUE);
-        g_print("Get Selected text\n");
-        g_print("%s\n",contents);
+        // g_print("Get Selected text\n");
+        // g_print("%s\n",contents);
     }else{
         gtk_text_buffer_get_start_iter(editor->textbuffer,&start);
         gtk_text_buffer_get_end_iter(editor->textbuffer,&end);
