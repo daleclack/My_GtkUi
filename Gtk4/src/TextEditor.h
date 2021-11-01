@@ -1,9 +1,8 @@
-#ifndef __TEXTEDITOR_H_
-#define __TEXTEDITOR_H_
+#pragma once
 
 #include <gtk/gtk.h>
 #include <cstdio>
 
-void text_editor(GtkWidget *widget,GtkWindow *parent);
+G_DECLARE_FINAL_TYPE(TextEditor,text_editor,TEXT,EDITOR,GtkWindow)
 
-#endif
+TextEditor * text_editor_new(GtkWindow * parent);

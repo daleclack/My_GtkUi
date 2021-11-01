@@ -3,7 +3,7 @@
 #include "LeftPanel.h"
 #include "MainWin.h"
 #include "GameWin.h"
-// #include "TextEditor.h"
+#include "TextEditor.h"
 #include "drawing.h"
 #include "FileWindow.h"
 
@@ -26,8 +26,9 @@ struct _LeftPanel{
     GameWin * game1;
     FileWindow * file_win;
     DrawingApp * draw_win;
+    TextEditor * editor_win;
     //Status
-    gboolean game_running = FALSE,file_running = FALSE,drawapp_running = FALSE;
+    gboolean game_running, file_running, editor_running, drawapp_running;
 };
 
 G_DEFINE_TYPE(LeftPanel,left_panel,GTK_TYPE_BOX)
@@ -165,6 +166,33 @@ static void btndraw_clicked(GtkWidget * widget,LeftPanel * parent_panel){
     }
 }
 
+//Functions for text editor window
+static gboolean text_editor_closed(GtkWindow * window,LeftPanel * parent_panel){
+    parent_panel->editor_running = FALSE;
+    gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->editor_image),"gedit");
+    gtk_window_destroy(window);
+    return TRUE;
+}
+
+static void btneditor_clicked(GtkWidget * widget,LeftPanel * parent_panel){
+    if(!parent_panel->editor_running){
+        //Create a window
+        parent_panel->editor_win = text_editor_new(parent_panel->parent_win);
+        //Connect to the close signal for window
+        g_signal_connect(parent_panel->editor_win,"close-request",G_CALLBACK(text_editor_closed),parent_panel);
+
+        //Change Panel Status
+        gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->editor_image),"gedit_running");
+        parent_panel->editor_running = TRUE;
+
+        //Show Window
+        gtk_window_present(GTK_WINDOW(parent_panel->editor_win));
+    }else{
+        //The Files Window is running, control the window
+        window_ctrl(parent_panel,GTK_WINDOW(parent_panel->editor_win));
+    }
+}
+
 static void left_panel_init(LeftPanel * panel){
     gtk_widget_init_template(GTK_WIDGET(panel));
 
@@ -175,6 +203,7 @@ static void left_panel_init(LeftPanel * panel){
     //All Apps are not in running mode
     panel->file_running = FALSE;
     panel->drawapp_running = FALSE;
+    panel->editor_running = FALSE;
     panel->game_running = FALSE;
 
     //Connect Signals
@@ -202,13 +231,16 @@ static void left_panel_init(LeftPanel * panel){
     //A guess game
     g_signal_connect(panel->btngame,"clicked",G_CALLBACK(btngame_clicked),panel);
     g_signal_connect_swapped(panel->btngame,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
+    //Text Editor
+    g_signal_connect(panel->btneditor,"clicked",G_CALLBACK(btneditor_clicked),panel);
+    g_signal_connect_swapped(panel->btneditor,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //Drawing App
     g_signal_connect(panel->btndraw,"clicked",G_CALLBACK(btndraw_clicked),panel);
     g_signal_connect_swapped(panel->btndraw,"clicked",G_CALLBACK(gtk_popover_popdown),panel->popover1);
     //Panel Buttons
     g_signal_connect(panel->panel_game,"clicked",G_CALLBACK(btngame_clicked),panel);
     g_signal_connect(panel->panel_file,"clicked",G_CALLBACK(btnfile_clicked),panel);
-    //g_assert(panel->panel_drawing);
+    g_signal_connect(panel->panel_editor,"clicked",G_CALLBACK(btneditor_clicked),panel);
     g_signal_connect(panel->panel_drawing,"clicked",G_CALLBACK(btndraw_clicked),panel);
 }
 

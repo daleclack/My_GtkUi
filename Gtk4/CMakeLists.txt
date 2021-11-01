@@ -71,7 +71,7 @@ compile_gresources(RESOURCE_FILE
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp 
-            src/drawing.cpp src/FileWindow.cpp src/winconf.cpp)
+            src/drawing.cpp src/TextEditor.cpp src/FileWindow.cpp src/winconf.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)

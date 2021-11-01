@@ -1,27 +1,33 @@
 #include "TextEditor.h"
 
-static GtkWidget *infobar;
-static GtkTextBuffer *textbuffer;
-static int filemode;
+struct _TextEditor{
+    GtkWindow parent_instance;
+    GtkWidget * infobar;
+    GtkTextBuffer * textbuffer;
+    GdkClipboard * clipboard;
+    int filemode;
+};
 
-static void dialog_response(GtkWidget *widget,int response,gpointer data){
+G_DEFINE_TYPE(TextEditor,text_editor,GTK_TYPE_WINDOW)
+
+static void dialog_response(GtkWidget *widget,int response,TextEditor * editor){
     char *contents,*filename;
     gsize length;
     if(response==GTK_RESPONSE_OK){
         GFile *file=gtk_file_chooser_get_file((GtkFileChooser*)widget);
         filename=g_file_get_path(file);
-        if(filemode==0){
+        if(editor->filemode == 0){
             //Get File contents and show
             if(g_file_get_contents(filename,&contents,&length,NULL)){
-                gtk_text_buffer_set_text(textbuffer,contents,length);
+                gtk_text_buffer_set_text(editor->textbuffer,contents,length);
             }
         }else{
             //Get Start and End char of Text
             GtkTextIter start,end;
-            gtk_text_buffer_get_start_iter(textbuffer,&start);
-            gtk_text_buffer_get_end_iter(textbuffer,&end);
+            gtk_text_buffer_get_start_iter(editor->textbuffer,&start);
+            gtk_text_buffer_get_end_iter(editor->textbuffer,&end);
             //Get Contents
-            contents=gtk_text_buffer_get_text(textbuffer,&start,&end,TRUE);
+            contents=gtk_text_buffer_get_text(editor->textbuffer,&start,&end,TRUE);
             //Create a file and write
             FILE *fp;
             fp=fopen(filename,"wt+");
@@ -34,13 +40,13 @@ static void dialog_response(GtkWidget *widget,int response,gpointer data){
         g_free(contents);
         g_free(filename);
     }
-    gtk_widget_destroy(widget);
+    gtk_window_destroy(GTK_WINDOW(widget));
 }
 
-static void openfile_dialog(GtkWidget *widget,GtkWindow *parent){
-    filemode=0;
+static void openfile_dialog(GtkWidget *widget,TextEditor * editor){
+    editor->filemode = 0;
     GtkFileChooserAction action=GTK_FILE_CHOOSER_ACTION_OPEN;
-    GtkWidget *dialog=gtk_file_chooser_dialog_new("Open a text file",parent,
+    GtkWidget *dialog=gtk_file_chooser_dialog_new("Open a text file",GTK_WINDOW(editor),
                       action,"OK",GTK_RESPONSE_OK,"Cancel",GTK_RESPONSE_CANCEL,NULL);
 
     GtkFileFilter *filter=gtk_file_filter_new();
@@ -55,14 +61,14 @@ static void openfile_dialog(GtkWidget *widget,GtkWindow *parent){
     gtk_file_chooser_add_filter((GtkFileChooser*)dialog,filter);
     //g_object_unref(filter);
 
-    g_signal_connect(dialog,"response",G_CALLBACK(dialog_response),NULL);
-    gtk_widget_show_all(dialog);
+    g_signal_connect(dialog,"response",G_CALLBACK(dialog_response),editor);
+    gtk_widget_show(dialog);
 }
 
-static void savefile_dialog(GtkWidget *widget,GtkWindow *parent){
-    filemode=1;
+static void savefile_dialog(GtkWidget *widget,TextEditor * editor){
+    editor->filemode = 1;
     GtkFileChooserAction action=GTK_FILE_CHOOSER_ACTION_SAVE;
-    GtkWidget *dialog=gtk_file_chooser_dialog_new("Open a text file",parent,
+    GtkWidget *dialog=gtk_file_chooser_dialog_new("Open a text file",GTK_WINDOW(editor),
                       action,"OK",GTK_RESPONSE_OK,"Cancel",GTK_RESPONSE_CANCEL,NULL);
 
     GtkFileFilter *filter=gtk_file_filter_new();
@@ -77,108 +83,138 @@ static void savefile_dialog(GtkWidget *widget,GtkWindow *parent){
     gtk_file_chooser_add_filter((GtkFileChooser*)dialog,filter);
     //g_object_unref(filter);
 
-    g_signal_connect(dialog,"response",G_CALLBACK(dialog_response),NULL);
-    gtk_widget_show_all(dialog);
+    g_signal_connect(dialog,"response",G_CALLBACK(dialog_response),editor);
+    gtk_widget_show(dialog);
 }
 
-static void textbuffer_clear(GtkWidget *widget,GtkTextBuffer *buffer){
-    gtk_text_buffer_set_text(buffer,"",-1);
-    gtk_widget_show(infobar);
+static void textbuffer_clear(GtkWidget *widget,TextEditor * editor){
+    gtk_text_buffer_set_text(editor->textbuffer,"",-1);
+    gtk_widget_show(editor->infobar);
 }
 
 static void infobar_response(GtkWidget *widget,gpointer data){
     gtk_widget_hide(widget);
 }
 
-static void btncopy_clicked(GtkWidget *widget,gpointer data){
+static void btncopy_clicked(GtkWidget *widget,TextEditor * editor){
     //Get Text or selected text
     const char *contents;
     GtkTextIter start,end;
-    if(gtk_text_buffer_get_has_selection(textbuffer)){
-        gtk_text_buffer_get_bounds(textbuffer,&start,&end);
-        contents=gtk_text_buffer_get_text(textbuffer,&start,&end,TRUE);
+    if(gtk_text_buffer_get_has_selection(editor->textbuffer)){
+        gtk_text_buffer_get_bounds(editor->textbuffer,&start,&end);
+        contents=gtk_text_buffer_get_text(editor->textbuffer,&start,&end,TRUE);
+        g_print("Get Selected text\n");
+        g_print("%s\n",contents);
     }else{
-        gtk_text_buffer_get_start_iter(textbuffer,&start);
-        gtk_text_buffer_get_end_iter(textbuffer,&end);
+        gtk_text_buffer_get_start_iter(editor->textbuffer,&start);
+        gtk_text_buffer_get_end_iter(editor->textbuffer,&end);
         //Get Contents
-        contents=gtk_text_buffer_get_text(textbuffer,&start,&end,TRUE);    
+        contents=gtk_text_buffer_get_text(editor->textbuffer,&start,&end,TRUE);    
     }
 
     //Get Clipboard and put text
-    GtkClipboard *clipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-    gtk_clipboard_set_text(clipboard,contents,-1);
-
+    gdk_clipboard_set_text(GDK_CLIPBOARD(editor->clipboard),contents);
 }
 
-static void get_text(GtkClipboard * clipboard,const char * text,gpointer data){
+static void get_text(GObject * source_object,GAsyncResult * res,gpointer data){
+    char * text;
+    GError * error = NULL;
+    TextEditor * editor = TEXT_EDITOR(data);
+    //Get text for copy operation
+    text = gdk_clipboard_read_text_finish(editor->clipboard,res,&error);
     //Paste text
-    gtk_text_buffer_insert_at_cursor(textbuffer,text,-1);
+    if(text){
+        gtk_text_buffer_insert_at_cursor(editor->textbuffer,text,-1);
+    }else{
+        GtkWidget *dialog;
+
+        /* Show an error about why pasting failed.
+         * Usually you probably want to ignore such failures,
+         * but for demonstration purposes, we show the error.
+         */
+        dialog = gtk_message_dialog_new (GTK_WINDOW (editor),
+                                         GTK_DIALOG_DESTROY_WITH_PARENT,
+                                         GTK_MESSAGE_ERROR,
+                                         GTK_BUTTONS_CLOSE,
+                                         "Could not paste text: %s",
+                                         error->message);
+        g_signal_connect (dialog, "response",
+                        G_CALLBACK (gtk_window_destroy), NULL);
+        gtk_widget_show (dialog);
+
+        g_error_free (error);
+    }
 }
 
-static void btnpaste_clicked(GtkWidget *widget,gpointer data){
+static void btnpaste_clicked(GtkWidget *widget,TextEditor * editor){
     //Get ClipBoard and paste text
-    GtkClipboard * clipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-    gtk_clipboard_request_text(clipboard,get_text,NULL);
+    gdk_clipboard_read_text_async(editor->clipboard,NULL,get_text,editor);
 }
 
-void text_editor(GtkWidget *widget,GtkWindow *parent){
-    //Initalize window
-    GtkWidget *window,*hbox;
-    //window=gtk_application_window_new(app);
-    window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_transient_for((GtkWindow*)window,parent);
-    gtk_window_set_title((GtkWindow*)window,"Simple Text Editor");
-    gtk_window_set_icon_name((GtkWindow*)window,"org.gtk.daleclack");
-    gtk_window_set_default_size((GtkWindow*)window,800,450);
-    hbox=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,5);
+static void text_editor_init(TextEditor * self){
+    GtkWidget * hbox, * vbox;
+    gtk_window_set_title((GtkWindow*)self,"Simple Text Editor");
+    gtk_window_set_icon_name((GtkWindow*)self,"org.gtk.daleclack");
+    gtk_window_set_default_size((GtkWindow*)self,800,450);
+    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,5);
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
 
     //Initalize infobar
-    infobar=gtk_info_bar_new_with_buttons("OK",GTK_RESPONSE_OK,NULL);
-    GtkWidget *content_area=gtk_info_bar_get_content_area((GtkInfoBar*)infobar);
+    self->infobar=gtk_info_bar_new_with_buttons("OK",GTK_RESPONSE_OK,NULL);
     GtkWidget *label=gtk_label_new("Cleared the text");
-    g_signal_connect(infobar,"response",G_CALLBACK(infobar_response),NULL);
-    gtk_container_add((GtkContainer*)content_area,label);
-    gtk_box_pack_start((GtkBox*)hbox,infobar,TRUE,FALSE,0);
+    g_signal_connect(self->infobar,"response",G_CALLBACK(infobar_response),NULL);
+    gtk_info_bar_add_child(GTK_INFO_BAR(self->infobar),label);
+    gtk_box_append((GtkBox*)vbox,self->infobar);
 
     //Ininalize TextView
     GtkWidget *scrolled;
     GtkWidget *textview;
     //GtkTextBuffer *textbuffer;
-    scrolled=gtk_scrolled_window_new(NULL,NULL);
+    scrolled=gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy((GtkScrolledWindow*)scrolled,
                                   GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
     textview=gtk_text_view_new();
-    textbuffer=gtk_text_view_get_buffer((GtkTextView*)textview);
+    self->textbuffer=gtk_text_view_get_buffer((GtkTextView*)textview);
+    gtk_text_buffer_set_enable_undo(self->textbuffer,TRUE);
+    self->clipboard=gtk_widget_get_clipboard(textview);
     //gtk_widget_set_size_request(scrolled,800,440);
-    gtk_container_add((GtkContainer*)scrolled,textview);
-    gtk_box_pack_start((GtkBox*)hbox,scrolled,TRUE,TRUE,0);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled),textview);
+    gtk_widget_set_hexpand(scrolled,TRUE);
+    gtk_widget_set_vexpand(scrolled,TRUE);
+    gtk_box_append((GtkBox*)vbox,hbox);
+    gtk_box_append((GtkBox*)hbox,scrolled);
 
     //Add Buttons
     GtkWidget *btn_box=gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
     GtkWidget *btnopen,*btnsave,*btnclear,*btncopy,*btnpaste,*btnexit;
     btnopen=gtk_button_new_with_label("Open");
-    g_signal_connect(btnopen,"clicked",G_CALLBACK(openfile_dialog),window);
+    g_signal_connect(btnopen,"clicked",G_CALLBACK(openfile_dialog),self);
     btnsave=gtk_button_new_with_label("Save");
-    g_signal_connect(btnsave,"clicked",G_CALLBACK(savefile_dialog),window);
+    g_signal_connect(btnsave,"clicked",G_CALLBACK(savefile_dialog),self);
     btnclear=gtk_button_new_with_label("Clear");
-    g_signal_connect(btnclear,"clicked",G_CALLBACK(textbuffer_clear),textbuffer);
+    g_signal_connect(btnclear,"clicked",G_CALLBACK(textbuffer_clear),self);
     btncopy=gtk_button_new_with_label("Copy");
-    g_signal_connect(btncopy,"clicked",G_CALLBACK(btncopy_clicked),NULL);
+    g_signal_connect(btncopy,"clicked",G_CALLBACK(btncopy_clicked),self);
     btnpaste=gtk_button_new_with_label("Paste");
-    g_signal_connect(btnpaste,"clicked",G_CALLBACK(btnpaste_clicked),NULL);
+    g_signal_connect(btnpaste,"clicked",G_CALLBACK(btnpaste_clicked),self);
     btnexit=gtk_button_new_with_label("Exit");
-    g_signal_connect_swapped(btnexit,"clicked",G_CALLBACK(gtk_widget_destroy),window);
+    g_signal_connect_swapped(btnexit,"clicked",G_CALLBACK(gtk_window_close),self);
     gtk_widget_set_valign(btn_box,GTK_ALIGN_CENTER);
-    gtk_box_pack_end((GtkBox*)btn_box,btnexit,FALSE,FALSE,0);
-    gtk_box_pack_end((GtkBox*)btn_box,btnpaste,FALSE,FALSE,0);
-    gtk_box_pack_end((GtkBox*)btn_box,btncopy,FALSE,FALSE,0);
-    gtk_box_pack_end((GtkBox*)btn_box,btnclear,FALSE,FALSE,0);
-    gtk_box_pack_end((GtkBox*)btn_box,btnsave,FALSE,FALSE,0);
-    gtk_box_pack_end((GtkBox*)btn_box,btnopen,FALSE,FALSE,0);
-    gtk_box_pack_end((GtkBox*)hbox,btn_box,FALSE,FALSE,0);
+    gtk_box_prepend((GtkBox*)btn_box,btnexit);
+    gtk_box_prepend((GtkBox*)btn_box,btnpaste);
+    gtk_box_prepend((GtkBox*)btn_box,btncopy);
+    gtk_box_prepend((GtkBox*)btn_box,btnclear);
+    gtk_box_prepend((GtkBox*)btn_box,btnsave);
+    gtk_box_prepend((GtkBox*)btn_box,btnopen);
+    gtk_box_append((GtkBox*)hbox,btn_box);
 
     //Add widgets and show everything
-    gtk_container_add((GtkContainer*)window,hbox);
-    gtk_widget_show_all(window);
-    gtk_widget_hide(infobar);
+    gtk_window_set_child(GTK_WINDOW(self),vbox);
+    gtk_widget_hide(self->infobar);
+}
+
+static void text_editor_class_init(TextEditorClass * klass){}
+
+TextEditor * text_editor_new(GtkWindow * parent){
+    return (TextEditor*)g_object_new(text_editor_get_type(),"transient-for",parent,NULL);
 }
