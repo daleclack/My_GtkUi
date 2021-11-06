@@ -21,12 +21,10 @@
                 "/usr/include/uuid/**",
                 */
                 //For manjaro(Arch linux)
-                
                 "/usr/lib/dbus-1.0/include/**",
                 "/usr/lib/glib-2.0/include/**",
                 "/usr/include/lzo/**",
                 "/usr/include/cloudproviders/**",
-                
                 "${workspaceFolder}/**",
                 "/usr/include/gtk-3.0/**",
                 "/usr/include/at-spi2-atk/2.0/**",
@@ -55,7 +53,7 @@
                 "`pkg-config --cflags --libs gtk+-3.0`"
             ],
             "configurationProvider": "ms-vscode.cmake-tools"
-        },    
+        },
         {
             "name": "win32",
             "includePath": [

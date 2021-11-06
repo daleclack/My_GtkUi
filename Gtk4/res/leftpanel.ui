@@ -293,6 +293,30 @@
                   </object>
                 </child>
                 <child>
+                  <object class="GtkButton" id="btnmedia">
+                    <property name="visible">1</property>
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="has-frame">0</property>
+                    <child>
+                      <object class="GtkBox">
+                        <child>
+                        <object class="GtkImage">
+                          <property name="pixel-size">16</property>
+                          <property name="icon-name">multimedia-player</property>
+                        </object>
+                        </child>
+                        <child>
+                        <object class="GtkLabel">
+                          <property name="label" translatable="yes">Media Player</property>
+                          <property name="hexpand">1</property>
+                        </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkButton" id="btneditor">
                     <property name="visible">1</property>
                     <property name="focusable">1</property>
@@ -395,6 +419,20 @@
           <object class="GtkImage" id="drawing_image">
             <property name="pixel-size">48</property>
             <property name="icon-name">drawing_app</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="panel_media">
+        <property name="visible">1</property>
+        <property name="focusable">1</property>
+        <property name="receives-default">1</property>
+        <property name="has-frame">0</property>
+        <child>
+          <object class="GtkImage" id="media_image">
+            <property name="pixel-size">48</property>
+            <property name="icon-name">multimedia-player1</property>
           </object>
         </child>
       </object>

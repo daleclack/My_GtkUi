@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <menu id='media-menu'>
+        <section>
+            <item>
+                <attribute name='label'>Open Media File</attribute>
+                <attribute name='action'>win.open</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Pause Media</attribute>
+                <attribute name='action'>win.pause</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Play Media</attribute>
+                <attribute name='action'>win.play</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Clear Media</attribute>
+                <attribute name='action'>win.clear</attribute>
+            </item>
+            <item>
+                <attribute name='label'>About</attribute>
+                <attribute name='action'>win.about</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Exit</attribute>
+                <attribute name='action'>win.quit</attribute>
+            </item>
+        </section>
+    </menu>
+</interface>

@@ -35,6 +35,7 @@ set(RESOURCE_LIST
     icons/16x16/actions/window-minimize.png
     icons/16x16/actions/drawing_app.png
     icons/16x16/actions/file-app.png
+    icons/16x16/actions/multimedia-player1.png
     icons/24x24/actions/view-grid-symbolic.png
     icons/24x24/actions/view-list-symbolic.png
     icons/48x48/actions/game.png
@@ -48,6 +49,8 @@ set(RESOURCE_LIST
     icons/48x48/actions/drawing_app_running.png
     icons/48x48/actions/file-app.png
     icons/48x48/actions/file-app-running.png
+    icons/48x48/actions/multimedia-player1.png
+    icons/48x48/actions/multimedia-player1_running.png
     icons/scalable/status/graphics.svg
     icons/scalable/status/log_out.svg
     icons/scalable/status/system.svg
@@ -55,6 +58,7 @@ set(RESOURCE_LIST
     gnome-fs-directory.png
     gnome-fs-regular.png
     STRIPBLANKS appmenu.xml
+    STRIPBLANKS media_menu.xml
     STRIPBLANKS stack.ui
     STRIPBLANKS leftpanel.ui
     STRIPBLANKS game1.ui)
@@ -71,7 +75,7 @@ compile_gresources(RESOURCE_FILE
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp 
-            src/drawing.cpp src/TextEditor.cpp src/FileWindow.cpp src/winconf.cpp)
+            src/drawing.cpp src/TextEditor.cpp src/FileWindow.cpp src/winconf.cpp src/MediaPlayer.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
