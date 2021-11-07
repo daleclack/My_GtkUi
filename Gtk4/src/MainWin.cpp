@@ -136,7 +136,7 @@ static void about_activated(GSimpleAction * action, GVariant * parmeter, gpointe
         NULL
     };
     char *version;
-    version=g_strdup_printf("4.0-Beta1\nRunning Against GTK %d.%d.%d",
+    version=g_strdup_printf("4.1\nRunning Against GTK %d.%d.%d",
                             gtk_get_major_version(),
                             gtk_get_minor_version(),
                             gtk_get_micro_version());
