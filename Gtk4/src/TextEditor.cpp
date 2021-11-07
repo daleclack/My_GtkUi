@@ -5,6 +5,9 @@ struct _TextEditor{
     GtkWidget * infobar;
     GtkTextBuffer * textbuffer;
     GdkClipboard * clipboard;
+    GtkWidget * searchbtn;
+    GtkWidget * searchbar;
+    GtkWidget * searchentry;
     int filemode;
 };
 
@@ -152,24 +155,32 @@ static void btnpaste_clicked(GtkWidget *widget,TextEditor * editor){
 }
 
 static void text_editor_init(TextEditor * self){
-    GtkWidget * hbox, * vbox;
+    GtkWidget * hbox, * textbox;
     gtk_window_set_title((GtkWindow*)self,"Simple Text Editor");
     gtk_window_set_icon_name((GtkWindow*)self,"org.gtk.daleclack");
     gtk_window_set_default_size((GtkWindow*)self,800,450);
     hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,5);
-    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
+    textbox = gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
+
+    //Initalize Searchbar
+    self->searchbar = gtk_search_bar_new();
+    self->searchentry = gtk_search_entry_new();
+    self->searchbtn = gtk_toggle_button_new_with_label("Search");
+    gtk_search_bar_set_child(GTK_SEARCH_BAR(self->searchbar),self->searchentry);
+    g_object_bind_property(self->searchbtn,"active",self->searchbar,
+                            "search-mode-enabled",G_BINDING_DEFAULT);
+    gtk_box_append((GtkBox*)textbox,self->searchbar);
 
     //Initalize infobar
     self->infobar=gtk_info_bar_new_with_buttons("OK",GTK_RESPONSE_OK,NULL);
     GtkWidget *label=gtk_label_new("Cleared the text");
     g_signal_connect(self->infobar,"response",G_CALLBACK(infobar_response),NULL);
     gtk_info_bar_add_child(GTK_INFO_BAR(self->infobar),label);
-    gtk_box_append((GtkBox*)vbox,self->infobar);
+    gtk_box_append((GtkBox*)textbox,self->infobar);
 
     //Ininalize TextView
     GtkWidget *scrolled;
     GtkWidget *textview;
-    //GtkTextBuffer *textbuffer;
     scrolled=gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy((GtkScrolledWindow*)scrolled,
                                   GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
@@ -181,8 +192,8 @@ static void text_editor_init(TextEditor * self){
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled),textview);
     gtk_widget_set_hexpand(scrolled,TRUE);
     gtk_widget_set_vexpand(scrolled,TRUE);
-    gtk_box_append((GtkBox*)vbox,hbox);
-    gtk_box_append((GtkBox*)hbox,scrolled);
+    gtk_box_append((GtkBox*)textbox,scrolled);
+    gtk_box_append((GtkBox*)hbox,textbox);
 
     //Add Buttons
     GtkWidget *btn_box=gtk_box_new(GTK_ORIENTATION_VERTICAL,5);
@@ -206,10 +217,11 @@ static void text_editor_init(TextEditor * self){
     gtk_box_prepend((GtkBox*)btn_box,btnclear);
     gtk_box_prepend((GtkBox*)btn_box,btnsave);
     gtk_box_prepend((GtkBox*)btn_box,btnopen);
+    gtk_box_prepend((GtkBox*)btn_box,self->searchbtn);
     gtk_box_append((GtkBox*)hbox,btn_box);
 
     //Add widgets and show everything
-    gtk_window_set_child(GTK_WINDOW(self),vbox);
+    gtk_window_set_child(GTK_WINDOW(self),hbox);
     gtk_widget_hide(self->infobar);
 }
 
