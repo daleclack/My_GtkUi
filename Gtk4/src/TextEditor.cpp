@@ -3,6 +3,7 @@
 struct _TextEditor{
     GtkWindow parent_instance;
     GtkWidget * infobar;
+    GtkWidget * textview;
     GtkTextBuffer * textbuffer;
     GdkClipboard * clipboard;
     GtkWidget * searchbtn;
@@ -12,6 +13,26 @@ struct _TextEditor{
 };
 
 G_DEFINE_TYPE(TextEditor,text_editor,GTK_TYPE_WINDOW)
+
+static void search_text_changed(GtkEntry * entry, TextEditor * editor){
+    GtkTextIter start_iter, match_start, match_end;
+
+    //Get Search Text
+    const char * text = gtk_editable_get_text(GTK_EDITABLE(entry));
+
+    //Get Start Iter
+    gtk_text_buffer_get_start_iter(editor->textbuffer,&start_iter);
+    
+    //Get Searched text
+    if(gtk_text_iter_forward_search(&start_iter,text,GTK_TEXT_SEARCH_CASE_INSENSITIVE,
+                                    &match_start,&match_end,NULL))
+    {
+        //Select if get the searched text
+        gtk_text_buffer_select_range(editor->textbuffer,&match_start,&match_end);
+        gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(editor->textview),&match_start,
+                                    0.0,FALSE,0.0,FALSE);
+    }
+}
 
 static void dialog_response(GtkWidget *widget,int response,TextEditor * editor){
     char *contents,*filename;
@@ -170,6 +191,7 @@ static void text_editor_init(TextEditor * self){
     g_object_bind_property(self->searchbtn,"active",self->searchbar,
                             "search-mode-enabled",G_BINDING_DEFAULT);
     gtk_box_append((GtkBox*)textbox,self->searchbar);
+    g_signal_connect(self->searchentry,"search-changed",G_CALLBACK(search_text_changed),self);
 
     //Initalize infobar
     self->infobar=gtk_info_bar_new_with_buttons("OK",GTK_RESPONSE_OK,NULL);
@@ -180,16 +202,15 @@ static void text_editor_init(TextEditor * self){
 
     //Ininalize TextView
     GtkWidget *scrolled;
-    GtkWidget *textview;
     scrolled=gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy((GtkScrolledWindow*)scrolled,
                                   GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
-    textview=gtk_text_view_new();
-    self->textbuffer=gtk_text_view_get_buffer((GtkTextView*)textview);
+    self->textview=gtk_text_view_new();
+    self->textbuffer=gtk_text_view_get_buffer((GtkTextView*)(self->textview));
     gtk_text_buffer_set_enable_undo(self->textbuffer,TRUE);
-    self->clipboard=gtk_widget_get_clipboard(textview);
+    self->clipboard=gtk_widget_get_clipboard(self->textview);
     //gtk_widget_set_size_request(scrolled,800,440);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled),textview);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled),self->textview);
     gtk_widget_set_hexpand(scrolled,TRUE);
     gtk_widget_set_vexpand(scrolled,TRUE);
     gtk_box_append((GtkBox*)textbox,scrolled);
