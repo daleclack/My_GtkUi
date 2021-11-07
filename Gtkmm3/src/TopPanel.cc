@@ -4,12 +4,17 @@
 
 TopPanel::TopPanel():
 Gtk::Box(Gtk::ORIENTATION_HORIZONTAL,5),
-time_label("21:00:00 2021/6/13"),
 timer_value(1000)
 {
     //Initalize Timer
     mytimer=Glib::signal_timeout().connect(sigc::mem_fun(*this,&TopPanel::on_timeout),timer_value);
-    pack_start(time_label,Gtk::PACK_SHRINK);
+    time_btn.set_relief(Gtk::RELIEF_NONE);
+    time_btn.set_label("18:13:00 2021/11/17");
+    time_btn.set_popover(time_popover);
+    time_popover.add(calender);
+    calender.set_size_request(300,250);
+    calender.show();
+    pack_start(time_btn,Gtk::PACK_SHRINK);
 
     //Initalize menu
     menu_builder=Gtk::Builder::create_from_resource("/GtkUI/appmenu.xml");
@@ -44,6 +49,6 @@ bool TopPanel::on_timeout(){
     //Show time
     sprintf(time_string,"%02d:%02d:%02d %04d/%02d/%02d",
     local->tm_hour,local->tm_min,local->tm_sec,local->tm_year+1900,local->tm_mon+1,local->tm_mday);
-    time_label.set_label(time_string);
+    time_btn.set_label(time_string);
     return true;
 }

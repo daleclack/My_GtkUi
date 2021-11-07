@@ -16,10 +16,13 @@ private:
     Glib::RefPtr<Gtk::Builder> menu_builder;
     //Timer
     sigc::connection mytimer;
-    Gtk::Label time_label;
+    Gtk::MenuButton time_btn;
     const int timer_value;
     bool on_timeout();
     char time_string[57];
+    //Calander
+    Gtk::Popover time_popover;
+    Gtk::Calendar calender;
     //Other Things
     Glib::RefPtr<Gtk::Builder> panel_builder;
     Gtk::VolumeButton *volume1;
