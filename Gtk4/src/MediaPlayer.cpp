@@ -148,7 +148,7 @@ static void media_player_init(MediaPlayer * self){
 
     //Create video
     self->video = gtk_video_new();
-    gtk_widget_set_size_request(self->video,400,200);
+    gtk_widget_set_size_request(self->video,712,400);
     gtk_window_set_child(GTK_WINDOW(self),self->video);
 
     g_object_unref(menu_builder);
