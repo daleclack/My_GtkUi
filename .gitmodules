@@ -1,0 +1,3 @@
+[submodule "GCR_CMake"]
+	path = GCR_CMake
+	url = git@github.com:daleclack/GCR_CMake
