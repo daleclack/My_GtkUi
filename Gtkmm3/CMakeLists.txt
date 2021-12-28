@@ -11,11 +11,17 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 include_directories(.)
 include_directories(..)
+include_directories(src/core src/apps src/panels)
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM3 REQUIRED gtkmm-3.0)
 include_directories (${GTKMM3_INCLUDE_DIRS})
 link_directories (${GTKMM3_LIBRARY_DIRS})
+
+set(SOURCES src/core/main.cc src/core/MyStack.cc src/core/MyWin.cc src/core/winconf.cc 
+    src/panels/LeftPanel.cc src/panels/TopPanel.cc
+    src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
+    src/run_app/Runner.cc src/text_app/TextEditor.cc)
 
 #Compile a resource.cpp file
 
@@ -57,13 +63,9 @@ if(WIN32)
 	set_property(SOURCE icon.rc APPEND PROPERTY
         OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
-	add_executable(My_GtkUI WIN32 ${app_WINRC} src/main.cc src/MyWin.cc src/MyStack.cc src/Runner.cc 
-	src/Game.cc src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc src/drawing.cc 
-    src/FileWindow.cc ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+	add_executable(My_GtkUI WIN32 ${app_WINRC} ${SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 else()
-	add_executable(My_GtkUI src/main.cc src/MyWin.cc src/MyStack.cc src/Game.cc src/Runner.cc 
-	src/TopPanel.cc src/LeftPanel.cc src/winconf.cc src/TextEditor.cc src/drawing.cc 
-    src/FileWindow.cc ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
+	add_executable(My_GtkUI ${SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C})
 
 endif(WIN32)
 
