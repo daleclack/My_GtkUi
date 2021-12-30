@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <menu id="model">
+        <submenu>
+            <attribute name='label'>File</attribute>
+        </submenu>
+        <submenu>
+            <attribute name='label'>Edit</attribute>
+        </submenu>
+        <submenu>
+            <attribute name='label'>Show</attribute>
+        </submenu>
+        <submenu>
+            <attribute name='label'>Go to</attribute>
+        </submenu>
+        <submenu>
+            <attribute name='label'>windows</attribute>
+        </submenu>
+        <submenu>
+            <attribute name='label'>Help</attribute>
+        </submenu>
+    </menu>
+</interface>

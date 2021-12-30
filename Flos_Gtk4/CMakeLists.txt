@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(gtk120 VERSION 1.0.0)
+project(My_GtkUI_Flos VERSION 4.0.0)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
 include(GlibCompileResourcesSupport)
@@ -14,6 +14,7 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 include_directories(.)
 include_directories(..)
+include_directories(src/core)
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTK4 REQUIRED gtk4)
@@ -23,7 +24,8 @@ link_directories (${GTK4_LIBRARY_DIRS})
 #Compile Resource
 
 set(RESOURCE_LIST
-    flos.png)
+    flos.png
+    menubar.xml)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
