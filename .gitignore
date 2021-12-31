@@ -23,6 +23,7 @@ Makefile
 
 #backup files 
 *.*~
+.DS_Store
 
 #Gresource prebuild file
 */src/resources.cpp
