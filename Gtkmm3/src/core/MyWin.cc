@@ -12,7 +12,7 @@ conf_dlg(this)
 {
     //Initalize Window
     set_icon_name("My_GtkUI");
-    set_title("My GtkUI 3.3");
+    set_title("My GtkUI 3");
     conf_dlg.get_config(&width,&height);
     overlay.add_overlay(draw_area);
     default_background1();

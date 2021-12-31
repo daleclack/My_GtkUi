@@ -1,6 +1,7 @@
 #include "LeftPanel.hh"
 #include <thread>
 #include <cstdlib>
+#include <iostream>
 
 LeftPanel::LeftPanel(){
     //Get Widgets
@@ -21,6 +22,8 @@ LeftPanel::LeftPanel(){
     panel_builder->get_widget("panel_draw",panel_draw);
     panel_builder->get_widget("btnfile",btnfile);
     panel_builder->get_widget("panel_file",panel_file);
+    panel_builder->get_widget("btnimage",btnimage);
+    panel_builder->get_widget("panel_image",panel_image);
 
     //Create Game
     game1=Game::create();
@@ -43,6 +46,8 @@ LeftPanel::LeftPanel(){
     panel_draw->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btndraw_clicked));
     btnfile->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnfile_clicked));
     panel_file->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnfile_clicked));
+    btnimage->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnimage_clicked));
+    panel_image->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnimage_clicked));
 }
 
 LeftPanel::~LeftPanel(){
@@ -169,4 +174,8 @@ void LeftPanel::btndraw_clicked(){
 
 void LeftPanel::btnfile_clicked(){
     window_ctrl(file_app,file_app.running);
+}
+
+void LeftPanel::btnimage_clicked(){
+    window_ctrl(image_app,image_app.running);
 }

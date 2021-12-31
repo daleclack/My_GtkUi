@@ -28,6 +28,7 @@
         <file>icons/48x48/actions/drawing_app_running.png</file>
         <file>icons/48x48/actions/file-app.png</file>
         <file>icons/48x48/actions/file-app-running.png</file>
+        <file>icons/scalable/status/eog.svg</file>
         <file>icons/scalable/status/graphics.svg</file>
         <file>icons/scalable/status/log_out.svg</file>
         <file>icons/scalable/status/system.svg</file>
@@ -36,6 +37,7 @@
     </gresource>
     <gresource prefix="GtkUI">
         <file preprocess="xml-stripblanks">appmenu.xml</file>
+        <file preprocess="xml-stripblanks">image_appmenu.xml</file>
         <file preprocess="xml-stripblanks">main_stack.ui</file>
         <file preprocess="xml-stripblanks">game1.ui</file>
         <file preprocess="xml-stripblanks">toppanel.ui</file>
