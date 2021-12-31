@@ -3,6 +3,9 @@
     <menu id="model">
         <submenu>
             <attribute name='label'>File</attribute>
+            <item>
+                <attribute name="label">Exit</attribute>
+            </item>
         </submenu>
         <submenu>
             <attribute name='label'>Edit</attribute>
