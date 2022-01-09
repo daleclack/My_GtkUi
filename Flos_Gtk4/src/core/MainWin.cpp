@@ -25,22 +25,20 @@ static void main_win_init(MainWin * win){
     g_object_unref(pixbuf);
     g_object_unref(sized);
 
-    //Add button for menubar
-    GtkWidget * back_button = gtk_button_new_with_label("   ");
-    gtk_widget_set_valign(back_button,GTK_ALIGN_START);
-    gtk_widget_set_halign(back_button,GTK_ALIGN_FILL);
-    gtk_widget_set_sensitive(back_button,FALSE);
-    gtk_widget_set_opacity(back_button,0.7);
-    gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay),back_button);
-
     //Add MenuBar
     GtkBuilder * builder = gtk_builder_new_from_resource("/org/gtk/daleclack/menubar.xml");
     GMenuModel * model = G_MENU_MODEL(gtk_builder_get_object(builder,"model"));
     GtkWidget * menubar = gtk_popover_menu_bar_new_from_model(model);
+    //gtk_button_set_child(GTK_BUTTON(back_button),menubar);
     gtk_widget_set_valign(menubar,GTK_ALIGN_START);
     gtk_widget_set_halign(menubar,GTK_ALIGN_FILL);
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay),menubar);
 
+    //Apply Style for menubar
+    GtkStyleProvider * provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
+    gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(provider),"/org/gtk/daleclack/style.css");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(menubar),provider,G_MAXINT);
+    
     //Add widgets
     gtk_overlay_set_child(GTK_OVERLAY(win->overlay),win->background);
     gtk_window_set_child(GTK_WINDOW(win),win->overlay);

@@ -25,7 +25,9 @@ link_directories (${GTK4_LIBRARY_DIRS})
 
 set(RESOURCE_LIST
     flos.png
-    menubar.xml)
+    menubar.xml
+    style.css
+    reset.css)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
