@@ -1,4 +1,5 @@
 #include "MainWin.h"
+#include "MyDock.h"
 #include <ctime>
 
 struct _MainWin
@@ -23,6 +24,8 @@ static gboolean label_timer(gpointer data)
     sprintf(buf, "%d:%d %d/%d/%d", local->tm_hour,
             local->tm_min, local->tm_year + 1900, local->tm_mon + 1, local->tm_mday);
     gtk_label_set_label(GTK_LABEL(data), buf);
+
+    return TRUE;
 }
 
 static void main_win_init(MainWin *win)
@@ -70,6 +73,9 @@ static void main_win_init(MainWin *win)
     gtk_widget_set_margin_end(time_label, 10);
     gtk_widget_set_margin_top(time_label, 3);
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), time_label);
+
+    //Add a dock
+    add_dock(win->overlay, provider);
 
     // Add widgets
     gtk_overlay_set_child(GTK_OVERLAY(win->overlay), win->background);

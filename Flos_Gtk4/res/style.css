@@ -8,5 +8,9 @@
 
 /*Style for menubar*/
 menubar{
-	background-color:#FFFA;
+	background-color: alpha(white,0.7);
+}
+
+box{
+    background-color: alpha(white,0.7);
 }
