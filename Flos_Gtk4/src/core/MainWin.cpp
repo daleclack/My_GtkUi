@@ -21,7 +21,7 @@ static gboolean label_timer(gpointer data)
 
     // Set Label time
     char buf[57];
-    sprintf(buf, "%d:%d %d/%d/%d", local->tm_hour,
+    sprintf(buf, "%02d:%02d %d/%d/%d", local->tm_hour,
             local->tm_min, local->tm_year + 1900, local->tm_mon + 1, local->tm_mday);
     gtk_label_set_label(GTK_LABEL(data), buf);
 
@@ -32,16 +32,16 @@ static void main_win_init(MainWin *win)
 {
     // Initalize window
     gtk_window_set_title(GTK_WINDOW(win), "My GtkUI Flos Version");
-    gtk_window_set_default_size(GTK_WINDOW(win), 800, 450);
-    gtk_window_set_icon_name(GTK_WINDOW(win), "org.gtk.daleclack");
+    gtk_window_set_icon_name(GTK_WINDOW(win), "My_GtkUI");
 
     // Create widgets
     win->overlay = gtk_overlay_new();
     win->background = gtk_picture_new();
+    gtk_widget_set_size_request(win->overlay, 1024, 576);
 
     // Add Background
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/flos.png", NULL);
-    GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 800, 450, GDK_INTERP_BILINEAR);
+    GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
     gtk_picture_set_pixbuf(GTK_PICTURE(win->background), sized);
     g_object_unref(pixbuf);
     g_object_unref(sized);

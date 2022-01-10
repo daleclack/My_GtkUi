@@ -28,7 +28,14 @@ set(RESOURCE_LIST
     menubar.xml
     style.css
     reset.css
-    dock.ui)
+    dock.ui
+    icons/48x48/actions/My_GtkUI.png
+    icons/scalable/status/file-manager.svg
+    icons/scalable/status/qemu-launcher.svg
+    icons/scalable/status/qq.svg
+    icons/scalable/status/qqmusic.svg
+    icons/scalable/status/utilities-system-monitor.svg
+    icons/scalable/status/baidunetdisk.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
@@ -49,7 +56,7 @@ if(WIN32)
 	SET(CMAKE_RC_COMPILER x86_64-w64-mingw32-windres)
 	set(app_WINRC ../icon.rc)
 	set_property(SOURCE ../icon.rc APPEND PROPERTY
-        OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/../icon.ico
+        OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
 	add_executable(${PROJECT_NAME} WIN32 ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
 else()

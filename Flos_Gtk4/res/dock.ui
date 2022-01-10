@@ -15,23 +15,76 @@
         <property name="has-frame">0</property>
         <child>
           <object class="GtkImage" id="image1">
-            <property name="icon-name">vlc</property>
+            <property name="icon-name">baidunetdisk</property>
             <property name="pixel-size">48</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <placeholder/>
+        <object class="GtkButton">
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <property name="has-frame">0</property>
+            <child>
+              <object class="GtkImage" id="image2">
+                <property name="icon-name">qq</property>
+                <property name="pixel-size">48</property>
+              </object>
+            </child>
+          </object>
     </child>
     <child>
-      <placeholder/>
+        <object class="GtkButton">
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <property name="has-frame">0</property>
+            <child>
+              <object class="GtkImage" id="image3">
+                <property name="icon-name">file-manager</property>
+                <property name="pixel-size">48</property>
+              </object>
+            </child>
+          </object>
     </child>
     <child>
-      <placeholder/>
+        <object class="GtkButton">
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <property name="has-frame">0</property>
+            <child>
+              <object class="GtkImage" id="image4">
+                <property name="icon-name">qqmusic</property>
+                <property name="pixel-size">48</property>
+              </object>
+            </child>
+          </object>
     </child>
     <child>
-      <placeholder/>
+        <object class="GtkButton">
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <property name="has-frame">0</property>
+            <child>
+              <object class="GtkImage" id="image5">
+                <property name="icon-name">utilities-system-monitor</property>
+                <property name="pixel-size">48</property>
+              </object>
+            </child>
+          </object>
+    </child>
+    <child>
+        <object class="GtkButton">
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <property name="has-frame">0</property>
+            <child>
+              <object class="GtkImage" id="image6">
+                <property name="icon-name">qemu</property>
+                <property name="pixel-size">48</property>
+              </object>
+            </child>
+          </object>
     </child>
     <child>
         <object class="GtkLabel">
