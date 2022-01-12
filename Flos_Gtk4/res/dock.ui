@@ -4,11 +4,6 @@
   <object class="GtkBox" id="main_dock">
     <!-- <property name="homogeneous">1</property> -->
     <child>
-        <object class="GtkLabel">
-          <property name="label"> </property>
-        </object>
-    </child>
-    <child>
       <object class="GtkButton">
         <property name="focusable">1</property>
         <property name="receives-default">1</property>

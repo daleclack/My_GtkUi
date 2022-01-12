@@ -53,7 +53,7 @@ compile_gresources(RESOURCE_FILE
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 #SOURCE FILES LIST
-set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyDock.cpp)
+set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyDock.cpp src/core/Start.cpp)
 
 #For win32 platform,use rc resource and .ico icon
 if(WIN32)

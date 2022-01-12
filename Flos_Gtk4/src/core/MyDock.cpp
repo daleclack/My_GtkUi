@@ -1,10 +1,14 @@
 #include "MyDock.h"
+#include "Start.h"
 
 void add_dock(GtkWidget * overlay, GtkStyleProvider * provider){
     GtkWidget * dock_box;
     //Get Widget
     GtkBuilder * builder = gtk_builder_new_from_resource("/org/gtk/daleclack/dock.ui");
     dock_box = (GtkWidget*)gtk_builder_get_object(builder,"main_dock");
+
+    //Add a start
+    add_start(GTK_BOX(dock_box));
 
     //Put the dock on the overlay
     gtk_widget_set_halign(dock_box,GTK_ALIGN_CENTER);
