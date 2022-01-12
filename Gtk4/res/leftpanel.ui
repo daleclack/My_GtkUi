@@ -365,6 +365,12 @@
         <property name="has-frame">0</property>
         <property name="direction">right</property>
         <property name="popover">popover1</property>
+        <child>
+            <object class="GtkImage" id="start_image">
+              <property name="pixel-size">48</property>
+              <property name="icon-name">My_GtkUI</property>
+            </object>
+          </child>
       </object>
     </child>
     <child>

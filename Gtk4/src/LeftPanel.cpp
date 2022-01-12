@@ -227,7 +227,7 @@ static void left_panel_init(LeftPanel * panel){
 
     //Set Image for start button
 
-    gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
+    //gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
 
     //All Apps are not in running mode
     panel->file_running = FALSE;
