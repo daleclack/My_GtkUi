@@ -29,13 +29,17 @@ set(RESOURCE_LIST
     style.css
     reset.css
     dock.ui
+    start.ui
+    icons/16x16/actions/7zFM.png
     icons/48x48/actions/My_GtkUI.png
     icons/scalable/status/file-manager.svg
     icons/scalable/status/qemu-launcher.svg
     icons/scalable/status/qq.svg
     icons/scalable/status/qqmusic.svg
     icons/scalable/status/utilities-system-monitor.svg
-    icons/scalable/status/baidunetdisk.svg)
+    icons/scalable/status/baidunetdisk.svg
+    icons/scalable/status/visual-studio-code.svg
+    icons/scalable/status/glade.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
