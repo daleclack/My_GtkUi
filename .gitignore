@@ -28,6 +28,9 @@ Makefile
 */src/resources.cpp
 resources.cc
 
+#music files
+*.mp3
+
 #backend source
 backend/*
 

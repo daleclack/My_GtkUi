@@ -26,7 +26,6 @@
                               <property name="visible">1</property>
                               <property name="focusable">1</property>
                               <property name="receives-default">1</property>
-                              <property name="halign">start</property>
                               <property name="has-frame">0</property>
                               <child>
                                 <object class="GtkBox">
@@ -40,6 +39,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> 7-zip File Manager</property>
                                       <property name="hexpand">1</property>
@@ -54,7 +54,6 @@
                               <property name="visible">1</property>
                               <property name="focusable">1</property>
                               <property name="receives-default">1</property>
-                              <property name="halign">start</property>
                               <property name="has-frame">0</property>
                               <child>
                                   <object class="GtkBox">
@@ -68,6 +67,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkLabel">
+                                        <property name="halign">start</property>
                                         <property name="visible">1</property>
                                         <property name="label" translatable="1"> File Manager</property>
                                         <property name="hexpand">1</property>
@@ -82,7 +82,6 @@
                               <property name="visible">1</property>
                               <property name="focusable">1</property>
                               <property name="receives-default">1</property>
-                              <property name="halign">start</property>
                               <property name="has-frame">0</property>
                               <child>
                                   <object class="GtkBox">
@@ -96,6 +95,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkLabel">
+                                        <property name="halign">start</property>
                                         <property name="visible">1</property>
                                         <property name="label" translatable="1"> Glade</property>
                                         <property name="hexpand">1</property>
@@ -110,7 +110,6 @@
                               <property name="visible">1</property>
                               <property name="focusable">1</property>
                               <property name="receives-default">1</property>
-                              <property name="halign">start</property>
                               <property name="has-frame">0</property>
                               <child>
                                   <object class="GtkBox">
@@ -124,6 +123,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkLabel">
+                                        <property name="halign">start</property>
                                         <property name="visible">1</property>
                                         <property name="label" translatable="1"> QEMU</property>
                                         <property name="hexpand">1</property>
@@ -138,7 +138,6 @@
                               <property name="visible">1</property>
                               <property name="focusable">1</property>
                               <property name="receives-default">1</property>
-                              <property name="halign">start</property>
                               <property name="has-frame">0</property>
                               <child>
                                   <object class="GtkBox">
@@ -152,6 +151,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkLabel">
+                                        <property name="halign">start</property>
                                         <property name="visible">1</property>
                                         <property name="label" translatable="1"> QQMusic</property>
                                         <property name="hexpand">1</property>
@@ -166,7 +166,6 @@
                               <property name="visible">1</property>
                               <property name="focusable">1</property>
                               <property name="receives-default">1</property>
-                              <property name="halign">start</property>
                               <property name="has-frame">0</property>
                               <child>
                                   <object class="GtkBox">
@@ -180,6 +179,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkLabel">
+                                        <property name="halign">start</property>
                                         <property name="visible">1</property>
                                         <property name="label" translatable="1"> Visual Studio Code</property>
                                         <property name="hexpand">1</property>
@@ -215,6 +215,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel">
+                                    <property name="halign">start</property>
                                     <property name="visible">1</property>
                                     <property name="label" translatable="1">All Programs</property>
                                     <property name="hexpand">1</property>
@@ -241,7 +242,6 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
                               <object class="GtkBox">
@@ -255,6 +255,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel">
+                                    <property name="halign">start</property>
                                     <property name="visible">1</property>
                                     <property name="label" translatable="1"> 7-zip File Manager</property>
                                     <property name="hexpand">1</property>
@@ -269,7 +270,6 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
                                 <object class="GtkBox">
@@ -283,6 +283,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                    <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> BaiduNetDisk</property>
                                       <property name="hexpand">1</property>
@@ -297,7 +298,6 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
                                 <object class="GtkBox">
@@ -311,6 +311,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> File Manager</property>
                                       <property name="hexpand">1</property>
@@ -324,8 +325,7 @@
                           <object class="GtkButton">
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
-                            <property name="receives-default">1</property>
-                            <property name="halign">start</property>
+                            <property name="receives-default">1</property> 
                             <property name="has-frame">0</property>
                             <child>
                                 <object class="GtkBox">
@@ -339,6 +339,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> Glade</property>
                                       <property name="hexpand">1</property>
@@ -353,7 +354,6 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
                                 <object class="GtkBox">
@@ -367,6 +367,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> QEMU</property>
                                       <property name="hexpand">1</property>
@@ -381,7 +382,6 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
                                 <object class="GtkBox">
@@ -395,6 +395,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> QQ</property>
                                       <property name="hexpand">1</property>
@@ -409,7 +410,6 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
                                 <object class="GtkBox">
@@ -423,6 +423,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> QQMusic</property>
                                       <property name="hexpand">1</property>
@@ -437,7 +438,6 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
                                 <object class="GtkBox">
@@ -451,6 +451,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1"> Visual Studio Code</property>
                                       <property name="hexpand">1</property>
@@ -480,6 +481,7 @@
                                   </child>
                                   <child>
                                     <object class="GtkLabel">
+                                      <property name="halign">start</property>
                                       <property name="visible">1</property>
                                       <property name="label" translatable="1">Back</property>
                                       <property name="hexpand">1</property>
@@ -565,6 +567,22 @@
                     <property name="receives-default">1</property>
                     <property name="has-frame">0</property>
                     <property name="label">Computer</property>
+                </object>
+            </child>
+            <child>
+                <object class="GtkBox" id="music_box">
+                    <property name="visible">0</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                        <object class="GtkLabel">
+                            <property name="label">Yanni-Nightingale</property>
+                        </object>
+                    </child>
+                    <child>
+                       <object class="GtkMediaControls" id="media_ctrl">
+                           <property name="hexpand">1</property>
+                       </object> 
+                    </child>
                 </object>
             </child>
             <child>

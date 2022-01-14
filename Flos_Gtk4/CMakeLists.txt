@@ -30,6 +30,7 @@ set(RESOURCE_LIST
     reset.css
     dock.ui
     start.ui
+    Yanni-Nightingale.mp3
     icons/16x16/actions/7zFM.png
     icons/48x48/actions/My_GtkUI.png
     icons/scalable/status/file-manager.svg
