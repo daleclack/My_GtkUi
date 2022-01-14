@@ -1,5 +1,6 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include "MainWin.h"
 
-void add_dock(GtkWidget * overlay, GtkStyleProvider * provider);
+void add_dock(MainWin * win, GtkStyleProvider * provider);

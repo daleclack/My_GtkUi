@@ -15,6 +15,7 @@
                 <property name="visible">1</property>
                 <child>
                   <object class="GtkStackPage">
+                    <property name="name">page0</property>
                     <property name="title" translatable="1">page0</property>
                     <property name="child">
                       <object class="GtkBox" id="begin_box">
@@ -58,6 +59,7 @@
                 </child>
                 <child>
                   <object class="GtkStackPage">
+                    <property name="name">page1</property>
                     <property name="title" translatable="1">page1</property>
                     <property name="child">
                       <object class="GtkBox" id="main_box">
@@ -66,129 +68,225 @@
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">7-Zip File Manager</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image1">
+                              <object class="GtkBox">
                                 <property name="visible">1</property>
-                                <property name="icon-name">7zFM</property>
-                              </object>
-                            </child>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">1</property>
+                                    <property name="pixel-size">16</property>
+                                    <property name="icon-name">7zFM</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">1</property>
+                                    <property name="label" translatable="1"> 7-zip File Manager</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">BaiduNetDisk</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image2">
-                                <property name="visible">1</property>
-                                <property name="icon-name">baidunetdisk</property>
-                              </object>
-                            </child>
+                                <object class="GtkBox">
+                                  <property name="visible">1</property>
+                                  <child>
+                                    <object class="GtkImage">
+                                      <property name="visible">1</property>
+                                      <property name="pixel-size">16</property>
+                                      <property name="icon-name">baidunetdisk</property>
+                                    </object>
+                                  </child>
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="visible">1</property>
+                                      <property name="label" translatable="1"> BaiduNetDisk</property>
+                                      <property name="hexpand">1</property>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">File Manager</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image6">
-                                <property name="visible">1</property>
-                                <property name="icon-name">file-manager</property>
-                              </object>
-                            </child>
+                                <object class="GtkBox">
+                                  <property name="visible">1</property>
+                                  <child>
+                                    <object class="GtkImage">
+                                      <property name="visible">1</property>
+                                      <property name="pixel-size">16</property>
+                                      <property name="icon-name">file-manager</property>
+                                    </object>
+                                  </child>
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="visible">1</property>
+                                      <property name="label" translatable="1"> File Manager</property>
+                                      <property name="hexpand">1</property>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">Glade</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image8">
-                                <property name="visible">1</property>
-                                <property name="icon-name">glade</property>
-                              </object>
-                            </child>
+                                <object class="GtkBox">
+                                  <property name="visible">1</property>
+                                  <child>
+                                    <object class="GtkImage">
+                                      <property name="visible">1</property>
+                                      <property name="pixel-size">16</property>
+                                      <property name="icon-name">glade</property>
+                                    </object>
+                                  </child>
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="visible">1</property>
+                                      <property name="label" translatable="1"> Glade</property>
+                                      <property name="hexpand">1</property>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">QEMU</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image7">
-                                <property name="visible">1</property>
-                                <property name="icon-name">qemu-launcher</property>
-                              </object>
-                            </child>
+                                <object class="GtkBox">
+                                  <property name="visible">1</property>
+                                  <child>
+                                    <object class="GtkImage">
+                                      <property name="visible">1</property>
+                                      <property name="pixel-size">16</property>
+                                      <property name="icon-name">qemu-launcher</property>
+                                    </object>
+                                  </child>
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="visible">1</property>
+                                      <property name="label" translatable="1"> QEMU</property>
+                                      <property name="hexpand">1</property>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">QQ</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image5">
-                                <property name="visible">1</property>
-                                <property name="icon-name">qq</property>
-                              </object>
-                            </child>
+                                <object class="GtkBox">
+                                  <property name="visible">1</property>
+                                  <child>
+                                    <object class="GtkImage">
+                                      <property name="visible">1</property>
+                                      <property name="pixel-size">16</property>
+                                      <property name="icon-name">qq</property>
+                                    </object>
+                                  </child>
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="visible">1</property>
+                                      <property name="label" translatable="1"> QQ</property>
+                                      <property name="hexpand">1</property>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">QQMusic</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image3">
-                                <property name="visible">1</property>
-                                <property name="icon-name">qqmusic</property>
-                              </object>
-                            </child>
+                                <object class="GtkBox">
+                                  <property name="visible">1</property>
+                                  <child>
+                                    <object class="GtkImage">
+                                      <property name="visible">1</property>
+                                      <property name="pixel-size">16</property>
+                                      <property name="icon-name">qqmusic</property>
+                                    </object>
+                                  </child>
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="visible">1</property>
+                                      <property name="label" translatable="1"> QQMusic</property>
+                                      <property name="hexpand">1</property>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
                             <property name="visible">1</property>
-                            <property name="label" translatable="1">Visual Studio Code</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="halign">start</property>
                             <property name="has-frame">0</property>
                             <child>
-                              <object class="GtkImage" id="image4">
-                                <property name="visible">1</property>
-                                <property name="icon-name">visual-studio-code</property>
-                              </object>
-                            </child>
+                                <object class="GtkBox">
+                                  <property name="visible">1</property>
+                                  <child>
+                                    <object class="GtkImage">
+                                      <property name="visible">1</property>
+                                      <property name="pixel-size">16</property>
+                                      <property name="icon-name">visual-studio-code</property>
+                                    </object>
+                                  </child>
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="visible">1</property>
+                                      <property name="label" translatable="1"> Visual Studio Code</property>
+                                      <property name="hexpand">1</property>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                           </object>
                         </child>
                         <child>
@@ -281,7 +379,7 @@
                   <placeholder/>
                 </child>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="btnshut">
                     <property name="visible">1</property>
                     <property name="label" translatable="1">Shutdown</property>
                     <property name="focusable">1</property>

@@ -75,7 +75,7 @@ static void main_win_init(MainWin *win)
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), time_label);
 
     //Add a dock
-    add_dock(win->overlay, provider);
+    add_dock(win, provider);
 
     // Add widgets
     gtk_overlay_set_child(GTK_OVERLAY(win->overlay), win->background);
@@ -87,4 +87,9 @@ static void main_win_class_init(MainWinClass *klass) {}
 MainWin *main_win_new(GtkApplication *app)
 {
     return (MainWin *)g_object_new(main_win_get_type(), "application", app, NULL);
+}
+
+
+GtkOverlay *main_win_get_overlay(MainWin * win){
+    return GTK_OVERLAY(win->overlay);
 }
