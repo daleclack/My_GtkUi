@@ -3,4 +3,4 @@
 #include <gtk/gtk.h>
 #include "MainWin.h"
 
-void add_dock(MainWin * win, GtkStyleProvider * provider);
+void add_dock(MainWin * win);

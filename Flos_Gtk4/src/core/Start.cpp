@@ -28,6 +28,15 @@ void add_start(MainWin * win, GtkBox * box){
     GtkWidget * btnshut = (GtkWidget*)gtk_builder_get_object(startbuilder,"btnshut");
     g_signal_connect_swapped(btnshut,"clicked",G_CALLBACK(gtk_window_destroy),win);
 
+    //Add Style for separator
+    GtkWidget * prim_separator, * ext_separator;
+    prim_separator = (GtkWidget*)gtk_builder_get_object(startbuilder,"prim_separator");
+    ext_separator = (GtkWidget*)gtk_builder_get_object(startbuilder,"ext_separator");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(prim_separator),
+                                   main_win_get_style(win), G_MAXINT);
+    gtk_style_context_add_provider(gtk_widget_get_style_context(ext_separator),
+                                   main_win_get_style(win), G_MAXINT);
+
     //Pack widgets
     gtk_box_prepend(box,menu_btn);
     gtk_box_prepend(box,label);

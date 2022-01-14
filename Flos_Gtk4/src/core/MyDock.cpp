@@ -1,7 +1,7 @@
 #include "MyDock.h"
 #include "Start.h"
 
-void add_dock(MainWin * win, GtkStyleProvider * provider){
+void add_dock(MainWin * win){
     GtkWidget * dock_box, * main_box;
 
     //Create a box for layout
@@ -25,5 +25,6 @@ void add_dock(MainWin * win, GtkStyleProvider * provider){
     gtk_box_append(GTK_BOX(main_box),space);
 
     //Set Style
-    gtk_style_context_add_provider(gtk_widget_get_style_context(dock_box), provider, G_MAXINT);
+    gtk_style_context_add_provider(gtk_widget_get_style_context(dock_box), 
+                                    main_win_get_style(win), G_MAXINT);
 }

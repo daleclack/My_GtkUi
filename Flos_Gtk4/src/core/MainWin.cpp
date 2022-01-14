@@ -7,6 +7,7 @@ struct _MainWin
     GtkApplicationWindow parent_instance;
     GtkWidget *overlay;
     GtkWidget *background;
+    GtkStyleProvider *provider;
 };
 
 G_DEFINE_TYPE(MainWin, main_win, GTK_TYPE_APPLICATION_WINDOW)
@@ -56,9 +57,9 @@ static void main_win_init(MainWin *win)
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), menubar);
 
     // Apply Style for menubar
-    GtkStyleProvider *provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
-    gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(provider), "/org/gtk/daleclack/style.css");
-    gtk_style_context_add_provider(gtk_widget_get_style_context(menubar), provider, G_MAXINT);
+    win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
+    gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(menubar), win->provider, G_MAXINT);
 
     // Add Label for time
     GtkWidget *time_label = gtk_label_new("12:21 2022/1/9");
@@ -75,7 +76,7 @@ static void main_win_init(MainWin *win)
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), time_label);
 
     //Add a dock
-    add_dock(win, provider);
+    add_dock(win);
 
     // Add widgets
     gtk_overlay_set_child(GTK_OVERLAY(win->overlay), win->background);
@@ -91,5 +92,11 @@ MainWin *main_win_new(GtkApplication *app)
 
 
 GtkOverlay *main_win_get_overlay(MainWin * win){
+    //Get the Overlay of the window
     return GTK_OVERLAY(win->overlay);
+}
+
+GtkStyleProvider *main_win_get_style(MainWin * win){
+    //Get Style Provider
+    return win->provider;
 }

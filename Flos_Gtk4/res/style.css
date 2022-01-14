@@ -14,3 +14,7 @@ menubar{
 box{
     background-color: alpha(white,0.7);
 }
+
+separator{
+	background-color:white;
+}
