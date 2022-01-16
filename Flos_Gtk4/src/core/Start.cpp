@@ -23,10 +23,6 @@ static void btnmusic_clicked(GtkWidget *widget, GtkWidget *music_box)
     }
 }
 
-static void start_file_clicked(GtkWidget * widget, GtkWindow * parent){
-    
-}
-
 void add_start(MainWin *win, GtkBox *box)
 {
     // Create a builder for menu
@@ -80,6 +76,13 @@ void add_start(MainWin *win, GtkBox *box)
     btn_computer = (GtkWidget*)gtk_builder_get_object(startbuilder,"btn_computer");
     g_signal_connect(user_button, "clicked", G_CALLBACK(btnhome_clicked), win);
     g_signal_connect(btn_computer, "clicked", G_CALLBACK(btnfile_clicked), win);
+
+    //When the button clicked, popdown the menu
+    GtkWidget * start_menu = (GtkWidget*)gtk_builder_get_object(startbuilder,"main_menu");
+    g_signal_connect_swapped(btnfile1,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
+    g_signal_connect_swapped(btnfile2,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
+    g_signal_connect_swapped(user_button,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
+    g_signal_connect_swapped(btn_computer,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
 
     // Pack widgets
     gtk_box_prepend(box, menu_btn);
