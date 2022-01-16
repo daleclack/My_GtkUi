@@ -31,16 +31,21 @@ set(RESOURCE_LIST
     dock.ui
     start.ui
     Yanni-Nightingale.mp3
+    dialog-error.png
+    folder.svg
+    gnome-fs-regular.svg
     icons/16x16/actions/7zFM.png
     icons/48x48/actions/My_GtkUI.png
     icons/scalable/status/file-manager.svg
+    icons/scalable/status/file-manager_running.svg
     icons/scalable/status/qemu-launcher.svg
     icons/scalable/status/qq.svg
     icons/scalable/status/qqmusic.svg
     icons/scalable/status/utilities-system-monitor.svg
     icons/scalable/status/baidunetdisk.svg
     icons/scalable/status/visual-studio-code.svg
-    icons/scalable/status/glade.svg)
+    icons/scalable/status/glade.svg
+    icons/scalable/status/user-home.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
@@ -54,7 +59,8 @@ compile_gresources(RESOURCE_FILE
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 #SOURCE FILES LIST
-set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyDock.cpp src/core/Start.cpp)
+set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyDock.cpp src/core/Start.cpp
+    src/file_app/FileWindow.cpp)
 
 #For win32 platform,use rc resource and .ico icon
 if(WIN32)

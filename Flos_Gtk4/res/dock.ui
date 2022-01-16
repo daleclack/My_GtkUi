@@ -30,7 +30,7 @@
           </object>
     </child>
     <child>
-        <object class="GtkButton">
+        <object class="GtkButton" id="btnfile">
             <property name="focusable">1</property>
             <property name="receives-default">1</property>
             <property name="has-frame">0</property>
