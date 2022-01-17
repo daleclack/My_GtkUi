@@ -21,6 +21,12 @@
         </submenu>
         <submenu>
             <attribute name='label'>Help</attribute>
+            <item>
+                <attribute name="label">Help of My_GtkUI</attribute>
+            </item>
+            <item>
+                <attribute name="label">About</attribute>
+            </item>
         </submenu>
     </menu>
 </interface>
