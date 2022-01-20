@@ -11,6 +11,7 @@ static gboolean file_window_closed(GtkWindow * self, GtkButton * dock_file){
     gtk_image_set_from_icon_name(GTK_IMAGE(child),"file-manager");
     file_app_running = FALSE;
     gtk_window_destroy(self);
+    return TRUE;
 }
 
 static void file_window_ctrl(FileWindow * window, GtkWindow * parent){
@@ -82,8 +83,18 @@ void add_dock(MainWin * win){
     btnfile = (GtkWidget*)gtk_builder_get_object(builder,"btnfile");
     g_signal_connect(btnfile,"clicked",G_CALLBACK(btnfile_clicked),win);
 
-
     //Set Style
-    gtk_style_context_add_provider(gtk_widget_get_style_context(dock_box), 
-                                    main_win_get_style(win), G_MAXINT);
+    gtk_style_context_add_provider(gtk_widget_get_style_context(dock_box),
+                                   main_win_get_style(win), G_MAXINT);
+    
+
+    //Apply Style for all child in dock
+    GtkWidget * child;
+    for(child = gtk_widget_get_first_child(dock_box);
+        child != NULL;
+        child = gtk_widget_get_next_sibling(child))
+    {
+        gtk_style_context_add_provider(gtk_widget_get_style_context(child),
+                                       main_win_get_style(win), G_MAXINT);
+    }
 }

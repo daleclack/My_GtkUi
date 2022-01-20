@@ -4,7 +4,7 @@
   <object class="GtkBox" id="main_dock">
     <!-- <property name="homogeneous">1</property> -->
     <child>
-      <object class="GtkButton">
+      <object class="GtkButton" id="btnbaidu">
         <property name="focusable">1</property>
         <property name="receives-default">1</property>
         <property name="has-frame">0</property>
@@ -17,7 +17,7 @@
       </object>
     </child>
     <child>
-        <object class="GtkButton">
+        <object class="GtkButton" id="btnqq">
             <property name="focusable">1</property>
             <property name="receives-default">1</property>
             <property name="has-frame">0</property>
@@ -43,7 +43,7 @@
           </object>
     </child>
     <child>
-        <object class="GtkButton">
+        <object class="GtkButton" id="btnqqmusic">
             <property name="focusable">1</property>
             <property name="receives-default">1</property>
             <property name="has-frame">0</property>
@@ -56,7 +56,7 @@
           </object>
     </child>
     <child>
-        <object class="GtkButton">
+        <object class="GtkButton" id="btnsys">
             <property name="focusable">1</property>
             <property name="receives-default">1</property>
             <property name="has-frame">0</property>
@@ -69,7 +69,7 @@
           </object>
     </child>
     <child>
-        <object class="GtkButton">
+        <object class="GtkButton" id="btnqemu">
             <property name="focusable">1</property>
             <property name="receives-default">1</property>
             <property name="has-frame">0</property>
