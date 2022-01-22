@@ -1,254 +1,371 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <menu id="model">
-        <submenu>
-            <attribute name='label'>File</attribute>
-            <section>
-                <item>
-                    <attribute name="label">New Filder Window</attribute>
-                </item>
-                <item>
-                    <attribute name="label">New Folder</attribute>
-                </item>
-                <item>
-                    <attribute name="label">New Smart Folder</attribute>
-                </item>
-                <item>
-                    <attribute name="label">New Burn Folder</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Open</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Open With</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Print</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Close Window</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Get Info</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Duplicate</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Make alias</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Show Original</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Add to Sidebar</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Create archive</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Move to Trash</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Eject</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Burn Disc...</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Find...</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Color Label:</attribute>
-                </item>
-            </section>
-        </submenu>
-        <submenu>
-            <attribute name='label'>Edit</attribute>
-            <section>
-                <item>
-                    <attribute name="label">Undo</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Cut</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Copy</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Paste</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Select All</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Show Clipboard</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Special Characters...</attribute>
-                </item>
-            </section>
-        </submenu>
-        <submenu>
-            <attribute name='label'>Show</attribute>
-            <section>
-                <item>
-                    <attribute name="label">As Icons</attribute>
-                </item>
-                <item>
-                    <attribute name="label">As List</attribute>
-                </item>
-                <item>
-                    <attribute name="label">As Columns</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Clean Up</attribute>
-                </item>
-                <submenu>
-                    <attribute name="label">Arrange by</attribute>
-                    <item>
-                        <attribute name="label">Name</attribute>
-                    </item>
-                    <item>
-                        <attribute name="label">Date Modified</attribute>
-                    </item>
-                    <item>
-                        <attribute name="label">Date Created</attribute>
-                    </item>
-                    <item>
-                        <attribute name="label">Size</attribute>
-                    </item>
-                    <item>
-                        <attribute name="label">Kind</attribute>
-                    </item>
-                    <item>
-                        <attribute name="label">Label</attribute>
-                    </item>
-                </submenu>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Hide Toolbar</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Customize Toolbar</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Hide Status Bar</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Show View Options</attribute>
-                </item>
-            </section>
-        </submenu>
-        <submenu>
-            <attribute name='label'>Go to</attribute>
-            <section>
-                <item>
-                    <attribute name="label">Back</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Forward</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Enclosing Folder</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Computer</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Home</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Network</attribute>
-                </item>
-                <submenu>
-                    <attribute name="label">iDisk</attribute>
-                    <item>
-                        <attribute name="label">My iDisk</attribute>
-                    </item>
-                    <item>
-                        <attribute name="label">Other User's iDisk</attribute>
-                    </item>
-                    <item>
-                        <attribute name="label">Other User's Public Folder</attribute>
-                    </item>
-                </submenu>
-                <item>
-                    <attribute name="label">Applications</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Utilities</attribute>
-                </item>
-            </section>
-            <section>
-                <submenu>
-                    <attribute name="label">Recent Folders</attribute>
-                    <section>
-                        <item>
-                            <attribute name="label">(None)</attribute>
-                        </item>
-                    </section>
-                    <section>
-                        <item>
-                            <attribute name="label">Clear Menu</attribute>
-                        </item>
-                    </section>
-                </submenu>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Go to Folder...</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Connect to Server...</attribute>
-                </item>
-            </section>
-        </submenu>
-        <submenu>
-            <attribute name='label'>windows</attribute>
-            <section>
-                <item>
-                    <attribute name="label">Minimize</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Zoom</attribute>
-                </item>
-                <item>
-                    <attribute name="label">Cycle Through Windows</attribute>
-                </item>
-            </section>
-            <section>
-                <item>
-                    <attribute name="label">Bring All to Front</attribute>
-                </item>
-            </section>
-        </submenu>
-        <submenu>
-            <attribute name='label'>Help</attribute>
+    <menu id="main_menu">
+        <section>
             <item>
-                <attribute name="label">About</attribute>
+                <attribute name="label">About My GtkUI mac version</attribute>
             </item>
-        </submenu>
+            <item>
+                <attribute name="label">Software Update...</attribute>
+            </item>
+            <item>
+                <attribute name="label">My GtkUI Update...</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">System Preferences...</attribute>
+            </item>
+            <submenu>
+                <attribute name="label">Dock</attribute>
+                <section>
+                    <item>
+                        <attribute name="label">Turn Hiding On</attribute>
+                    </item>
+                    <item>
+                        <attribute name="label">Turn Magnification On</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label">Position On Left</attribute>
+                    </item>
+                    <item>
+                        <attribute name="label">Position On Bottom</attribute>
+                    </item>
+                    <item>
+                        <attribute name="label">Position On Right</attribute>
+                    </item>
+                </section>
+            </submenu>
+            <submenu>
+                <attribute name="label">Location</attribute>
+                <section>
+                    <item>
+                        <attribute name="label">Automatic</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label">Network Preferences...</attribute>
+                    </item>
+                </section>
+            </submenu>
+        </section>
+        <section>
+            <submenu>
+                <attribute name="label">Recent Items</attribute>
+                <section>
+                    <item>
+                        <attribute name="label">(None)</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label">Clear Menu</attribute>
+                    </item>
+                </section>
+            </submenu>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Force Quit...</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Sleep</attribute>
+            </item>
+            <item>
+                <attribute name="label">Restart...</attribute>
+            </item>
+            <item>
+                <attribute name="label">Shut Down...</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Login Out dale...</attribute>
+            </item>
+        </section>
+    </menu>
+    <menu id="title_menu">
+        <section>
+            <item>
+                <attribute name="label">About MyFinder</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Preferences...</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Empty Trash...</attribute>
+            </item>
+            <item>
+                <attribute name="label">Secure Empty Trash</attribute>
+            </item>
+        </section>
+        <section>
+            <submenu>
+                <attribute name="label">Services</attribute>
+            </submenu>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Hide MyFinder</attribute>
+            </item>
+            <item>
+                <attribute name="label">Hide Others</attribute>
+            </item>
+            <item>
+                <attribute name="label">Show All</attribute>
+            </item>
+        </section>
+    </menu>
+    <menu id="menu_file">
+        <section>
+            <item>
+                <attribute name="label">New Filder Window</attribute>
+            </item>
+            <item>
+                <attribute name="label">New Folder</attribute>
+            </item>
+            <item>
+                <attribute name="label">New Smart Folder</attribute>
+            </item>
+            <item>
+                <attribute name="label">New Burn Folder</attribute>
+            </item>
+            <item>
+                <attribute name="label">Open</attribute>
+            </item>
+            <item>
+                <attribute name="label">Open With</attribute>
+            </item>
+            <item>
+                <attribute name="label">Print</attribute>
+            </item>
+            <item>
+                <attribute name="label">Close Window</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Get Info</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Duplicate</attribute>
+            </item>
+            <item>
+                <attribute name="label">Make alias</attribute>
+            </item>
+            <item>
+                <attribute name="label">Show Original</attribute>
+            </item>
+            <item>
+                <attribute name="label">Add to Sidebar</attribute>
+            </item>
+            <item>
+                <attribute name="label">Create archive</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Move to Trash</attribute>
+            </item>
+            <item>
+                <attribute name="label">Eject</attribute>
+            </item>
+            <item>
+                <attribute name="label">Burn Disc...</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Find...</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Color Label:</attribute>
+            </item>
+        </section>
+    </menu>
+    <menu id="menu_edit">
+        <section>
+            <item>
+                <attribute name="label">Undo</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Cut</attribute>
+            </item>
+            <item>
+                <attribute name="label">Copy</attribute>
+            </item>
+            <item>
+                <attribute name="label">Paste</attribute>
+            </item>
+            <item>
+                <attribute name="label">Select All</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Show Clipboard</attribute>
+            </item>
+            <item>
+                <attribute name="label">Special Characters...</attribute>
+            </item>
+        </section>
+    </menu>
+    <menu id="menu_show">
+        <section>
+            <item>
+                <attribute name="label">As Icons</attribute>
+            </item>
+            <item>
+                <attribute name="label">As List</attribute>
+            </item>
+            <item>
+                <attribute name="label">As Columns</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Clean Up</attribute>
+            </item>
+            <submenu>
+                <attribute name="label">Arrange by</attribute>
+                <item>
+                    <attribute name="label">Name</attribute>
+                </item>
+                <item>
+                    <attribute name="label">Date Modified</attribute>
+                </item>
+                <item>
+                    <attribute name="label">Date Created</attribute>
+                </item>
+                <item>
+                    <attribute name="label">Size</attribute>
+                </item>
+                <item>
+                    <attribute name="label">Kind</attribute>
+                </item>
+                <item>
+                    <attribute name="label">Label</attribute>
+                </item>
+            </submenu>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Hide Toolbar</attribute>
+            </item>
+            <item>
+                <attribute name="label">Customize Toolbar</attribute>
+            </item>
+            <item>
+                <attribute name="label">Hide Status Bar</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Show View Options</attribute>
+            </item>
+        </section>
+    </menu>
+    <menu id="menu_goto">
+        <section>
+            <item>
+                <attribute name="label">Back</attribute>
+            </item>
+            <item>
+                <attribute name="label">Forward</attribute>
+            </item>
+            <item>
+                <attribute name="label">Enclosing Folder</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Computer</attribute>
+            </item>
+            <item>
+                <attribute name="label">Home</attribute>
+            </item>
+            <item>
+                <attribute name="label">Network</attribute>
+            </item>
+            <submenu>
+                <attribute name="label">iDisk</attribute>
+                <item>
+                    <attribute name="label">My iDisk</attribute>
+                </item>
+                <item>
+                    <attribute name="label">Other User's iDisk</attribute>
+                </item>
+                <item>
+                    <attribute name="label">Other User's Public Folder</attribute>
+                </item>
+            </submenu>
+            <item>
+                <attribute name="label">Applications</attribute>
+            </item>
+            <item>
+                <attribute name="label">Utilities</attribute>
+            </item>
+        </section>
+        <section>
+            <submenu>
+                <attribute name="label">Recent Folders</attribute>
+                <section>
+                    <item>
+                        <attribute name="label">(None)</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label">Clear Menu</attribute>
+                    </item>
+                </section>
+            </submenu>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Go to Folder...</attribute>
+            </item>
+            <item>
+                <attribute name="label">Connect to Server...</attribute>
+            </item>
+        </section>
+    </menu>
+    <menu id="menu_win">
+        <section>
+            <item>
+                <attribute name="label">Minimize</attribute>
+            </item>
+            <item>
+                <attribute name="label">Zoom</attribute>
+            </item>
+            <item>
+                <attribute name="label">Cycle Through Windows</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label">Bring All to Front</attribute>
+            </item>
+        </section>
+    </menu>
+    <menu id="menu_help">
+        <item>
+            <attribute name="label">About</attribute>
+        </item>
     </menu>
 </interface>

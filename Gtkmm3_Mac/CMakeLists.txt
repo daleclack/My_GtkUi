@@ -32,6 +32,7 @@ set(SOURCES src/core/main.cc src/core/MyWin.cc) #src/core/winconf.cc src/core/My
 
 set(RESOURCE_LIST
     menubar.xml
+    icons/16x16/actions/My_GtkUI.png
     icons/48x48/actions/My_GtkUI.png)
 
 compile_gresources(RESOURCE_FILE
