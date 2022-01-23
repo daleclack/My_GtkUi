@@ -1,4 +1,5 @@
 #include "MyWin.hh"
+#include "MyStack.hh"
 #include "winpe.xpm"
 
 MyWin::MyWin()
@@ -71,6 +72,20 @@ MyWin::MyWin()
     menubox.set_halign(Gtk::ALIGN_FILL);
     menubox.set_valign(Gtk::ALIGN_START);
     m_overlay.add_overlay(menubox);
+
+    //Add a timer
+    time_popover.add(calender);
+    calender.show();
+    calender.set_margin_bottom(5);
+    calender.set_margin_end(5);
+    calender.set_margin_start(5);
+    calender.set_margin_end(5);
+
+    //Timer
+    timer_button.set_label("2022/1/23 18:32");
+    timer_button.set_relief(Gtk::RELIEF_NONE);
+    timer_button.set_popover(time_popover);
+    menubox.pack_end(timer_button,Gtk::PACK_SHRINK);
 
     add(m_overlay);
     show_all_children();

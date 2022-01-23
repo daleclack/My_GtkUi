@@ -22,7 +22,7 @@ pkg_check_modules (GTKMM3 REQUIRED gtkmm-3.0)
 include_directories (${GTKMM3_INCLUDE_DIRS})
 link_directories (${GTKMM3_LIBRARY_DIRS})
 
-set(SOURCES src/core/main.cc src/core/MyWin.cc) #src/core/winconf.cc src/core/MyStack.cc 
+set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc) #src/core/winconf.cc  
     # src/panels/LeftPanel.cc src/panels/TopPanel.cc 
     # src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
     # src/image_app/ImageApp.cc src/image_app/MyImage.cc 

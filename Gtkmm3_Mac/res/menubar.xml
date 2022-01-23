@@ -3,7 +3,7 @@
     <menu id="main_menu">
         <section>
             <item>
-                <attribute name="label">About My GtkUI mac version</attribute>
+                <attribute name="label">About My GtkUI Mac version</attribute>
             </item>
             <item>
                 <attribute name="label">Software Update...</attribute>
