@@ -15,7 +15,7 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 include_directories(.)
 include_directories(..)
-include_directories(src/core src/apps src/panels src/image_app)
+include_directories(src/core src/ui src/apps src/panels src/image_app)
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM3 REQUIRED gtkmm-3.0)
@@ -33,6 +33,7 @@ set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc
 
 set(RESOURCE_LIST
     menubar.xml
+    mainmenu.xml
     stack.ui
     icons/16x16/actions/My_GtkUI.png
     icons/48x48/actions/My_GtkUI.png)
