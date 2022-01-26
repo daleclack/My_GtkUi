@@ -23,6 +23,9 @@ MyWin::MyWin()
     //Add Stack
     m_overlay.add_overlay(*(main_stack.stack));
 
+    //Add context menu
+    auto menubuilder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/mainmenu.xml");
+
     add(m_overlay);
     show_all_children();
 }
