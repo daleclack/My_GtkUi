@@ -81,11 +81,13 @@
             </item>
             <item>
                 <attribute name="label">Shut Down...</attribute>
+                <attribute name="action">win.quit</attribute>
             </item>
         </section>
         <section>
             <item>
                 <attribute name="label">Login Out dale...</attribute>
+                <attribute name="action">win.logout</attribute>
             </item>
         </section>
     </menu>

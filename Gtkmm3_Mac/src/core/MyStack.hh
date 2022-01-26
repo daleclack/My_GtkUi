@@ -1,12 +1,26 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "MyFinder.hh"
 
-class MyStack{
+class MyStack
+{
 public:
     MyStack();
-    void add_stack(Gtk::Overlay &overlay);
+    void logout();
 
+    // Main Widget
+    Gtk::Stack *stack;
 private:
-    Gtk::Stack * main_stack;
+    Glib::RefPtr<Gtk::Builder> stackbuilder;
+
+    // Child widgets
+    Gtk::Box *login_page, *main_page;
+    Gtk::Button *btnlogin;
+
+    //Finder
+    MyFinder finder;
+
+    // Signal Handlers
+    void btnlogin_clicked();
 };

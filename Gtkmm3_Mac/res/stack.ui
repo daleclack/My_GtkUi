@@ -5,6 +5,7 @@
   <object class="GtkStack" id="main_stack">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
+    <property name="transition-type">crossfade</property>
     <child>
       <object class="GtkBox" id="login_page">
         <property name="visible">True</property>
@@ -13,9 +14,10 @@
         <property name="valign">center</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkImage">
+          <object class="GtkImage" id="user_image">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="pixel-size">48</property>
             <property name="icon-name">My_GtkUI</property>
           </object>
           <packing>
@@ -25,7 +27,19 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkLabel" id="user_label">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">dale</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnlogin">
             <property name="label" translatable="yes">Login</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
@@ -35,11 +49,8 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
-        </child>
-        <child>
-          <placeholder/>
         </child>
       </object>
       <packing>
@@ -69,43 +80,7 @@
       </packing>
     </child>
     <child>
-      <!-- n-columns=3 n-rows=3 -->
-      <object class="GtkGrid" id="launchpad_page">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-      <packing>
-        <property name="name">page2</property>
-        <property name="title" translatable="yes">page2</property>
-        <property name="position">2</property>
-      </packing>
+      <placeholder/>
     </child>
   </object>
 </interface>

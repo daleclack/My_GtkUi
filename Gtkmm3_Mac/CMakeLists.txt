@@ -22,7 +22,8 @@ pkg_check_modules (GTKMM3 REQUIRED gtkmm-3.0)
 include_directories (${GTKMM3_INCLUDE_DIRS})
 link_directories (${GTKMM3_LIBRARY_DIRS})
 
-set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc) #src/core/winconf.cc  
+set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc 
+    src/ui/MyFinder.cc) #src/core/winconf.cc  
     # src/panels/LeftPanel.cc src/panels/TopPanel.cc 
     # src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
     # src/image_app/ImageApp.cc src/image_app/MyImage.cc 
@@ -32,6 +33,7 @@ set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc) #src/core/wi
 
 set(RESOURCE_LIST
     menubar.xml
+    stack.ui
     icons/16x16/actions/My_GtkUI.png
     icons/48x48/actions/My_GtkUI.png)
 

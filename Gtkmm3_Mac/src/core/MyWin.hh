@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "MyStack.hh"
 
 class MyWin : public Gtk::ApplicationWindow{
 public:
@@ -10,15 +11,13 @@ private:
     Gtk::Overlay m_overlay;
     Gtk::Image m_background;
     Gtk::Box menubox;
-    Gtk::MenuButton btnlogo, btntitle, btnfile, btnedit, btnshow, 
-                    btngoto, btnwin, btnhelp;
-    Gtk::MenuButton timer_button;
-    Gtk::Popover time_popover;
-    Gtk::Calendar calender;
+    Gtk::DrawingArea draw_area;
 
-    //Get Menu
-    Glib::RefPtr<Gio::Menu> get_menu(Glib::RefPtr<Gtk::Builder> &builder, const Glib::ustring &id);
+    //Main Stack
+    MyStack main_stack;
 
-    //Timer auto update
-    sigc::connection mytimer;
+    //Signal Handlers
+    void logout_activated();
+    void quit_activated();
+
 };
