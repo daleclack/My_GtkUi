@@ -25,9 +25,24 @@ MyWin::MyWin()
 
     //Add context menu
     auto menubuilder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/mainmenu.xml");
+    auto object = menubuilder->get_object("model");
+    auto gmenu = Glib::RefPtr<Gio::Menu>::cast_dynamic(object);
+    context_menu.bind_model(gmenu);
+    context_menu.set_relative_to(m_overlay);
+
+    //Add Gesture for control
+    gesture = Gtk::GestureMultiPress::create(m_overlay);
+    gesture->set_button(GDK_BUTTON_SECONDARY);
+    gesture->signal_pressed().connect(sigc::mem_fun(*this,&MyWin::press));
 
     add(m_overlay);
     show_all_children();
+}
+
+void MyWin::press(int n_press,double x,double y){
+    //Show Menu
+    context_menu.set_pointing_to(Gdk::Rectangle((int)x,(int)y,1,1));
+    context_menu.popup();
 }
 
 void MyWin::logout_activated(){

@@ -11,7 +11,11 @@ private:
     Gtk::Overlay m_overlay;
     Gtk::Image m_background;
     Gtk::Box menubox;
-    Gtk::DrawingArea draw_area;
+    Gtk::Popover context_menu;
+
+    //Gesture Control
+    Glib::RefPtr<Gtk::GestureMultiPress> gesture;
+    void press(int n_press,double x,double y);
 
     //Main Stack
     MyStack main_stack;

@@ -20,4 +20,5 @@ private:
 
     //Timer
     sigc::connection mytimer;
+    bool time_out();
 };
