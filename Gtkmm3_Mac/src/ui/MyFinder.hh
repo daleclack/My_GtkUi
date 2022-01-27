@@ -14,7 +14,8 @@ private:
     Gtk::MenuButton timer_button;
     Gtk::Popover time_popover;
     Gtk::Calendar calender;
-    Gtk::VolumeButton btn_vol;
+    Gtk::Button find_button, menu_button, battery_button, 
+                network_button, screen_button, audio_button;
 
     // Get Menu
     Glib::RefPtr<Gio::Menu> get_menu(Glib::RefPtr<Gtk::Builder> &builder, const Glib::ustring &id);

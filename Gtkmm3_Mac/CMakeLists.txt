@@ -37,8 +37,14 @@ set(RESOURCE_LIST
     stack.ui
     style.css
     reset.css
+    icons/16x16/actions/audio-speakers.svg
+    icons/16x16/actions/battery.svg
+    icons/16x16/actions/computer.svg
+    icons/16x16/actions/folder-wifi.svg
     icons/16x16/actions/My_GtkUI.png
-    icons/48x48/actions/My_GtkUI.png)
+    icons/16x16/actions/open-menu.svg
+    icons/48x48/actions/My_GtkUI.png
+    icons/scalable/status/edit-find.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

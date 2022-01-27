@@ -67,6 +67,16 @@ MyFinder::MyFinder()
     calender.set_margin_start(5);
     calender.set_margin_end(5);
 
+    //Menu button
+    menu_button.set_image_from_icon_name("open-menu");
+    menu_button.set_relief(Gtk::RELIEF_NONE);
+    pack_end(menu_button,Gtk::PACK_SHRINK);
+
+    //Find Button
+    find_button.set_image_from_icon_name("edit-find");
+    find_button.set_relief(Gtk::RELIEF_NONE);
+    pack_end(find_button,Gtk::PACK_SHRINK);
+
     // Timer
     timer_button.set_label("2022/1/23 18:32");
     timer_button.set_relief(Gtk::RELIEF_NONE);
@@ -74,6 +84,26 @@ MyFinder::MyFinder()
     pack_end(timer_button, Gtk::PACK_SHRINK);
 
     mytimer = Glib::signal_timeout().connect(sigc::mem_fun(*this, &MyFinder::time_out), 1000);
+
+    //Battery Button
+    battery_button.set_image_from_icon_name("battery");
+    battery_button.set_relief(Gtk::RELIEF_NONE);
+    pack_end(battery_button,Gtk::PACK_SHRINK);
+
+    //NetWork Button
+    network_button.set_image_from_icon_name("folder-wifi");
+    network_button.set_relief(Gtk::RELIEF_NONE);
+    pack_end(network_button,Gtk::PACK_SHRINK);
+
+    //Audio Button
+    audio_button.set_image_from_icon_name("audio-speakers");
+    audio_button.set_relief(Gtk::RELIEF_NONE);
+    pack_end(audio_button,Gtk::PACK_SHRINK);
+
+    //Monitor Button
+    screen_button.set_image_from_icon_name("computer");
+    screen_button.set_relief(Gtk::RELIEF_NONE);
+    pack_end(screen_button,Gtk::PACK_SHRINK);
 
     //Add Style for MyFinder
     provider = Gtk::CssProvider::create();

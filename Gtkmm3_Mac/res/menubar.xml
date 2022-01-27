@@ -368,6 +368,7 @@
     <menu id="menu_help">
         <item>
             <attribute name="label">About</attribute>
+            <attribute name="action">win.about</attribute>
         </item>
     </menu>
 </interface>
