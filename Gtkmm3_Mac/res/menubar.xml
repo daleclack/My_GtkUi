@@ -305,12 +305,12 @@
                 <attribute name="label">Network</attribute>
             </item>
             <submenu>
-                <attribute name="label">iDisk</attribute>
+                <attribute name="label">iCloud</attribute>
                 <item>
-                    <attribute name="label">My iDisk</attribute>
+                    <attribute name="label">My iCloud</attribute>
                 </item>
                 <item>
-                    <attribute name="label">Other User's iDisk</attribute>
+                    <attribute name="label">Other User's iCloud</attribute>
                 </item>
                 <item>
                     <attribute name="label">Other User's Public Folder</attribute>

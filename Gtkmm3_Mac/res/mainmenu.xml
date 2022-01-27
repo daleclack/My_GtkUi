@@ -12,6 +12,11 @@
             </item>
             <item>
                 <attribute name="label">Change Background</attribute>
+                <attribute name="action">win.back</attribute>
+            </item>
+            <item>
+                <attribute name="label">Refresh</attribute>
+                <attribute name="action">win.refresh</attribute>
             </item>
         </section>
         <section>

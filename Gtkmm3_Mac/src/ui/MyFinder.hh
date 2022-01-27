@@ -14,9 +14,13 @@ private:
     Gtk::MenuButton timer_button;
     Gtk::Popover time_popover;
     Gtk::Calendar calender;
+    Gtk::VolumeButton btn_vol;
 
     // Get Menu
     Glib::RefPtr<Gio::Menu> get_menu(Glib::RefPtr<Gtk::Builder> &builder, const Glib::ustring &id);
+
+    //Style for finder
+    Glib::RefPtr<Gtk::CssProvider> provider;
 
     //Timer
     sigc::connection mytimer;

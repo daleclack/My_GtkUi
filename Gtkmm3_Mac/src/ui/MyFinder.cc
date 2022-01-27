@@ -74,6 +74,12 @@ MyFinder::MyFinder()
     pack_end(timer_button, Gtk::PACK_SHRINK);
 
     mytimer = Glib::signal_timeout().connect(sigc::mem_fun(*this, &MyFinder::time_out), 1000);
+
+    //Add Style for MyFinder
+    provider = Gtk::CssProvider::create();
+    provider->load_from_resource("/org/gtk/daleclack/style.css");
+    auto style = get_style_context();
+    style->add_provider(provider,G_MAXUINT);
 }
 
 bool MyFinder::time_out()

@@ -35,6 +35,8 @@ set(RESOURCE_LIST
     menubar.xml
     mainmenu.xml
     stack.ui
+    style.css
+    reset.css
     icons/16x16/actions/My_GtkUI.png
     icons/48x48/actions/My_GtkUI.png)
 
