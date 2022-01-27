@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUI VERSION 3.5.0)
+project(My_GtkUI VERSION 5.0.0)
 
 #Add GCR_CMake
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
@@ -23,8 +23,7 @@ include_directories (${GTKMM3_INCLUDE_DIRS})
 link_directories (${GTKMM3_LIBRARY_DIRS})
 
 set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc 
-    src/ui/MyFinder.cc src/ui/WinConf.cc) #src/core/winconf.cc  
-    # src/panels/LeftPanel.cc src/panels/TopPanel.cc 
+    src/ui/MyFinder.cc src/ui/WinConf.cc src/ui/MyDock.cc)
     # src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
     # src/image_app/ImageApp.cc src/image_app/MyImage.cc 
     # src/run_app/Runner.cc src/text_app/TextEditor.cc)
