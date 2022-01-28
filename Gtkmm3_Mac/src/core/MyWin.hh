@@ -23,5 +23,6 @@ private:
     //Signal Handlers
     void logout_activated();
     void quit_activated();
+    void about_activated();
 
 };

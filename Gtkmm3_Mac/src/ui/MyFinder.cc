@@ -67,15 +67,15 @@ MyFinder::MyFinder()
     calender.set_margin_start(5);
     calender.set_margin_end(5);
 
-    //Menu button
+    // Menu button
     menu_button.set_image_from_icon_name("open-menu");
     menu_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(menu_button,Gtk::PACK_SHRINK);
+    pack_end(menu_button, Gtk::PACK_SHRINK);
 
-    //Find Button
+    // Find Button
     find_button.set_image_from_icon_name("finder-find");
     find_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(find_button,Gtk::PACK_SHRINK);
+    pack_end(find_button, Gtk::PACK_SHRINK);
 
     // Timer
     timer_button.set_label("2022/1/23 18:32");
@@ -85,31 +85,31 @@ MyFinder::MyFinder()
 
     mytimer = Glib::signal_timeout().connect(sigc::mem_fun(*this, &MyFinder::time_out), 1000);
 
-    //finder-battery Button
+    // finder-battery Button
     battery_button.set_image_from_icon_name("finder-battery");
     battery_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(battery_button,Gtk::PACK_SHRINK);
+    pack_end(battery_button, Gtk::PACK_SHRINK);
 
-    //NetWork Button
+    // NetWork Button
     network_button.set_image_from_icon_name("finder-wifi");
     network_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(network_button,Gtk::PACK_SHRINK);
+    pack_end(network_button, Gtk::PACK_SHRINK);
 
-    //Audio Button
+    // Audio Button
     audio_button.set_image_from_icon_name("finder_audio");
     audio_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(audio_button,Gtk::PACK_SHRINK);
+    pack_end(audio_button, Gtk::PACK_SHRINK);
 
-    //Monitor Button
+    // Monitor Button
     screen_button.set_image_from_icon_name("finder-computer");
     screen_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(screen_button,Gtk::PACK_SHRINK);
+    pack_end(screen_button, Gtk::PACK_SHRINK);
 
-    //Add Style for MyFinder
+    // Add Style for MyFinder
     provider = Gtk::CssProvider::create();
     provider->load_from_resource("/org/gtk/daleclack/style.css");
     auto style = get_style_context();
-    style->add_provider(provider,G_MAXUINT);
+    style->add_provider(provider, G_MAXUINT);
 }
 
 bool MyFinder::time_out()
@@ -124,7 +124,7 @@ bool MyFinder::time_out()
     local = localtime(&t);
 
     // Format the time to show
-    sprintf(time_string, "%04d/%d/%d %02d:%02d:%02d", local->tm_year + 1900, local->tm_mon + 1, 
+    sprintf(time_string, "%04d/%d/%d %02d:%02d:%02d", local->tm_year + 1900, local->tm_mon + 1,
             local->tm_mday, local->tm_hour, local->tm_min, local->tm_sec);
 
     timer_button.set_label(time_string);

@@ -4,6 +4,7 @@
         <section>
             <item>
                 <attribute name="label">About My GtkUI Mac version</attribute>
+                <attribute name="action">win.about</attribute>
             </item>
             <item>
                 <attribute name="label">Software Update...</attribute>
