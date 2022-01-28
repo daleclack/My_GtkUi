@@ -296,7 +296,7 @@
         </section>
         <section>
             <item>
-                <attribute name="label">Computer</attribute>
+                <attribute name="label">finder-computer</attribute>
             </item>
             <item>
                 <attribute name="label">Home</attribute>

@@ -2,4 +2,10 @@
 
 #include <gtkmm.h>
 
-class MyDock : public Gtk::Box{};
+class MyDock : public Gtk::Box
+{
+public:
+    MyDock();
+private:
+    
+};
