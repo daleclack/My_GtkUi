@@ -12,7 +12,10 @@ MyStack::MyStack(){
     btnlogin->signal_clicked().connect(sigc::mem_fun(*this,&MyStack::btnlogin_clicked));
 
     //Add Widget
-    main_page->pack_start(finder);
+    main_dock = MyDock::create();
+    main_dock->set_hexpand();
+    main_dock->set_vexpand();
+    main_page->pack_start(*main_dock);
 }
 
 void MyStack::logout(){

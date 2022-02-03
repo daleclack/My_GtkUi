@@ -34,12 +34,13 @@ set(RESOURCE_LIST
     menubar.xml
     mainmenu.xml
     stack.ui
+    prefs_stack.ui
+    mydock.ui
     style.css
     reset.css
     folder.svg
     folder-images.svg
     image_file.svg
-    prefs_stack.ui
     icons/16x16/actions/finder_audio.svg
     icons/16x16/actions/finder-battery.svg
     icons/16x16/actions/finder-computer.svg
@@ -48,7 +49,17 @@ set(RESOURCE_LIST
     icons/16x16/actions/open-menu.svg
     icons/16x16/actions/list-add.svg
     icons/16x16/actions/list-remove.svg
+    icons/48x48/actions/dialog-error.png
+    icons/48x48/actions/file-app.png
+    icons/48x48/actions/file-app-running.png
+    icons/48x48/actions/game.png
+    icons/48x48/actions/game_running.png
+    icons/48x48/actions/gedit.png 
+    icons/48x48/actions/gedit_running.png 
     icons/48x48/actions/My_GtkUI.png
+    icons/scalable/status/my_prefs.svg
+    icons/scalable/status/drawing_app.svg
+    icons/scalable/status/drawing_app_running.svg
     icons/scalable/status/finder-find.svg
     icons/scalable/status/display_prefs.svg)
 

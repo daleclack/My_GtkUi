@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
-#include "MyFinder.hh"
+#include "MyDock.hh"
 
 class MyStack
 {
@@ -18,8 +18,8 @@ private:
     Gtk::Box *login_page, *main_page;
     Gtk::Button *btnlogin;
 
-    //Finder
-    MyFinder finder;
+    // Dock Widget
+    MyDock *main_dock;
 
     // Signal Handlers
     void btnlogin_clicked();
