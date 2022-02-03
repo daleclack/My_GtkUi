@@ -19,6 +19,10 @@ MyWin::MyWin()
     add_action("logout", sigc::mem_fun(*this, &MyWin::logout_activated));
     add_action("quit", sigc::mem_fun(*this, &MyWin::quit_activated));
     add_action("about",sigc::mem_fun(*this,&MyWin::about_activated));
+    add_action("back",sigc::mem_fun(*this,&MyWin::back_actiavted));
+
+    prefs_win.set_background(&m_background);
+    prefs_win.set_transient_for(*this);
 
     // Add Stack
     m_overlay.add_overlay(*(main_stack.stack));
@@ -49,6 +53,10 @@ void MyWin::press(int n_press, double x, double y)
 void MyWin::logout_activated()
 {
     main_stack.logout();
+}
+
+void MyWin::back_actiavted(){
+    prefs_win.show_all();
 }
 
 void MyWin::about_activated()

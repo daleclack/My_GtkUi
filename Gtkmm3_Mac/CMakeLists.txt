@@ -22,8 +22,8 @@ pkg_check_modules (GTKMM3 REQUIRED gtkmm-3.0)
 include_directories (${GTKMM3_INCLUDE_DIRS})
 link_directories (${GTKMM3_LIBRARY_DIRS})
 
-set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc 
-    src/ui/MyFinder.cc src/ui/WinConf.cc src/ui/MyDock.cc)
+set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc src/cfgfile/cfgfile.cc
+    src/ui/MyFinder.cc src/ui/MyPrefs.cc src/ui/MyDock.cc)
     # src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
     # src/image_app/ImageApp.cc src/image_app/MyImage.cc 
     # src/run_app/Runner.cc src/text_app/TextEditor.cc)
@@ -36,14 +36,21 @@ set(RESOURCE_LIST
     stack.ui
     style.css
     reset.css
+    folder.svg
+    folder-images.svg
+    image_file.svg
+    prefs_stack.ui
     icons/16x16/actions/finder_audio.svg
     icons/16x16/actions/finder-battery.svg
     icons/16x16/actions/finder-computer.svg
     icons/16x16/actions/finder-wifi.svg
     icons/16x16/actions/My_GtkUI.png
     icons/16x16/actions/open-menu.svg
+    icons/16x16/actions/list-add.svg
+    icons/16x16/actions/list-remove.svg
     icons/48x48/actions/My_GtkUI.png
-    icons/scalable/status/finder-find.svg)
+    icons/scalable/status/finder-find.svg
+    icons/scalable/status/display_prefs.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

@@ -5,7 +5,8 @@
 class MyDock : public Gtk::Box
 {
 public:
-    MyDock();
+    MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> ref_Glade);
+    MyDock * create();
 private:
     
 };
