@@ -4,8 +4,17 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> ref_Gla
 :Gtk::Box(cobject),
 ref_builder(ref_Glade)
 {
+    // Get Widget
     ref_builder->get_widget("finder_box",finder_box);
+    ref_builder->get_widget("dock_box",dock_box);
     finder_box->pack_start(finder);
+
+    // Add Style for MyFinder
+    provider = Gtk::CssProvider::create();
+    provider->load_from_resource("/org/gtk/daleclack/style.css");
+    auto style = dock_box->get_style_context();
+    style->add_provider(provider, G_MAXUINT);
+
     show_all_children();
 }
 

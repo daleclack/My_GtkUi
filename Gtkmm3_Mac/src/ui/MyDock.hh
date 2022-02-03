@@ -11,10 +11,13 @@ public:
 
 private:
     // Child widgets
-    Gtk::Box * finder_box;
+    Gtk::Box *finder_box, *dock_box;
+
     //Finder
     MyFinder finder;
 
+    //Other
     Gtk::Window * parent_win;
     Glib::RefPtr<Gtk::Builder> ref_builder;
+    Glib::RefPtr<Gtk::CssProvider> provider;
 };
