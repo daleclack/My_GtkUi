@@ -2,7 +2,6 @@
 
 #include <gtkmm.h>
 #include "MyStack.hh"
-#include "MyPrefs.hh"
 
 class MyWin : public Gtk::ApplicationWindow{
 public:
@@ -20,9 +19,6 @@ private:
 
     //Main Stack
     MyStack main_stack;
-
-    //Window Preferences
-    MyPrefs prefs_win;
 
     //Signal Handlers
     void logout_activated();

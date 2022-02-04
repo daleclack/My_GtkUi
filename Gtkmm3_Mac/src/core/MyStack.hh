@@ -8,6 +8,8 @@ class MyStack
 public:
     MyStack();
     void logout();
+    void mystack_init(Gtk::Window *window, Gtk::Image *m_back);
+    void show_prefs();
 
     // Main Widget
     Gtk::Stack *stack;

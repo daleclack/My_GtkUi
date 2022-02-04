@@ -21,9 +21,6 @@ MyWin::MyWin()
     add_action("about",sigc::mem_fun(*this,&MyWin::about_activated));
     add_action("back",sigc::mem_fun(*this,&MyWin::back_actiavted));
 
-    prefs_win.set_background(&m_background);
-    prefs_win.set_transient_for(*this);
-
     // Add Stack
     m_overlay.add_overlay(*(main_stack.stack));
 
@@ -38,6 +35,9 @@ MyWin::MyWin()
     gesture = Gtk::GestureMultiPress::create(m_overlay);
     gesture->set_button(GDK_BUTTON_SECONDARY);
     gesture->signal_pressed().connect(sigc::mem_fun(*this, &MyWin::press));
+
+    // Initalize Stack
+    main_stack.mystack_init(this,&m_background);
 
     add(m_overlay);
     show_all_children();
@@ -56,7 +56,7 @@ void MyWin::logout_activated()
 }
 
 void MyWin::back_actiavted(){
-    prefs_win.show_all();
+    main_stack.show_prefs();
 }
 
 void MyWin::about_activated()
