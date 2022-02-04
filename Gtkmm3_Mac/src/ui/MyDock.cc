@@ -11,7 +11,7 @@ ref_builder(ref_Glade)
 
     // Add Style for MyFinder
     provider = Gtk::CssProvider::create();
-    provider->load_from_resource("/org/gtk/daleclack/style.css");
+    provider->load_from_resource("/org/gtk/daleclack/dock_style.css");
     auto style = dock_box->get_style_context();
     style->add_provider(provider, G_MAXUINT);
 

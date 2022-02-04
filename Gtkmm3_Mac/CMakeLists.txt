@@ -38,6 +38,7 @@ set(RESOURCE_LIST
     mydock.ui
     style.css
     reset.css
+    dock_style.css
     folder.svg
     folder-images.svg
     image_file.svg
