@@ -58,11 +58,14 @@ set(RESOURCE_LIST
     icons/48x48/actions/btnabout.png
     icons/48x48/actions/My_GtkUI.png
     icons/scalable/status/my_prefs.svg
+    icons/scalable/status/my_prefs_running.svg
     icons/scalable/status/drawing_app.svg
     icons/scalable/status/drawing_app_running.svg
     icons/scalable/status/finder-find.svg
+    icons/scalable/status/file-app.svg
+    icons/scalable/status/file-app_running.svg
     icons/scalable/status/display_prefs.svg
-    icons/scalable/status/file-app.svg)
+    icons/scalable/status/myrunner.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

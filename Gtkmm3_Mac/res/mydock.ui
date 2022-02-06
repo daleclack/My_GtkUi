@@ -2,21 +2,6 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkWindow">
-    <property name="can-focus">False</property>
-    <child>
-      <object class="GtkButton" id="btnnote">
-        <property name="label" translatable="yes">Notepad</property>
-        <property name="visible">True</property>
-        <property name="can-focus">True</property>
-        <property name="receives-default">True</property>
-        <property name="image">image15</property>
-        <property name="relief">none</property>
-        <property name="image-position">top</property>
-        <property name="always-show-image">True</property>
-      </object>
-    </child>
-  </object>
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -62,11 +47,41 @@
     <property name="pixel-size">48</property>
     <property name="icon-name">gedit</property>
   </object>
+  <object class="GtkImage" id="image16">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">gedit</property>
+  </object>
+  <object class="GtkImage" id="image17">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">vlc</property>
+  </object>
+  <object class="GtkImage" id="image18">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">vlc</property>
+  </object>
+  <object class="GtkImage" id="image19">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">myrunner</property>
+  </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
     <property name="icon-name">drawing_app</property>
+  </object>
+  <object class="GtkImage" id="image20">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">my_prefs</property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
@@ -145,6 +160,19 @@
             <property name="halign">center</property>
             <property name="valign">center</property>
             <property name="orientation">vertical</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkSeparator" id="separator_start">
+                <property name="height-request">5</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
             <child>
               <object class="GtkButton" id="btnlaunch">
                 <property name="visible">True</property>
@@ -157,7 +185,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -172,7 +200,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -187,7 +215,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child>
@@ -202,7 +230,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child>
@@ -217,7 +245,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">4</property>
+                <property name="position">5</property>
               </packing>
             </child>
             <child>
@@ -232,7 +260,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">5</property>
+                <property name="position">6</property>
               </packing>
             </child>
             <child>
@@ -247,11 +275,23 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">6</property>
+                <property name="position">7</property>
               </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkSeparator" id="separator_end">
+                <property name="height-request">5</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <style>
+                  <class name="separator1"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">8</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -318,7 +358,7 @@
                     <property name="row-homogeneous">True</property>
                     <property name="column-homogeneous">True</property>
                     <child>
-                      <object class="GtkButton" id="btnabout">
+                      <object class="GtkButton" id="padabout">
                         <property name="label" translatable="yes">about</property>
                         <property name="width-request">64</property>
                         <property name="height-request">64</property>
@@ -337,7 +377,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btnaud">
+                      <object class="GtkButton" id="padaud">
                         <property name="label" translatable="yes">audacious</property>
                         <property name="width-request">64</property>
                         <property name="height-request">64</property>
@@ -355,7 +395,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btndra">
+                      <object class="GtkButton" id="paddraw">
                         <property name="label" translatable="yes">Drawing</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -371,7 +411,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btnfile">
+                      <object class="GtkButton" id="padfile">
                         <property name="label" translatable="yes">MyFinder</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -387,7 +427,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btngedit">
+                      <object class="GtkButton" id="padgedit">
                         <property name="label" translatable="yes">Gedit</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -403,7 +443,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btngam">
+                      <object class="GtkButton" id="padgame">
                         <property name="label" translatable="yes">Guess game</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -419,7 +459,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btnimag">
+                      <object class="GtkButton" id="padimage">
                         <property name="label" translatable="yes">Image Viewer</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -435,22 +475,100 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padnote">
+                        <property name="label" translatable="yes">Notepad(win)</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image15</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">1</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padedit">
+                        <property name="label" translatable="yes">TextEditor</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image16</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">1</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padvlc">
+                        <property name="label" translatable="yes">VLC(linux)</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image17</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">1</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padvlc_win32">
+                        <property name="label" translatable="yes">VLC(win32)</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image18</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">5</property>
+                        <property name="top-attach">1</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padrun">
+                        <property name="label" translatable="yes">Run App</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image19</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padset">
+                        <property name="label" translatable="yes">Preferences</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image20</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
                     </child>
                     <child>
                       <placeholder/>
@@ -588,7 +706,14 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
                 </child>
                 <child>
                   <placeholder/>
