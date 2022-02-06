@@ -21,6 +21,11 @@ private:
     // Finder
     MyFinder finder;
 
+    // LaunchPad
+    bool launchpad_shown;
+    Gtk::Stack *launchpad_stack;
+    Gtk::Grid *default_page, *launchpad_page;
+
     //Window Preferences
     MyPrefs prefs_win;
 
@@ -28,4 +33,7 @@ private:
     Gtk::Window *parent_win;
     Glib::RefPtr<Gtk::Builder> ref_builder;
     Glib::RefPtr<Gtk::CssProvider> provider;
+
+    // Signal Handlers
+    void btnlaunch_clicked();
 };

@@ -2,7 +2,8 @@
 
 MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade)
     : Gtk::Box(cobject),
-      ref_builder(ref_Glade)
+      ref_builder(ref_Glade),
+      launchpad_shown(false)
 {
     // Get Widget
     ref_builder->get_widget("finder_box", finder_box);
@@ -14,9 +15,13 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("btnedit",btnedit);
     ref_builder->get_widget("btnimage",btnimage);
     ref_builder->get_widget("btnset",btnset);
+    ref_builder->get_widget("launchpad_stack",launchpad_stack);
+    ref_builder->get_widget("default_page",default_page);
+    ref_builder->get_widget("launchpad_page",launchpad_page);
 
     //Link signals
     btnset->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::btnset_clicked));
+    btnlaunch->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::btnlaunch_clicked));
     finder_box->pack_start(finder);
 
     // Add Style for MyFinder
@@ -24,8 +29,22 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     provider->load_from_resource("/org/gtk/daleclack/dock_style.css");
     auto style = dock_box->get_style_context();
     style->add_provider(provider, G_MAXUINT);
+    auto style1 = launchpad_page->get_style_context();
+    style1->add_provider(provider,G_MAXUINT);
 
     show_all_children();
+}
+
+void MyDock::btnlaunch_clicked(){
+    if(launchpad_shown){
+        finder_box->set_visible();
+        launchpad_stack->set_visible_child(*default_page);
+        launchpad_shown = false;
+    }else{
+        finder_box->set_visible(false);
+        launchpad_stack->set_visible_child(*launchpad_page);
+        launchpad_shown = true;
+    }
 }
 
 void MyDock::mydock_init(Gtk::Window *window, Gtk::Image *background1)
