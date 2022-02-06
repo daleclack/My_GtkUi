@@ -13,7 +13,7 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">audacious</property>
+    <property name="icon-name">audacious_whitesur</property>
     <property name="icon_size">6</property>
   </object>
   <object class="GtkImage" id="image11">
@@ -26,7 +26,7 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">gedit</property>
+    <property name="icon-name">my_textedit</property>
   </object>
   <object class="GtkImage" id="image13">
     <property name="visible">True</property>
@@ -38,32 +38,32 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">eog</property>
+    <property name="icon-name">image_app</property>
     <property name="icon_size">6</property>
   </object>
   <object class="GtkImage" id="image15">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">gedit</property>
+    <property name="icon-name">my_textedit</property>
   </object>
   <object class="GtkImage" id="image16">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">gedit</property>
+    <property name="icon-name">my_textedit</property>
   </object>
   <object class="GtkImage" id="image17">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">vlc</property>
+    <property name="icon-name">vlc_whitesur</property>
   </object>
   <object class="GtkImage" id="image18">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">vlc</property>
+    <property name="icon-name">vlc_whitesur</property>
   </object>
   <object class="GtkImage" id="image19">
     <property name="visible">True</property>
@@ -99,13 +99,13 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">gedit</property>
+    <property name="icon-name">my_textedit</property>
   </object>
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
-    <property name="icon-name">eog</property>
+    <property name="icon-name">image_app</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>

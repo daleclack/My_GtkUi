@@ -3,6 +3,12 @@
 #include <gtkmm.h>
 #include "MyFinder.hh"
 #include "MyPrefs.hh"
+#include "drawing.hh"
+#include "FileWindow.hh"
+#include "Game.hh"
+#include "ImageApp.hh"
+#include "Runner.hh"
+#include "TextEditor.hh"
 
 class MyDock : public Gtk::Box
 {
@@ -33,6 +39,41 @@ private:
     // Window Preferences
     MyPrefs prefs_win;
     bool prefs_win_closed(GdkEventAny *event);
+    void padset_clicked();
+
+    // Drawing Window
+    Drawing draw_app;
+    bool draw_win_closed(GdkEventAny *event);
+    void btndraw_clicked();
+    void paddraw_clicked();
+
+    // Finder
+    FileWindow file_app;
+    bool file_win_closed(GdkEventAny *event);
+    void btnfile_clicked();
+    void padfile_clicked();
+
+    // Guess Game
+    Game *game_win;
+    bool game_win_closed(GdkEventAny *event);
+    void game_win_hide();
+    void btngame_clicked();
+    void padgame_clicked();
+
+    // Image Viewer
+    ImageApp image_win;
+    bool image_win_closed(GdkEventAny *event);
+    void btnimage_clicked();
+    void padimage_clicked();
+
+    // Text Editor
+    TextEditor editor_win;
+    bool editor_win_closed(GdkEventAny *event);
+    void btnedit_clicked();
+    void padedit_clicked();
+
+    // A Simple Runner
+    GtkRunner runner1;
 
     // Window Control
     void window_ctrl(Gtk::Window &window, bool on_dock = true);
@@ -49,5 +90,5 @@ private:
     void padvlc_clicked();
     void padvlc_win32_clicked();
     void padnote_clicked();
-    void padset_clicked();
+    void btnrun_clicked();
 };

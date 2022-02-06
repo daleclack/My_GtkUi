@@ -23,25 +23,28 @@ include_directories (${GTKMM3_INCLUDE_DIRS})
 link_directories (${GTKMM3_LIBRARY_DIRS})
 
 set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc src/cfgfile/cfgfile.cc
-    src/ui/MyFinder.cc src/ui/MyPrefs.cc src/ui/MyDock.cc)
-    # src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
-    # src/image_app/ImageApp.cc src/image_app/MyImage.cc 
-    # src/run_app/Runner.cc src/text_app/TextEditor.cc)
+    src/ui/MyFinder.cc src/ui/MyPrefs.cc src/ui/MyDock.cc
+    src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
+    src/image_app/ImageApp.cc src/image_app/MyImage.cc 
+    src/run_app/Runner.cc src/text_app/TextEditor.cc)
 
 #Compile resources with GCR_CMake
 
 set(RESOURCE_LIST
     menubar.xml
     mainmenu.xml
+    image_appmenu.xml
     stack.ui
     prefs_stack.ui
     mydock.ui
+    game1.ui
     style.css
     reset.css
     dock_style.css
     folder.svg
     folder-images.svg
     image_file.svg
+    gnome-fs-regular.svg
     icons/16x16/actions/finder_audio.svg
     icons/16x16/actions/finder-battery.svg
     icons/16x16/actions/finder-computer.svg
@@ -53,10 +56,9 @@ set(RESOURCE_LIST
     icons/48x48/actions/dialog-error.png
     icons/48x48/actions/game.png
     icons/48x48/actions/game_running.png
-    icons/48x48/actions/gedit.png 
-    icons/48x48/actions/gedit_running.png
     icons/48x48/actions/btnabout.png
     icons/48x48/actions/My_GtkUI.png
+    icons/scalable/status/audacious_whitesur.svg
     icons/scalable/status/my_prefs.svg
     icons/scalable/status/my_prefs_running.svg
     icons/scalable/status/drawing_app.svg
@@ -65,7 +67,12 @@ set(RESOURCE_LIST
     icons/scalable/status/file-app.svg
     icons/scalable/status/file-app_running.svg
     icons/scalable/status/display_prefs.svg
-    icons/scalable/status/myrunner.svg)
+    icons/scalable/status/myrunner.svg
+    icons/scalable/status/image_app.svg
+    icons/scalable/status/image_app_running.svg
+    icons/scalable/status/my_textedit.svg
+    icons/scalable/status/my_textedit_running.svg
+    icons/scalable/status/vlc_whitesur.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
