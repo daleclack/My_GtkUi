@@ -31,13 +31,13 @@ set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc src/cfgfile/c
 #Compile resources with GCR_CMake
 
 set(RESOURCE_LIST
-    menubar.xml
-    mainmenu.xml
-    image_appmenu.xml
-    stack.ui
-    prefs_stack.ui
-    mydock.ui
-    game1.ui
+    STRIPBLANKS menubar.xml
+    STRIPBLANKS mainmenu.xml
+    STRIPBLANKS image_appmenu.xml
+    STRIPBLANKS stack.ui
+    STRIPBLANKS prefs_stack.ui
+    STRIPBLANKS mydock.ui
+    STRIPBLANKS game1.ui
     style.css
     reset.css
     dock_style.css
@@ -72,7 +72,8 @@ set(RESOURCE_LIST
     icons/scalable/status/image_app_running.svg
     icons/scalable/status/my_textedit.svg
     icons/scalable/status/my_textedit_running.svg
-    icons/scalable/status/vlc_whitesur.svg)
+    icons/scalable/status/vlc_whitesur.svg
+    icons/scalable/status/my_trash.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
