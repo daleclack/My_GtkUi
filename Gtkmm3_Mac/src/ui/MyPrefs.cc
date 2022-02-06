@@ -2,7 +2,6 @@
 #include "winpe.xpm"
 #include "img7.xpm"
 #include "image_types.hh"
-#include "cfgfile/cfgfile.hh"
 #include <iostream>
 #include <fstream>
 
@@ -445,11 +444,4 @@ void MyPrefs::load_winsize_config(){
         height = atoi(height_str.c_str());
         width = atoi(width_str.c_str());
     }
-}
-
-void MyPrefs::get_winsize_config(int &width1, int &height1)
-{
-    // Apply Config
-    width1 = width;
-    height1 = height;
 }

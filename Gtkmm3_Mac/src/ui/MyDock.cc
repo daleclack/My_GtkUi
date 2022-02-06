@@ -1,4 +1,5 @@
 #include "MyDock.hh"
+#include <thread>
 
 MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade)
     : Gtk::Box(cobject),
@@ -18,6 +19,16 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("launchpad_stack",launchpad_stack);
     ref_builder->get_widget("default_page",default_page);
     ref_builder->get_widget("launchpad_page",launchpad_page);
+    ref_builder->get_widget("btnabout",btnabout);
+    ref_builder->get_widget("btnaud",btnaud);
+
+    // Add Buttons for launchpad
+    // launchpad_page->attach(*btnabout,0,0);
+    // launchpad_page->attach(*btnaud,1,0);
+    // label1.set_label(" ");
+    // label1.set_hexpand();
+    // label1.set_vexpand();
+    // launchpad_page->attach(label1,2,1);
 
     //Link signals
     btnset->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::btnset_clicked));
@@ -37,11 +48,9 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
 
 void MyDock::btnlaunch_clicked(){
     if(launchpad_shown){
-        finder_box->set_visible();
         launchpad_stack->set_visible_child(*default_page);
         launchpad_shown = false;
     }else{
-        finder_box->set_visible(false);
         launchpad_stack->set_visible_child(*launchpad_page);
         launchpad_shown = true;
     }

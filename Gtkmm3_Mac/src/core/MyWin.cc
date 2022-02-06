@@ -2,26 +2,31 @@
 #include "winpe.xpm"
 
 MyWin::MyWin()
-    : menubox(Gtk::ORIENTATION_HORIZONTAL, 0)
+    : menubox(Gtk::ORIENTATION_HORIZONTAL, 0),
+      width(1024),
+      height(576)
 {
     // Initalize window
-    set_default_size(1024, 576);
     set_icon_name("My_GtkUI");
     set_title("My GtkUI macOS Version");
+    get_size_config(width, height);
 
     // Add background
     auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(winpe);
-    auto sized = pixbuf->scale_simple(1024, 576, Gdk::INTERP_BILINEAR);
+    auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(m_background.gobj(), sized->gobj());
     m_overlay.add(m_background);
+    pixbuf.reset();
+    sized.reset();
 
     // Add Action for menus
     add_action("logout", sigc::mem_fun(*this, &MyWin::logout_activated));
     add_action("quit", sigc::mem_fun(*this, &MyWin::quit_activated));
-    add_action("about",sigc::mem_fun(*this,&MyWin::about_activated));
-    add_action("back",sigc::mem_fun(*this,&MyWin::back_actiavted));
+    add_action("about", sigc::mem_fun(*this, &MyWin::about_activated));
+    add_action("back", sigc::mem_fun(*this, &MyWin::back_actiavted));
 
     // Add Stack
+    m_overlay.set_size_request(width, height);
     m_overlay.add_overlay(*(main_stack.stack));
 
     // Add context menu
@@ -37,7 +42,7 @@ MyWin::MyWin()
     gesture->signal_pressed().connect(sigc::mem_fun(*this, &MyWin::press));
 
     // Initalize Stack
-    main_stack.mystack_init(this,&m_background);
+    main_stack.mystack_init(this, &m_background);
 
     add(m_overlay);
     show_all_children();
@@ -55,7 +60,8 @@ void MyWin::logout_activated()
     main_stack.logout();
 }
 
-void MyWin::back_actiavted(){
+void MyWin::back_actiavted()
+{
     main_stack.show_prefs();
 }
 
@@ -67,7 +73,7 @@ void MyWin::about_activated()
         "GCR_CMake on github https://github.com/Makman2/GCR_CMake",
         NULL};
 
-    //Version information
+    // Version information
     char *version;
     version = g_strdup_printf("5.0\nRunning Against: Gtkmm %d.%d.%d",
                               GTKMM_MAJOR_VERSION,
@@ -76,15 +82,15 @@ void MyWin::about_activated()
 
     // Get Year information
     time_t t;
-    t=time(NULL);
-    struct tm * local;
+    t = time(NULL);
+    struct tm *local;
     local = localtime(&t);
 
-    //Copyright
-    char * copyright;
-    copyright = g_strdup_printf("© 2019—%04d The Xe Project",local->tm_year+1900);
+    // Copyright
+    char *copyright;
+    copyright = g_strdup_printf("© 2019—%04d The Xe Project", local->tm_year + 1900);
 
-    //Show the about dialog
+    // Show the about dialog
     gtk_show_about_dialog(GTK_WINDOW(gobj()),
                           "program-name", "My_GtkUI",
                           "version", version,
@@ -95,8 +101,8 @@ void MyWin::about_activated()
                           "logo-icon-name", "My_GtkUI",
                           "title", "About My GtkUI Mac Version",
                           NULL);
-    
-    //Free Memory
+
+    // Free Memory
     g_free(version);
     g_free(copyright);
 }

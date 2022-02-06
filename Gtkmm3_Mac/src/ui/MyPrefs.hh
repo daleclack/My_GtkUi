@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include <string>
+#include "cfgfile/cfgfile.hh"
 
 class MyPrefs : public Gtk::Window
 {
@@ -9,7 +10,6 @@ public:
     MyPrefs();
     void set_background(Gtk::Image *back);
     void load_winsize_config();
-    void get_winsize_config(int &width1,int &height1);
     void update_background_size();
 
 protected:
@@ -78,3 +78,15 @@ private:
     void btnapply_clicked();
     void btnGet_clicked();
 };
+
+//Read Config from file without use the MyPrefs class
+static inline void get_size_config(int &width, int &height){
+    std::string height_str, width_str;
+
+    // Read values from a file
+    if (readCfgFile("config", "width", width_str) && readCfgFile("config", "height", height_str))
+    {
+        height = atoi(height_str.c_str());
+        width = atoi(width_str.c_str());
+    }
+}

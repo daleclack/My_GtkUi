@@ -19,6 +19,7 @@ private:
 
     //Main Stack
     MyStack main_stack;
+    int width, height;
 
     //Signal Handlers
     void logout_activated();

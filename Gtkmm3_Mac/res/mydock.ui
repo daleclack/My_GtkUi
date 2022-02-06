@@ -2,12 +2,65 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkWindow">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkButton" id="btnnote">
+        <property name="label" translatable="yes">Notepad</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="image">image15</property>
+        <property name="relief">none</property>
+        <property name="image-position">top</property>
+        <property name="always-show-image">True</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
     <property name="icon-name">My_GtkUI</property>
     <property name="icon_size">6</property>
+  </object>
+  <object class="GtkImage" id="image10">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">audacious</property>
+    <property name="icon_size">6</property>
+  </object>
+  <object class="GtkImage" id="image11">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">file-app</property>
+  </object>
+  <object class="GtkImage" id="image12">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">gedit</property>
+  </object>
+  <object class="GtkImage" id="image13">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">game</property>
+  </object>
+  <object class="GtkImage" id="image14">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">eog</property>
+    <property name="icon_size">6</property>
+  </object>
+  <object class="GtkImage" id="image15">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">gedit</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
@@ -44,6 +97,21 @@
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
     <property name="icon-name">my_prefs</property>
+  </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="hexpand">False</property>
+    <property name="vexpand">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">btnabout</property>
+    <property name="icon_size">6</property>
+  </object>
+  <object class="GtkImage" id="image9">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">48</property>
+    <property name="icon-name">drawing_app</property>
   </object>
   <object class="GtkBox" id="main_box">
     <property name="visible">True</property>
@@ -238,185 +306,286 @@
               </packing>
             </child>
             <child>
-              <!-- n-columns=8 n-rows=8 -->
+              <!-- n-columns=3 n-rows=3 -->
               <object class="GtkGrid" id="launchpad_page">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="row-homogeneous">True</property>
-                <property name="column-homogeneous">True</property>
                 <child>
-                  <placeholder/>
+                  <!-- n-columns=8 n-rows=6 -->
+                  <object class="GtkGrid">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="row-homogeneous">True</property>
+                    <property name="column-homogeneous">True</property>
+                    <child>
+                      <object class="GtkButton" id="btnabout">
+                        <property name="label" translatable="yes">about</property>
+                        <property name="width-request">64</property>
+                        <property name="height-request">64</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="action-name">win.about</property>
+                        <property name="image">image8</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btnaud">
+                        <property name="label" translatable="yes">audacious</property>
+                        <property name="width-request">64</property>
+                        <property name="height-request">64</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image10</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btndra">
+                        <property name="label" translatable="yes">Drawing</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image9</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btnfile">
+                        <property name="label" translatable="yes">MyFinder</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image11</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btngedit">
+                        <property name="label" translatable="yes">Gedit</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image12</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btngam">
+                        <property name="label" translatable="yes">Guess game</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image13</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">5</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btnimag">
+                        <property name="label" translatable="yes">Image Viewer</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image14</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">6</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">1</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">2</property>
+                  </packing>
                 </child>
                 <child>
                   <placeholder/>

@@ -25,6 +25,8 @@ private:
     bool launchpad_shown;
     Gtk::Stack *launchpad_stack;
     Gtk::Grid *default_page, *launchpad_page;
+    Gtk::Button *btnabout, *btnaud;
+    Gtk::Label label1;
 
     //Window Preferences
     MyPrefs prefs_win;
