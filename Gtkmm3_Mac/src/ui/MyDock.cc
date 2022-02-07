@@ -21,6 +21,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("launchpad_stack", launchpad_stack);
     ref_builder->get_widget("default_page", default_page);
     ref_builder->get_widget("launchpad_page", launchpad_page);
+    ref_builder->get_widget("apps_grid",apps_grid);
     ref_builder->get_widget("padaud", padaud);
     ref_builder->get_widget("padgedit", padgedit);
     ref_builder->get_widget("padvlc", padvlc);
@@ -78,14 +79,17 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     // Add Style for MyFinder
     provider = Gtk::CssProvider::create();
     provider->load_from_resource("/org/gtk/daleclack/dock_style.css");
-    auto style = dock_box->get_style_context();
-    style->add_provider(provider, G_MAXUINT);
-    auto style1 = launchpad_page->get_style_context();
-    style1->add_provider(provider, G_MAXUINT);
-    auto style2 = separator_end->get_style_context();
-    style2->add_provider(provider, G_MAXUINT);
+    apply_style(*dock_box);
+    apply_style(*launchpad_page);
+    apply_style(*separator_end);
+    //apps_grid->foreach(sigc::mem_fun(*this,&MyDock::apply_style));
 
     show_all_children();
+}
+
+void MyDock::apply_style(Gtk::Widget &widget){
+    auto style = widget.get_style_context();
+    style->add_provider(provider,G_MAXUINT);
 }
 
 void MyDock::btnlaunch_clicked()
@@ -162,6 +166,7 @@ void MyDock::padset_clicked()
 {
     btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(prefs_win, false);
+    btnlaunch_clicked();
 }
 
 bool MyDock::draw_win_closed(GdkEventAny *event)
@@ -181,6 +186,7 @@ void MyDock::paddraw_clicked()
 {
     btndraw->set_image_from_icon_name("drawing_app_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(draw_app, false);
+    btnlaunch_clicked();
 }
 
 bool MyDock::file_win_closed(GdkEventAny *event)
@@ -199,6 +205,7 @@ void MyDock::padfile_clicked()
 {
     btnfiles->set_image_from_icon_name("file-app_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(file_app, false);
+    btnlaunch_clicked();
 }
 
 bool MyDock::game_win_closed(GdkEventAny *event)
@@ -224,6 +231,7 @@ void MyDock::padgame_clicked()
 {
     btngame->set_image_from_icon_name("game_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(*game_win, false);
+    btnlaunch_clicked();
 }
 
 bool MyDock::image_win_closed(GdkEventAny *event)
@@ -242,6 +250,7 @@ void MyDock::padimage_clicked()
 {
     btnimage->set_image_from_icon_name("image_app_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(image_win, false);
+    btnlaunch_clicked();
 }
 
 bool MyDock::editor_win_closed(GdkEventAny *event)
@@ -260,11 +269,13 @@ void MyDock::padedit_clicked()
 {
     btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(editor_win, false);
+    btnlaunch_clicked();
 }
 
 void MyDock::btnrun_clicked()
 {
     runner1.show();
+    btnlaunch_clicked();
 }
 
 void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)

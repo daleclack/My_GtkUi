@@ -154,7 +154,7 @@
       </packing>
     </child>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="launchpad_box">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="hexpand">True</property>
@@ -394,7 +394,7 @@
                 <property name="can-focus">False</property>
                 <child>
                   <!-- n-columns=8 n-rows=6 -->
-                  <object class="GtkGrid">
+                  <object class="GtkGrid" id="apps_grid">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="row-homogeneous">True</property>
@@ -786,12 +786,18 @@
             <property name="position">1</property>
           </packing>
         </child>
+        <child>
+          <placeholder/>
+        </child>
       </object>
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
         <property name="position">1</property>
       </packing>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
 </interface>

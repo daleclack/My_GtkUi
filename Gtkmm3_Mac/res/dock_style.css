@@ -15,6 +15,10 @@ separator{
 	background-color:alpha(white,0.3);
 }
 
+button{
+    color:white;
+}
+
 grid{
 	background-color:alpha(rgb(49, 48, 48),0.3);
 }

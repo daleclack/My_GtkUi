@@ -31,7 +31,7 @@ private:
     // LaunchPad
     bool launchpad_shown;
     Gtk::Stack *launchpad_stack;
-    Gtk::Grid *default_page, *launchpad_page;
+    Gtk::Grid *default_page, *launchpad_page, *apps_grid;
     Gtk::Button *padaud, *paddraw, *padfile, *padgedit, *padgame, *padset,
         *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun;
     Gtk::Label label1;
@@ -82,6 +82,7 @@ private:
     Gtk::Window *parent_win;
     Glib::RefPtr<Gtk::Builder> ref_builder;
     Glib::RefPtr<Gtk::CssProvider> provider;
+    void apply_style(Gtk::Widget &widget);
 
     // Signal Handlers
     void btnlaunch_clicked();
