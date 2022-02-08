@@ -7,7 +7,7 @@ ImageApp::ImageApp()
 {
     // Add Widgets
     set_default_size(800, 450);
-    set_icon_name("org.gtk.daleclack");
+    set_icon_name("image_app");
     set_title("Image Viewer");
 
     // Scrolled Window

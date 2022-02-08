@@ -9,6 +9,7 @@ game_builder(tmp_builder),
 game_index{0,1,2,3}
 {
     //Ininalize Window
+    set_icon_name("game");
     game_builder->get_widget("window",game_window);
     game_builder->get_widget("btn_exit",btnexit);
     game_builder->get_widget("btn_go",btngo);

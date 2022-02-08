@@ -8,6 +8,7 @@ open_btn("...")
 {
     //Ininalize window
     set_title("Run a Application");
+    set_icon_name("myrunner");
     set_default_size(300,150);
     add_button("OK",Gtk::RESPONSE_OK);
     add_button("Cancel",Gtk::RESPONSE_CANCEL);
@@ -28,6 +29,8 @@ open_btn("...")
     //Add Widgets
     auto pbox=get_content_area();
     pbox->pack_start(hbox);
+
+    show_all_children();
 }
 
 void GtkRunner::on_response(int response_id){

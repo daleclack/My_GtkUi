@@ -10,7 +10,7 @@ show_hidden("Show hidden files")
 {
     //Initalize Window
     set_default_size(650,400);
-    set_icon_name("org.gtk.daleclack");
+    set_icon_name("file-app");
     set_title("File Manager");
 
     //Load Pixbufs

@@ -60,7 +60,7 @@ btn_clear("Clear Board"),
 btn_exit("Exit")
 {
     //Ininalize window
-    set_icon_name("org.gtk.daleclack");
+    set_icon_name("drawing_app");
     set_title("Drawing");
     set_default_size(640,480);
 

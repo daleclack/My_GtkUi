@@ -14,7 +14,7 @@ btn_clear("Clear")
 {
     //Initalize Window
     set_default_size(800,450);
-    set_icon_name("My_GtkUI");
+    set_icon_name("my_textedit");
     set_title("Simple Text Editor");
     
     //Initalize Text Buffers
