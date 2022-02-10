@@ -23,7 +23,11 @@ Makefile
 
 #backup files 
 *.*~
+.DS_Store\
 .DS_Store
+
+#music files
+*.mp3
 
 #Gresource prebuild file
 */src/resources.cpp

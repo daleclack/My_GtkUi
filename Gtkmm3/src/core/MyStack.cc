@@ -1,8 +1,6 @@
 #include "MyStack.hh"
 
 MyStack::MyStack(Gtk::Window *parent1)
-:labelbox(Gtk::ORIENTATION_HORIZONTAL,5),
-toplabel("My GtkUI Desktop")
 {
     //Create a builder
     ref_builder=Gtk::Builder::create_from_resource("/GtkUI/main_stack.ui");
@@ -22,12 +20,7 @@ toplabel("My GtkUI Desktop")
     home_btn->signal_clicked().connect(sigc::mem_fun(*this,&MyStack::btnhome_clicked));
     login_overlay->add_overlay(*user_box);
 
-    //Add Toppanel
-    labelbox.pack_start(toplabel);
-    labelbox.set_valign(Gtk::ALIGN_START);
-    labelbox.set_halign(Gtk::ALIGN_START);
-    main_overlay->add_overlay(labelbox);
-    panel1.set_halign(Gtk::ALIGN_END);
+    panel1.set_halign(Gtk::ALIGN_FILL);
     panel1.set_valign(Gtk::ALIGN_START);
     main_overlay->add_overlay(panel1);
 

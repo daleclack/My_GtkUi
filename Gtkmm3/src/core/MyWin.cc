@@ -144,7 +144,7 @@ void MyWin::about_dialog(){
     std::vector<Glib::ustring> authors;
     authors.push_back("Dale Clack");
     //Create Comments
-    version=g_strdup_printf("3.5\nRunning against Gtkmm %d.%d.%d",
+    version=g_strdup_printf("3.6\nRunning against Gtkmm %d.%d.%d",
                             GTKMM_MAJOR_VERSION,
                             GTKMM_MINOR_VERSION,
                             GTKMM_MICRO_VERSION);

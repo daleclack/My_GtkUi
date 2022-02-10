@@ -4,8 +4,14 @@
 
 TopPanel::TopPanel():
 Gtk::Box(Gtk::ORIENTATION_HORIZONTAL,5),
+toplabel("My GtkUI Desktop"),
+midlabel("  "),
 timer_value(1000)
 {
+    //Add Header
+    pack_start(toplabel,Gtk::PACK_SHRINK);
+    pack_start(midlabel);
+
     //Initalize Timer
     mytimer=Glib::signal_timeout().connect(sigc::mem_fun(*this,&TopPanel::on_timeout),timer_value);
     time_btn.set_relief(Gtk::RELIEF_NONE);

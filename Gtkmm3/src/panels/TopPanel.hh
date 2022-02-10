@@ -14,6 +14,8 @@ private:
     Gtk::Popover popover;
     Gtk::MenuButton menubtn;
     Glib::RefPtr<Gtk::Builder> menu_builder;
+    //Header
+    Gtk::Label toplabel,midlabel;
     //Timer
     sigc::connection mytimer;
     Gtk::MenuButton time_btn;

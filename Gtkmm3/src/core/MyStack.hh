@@ -21,8 +21,6 @@ private:
     Gtk::Image *user_image;
     Gtk::Button *login_btn,*home_btn;
     //TopPanel and LeftPanel
-    Gtk::Box labelbox;
-    Gtk::Label toplabel;
     TopPanel panel1;
     LeftPanel panel2;
     //Signal Handlers
