@@ -26,6 +26,10 @@
                     <item>
                         <attribute name="label">Turn Magnification On</attribute>
                     </item>
+                    <item>
+                        <attribute name="label">Expand</attribute>
+                        <attribute name="action">win.expand</attribute>
+                    </item>
                 </section>
                 <section>
                     <item>

@@ -33,3 +33,7 @@ void MyStack::logout(){
 void MyStack::btnlogin_clicked(){
     stack->set_visible_child(*main_page);
 }
+
+void MyStack::set_mydock_mode(DockMode mode){
+    main_dock->set_dock_mode(mode);
+}

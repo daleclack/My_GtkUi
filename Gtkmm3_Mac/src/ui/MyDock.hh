@@ -10,6 +10,11 @@
 #include "Runner.hh"
 #include "TextEditor.hh"
 
+enum class DockMode{
+    MODE_DOCK,
+    MODE_PANEL
+};
+
 class MyDock : public Gtk::Box
 {
 public:
@@ -17,6 +22,7 @@ public:
     static MyDock *create();
     void btnset_clicked();
     void mydock_init(Gtk::Window *window, Gtk::Image *background1);
+    void set_dock_mode(DockMode mode);
 
 private:
     // Child widgets

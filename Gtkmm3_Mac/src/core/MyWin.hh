@@ -25,6 +25,7 @@ private:
     void logout_activated();
     void quit_activated();
     void about_activated();
-    void back_actiavted();
+    void back_activated();
+    void expand_activated();
 
 };

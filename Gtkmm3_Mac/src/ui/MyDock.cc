@@ -87,6 +87,18 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     show_all_children();
 }
 
+void MyDock::set_dock_mode(DockMode mode){
+    switch(mode){
+        case DockMode::MODE_DOCK:
+            set_vexpand(false);
+            break;
+        case DockMode::MODE_PANEL:
+            set_vexpand();
+            set_valign(Gtk::ALIGN_FILL);
+            break;
+    }
+}
+
 void MyDock::apply_style(Gtk::Widget &widget){
     auto style = widget.get_style_context();
     style->add_provider(provider,G_MAXUINT);

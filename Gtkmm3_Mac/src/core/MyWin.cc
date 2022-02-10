@@ -23,7 +23,8 @@ MyWin::MyWin()
     add_action("logout", sigc::mem_fun(*this, &MyWin::logout_activated));
     add_action("quit", sigc::mem_fun(*this, &MyWin::quit_activated));
     add_action("about", sigc::mem_fun(*this, &MyWin::about_activated));
-    add_action("back", sigc::mem_fun(*this, &MyWin::back_actiavted));
+    add_action("back", sigc::mem_fun(*this, &MyWin::back_activated));
+    add_action("expand",sigc::mem_fun(*this,&MyWin::expand_activated));
 
     // Add Stack
     m_overlay.set_size_request(width, height);
@@ -60,9 +61,13 @@ void MyWin::logout_activated()
     main_stack.logout();
 }
 
-void MyWin::back_actiavted()
+void MyWin::back_activated()
 {
     main_stack.show_prefs();
+}
+
+void MyWin::expand_activated(){
+    main_stack.set_mydock_mode(DockMode::MODE_PANEL);
 }
 
 void MyWin::about_activated()
