@@ -50,6 +50,9 @@ add_custom_command(
         ${CMAKE_SOURCE_DIR}/res/toppanel.ui
         ${CMAKE_SOURCE_DIR}/res/win_size.ui
         ${CMAKE_SOURCE_DIR}/res/my_gtkui.resource.xml
+        ${CMAKE_SOURCE_DIR}/res/dock_style.css
+        ${CMAKE_SOURCE_DIR}/res/reset.css
+        ${CMAKE_SOURCE_DIR}/res/style.css
 )
 
 # Step 3:

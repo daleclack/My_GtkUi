@@ -48,6 +48,12 @@ LeftPanel::LeftPanel(){
     panel_file->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnfile_clicked));
     btnimage->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnimage_clicked));
     panel_image->signal_clicked().connect(sigc::mem_fun(*this,&LeftPanel::btnimage_clicked));
+
+    //Add Style for panel
+    provider = Gtk::CssProvider::create();
+    provider->load_from_resource("/org/gtk/daleclack/dock_style.css");
+    auto style = btnbox->get_style_context();
+    style->add_provider(provider,G_MAXUINT);
 }
 
 LeftPanel::~LeftPanel(){
@@ -62,7 +68,7 @@ void LeftPanel::file_manager(){
 void LeftPanel::add_panel(Gtk::Window *parent1,Gtk::Overlay &overlay){
     //Pack the panel
     btnbox->set_halign(Gtk::ALIGN_START);
-    btnbox->set_valign(Gtk::ALIGN_START);
+    btnbox->set_valign(Gtk::ALIGN_FILL);
     overlay.add_overlay(*btnbox); 
     //Set Parent Window
     parent=parent1;

@@ -20,12 +20,13 @@ MyStack::MyStack(Gtk::Window *parent1)
     home_btn->signal_clicked().connect(sigc::mem_fun(*this,&MyStack::btnhome_clicked));
     login_overlay->add_overlay(*user_box);
 
+    //Add LeftPanel
+    panel2.add_panel(parent1,*main_overlay);
+
+    //Add TopPanel
     panel1.set_halign(Gtk::ALIGN_FILL);
     panel1.set_valign(Gtk::ALIGN_START);
     main_overlay->add_overlay(panel1);
-
-    //Add LeftPanel
-    panel2.add_panel(parent1,*main_overlay);
 
     //Bind Parent Window
     parent=parent1;

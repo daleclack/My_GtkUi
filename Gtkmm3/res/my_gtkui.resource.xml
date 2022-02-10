@@ -34,6 +34,9 @@
         <file>icons/scalable/status/system.svg</file>
         <file>gnome-fs-directory.png</file>
         <file>gnome-fs-regular.png</file>
+        <file>dock_style.css</file>
+        <file>reset.css</file>
+        <file>style.css</file>
     </gresource>
     <gresource prefix="GtkUI">
         <file preprocess="xml-stripblanks">appmenu.xml</file>

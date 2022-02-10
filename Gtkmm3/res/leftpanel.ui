@@ -373,6 +373,7 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="orientation">vertical</property>
+    <property name="baseline-position">top</property>
     <child type="center">
       <object class="GtkLabel">
         <property name="visible">True</property>
@@ -382,18 +383,31 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">7</property>
+        <property name="position">8</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="label" translatable="yes">	</property>
       </object>
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
         <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkSeparator">
+        <property name="height-request">12</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
       </packing>
     </child>
     <child>
@@ -416,7 +430,7 @@
       <packing>
         <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">1</property>
+        <property name="position">2</property>
       </packing>
     </child>
     <child>
@@ -430,7 +444,7 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">2</property>
+        <property name="position">3</property>
       </packing>
     </child>
     <child>
@@ -446,7 +460,7 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">3</property>
+        <property name="position">4</property>
       </packing>
     </child>
     <child>
@@ -460,7 +474,7 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">4</property>
+        <property name="position">5</property>
       </packing>
     </child>
     <child>
@@ -474,7 +488,7 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">5</property>
+        <property name="position">6</property>
       </packing>
     </child>
     <child>
@@ -489,7 +503,7 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">6</property>
+        <property name="position">8</property>
       </packing>
     </child>
   </object>

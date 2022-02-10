@@ -44,6 +44,12 @@ timer_value(1000)
     pack_start(*volume1,Gtk::PACK_SHRINK);
 
     pack_end(menubtn,Gtk::PACK_SHRINK);
+
+    //Add Style for TopPanel
+    provider = Gtk::CssProvider::create();
+    provider->load_from_resource("/org/gtk/daleclack/style.css");
+    auto style = get_style_context();
+    style->add_provider(provider,G_MAXUINT);
 }
 
 bool TopPanel::on_timeout(){

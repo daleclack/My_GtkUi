@@ -16,6 +16,8 @@ private:
     Glib::RefPtr<Gtk::Builder> menu_builder;
     //Header
     Gtk::Label toplabel,midlabel;
+    //Style for TopPanel
+    Glib::RefPtr<Gtk::CssProvider> provider;
     //Timer
     sigc::connection mytimer;
     Gtk::MenuButton time_btn;

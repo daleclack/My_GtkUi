@@ -27,6 +27,8 @@ private:
     //Parent Window
     Gtk::Window *parent;
     Game *game1;
+    //Style for leftpanel
+    Glib::RefPtr<Gtk::CssProvider> provider;
     //Timer for panel monitor
     sigc::connection paneltimer;
     bool on_timeout();
