@@ -20,6 +20,7 @@
     <file preprocess="xml-stripblanks">toppanel.ui</file>
     <file preprocess="xml-stripblanks">win_size.ui</file>
     <file preprocess="xml-stripblanks">win1.ui</file>
+    <file preprocess="xml-stripblanks">title.ui</file>
     <file preprocess="xml-stripblanks">game1.ui</file>
   </gresource>
 </gresources>

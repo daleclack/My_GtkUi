@@ -56,4 +56,9 @@ void add_toppanel(GtkBuilder *builder,GtkFixed *fixed){
     GObject *window=gtk_builder_get_object(builder,"window");
     g_signal_connect_swapped(btn_exit,"clicked",G_CALLBACK(gtk_widget_destroy),window);
     gtk_fixed_put(fixed,GTK_WIDGET(panel1),0,0);
+
+    //Add Title Panel
+    GtkBuilder *titlebuilder=gtk_builder_new_from_resource("/gtk42/title.ui");
+    GObject *titlebox=gtk_builder_get_object(titlebuilder,"titlebox");
+    gtk_fixed_put(fixed,GTK_WIDGET(titlebox),0,0);
 }

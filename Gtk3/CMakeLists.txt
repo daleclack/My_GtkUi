@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUi VERSION 2.6.0)
+project(My_GtkUi VERSION 2.7.0)
 
 include(CTest)
 enable_testing()
@@ -32,6 +32,14 @@ add_custom_command(
 		${GRESOURCE_XML}
         --target=${CMAKE_CURRENT_BINARY_DIR}/${GRESOURCE_C} 
 		--generate-source
+    DEPENDS
+        ${CMAKE_SOURCE_DIR}/res/game1.ui
+        ${CMAKE_SOURCE_DIR}/res/title.ui
+        ${CMAKE_SOURCE_DIR}/res/toppanel.ui
+        ${CMAKE_SOURCE_DIR}/res/win_size.ui
+        ${CMAKE_SOURCE_DIR}/res/win1.ui
+        ${CMAKE_SOURCE_DIR}/res/window.ui
+        ${CMAKE_SOURCE_DIR}/res/gtk42.resource.xml
 )
 
 # Step 3:

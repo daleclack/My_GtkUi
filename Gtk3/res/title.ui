@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkButtonBox">
+  <object class="GtkButtonBox" id="titlebox">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="layout-style">start</property>
