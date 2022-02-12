@@ -50,9 +50,9 @@ add_custom_target(
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
-    set(app_WINRC icon.rc)
+    set(app_WINRC gtk42/icon.rc)
 	set_property(SOURCE icon.rc APPEND PROPERTY
-        OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
+        OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/gtk42/icon.ico
         )
     add_executable(My_GtkUi WIN32 ${app_WINRC} src/main.cpp src/background.cpp src/game.cpp 
     src/TextEditor.cpp src/panel1.cpp src/panel2.cpp src/win1.cpp src/winconf.cpp src/drawing.cpp 
