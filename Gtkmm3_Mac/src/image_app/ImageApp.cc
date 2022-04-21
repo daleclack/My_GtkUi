@@ -22,6 +22,7 @@ ImageApp::ImageApp()
     scale.signal_value_changed().connect(sigc::mem_fun(*this, &ImageApp::scale_changed));
 
     // Add control widgets
+    btnopen.set_relief(Gtk::RELIEF_NONE);
     btnbox.pack_start(scale);
     btnbox.pack_start(btnopen, Gtk::PACK_SHRINK);
     main_box.pack_start(btnbox, Gtk::PACK_SHRINK);

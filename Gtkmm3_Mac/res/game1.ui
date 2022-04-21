@@ -33,6 +33,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="relief">none</property>
             <property name="image-position">top</property>
             <property name="always-show-image">True</property>
           </object>
@@ -49,6 +50,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="relief">none</property>
             <property name="image-position">top</property>
             <property name="always-show-image">True</property>
           </object>
@@ -65,6 +67,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="relief">none</property>
             <property name="image-position">top</property>
             <property name="always-show-image">True</property>
           </object>
@@ -81,6 +84,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="relief">none</property>
             <property name="image-position">top</property>
             <property name="always-show-image">True</property>
           </object>
