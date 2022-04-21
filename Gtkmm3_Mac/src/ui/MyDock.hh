@@ -9,6 +9,7 @@
 #include "ImageApp.hh"
 #include "Runner.hh"
 #include "TextEditor.hh"
+#include "Game24Win.hh"
 
 enum class DockMode{
     MODE_DOCK,
@@ -28,7 +29,7 @@ private:
     // Child widgets
     Gtk::Box *finder_box, *dock_box;
     Gtk::Button *btnlaunch, *btndraw, *btnfiles,
-        *btngame, *btnedit, *btnimage, *btnset;
+        *btngame, *btnedit, *btnimage, *btnset, *btngame24;
     Gtk::Separator *separator_start, *separator_end;
 
     // Finder
@@ -39,7 +40,7 @@ private:
     Gtk::Stack *launchpad_stack;
     Gtk::Grid *default_page, *launchpad_page, *apps_grid;
     Gtk::Button *padaud, *paddraw, *padfile, *padgedit, *padgame, *padset,
-        *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun;
+        *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun, *padgame24;
     Gtk::Label label1;
 
     // Window Preferences
@@ -65,6 +66,13 @@ private:
     void game_win_hide();
     void btngame_clicked();
     void padgame_clicked();
+
+    // 24-Game
+    Game24Win *game24_win;
+    bool game24_win_closed(GdkEventAny *event);
+    void game24_win_hide();
+    void btngame24_clicked();
+    void padgame24_clicked();
 
     // Image Viewer
     ImageApp image_win;

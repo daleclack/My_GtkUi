@@ -16,6 +16,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("btnedit", btnedit);
     ref_builder->get_widget("btnimage", btnimage);
     ref_builder->get_widget("btnset", btnset);
+    ref_builder->get_widget("btngame24",btngame24);
     ref_builder->get_widget("separator_start", separator_start);
     ref_builder->get_widget("separator_end", separator_end);
     ref_builder->get_widget("launchpad_stack", launchpad_stack);
@@ -35,9 +36,11 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("padimage", padimage);
     ref_builder->get_widget("padedit", padedit);
     ref_builder->get_widget("padrun", padrun);
+    ref_builder->get_widget("padgame24",padgame24);
 
     // Create window
     game_win = Game::create();
+    game24_win = Game24Win::create();
 
     // Link signals
     btnlaunch->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnlaunch_clicked));
@@ -64,6 +67,11 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     padgame->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padgame_clicked));
     game_win->signal_delete_event().connect(sigc::mem_fun(*this, &MyDock::game_win_closed));
     game_win->signal_hide().connect(sigc::mem_fun(*this, &MyDock::game_win_hide));
+
+    btngame24->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::btngame24_clicked));
+    padgame24->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::padgame24_clicked));
+    game24_win->signal_delete_event().connect(sigc::mem_fun(*this,&MyDock::game24_win_closed));
+    game24_win->signal_hide().connect(sigc::mem_fun(*this,&MyDock::game24_win_hide));
 
     btnimage->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnimage_clicked));
     padimage->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padimage_clicked));
@@ -128,6 +136,7 @@ void MyDock::mydock_init(Gtk::Window *window, Gtk::Image *background1)
 
 void MyDock::padaud_clicked()
 {
+    // Start audacious app
     std::thread first(system, "audacious");
     first.detach();
     btnlaunch_clicked();
@@ -135,6 +144,7 @@ void MyDock::padaud_clicked()
 
 void MyDock::padgedit_clicked()
 {
+    // Start gedit app
     std::thread second(system, "gedit");
     second.detach();
     btnlaunch_clicked();
@@ -142,6 +152,7 @@ void MyDock::padgedit_clicked()
 
 void MyDock::padvlc_clicked()
 {
+    // Start vlc app
     std::thread third(system, "vlc");
     third.detach();
     btnlaunch_clicked();
@@ -149,6 +160,7 @@ void MyDock::padvlc_clicked()
 
 void MyDock::padvlc_win32_clicked()
 {
+    // Start vlc on windows
     std::thread fourth(system, "start notepad");
     fourth.detach();
     btnlaunch_clicked();
@@ -156,6 +168,7 @@ void MyDock::padvlc_win32_clicked()
 
 void MyDock::padnote_clicked()
 {
+    // Start Notepad on windows
     std::thread fifth(system, "start ..\\vlc\\vlc.exe");
     fifth.detach();
     btnlaunch_clicked();
@@ -163,6 +176,7 @@ void MyDock::padnote_clicked()
 
 bool MyDock::prefs_win_closed(GdkEventAny *event)
 {
+    // Handle the "closed" signal of preference window
     btnset->set_image_from_icon_name("my_prefs", Gtk::ICON_SIZE_DIALOG);
     prefs_win.hide();
     return true;
@@ -170,16 +184,20 @@ bool MyDock::prefs_win_closed(GdkEventAny *event)
 
 void MyDock::btnset_clicked()
 {
+    // Show settings window (preferences)
     btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(prefs_win);
 }
 
 void MyDock::padset_clicked()
 {
+    // Function for button on launchpad
     btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(prefs_win, false);
     btnlaunch_clicked();
 }
+
+//Signal Handlers for drawing app window
 
 bool MyDock::draw_win_closed(GdkEventAny *event)
 {
@@ -201,6 +219,8 @@ void MyDock::paddraw_clicked()
     btnlaunch_clicked();
 }
 
+// Signal Handlers for file window
+
 bool MyDock::file_win_closed(GdkEventAny *event)
 {
     btnfiles->set_image_from_icon_name("file-app", Gtk::ICON_SIZE_DIALOG);
@@ -213,12 +233,15 @@ void MyDock::btnfile_clicked()
     btnfiles->set_image_from_icon_name("file-app_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(file_app);
 }
+
 void MyDock::padfile_clicked()
 {
     btnfiles->set_image_from_icon_name("file-app_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(file_app, false);
     btnlaunch_clicked();
 }
+
+// Signal Handlers for game window
 
 bool MyDock::game_win_closed(GdkEventAny *event)
 {
@@ -246,6 +269,32 @@ void MyDock::padgame_clicked()
     btnlaunch_clicked();
 }
 
+// Signal Handlers for game24 window
+
+bool MyDock::game24_win_closed(GdkEventAny *event){
+    btngame24->set_image_from_icon_name("24game",Gtk::ICON_SIZE_DIALOG);
+    game24_win->hide();
+    return true;
+}
+
+void MyDock::btngame24_clicked(){
+    btngame24->set_image_from_icon_name("24game_running",Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(*game24_win);
+}
+
+void MyDock::padgame24_clicked(){
+    btngame24->set_image_from_icon_name("24game_running",Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(*game24_win,false);
+    btnlaunch_clicked();
+}
+
+void MyDock::game24_win_hide(){
+    btngame24->set_image_from_icon_name("24game",Gtk::ICON_SIZE_DIALOG);
+    game24_win->hide();
+}
+
+// Signal Handlers for image app window
+
 bool MyDock::image_win_closed(GdkEventAny *event)
 {
     btnimage->set_image_from_icon_name("image_app", Gtk::ICON_SIZE_DIALOG);
@@ -258,12 +307,15 @@ void MyDock::btnimage_clicked()
     btnimage->set_image_from_icon_name("image_app_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(image_win);
 }
+
 void MyDock::padimage_clicked()
 {
     btnimage->set_image_from_icon_name("image_app_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(image_win, false);
     btnlaunch_clicked();
 }
+
+// Signal Handlers for editor window
 
 bool MyDock::editor_win_closed(GdkEventAny *event)
 {
@@ -277,12 +329,15 @@ void MyDock::btnedit_clicked()
     btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(editor_win);
 }
+
 void MyDock::padedit_clicked()
 {
     btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(editor_win, false);
     btnlaunch_clicked();
 }
+
+// Signal Handler for run window
 
 void MyDock::btnrun_clicked()
 {
