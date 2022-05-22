@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUI VERSION 5.1.0)
+project(My_GtkUI VERSION 5.2.0)
 
 #Add GCR_CMake
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
@@ -77,7 +77,11 @@ set(RESOURCE_LIST
     icons/scalable/status/my_textedit.svg
     icons/scalable/status/my_textedit_running.svg
     icons/scalable/status/vlc_whitesur.svg
-    icons/scalable/status/my_trash.svg)
+    icons/scalable/status/my_trash.svg
+    icons/scalable/status/circle.svg
+    icons/scalable/status/freehand.svg
+    icons/scalable/status/line.svg
+    icons/scalable/status/rectangle.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
