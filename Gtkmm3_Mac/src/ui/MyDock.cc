@@ -58,6 +58,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     btndraw->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btndraw_clicked));
     paddraw->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::paddraw_clicked));
     draw_app.signal_delete_event().connect(sigc::mem_fun(*this, &MyDock::draw_win_closed));
+    draw_app.signal_hide().connect(sigc::mem_fun(*this, &MyDock::draw_win_hide));
 
     btnfiles->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnfile_clicked));
     padfile->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padfile_clicked));
@@ -204,6 +205,11 @@ bool MyDock::draw_win_closed(GdkEventAny *event)
     btndraw->set_image_from_icon_name("drawing_app", Gtk::ICON_SIZE_DIALOG);
     draw_app.hide();
     return true;
+}
+
+void MyDock::draw_win_hide(){
+    btndraw->set_image_from_icon_name("drawing_app", Gtk::ICON_SIZE_DIALOG);
+    draw_app.hide();
 }
 
 void MyDock::btndraw_clicked()

@@ -53,6 +53,7 @@ private:
     bool draw_win_closed(GdkEventAny *event);
     void btndraw_clicked();
     void paddraw_clicked();
+    void draw_win_hide();
 
     // Finder
     FileWindow file_app;
