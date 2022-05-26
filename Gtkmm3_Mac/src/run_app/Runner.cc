@@ -7,7 +7,7 @@ hbox(Gtk::ORIENTATION_HORIZONTAL,5),
 open_btn("...")
 {
     //Ininalize window
-    set_title("Run a Application");
+    set_title("Run a Command");
     set_icon_name("myrunner");
     set_default_size(300,150);
     add_button("OK",Gtk::RESPONSE_OK);
@@ -36,7 +36,7 @@ open_btn("...")
 void GtkRunner::on_response(int response_id){
     if(response_id==Gtk::RESPONSE_OK){
         //Start The Application
-        Glib::ustring program=app_entry.get_text();
+        std::string program=app_entry.get_text();
         std::thread first(system,program.c_str());
         first.detach();
     }
@@ -65,7 +65,8 @@ void GtkRunner::file_dialog(){
 void GtkRunner::dialog_response(int response){
     if(response==Gtk::RESPONSE_ACCEPT){
         Glib::ustring filename=dialog->get_filename();
-        app_entry.set_text(filename);
+        Glib::ustring text = Glib::filename_to_utf8(filename);
+        app_entry.set_text(text);
     }
     dialog.reset();
 }
