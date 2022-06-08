@@ -7,7 +7,8 @@ CalcApp::CalcApp(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
       ref_builder(ref_Glade),
       winned(true)
 {
-    set_icon_name("Calculator");
+    set_icon_name("calcapp");
+    set_title("Calculator");
 
     // Get Widgets
     //ref_builder->get_widget("label_numbers", label_numbers);
@@ -110,7 +111,7 @@ CalcApp *CalcApp::create()
 {
     // Create a new window
     CalcApp *window = nullptr;
-    auto builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/window.ui");
+    auto builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/calcapp.ui");
     builder->get_widget_derived("window", window);
 
     return window;

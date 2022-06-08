@@ -42,6 +42,7 @@ set(RESOURCE_LIST
     STRIPBLANKS mydock.ui
     STRIPBLANKS game1.ui
     STRIPBLANKS game24.ui
+    STRIPBLANKS calcapp.ui
     style.css
     reset.css
     dock_style.css
@@ -83,7 +84,9 @@ set(RESOURCE_LIST
     icons/scalable/status/circle.svg
     icons/scalable/status/freehand.svg
     icons/scalable/status/line.svg
-    icons/scalable/status/rectangle.svg)
+    icons/scalable/status/rectangle.svg
+    icons/scalable/status/calcapp.svg
+    icons/scalable/status/calcapp_running.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
