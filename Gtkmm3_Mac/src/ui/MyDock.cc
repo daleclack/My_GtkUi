@@ -17,6 +17,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("btnimage", btnimage);
     ref_builder->get_widget("btnset", btnset);
     ref_builder->get_widget("btngame24",btngame24);
+    ref_builder->get_widget("btncalc",btncalc);
     ref_builder->get_widget("separator_start", separator_start);
     ref_builder->get_widget("separator_end", separator_end);
     ref_builder->get_widget("launchpad_stack", launchpad_stack);
@@ -37,10 +38,12 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("padedit", padedit);
     ref_builder->get_widget("padrun", padrun);
     ref_builder->get_widget("padgame24",padgame24);
+    ref_builder->get_widget("padcalc",padcalc);
 
     // Create window
     game_win = Game::create();
     game24_win = Game24Win::create();
+    calc_win = CalcApp::create();
 
     // Link signals
     btnlaunch->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnlaunch_clicked));
@@ -73,6 +76,11 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     padgame24->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::padgame24_clicked));
     game24_win->signal_delete_event().connect(sigc::mem_fun(*this,&MyDock::game24_win_closed));
     game24_win->signal_hide().connect(sigc::mem_fun(*this,&MyDock::game24_win_hide));
+
+    btncalc->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::btncalc_clicked));
+    padcalc->signal_clicked().connect(sigc::mem_fun(*this,&MyDock::padcalc_clicked));
+    calc_win->signal_delete_event().connect(sigc::mem_fun(*this,&MyDock::calc_win_closed));
+    calc_win->signal_hide().connect(sigc::mem_fun(*this,&MyDock::calc_win_hide));
 
     btnimage->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnimage_clicked));
     padimage->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padimage_clicked));
@@ -297,6 +305,30 @@ void MyDock::padgame24_clicked(){
 void MyDock::game24_win_hide(){
     btngame24->set_image_from_icon_name("24game",Gtk::ICON_SIZE_DIALOG);
     game24_win->hide();
+}
+
+// Signal Handlers for Calc App
+
+bool MyDock::calc_win_closed(GdkEventAny *event){
+    btncalc->set_image_from_icon_name("calcapp",Gtk::ICON_SIZE_DIALOG);
+    calc_win->hide();
+    return true;
+}
+
+void MyDock::btncalc_clicked(){
+    btncalc->set_image_from_icon_name("calcapp_running",Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(*calc_win);
+}
+
+void MyDock::padcalc_clicked(){
+    btncalc->set_image_from_icon_name("calcapp_running",Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(*calc_win);
+    btnlaunch_clicked();
+}
+
+void MyDock::calc_win_hide(){
+    btncalc->set_image_from_icon_name("calcapp",Gtk::ICON_SIZE_DIALOG);
+    calc_win->hide();
 }
 
 // Signal Handlers for image app window

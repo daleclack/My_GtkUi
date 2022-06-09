@@ -10,6 +10,7 @@
 #include "Runner.hh"
 #include "TextEditor.hh"
 #include "Game24Win.hh"
+#include "CalcApp.hh"
 
 enum class DockMode{
     MODE_DOCK,
@@ -28,7 +29,7 @@ public:
 private:
     // Child widgets
     Gtk::Box *finder_box, *dock_box;
-    Gtk::Button *btnlaunch, *btndraw, *btnfiles,
+    Gtk::Button *btnlaunch, *btndraw, *btnfiles, *btncalc, 
         *btngame, *btnedit, *btnimage, *btnset, *btngame24;
     Gtk::Separator *separator_start, *separator_end;
 
@@ -39,7 +40,7 @@ private:
     bool launchpad_shown;
     Gtk::Stack *launchpad_stack;
     Gtk::Grid *default_page, *launchpad_page, *apps_grid;
-    Gtk::Button *padaud, *paddraw, *padfile, *padgedit, *padgame, *padset,
+    Gtk::Button *padaud, *paddraw, *padfile, *padgedit, *padgame, *padset, *padcalc, 
         *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun, *padgame24;
     Gtk::Label label1;
 
@@ -60,6 +61,13 @@ private:
     bool file_win_closed(GdkEventAny *event);
     void btnfile_clicked();
     void padfile_clicked();
+
+    // Calculator App
+    CalcApp *calc_win;
+    bool calc_win_closed(GdkEventAny *event);
+    void calc_win_hide();
+    void btncalc_clicked();
+    void padcalc_clicked();
 
     // Guess Game
     Game *game_win;
