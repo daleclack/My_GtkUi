@@ -14,7 +14,7 @@ private:
 
     // Calculator Class
     int pos;
-    bool focused, winned;
+    bool focused;
     Glib::ustring tmp;
 
     // Child widgets

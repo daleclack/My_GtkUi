@@ -4,8 +4,7 @@
 
 CalcApp::CalcApp(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade)
     : Gtk::Window(cobject),
-      ref_builder(ref_Glade),
-      winned(true)
+      ref_builder(ref_Glade)
 {
     set_icon_name("calcapp");
     set_title("Calculator");
