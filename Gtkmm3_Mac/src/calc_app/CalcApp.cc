@@ -32,12 +32,18 @@ CalcApp::CalcApp(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     ref_builder->get_widget("btndiv", btns[13]);
     ref_builder->get_widget("btnleft", btns[14]);
     ref_builder->get_widget("btnright", btns[15]);
+    ref_builder->get_widget("btnpoint",btns[16]);
+    ref_builder->get_widget("btndiv100",btns[17]);
+    ref_builder->get_widget("btnsqrt",btnsqrt);
+    ref_builder->get_widget("btnpow",btnpow);
 
     // Link Signals
     btnclear->signal_clicked().connect(sigc::mem_fun(*this,&CalcApp::btnclear_clicked));
     btnback->signal_clicked().connect(sigc::mem_fun(*this,&CalcApp::btnback_clicked));
     btnanswer->signal_clicked().connect(sigc::mem_fun(*this,&CalcApp::btnanswer_clicked));
-    for (int i = 0; i < 16; i++)
+    btnpow->signal_clicked().connect(sigc::mem_fun(*this,&CalcApp::btnpow_clicked));
+    btnsqrt->signal_clicked().connect(sigc::mem_fun(*this,&CalcApp::btnsqrt_clicked));
+    for (int i = 0; i < 18; i++)
     {
         btns[i]->signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &CalcApp::btns_clicked), btns[i]));
     }
@@ -75,6 +81,18 @@ void CalcApp::btnclear_clicked(){
     entry_ans->set_text("");
 }
 
+void CalcApp::btnpow_clicked(){
+    Glib::ustring string = entry_ans->get_text();
+    Glib::ustring string2 = string + "^2";
+    entry_ans->set_text(string2);
+}
+
+void CalcApp::btnsqrt_clicked(){
+    Glib::ustring string = entry_ans->get_text();
+    Glib::ustring string2 = string + "^(1/2)";
+    entry_ans->set_text(string2);
+}
+
 void CalcApp::btnback_clicked(){
     // Get Original text and add number from button
 
@@ -102,9 +120,9 @@ void CalcApp::btnanswer_clicked(){
 
     // Calculation
     calc_reset();
-    int result = calc_expression_value(text.c_str());
+    double result = calc_expression_value(text.c_str());
     char result_str[40];
-    sprintf(result_str,"%d",result);
+    sprintf(result_str,"%f",result);
     entry_ans->set_text(Glib::ustring(result_str));
 }
 
