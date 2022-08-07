@@ -1,9 +1,11 @@
 #include "TextEditor.hh"
 #include "text_types.hh"
+#include "../json_nlohmann/json.hpp"
 #include <fstream>
+#include <iostream>
+#include <string>
 
-// Only for build in this repository
-// #define text_globs supported_globs
+using json = nlohmann::json;
 
 TextEditor::TextEditor()
     : vbox(Gtk::ORIENTATION_VERTICAL, 5),
@@ -11,8 +13,19 @@ TextEditor::TextEditor()
       searchbox(Gtk::ORIENTATION_HORIZONTAL, 5),
       file_opened(false)
 {
+    // Load window config from json file
+    int width = 800, height = 450;
+    std::ifstream json_file("text_config.json");
+    if (json_file.is_open())
+    {
+        json data = json::parse(json_file);
+        width = data["width"];
+        height = data["height"];
+    }
+    json_file.close();
+
     // Initalize Window
-    set_default_size(800, 450);
+    set_default_size(width, height);
     set_icon_name("my_textedit");
 
     // Initalize HeaderBar
@@ -48,6 +61,7 @@ TextEditor::TextEditor()
     add_action("text_copy", sigc::mem_fun(*this, &TextEditor::btncopy_clicked));
     add_action("text_paste", sigc::mem_fun(*this, &TextEditor::btnpaste_clicked));
     add_action("text_close", sigc::mem_fun(*this, &TextEditor::btnclose_clicked));
+    add_action("text_about", sigc::mem_fun(*this, &TextEditor::about_activated));
 
     // Add searchbar and search up and down buttons
     search_up.set_image_from_icon_name("up");
@@ -74,12 +88,82 @@ TextEditor::TextEditor()
     infobox = dynamic_cast<Gtk::Box *>(infobar.get_content_area());
     infobox->pack_start(label1);
     vbox.pack_start(infobar, Gtk::PACK_SHRINK);
+    vbox.pack_start(hbox);
+
+    // Save config when the window is closed
+    signal_delete_event().connect(sigc::mem_fun(*this, &TextEditor::window_delete_event));
+
+    // Add Intergated keyboard
+    expend_builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/expender.ui");
+    expend_builder->get_widget("key_expend", expender);
+    expend_builder->get_widget("btnshift", btnshift);
+    expend_builder->get_widget("btn_caps", btncaps);
+    expend_builder->get_widget("btntab", btntab);
+    expend_builder->get_widget("btnenter", btnenter);
+    vbox.pack_start(*expender, Gtk::PACK_SHRINK);
+
+    // Get alphabet buttons
+    for(int i = 0; i < 26; i++){
+        char name[10];
+        sprintf(name, "btn%d", i);
+        expend_builder->get_widget(name, btns[i]);
+        btns[i]->signal_clicked().connect(sigc::bind(
+            sigc::mem_fun(*this, &TextEditor::key_pressed),
+            btns[i]
+        ));
+    }
+    btntab->signal_clicked().connect(sigc::mem_fun(*this, &TextEditor::btntab_clicked));
+    btnenter->signal_clicked().connect(sigc::mem_fun(*this, &TextEditor::btnenter_clicked));
 
     // Show everything
-    vbox.pack_start(hbox);
     add(vbox);
     show_all_children();
     infobar.hide();
+}
+
+void TextEditor::key_pressed(Gtk::Button *button){
+    auto label = button->get_label();
+    Glib::ustring::size_type pos = 0,len = 1;
+    char buf[2];
+    if(btncaps->get_active() || btnshift->get_active()){
+        btnshift->set_active(false);
+    }else{
+        sprintf(buf, "%c", label[0] + 32);
+        label.replace(pos, len, buf);
+    }
+    //std::cout << label << std::endl;
+    buffer1->insert_at_cursor(label);
+}
+
+void TextEditor::btntab_clicked(){
+    buffer1->insert_at_cursor("\t");
+}
+
+void TextEditor::btnenter_clicked(){
+    buffer1->insert_at_cursor("\n");
+}
+
+bool TextEditor::window_delete_event(GdkEventAny *event)
+{
+    // Create json raw data
+    json data = json::parse(R"({
+        "width":800,
+        "height":450
+    })");
+
+    // Override config in json file
+    data["width"] = sw1.get_width();
+    data["height"] = sw1.get_height();
+
+    // Output json data to file
+    std::fstream outfile;
+    outfile.open("config.json", std::ios_base::out);
+    if (outfile.is_open())
+    {
+        outfile << data;
+    }
+    outfile.close();
+    return false;
 }
 
 void TextEditor::btnopen_clicked()
@@ -214,12 +298,15 @@ void TextEditor::search_entry_changed()
 
     Gtk::TextIter start, end;
     // If get text to search, select the text and storage the position
-    if (buffer1->begin().forward_search(text, Gtk::TEXT_SEARCH_CASE_INSENSITIVE, start, end))
+    if (text.length() != 0)
     {
-        curr_iter_up = start;
-        curr_iter_down = end;
-        buffer1->select_range(start, end);
-        textview1.scroll_to(start);
+        if (buffer1->begin().forward_search(text, Gtk::TEXT_SEARCH_CASE_INSENSITIVE, start, end))
+        {
+            curr_iter_up = start;
+            curr_iter_down = end;
+            buffer1->select_range(start, end);
+            textview1.scroll_to(start);
+        }
     }
 }
 
@@ -230,12 +317,15 @@ void TextEditor::search_forward()
 
     Gtk::TextIter start, end;
     // Get Text to search, down to the end of text
-    if (curr_iter_down.forward_search(search_text, Gtk::TEXT_SEARCH_CASE_INSENSITIVE, start, end))
+    if (search_text.length() != 0)
     {
-        curr_iter_up = start;
-        curr_iter_down = end;
-        buffer1->select_range(start, end);
-        textview1.scroll_to(start);
+        if (curr_iter_down.forward_search(search_text, Gtk::TEXT_SEARCH_CASE_INSENSITIVE, start, end))
+        {
+            curr_iter_up = start;
+            curr_iter_down = end;
+            buffer1->select_range(start, end);
+            textview1.scroll_to(start);
+        }
     }
 }
 
@@ -246,12 +336,15 @@ void TextEditor::search_backward()
 
     Gtk::TextIter start, end;
     // Get Text to search
-    if (curr_iter_up.backward_search(search_text, Gtk::TEXT_SEARCH_CASE_INSENSITIVE, start, end))
+    if (search_text.length() != 0)
     {
-        curr_iter_up = start;
-        curr_iter_down = end;
-        buffer1->select_range(start, end);
-        textview1.scroll_to(start);
+        if (curr_iter_up.backward_search(search_text, Gtk::TEXT_SEARCH_CASE_INSENSITIVE, start, end))
+        {
+            curr_iter_up = start;
+            curr_iter_down = end;
+            buffer1->select_range(start, end);
+            textview1.scroll_to(start);
+        }
     }
 }
 
@@ -310,4 +403,31 @@ void TextEditor::btnclose_clicked()
 void TextEditor::infobar_response(int response)
 {
     infobar.hide();
+}
+
+void TextEditor::about_activated()
+{
+    char *version, *copyright;
+    // The Gtkmm Version
+    version = g_strdup_printf("1.0\nRunning Against Gtkmm %d.%d.%d",
+                              GTKMM_MAJOR_VERSION,
+                              GTKMM_MINOR_VERSION,
+                              GTKMM_MICRO_VERSION);
+    const char *authors[] = {"Dale Clack", NULL};
+    // Copyright Informaion
+    copyright = g_strdup_printf("© 2019—2022 The Xe Project");
+    // Show the about dialog
+    gtk_show_about_dialog(GTK_WINDOW(this->gobj()),
+                          "program-name", "Text Editot",
+                          "version", version,
+                          "copyright", copyright,
+                          "comments", "A simple text editor",
+                          "authors", authors,
+                          "license-type", GTK_LICENSE_GPL_3_0,
+                          "logo-icon-name", "org.gtk.daleclack",
+                          "title", "About Simple text editor",
+                          (char *)NULL);
+    // Free memory
+    g_free(version);
+    g_free(copyright);
 }

@@ -44,6 +44,7 @@ set(RESOURCE_LIST
     STRIPBLANKS game24.ui
     STRIPBLANKS calcapp.ui
     STRIPBLANKS text_menu.xml
+    STRIPBLANKS expender.ui
     style.css
     reset.css
     dock_style.css
