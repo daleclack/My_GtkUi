@@ -416,12 +416,19 @@ void MyPrefs::btnapply_clicked()
     }
 
     // Open the file for configs
+    json data = json::parse(R"(
+        {
+            "height":1280,
+            "width":720
+        }
+    )");
     std::fstream outfile;
-    outfile.open("config", std::ios_base::out);
+    outfile.open("config.json", std::ios_base::out);
     if (outfile.is_open())
     {
-        outfile << "width=" << width << std::endl;
-        outfile << "height=" << height << std::endl;
+        data["width"] = width;
+        data["height"] = height;
+        outfile<<data;
         outfile.close();
     }
 }
@@ -436,12 +443,13 @@ void MyPrefs::btnGet_clicked()
 }
 
 void MyPrefs::load_winsize_config(){
-    std::string height_str, width_str;
-
-    // Read values from a file
-    if (readCfgFile("config", "width", width_str) && readCfgFile("config", "height", height_str))
-    {
-        height = atoi(height_str.c_str());
-        width = atoi(width_str.c_str());
+    std::ifstream jsonfile("config.json");
+    if(jsonfile.is_open()){
+        json data = json::parse(jsonfile);
+        height = data["height"];
+        width = data["width"];
+    }else{
+        height = 720;
+        width = 1280;
     }
 }

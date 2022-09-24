@@ -11,7 +11,7 @@
                 <attribute name="label">Show Info</attribute>
             </item>
             <item>
-                <attribute name="label">Change Background</attribute>
+                <attribute name="label">Customization</attribute>
                 <attribute name="action">win.back</attribute>
             </item>
             <item>

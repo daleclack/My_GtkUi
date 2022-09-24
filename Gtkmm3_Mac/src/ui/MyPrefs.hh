@@ -2,7 +2,10 @@
 
 #include <gtkmm.h>
 #include <string>
-#include "cfgfile/cfgfile.hh"
+#include <fstream>
+#include "../json_nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 class MyPrefs : public Gtk::Window
 {
@@ -81,12 +84,13 @@ private:
 
 //Read Config from file without use the MyPrefs class
 static inline void get_size_config(int &width, int &height){
-    std::string height_str, width_str;
-
-    // Read values from a file
-    if (readCfgFile("config", "width", width_str) && readCfgFile("config", "height", height_str))
-    {
-        height = atoi(height_str.c_str());
-        width = atoi(width_str.c_str());
+    std::ifstream jsonfile("config.json");
+    if(jsonfile.is_open()){
+        json data = json::parse(jsonfile);
+        height = data["height"];
+        width = data["width"];
+    }else{
+        height = 720;
+        width = 1280;
     }
 }
