@@ -407,6 +407,10 @@ void MyPrefs::btnapply_clicked()
             width = 1280;
             height = 720;
             break;
+        case 4:
+            width = 1366;
+            height = 768;
+            break;
         }
     }
     else

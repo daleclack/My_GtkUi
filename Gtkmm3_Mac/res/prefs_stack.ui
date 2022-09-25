@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkAdjustment" id="adjustment1">
@@ -107,6 +107,7 @@
                           <item translatable="yes">800x450</item>
                           <item translatable="yes">1024x576</item>
                           <item translatable="yes">1280x720</item>
+                          <item translatable="yes">1366x768</item>
                         </items>
                       </object>
                       <packing>
