@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUI VERSION 5.4.0)
+project(My_GtkUI VERSION 5.5.0)
 
 #Add GCR_CMake
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
@@ -45,6 +45,9 @@ set(RESOURCE_LIST
     STRIPBLANKS calcapp.ui
     STRIPBLANKS text_menu.xml
     STRIPBLANKS expender.ui
+    STRIPBLAKNS win_input.ui
+    STRIPBLANKS scores_win.ui
+    STRIPBLAKNS mine_menu.xml
     style.css
     reset.css
     dock_style.css
@@ -65,6 +68,19 @@ set(RESOURCE_LIST
     icons/48x48/actions/game_running.png
     icons/48x48/actions/btnabout.png
     icons/48x48/actions/My_GtkUI.png
+    icons/scalable/status/1mines.svg
+    icons/scalable/status/2mines.svg
+    icons/scalable/status/3mines.svg
+    icons/scalable/status/4mines.svg
+    icons/scalable/status/5mines.svg
+    icons/scalable/status/6mines.svg
+    icons/scalable/status/7mines.svg
+    icons/scalable/status/8mines.svg
+    icons/scalable/status/exploded.svg
+    icons/scalable/status/flag.svg
+    icons/scalable/status/incorrect.svg
+    icons/scalable/status/maybe.svg
+    icons/scalable/status/mine.svg
     icons/scalable/status/24game.svg
     icons/scalable/status/24game_running.svg
     icons/scalable/status/audacious_whitesur.svg
