@@ -16,7 +16,7 @@ include(CPack)
 include_directories(.)
 include_directories(..)
 include_directories(src/core src/ui src/apps src/panels src/image_app 
-                    src/game24_app src/calc_app)
+                    src/game24_app src/calc_app src/mine_app)
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM3 REQUIRED gtkmm-3.0)
@@ -29,7 +29,8 @@ set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc src/cfgfile/c
     src/game24_app/Game24.cc src/game24_app/Game24Win.cc
     src/image_app/ImageApp.cc src/image_app/MyImage.cc 
     src/run_app/Runner.cc src/text_app/TextEditor.cc
-    src/calc_app/calc.cc src/calc_app/CalcApp.cc)
+    src/calc_app/calc.cc src/calc_app/CalcApp.cc
+    src/mine_app/InputBox.cc src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc)
 
 #Compile resources with GCR_CMake
 

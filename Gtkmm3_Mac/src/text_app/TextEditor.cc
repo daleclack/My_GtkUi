@@ -183,7 +183,7 @@ void TextEditor::btnopen_clicked()
     }
     else
     {
-        for (int i = 0; text_globs != NULL && text_globs[i] != NULL; i++)
+        for (int i = 0; text_globs[i] != NULL; i++)
         {
             const char *glob = text_globs[i];
             filter->add_pattern(glob);
@@ -251,7 +251,7 @@ void TextEditor::btnsaveas_clicked()
     }
     else
     {
-        for (int i = 0; text_globs != NULL && text_globs[i] != NULL; i++)
+        for (int i = 0; text_globs[i] != NULL; i++)
         {
             const char *glob = text_globs[i];
             filter->add_pattern(glob);
