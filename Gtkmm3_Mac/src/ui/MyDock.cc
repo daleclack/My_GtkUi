@@ -18,6 +18,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("btnset", btnset);
     ref_builder->get_widget("btngame24",btngame24);
     ref_builder->get_widget("btncalc",btncalc);
+    ref_builder->get_widget("btnmine", btnmine);
     ref_builder->get_widget("separator_start", separator_start);
     ref_builder->get_widget("separator_end", separator_end);
     ref_builder->get_widget("launchpad_stack", launchpad_stack);
@@ -39,6 +40,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("padrun", padrun);
     ref_builder->get_widget("padgame24",padgame24);
     ref_builder->get_widget("padcalc",padcalc);
+    ref_builder->get_widget("padmine", padmine);
 
     // Create window
     game_win = Game::create();
@@ -46,6 +48,8 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     calc_win = CalcApp::create();
 
     // Link signals
+
+    // These signal handlers not contain a icon on the dock
     btnlaunch->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnlaunch_clicked));
     padaud->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padaud_clicked));
     padgedit->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padgedit_clicked));
@@ -54,6 +58,13 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     padvlc_win32->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padvlc_win32_clicked));
     padrun->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnrun_clicked));
 
+    /*
+    These functions contain a icon on the dock
+    the first signal for control button on dock
+    the next signal for button on launchpad
+    last 1 or 2 signals for the window
+    */
+   
     btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnset_clicked));
     padset->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padset_clicked));
     prefs_win.signal_delete_event().connect(sigc::mem_fun(*this, &MyDock::prefs_win_closed));
@@ -90,6 +101,10 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     padedit->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padedit_clicked));
     editor_win.signal_delete_event().connect(sigc::mem_fun(*this, &MyDock::editor_win_closed));
 
+    btnmine->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnmine_clicked));
+    padmine->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padmine_clicked));
+    mine_win.signal_delete_event().connect(sigc::mem_fun(*this, &MyDock::mine_win_closed));
+
     // Add Finder
     finder_box->pack_start(finder);
 
@@ -116,11 +131,13 @@ void MyDock::set_dock_mode(DockMode mode){
     }
 }
 
+// Set the style of dock widget
 void MyDock::apply_style(Gtk::Widget &widget){
     auto style = widget.get_style_context();
     style->add_provider(provider,G_MAXUINT);
 }
 
+// Launchpad
 void MyDock::btnlaunch_clicked()
 {
     if (launchpad_shown)
@@ -142,6 +159,13 @@ void MyDock::mydock_init(Gtk::Window *window, Gtk::Image *background1)
     prefs_win.set_transient_for(*window);
     parent_win = window;
 }
+
+/*
+Functions for execute outside apps
+padxx_clicked() for click in launchpad
+The first three functions for use in linux
+and the next three functions for windows
+*/
 
 void MyDock::padaud_clicked()
 {
@@ -372,6 +396,25 @@ void MyDock::padedit_clicked()
 {
     btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
     window_ctrl(editor_win, false);
+    btnlaunch_clicked();
+}
+
+// Signal Handler for minesweeper window
+
+bool MyDock::mine_win_closed(GdkEventAny *event){
+    btnmine->set_image_from_icon_name("mines_app", Gtk::ICON_SIZE_DIALOG);
+    mine_win.hide();
+    return true;
+}
+
+void MyDock::btnmine_clicked(){
+    btnmine->set_image_from_icon_name("mines_app_running", Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(mine_win);
+}
+
+void MyDock::padmine_clicked(){
+    btnmine->set_image_from_icon_name("mines_app_running", Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(mine_win, false);
     btnlaunch_clicked();
 }
 

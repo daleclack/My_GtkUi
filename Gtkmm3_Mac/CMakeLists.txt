@@ -105,7 +105,9 @@ set(RESOURCE_LIST
     icons/scalable/status/line.svg
     icons/scalable/status/rectangle.svg
     icons/scalable/status/calcapp.svg
-    icons/scalable/status/calcapp_running.svg)
+    icons/scalable/status/calcapp_running.svg
+    icons/scalable/status/mines_app.svg
+    icons/scalable/status/mines_app_running.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

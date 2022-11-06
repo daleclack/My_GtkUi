@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkImage" id="image1">
@@ -115,6 +115,18 @@
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
     <property name="icon-name">calcapp</property>
+  </object>
+  <object class="GtkImage" id="image26">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">mines_app</property>
+    <property name="icon_size">6</property>
+  </object>
+  <object class="GtkImage" id="image27">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">mines_app</property>
+    <property name="icon_size">6</property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
@@ -368,6 +380,21 @@
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">7</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btnmine">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">True</property>
+                            <property name="image">image26</property>
+                            <property name="relief">none</property>
+                            <property name="always-show-image">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">8</property>
                           </packing>
                         </child>
                         <child>
@@ -760,7 +787,20 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padmine">
+                        <property name="label" translatable="yes">MineSweeper</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image27</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
                     </child>
                     <child>
                       <placeholder/>

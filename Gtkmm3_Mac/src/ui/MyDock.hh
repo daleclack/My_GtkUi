@@ -11,6 +11,7 @@
 #include "TextEditor.hh"
 #include "Game24Win.hh"
 #include "CalcApp.hh"
+#include "MineSweeper.hh"
 
 enum class DockMode{
     MODE_DOCK,
@@ -30,7 +31,7 @@ private:
     // Child widgets
     Gtk::Box *finder_box, *dock_box;
     Gtk::Button *btnlaunch, *btndraw, *btnfiles, *btncalc, 
-        *btngame, *btnedit, *btnimage, *btnset, *btngame24;
+        *btngame, *btnedit, *btnimage, *btnset, *btngame24, *btnmine;
     Gtk::Separator *separator_start, *separator_end;
 
     // Finder
@@ -41,7 +42,7 @@ private:
     Gtk::Stack *launchpad_stack;
     Gtk::Grid *default_page, *launchpad_page, *apps_grid;
     Gtk::Button *padaud, *paddraw, *padfile, *padgedit, *padgame, *padset, *padcalc, 
-        *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun, *padgame24;
+        *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun, *padgame24, *padmine;
     Gtk::Label label1;
 
     // Window Preferences
@@ -94,6 +95,12 @@ private:
     bool editor_win_closed(GdkEventAny *event);
     void btnedit_clicked();
     void padedit_clicked();
+
+    // MineSweeper
+    MineSweeper mine_win;
+    bool mine_win_closed(GdkEventAny *event);
+    void btnmine_clicked();
+    void padmine_clicked();
 
     // A Simple Runner
     GtkRunner runner1;
