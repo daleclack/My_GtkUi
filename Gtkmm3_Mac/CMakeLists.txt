@@ -45,9 +45,9 @@ set(RESOURCE_LIST
     STRIPBLANKS calcapp.ui
     STRIPBLANKS text_menu.xml
     STRIPBLANKS expender.ui
-    STRIPBLAKNS win_input.ui
-    STRIPBLANKS scores_win.ui
-    STRIPBLAKNS mine_menu.xml
+    STRIPBLANKS win_input.ui
+    STRIPBLANKS scoreswin.ui
+    STRIPBLANKS mine_menu.xml
     style.css
     reset.css
     dock_style.css
