@@ -428,9 +428,16 @@ void MyDock::btnrun_clicked()
 
 void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
 {
+    // Get the GdkWindow object to get the state of a window
     auto gdk_win = window.get_window();
     if (gdk_win)
     {
+        /*
+        The State of GdkWindow (GdkSurface for Gtk4)
+        Gdk::WINDOW_STATE_WITHDRAWN: The window is not shown
+        Gdk::WINDOW_STATE_ICONIFIED: The window is minimized
+        the default mode for first launch
+        */
         auto state = gdk_win->get_state();
         switch (state)
         {
