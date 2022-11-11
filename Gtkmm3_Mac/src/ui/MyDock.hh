@@ -22,10 +22,10 @@ class MyDock : public Gtk::Box
 {
 public:
     MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade);
-    static MyDock *create();
+    static MyDock *create(DockMode mode);
     void btnset_clicked();
     void mydock_init(Gtk::Window *window, Gtk::Image *background1);
-    void set_dock_mode(DockMode mode);
+    // void set_dock_mode(DockMode mode);
 
 private:
     // Child widgets

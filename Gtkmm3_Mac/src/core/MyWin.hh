@@ -20,6 +20,7 @@ private:
     //Main Stack
     MyStack main_stack;
     int width, height;
+    bool panel_mode;
 
     //Signal Handlers
     void logout_activated();

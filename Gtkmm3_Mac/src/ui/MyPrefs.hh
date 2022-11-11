@@ -40,6 +40,7 @@ protected:
 private:
     // Background widget and properties
     int width, height;
+    bool panel_mode;
     Gtk::Image *background1;
     std::string path;
     bool background_internal;
@@ -83,14 +84,16 @@ private:
 };
 
 //Read Config from file without use the MyPrefs class
-static inline void get_size_config(int &width, int &height){
+static inline void get_size_config(int &width, int &height, bool &panel_mode){
     std::ifstream jsonfile("config.json");
     if(jsonfile.is_open()){
         json data = json::parse(jsonfile);
         height = data["height"];
         width = data["width"];
+        panel_mode = data["panel_mode"];
     }else{
         height = 720;
         width = 1280;
+        panel_mode = false;
     }
 }

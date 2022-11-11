@@ -423,7 +423,8 @@ void MyPrefs::btnapply_clicked()
     json data = json::parse(R"(
         {
             "height":1280,
-            "width":720
+            "width":720,
+            "panel_mode":false
         }
     )");
     std::fstream outfile;
@@ -432,6 +433,7 @@ void MyPrefs::btnapply_clicked()
     {
         data["width"] = width;
         data["height"] = height;
+        data["panel_mode"] = panel_mode;
         outfile<<data;
         outfile.close();
     }
@@ -452,8 +454,10 @@ void MyPrefs::load_winsize_config(){
         json data = json::parse(jsonfile);
         height = data["height"];
         width = data["width"];
+        panel_mode = data["panel_mode"];
     }else{
         height = 720;
         width = 1280;
+        panel_mode = false;
     }
 }
