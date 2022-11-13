@@ -9,6 +9,7 @@
 
 box{
 	background-color:alpha(gray,0.3);
+    color:white;
 }
 
 separator{

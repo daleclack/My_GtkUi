@@ -13,11 +13,6 @@
 #include "CalcApp.hh"
 #include "MineSweeper.hh"
 
-enum class DockMode{
-    MODE_DOCK,
-    MODE_PANEL
-};
-
 class MyDock : public Gtk::Box
 {
 public:
