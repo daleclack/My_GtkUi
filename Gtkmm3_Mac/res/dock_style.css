@@ -8,15 +8,15 @@
 @import url("resource://org/gtk/daleclack/reset.css");
 
 box{
-	background-color:alpha(white,0.3);
+	background-color:alpha(gray,0.3);
 }
 
 separator{
-	background-color:alpha(white,0.3);
+	background-color:alpha(gray,0.3);
 }
 
 button{
-    color:white;
+    color:gray;
 }
 
 grid{

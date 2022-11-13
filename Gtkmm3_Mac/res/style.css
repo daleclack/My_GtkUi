@@ -8,5 +8,9 @@
 @import url("resource://org/gtk/daleclack/reset.css");
 
 box{
-	background-color:alpha(white,0.7);
+	background-color:alpha(gray,0.7);
+}
+
+label{
+    color:black;
 }
