@@ -489,6 +489,11 @@ void MyPrefs::btnGet_clicked()
     spin_height->set_value(height);
 }
 
+DockPos MyPrefs::get_dock_pos(){
+    // Get config for dock position
+    return dock_pos;
+}
+
 void MyPrefs::load_winsize_config()
 {
     // Read the config

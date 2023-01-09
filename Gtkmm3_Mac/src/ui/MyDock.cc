@@ -13,6 +13,8 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     // Get Widgets
     ref_builder->get_widget("finder_box", finder_box);
     ref_builder->get_widget("dock_box", dock_box);
+    ref_builder->get_widget("dock_left", dock_left);
+    ref_builder->get_widget("dock_right", dock_right);
     ref_builder->get_widget("btnlaunch", btnlaunch);
     ref_builder->get_widget("btndraw", btndraw);
     ref_builder->get_widget("btnfiles", btnfiles);
@@ -132,6 +134,22 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
         dock_box->set_valign(Gtk::ALIGN_FILL);
         // std::cout << "panel mode" << std::endl;
         break;
+    }
+
+    // Set dock position
+    // The dock can be positioned at the left, right and the bottom of the window
+    auto dock_pos = prefs_win.get_dock_pos();
+    switch (dock_pos)
+    {
+    case DockPos::POS_LEFT:
+        dock_left->pack_start(*dock_box);
+        break;
+    case DockPos::POS_RIGHT:
+        dock_right->pack_start(*dock_box);
+        break;
+    case DockPos::POS_BOTTOM:
+    default:
+        dock_right->pack_start(*dock_box);
     }
 
     show_all_children();
@@ -503,7 +521,7 @@ MyDock *MyDock::create(DockMode mode)
     // Get Widget
     auto builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/mydock.ui");
     builder->get_widget_derived("main_box", dock);
-    
+
     // switch (mode)
     // {
     // case DockMode::MODE_DOCK:

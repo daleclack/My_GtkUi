@@ -25,6 +25,7 @@ public:
     void set_background(Gtk::Image *back);
     void load_winsize_config();
     void update_background_size();
+    DockPos get_dock_pos();
 
 protected:
     class ModelColumns : public Gtk::TreeModelColumnRecord

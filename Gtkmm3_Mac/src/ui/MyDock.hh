@@ -24,7 +24,7 @@ public:
 
 private:
     // Child widgets
-    Gtk::Box *finder_box, *dock_box;
+    Gtk::Box *finder_box, *dock_box, *dock_left, *dock_right;
     Gtk::Button *btnlaunch, *btndraw, *btnfiles, *btncalc, 
         *btngame, *btnedit, *btnimage, *btnset, *btngame24, *btnmine;
     Gtk::Separator *separator_start, *separator_end;
