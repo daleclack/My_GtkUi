@@ -526,7 +526,7 @@ void MyPrefs::load_winsize_config()
         radio_right->set_active();
         break;
     case DockPos::POS_BOTTOM:
-        radio_left->set_active();
+        radio_bottom->set_active();
         break;
     }
 }
