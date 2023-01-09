@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkImage" id="image1">
@@ -116,6 +116,18 @@
     <property name="pixel-size">48</property>
     <property name="icon-name">calcapp</property>
   </object>
+  <object class="GtkImage" id="image26">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">mines_app</property>
+    <property name="icon_size">6</property>
+  </object>
+  <object class="GtkImage" id="image27">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">mines_app</property>
+    <property name="icon_size">6</property>
+  </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -145,6 +157,283 @@
     <property name="can-focus">False</property>
     <property name="pixel-size">48</property>
     <property name="icon-name">my_prefs</property>
+  </object>
+  <object class="GtkBox" id="dock_box">
+    <property name="width-request">54</property>
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="halign">center</property>
+    <property name="valign">center</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkSeparator" id="separator_start">
+        <property name="height-request">5</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="btnlaunch">
+        <property name="width-request">54</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="image">image1</property>
+        <property name="relief">none</property>
+        <property name="always-show-image">True</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkSeparator" id="separator_2">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkScrolledWindow" id="icons_sw">
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="shadow-type">in</property>
+        <child>
+          <object class="GtkViewport">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkBox" id="icons_box">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkButton" id="btnfiles">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image3</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btndraw">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image2</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btncalc">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image25</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btngame">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image4</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnedit">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image5</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnimage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image6</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnset">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image7</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btngame24">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image23</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnmine">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">image26</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">3</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkSeparator" id="separator_3">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">11</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="btntrash">
+        <property name="width-request">54</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="image">image21</property>
+        <property name="relief">none</property>
+        <property name="always-show-image">True</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">12</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkSeparator" id="separator_end">
+        <property name="height-request">5</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="halign">end</property>
+        <style>
+          <class name="separator1"/>
+        </style>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">13</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
@@ -187,265 +476,15 @@
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
         <child>
-          <object class="GtkBox" id="dock_box">
-            <property name="width-request">54</property>
+          <object class="GtkBox" id="dock_left">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkSeparator" id="separator_start">
-                <property name="height-request">5</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btnlaunch">
-                <property name="width-request">54</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="image">image1</property>
-                <property name="relief">none</property>
-                <property name="always-show-image">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparator">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkScrolledWindow">
-                <property name="width-request">52</property>
-                <property name="height-request">340</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="hscrollbar-policy">never</property>
-                <property name="shadow-type">in</property>
-                <child>
-                  <object class="GtkViewport">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkButton" id="btnfiles">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image3</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btndraw">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image2</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btncalc">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image25</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btngame">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image4</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btnedit">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image5</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btnimage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image6</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">5</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btnset">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image7</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">6</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btngame24">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">image23</property>
-                            <property name="relief">none</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">7</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-            <child>
               <placeholder/>
             </child>
             <child>
               <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <object class="GtkSeparator">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">11</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btntrash">
-                <property name="width-request">54</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="image">image21</property>
-                <property name="relief">none</property>
-                <property name="always-show-image">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">12</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparator" id="separator_end">
-                <property name="height-request">5</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <style>
-                  <class name="separator1"/>
-                </style>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">13</property>
-              </packing>
             </child>
             <child>
               <placeholder/>
@@ -760,7 +799,20 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="padmine">
+                        <property name="label" translatable="yes">MineSweeper</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image27</property>
+                        <property name="relief">none</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
                     </child>
                     <child>
                       <placeholder/>
@@ -928,7 +980,25 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkBox" id="dock_right">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
         </child>
       </object>
       <packing>
@@ -938,7 +1008,24 @@
       </packing>
     </child>
     <child>
-      <placeholder/>
+      <object class="GtkBox" id="dock_bottom">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
     </child>
   </object>
 </interface>

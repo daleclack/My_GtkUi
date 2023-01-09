@@ -10,7 +10,8 @@ MyPrefs::MyPrefs()
       views_box(Gtk::ORIENTATION_HORIZONTAL, 5),
       btnbox(Gtk::ORIENTATION_HORIZONTAL, 5),
       width(1024),
-      height(576)
+      height(576),
+      dock_pos(DockPos::POS_LEFT)
 {
     /*Step 1: Initalize widget that without Gtk::Builder*/
 
@@ -112,8 +113,13 @@ MyPrefs::MyPrefs()
     stackbuilder->get_widget("spin_width", spin_width);
     stackbuilder->get_widget("spin_height", spin_height);
     stackbuilder->get_widget("btnapply", btnapply);
-    stackbuilder->get_widget("btnGet",btnGet);
-    stackbuilder->get_widget("label_size",label_size);
+    stackbuilder->get_widget("btnGet", btnGet);
+    stackbuilder->get_widget("label_size", label_size);
+    stackbuilder->get_widget("mode_check", mode_check);
+    stackbuilder->get_widget("radio_left", radio_left);
+    stackbuilder->get_widget("radio_right", radio_right);
+    stackbuilder->get_widget("radio_bottom", radio_bottom);
+    stackbuilder->get_widget("btnapply1", btnapply1);
 
     // Initalize radio buttons
     radio_default->set_active();
@@ -122,11 +128,14 @@ MyPrefs::MyPrefs()
 
     // Initalize other widgets
     btnapply->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnapply_clicked));
-    btnGet->signal_clicked().connect(sigc::mem_fun(*this,&MyPrefs::btnGet_clicked));
+    btnGet->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnGet_clicked));
+
+    // Initalize Dock Preferences
+    btnapply1->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnapply1_clicked));
 
     // Initalize Label
     load_winsize_config();
-    char * size_str = g_strdup_printf("Current Config: %d x %d", width, height);
+    char *size_str = g_strdup_printf("Current Config: %d x %d", width, height);
     label_size->set_label(size_str);
     g_free(size_str);
 
@@ -366,7 +375,8 @@ void MyPrefs::set_background_file()
 }
 
 void MyPrefs::update_background_size()
-{}
+{
+}
 
 void MyPrefs::set_background(Gtk::Image *back)
 {
@@ -381,6 +391,30 @@ void MyPrefs::radiobutton_toggled()
     spin_height->set_sensitive(!mode);
     spin_width->set_sensitive(!mode);
     btnGet->set_sensitive(!mode);
+}
+
+void MyPrefs::save_config_file()
+{
+    // Open the file for configs
+    json data = json::parse(R"(
+        {
+            "height":1280,
+            "width":720,
+            "panel_mode":false,
+            "position":0
+        }
+    )");
+    std::fstream outfile;
+    outfile.open("config.json", std::ios_base::out);
+    if (outfile.is_open())
+    {
+        data["width"] = width;
+        data["height"] = height;
+        data["panel_mode"] = panel_mode;
+        data["position"] = dock_pos;
+        outfile << data;
+        outfile.close();
+    }
 }
 
 void MyPrefs::btnapply_clicked()
@@ -419,41 +453,80 @@ void MyPrefs::btnapply_clicked()
         height = spin_height->get_value_as_int();
     }
 
-    // Open the file for configs
-    json data = json::parse(R"(
-        {
-            "height":1280,
-            "width":720
-        }
-    )");
-    std::fstream outfile;
-    outfile.open("config.json", std::ios_base::out);
-    if (outfile.is_open())
+    // Save the config to json file
+    save_config_file();
+}
+
+void MyPrefs::btnapply1_clicked()
+{
+    // Whether panel mode is enabled
+    panel_mode = mode_check->get_active();
+
+    // The dock position
+    if (radio_left->get_active())
     {
-        data["width"] = width;
-        data["height"] = height;
-        outfile<<data;
-        outfile.close();
+        dock_pos = DockPos::POS_LEFT;
     }
+    if (radio_right->get_active())
+    {
+        dock_pos = DockPos::POS_RIGHT;
+    }
+    if (radio_bottom->get_active())
+    {
+        dock_pos = DockPos::POS_BOTTOM;
+    }
+
+    // std::cout << dock_pos << std::endl;
+    save_config_file();
 }
 
 void MyPrefs::btnGet_clicked()
 {
-    //Get Current Window Size
+    // Get Current Window Size
     width = background1->get_width();
     height = background1->get_height();
     spin_width->set_value(width);
     spin_height->set_value(height);
 }
 
-void MyPrefs::load_winsize_config(){
+DockPos MyPrefs::get_dock_pos(){
+    // Get config for dock position
+    return dock_pos;
+}
+
+void MyPrefs::load_winsize_config()
+{
+    // Read the config
     std::ifstream jsonfile("config.json");
-    if(jsonfile.is_open()){
+    if (jsonfile.is_open())
+    {
         json data = json::parse(jsonfile);
         height = data["height"];
         width = data["width"];
-    }else{
+        panel_mode = data["panel_mode"];
+        dock_pos = data["position"];
+    }
+    else
+    {
+        // Default config
         height = 720;
         width = 1280;
+        panel_mode = false;
+        dock_pos = DockPos::POS_LEFT;
+    }
+
+    // Load the config
+    mode_check->set_active(panel_mode);
+    switch (dock_pos)
+    {
+    case DockPos::POS_LEFT:
+        radio_left->set_active();
+        break;
+    case DockPos::POS_RIGHT:
+        radio_right->set_active();
+        break;
+    case DockPos::POS_BOTTOM:
+        radio_bottom->set_active();
+        break;
     }
 }

@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUI VERSION 5.4.0)
+project(My_GtkUI VERSION 5.6.0)
 
 #Add GCR_CMake
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
@@ -16,7 +16,7 @@ include(CPack)
 include_directories(.)
 include_directories(..)
 include_directories(src/core src/ui src/apps src/panels src/image_app 
-                    src/game24_app src/calc_app)
+                    src/game24_app src/calc_app src/mine_app)
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM3 REQUIRED gtkmm-3.0)
@@ -29,7 +29,8 @@ set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc src/cfgfile/c
     src/game24_app/Game24.cc src/game24_app/Game24Win.cc
     src/image_app/ImageApp.cc src/image_app/MyImage.cc 
     src/run_app/Runner.cc src/text_app/TextEditor.cc
-    src/calc_app/calc.cc src/calc_app/CalcApp.cc)
+    src/calc_app/calc.cc src/calc_app/CalcApp.cc
+    src/mine_app/InputBox.cc src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc)
 
 #Compile resources with GCR_CMake
 
@@ -45,6 +46,9 @@ set(RESOURCE_LIST
     STRIPBLANKS calcapp.ui
     STRIPBLANKS text_menu.xml
     STRIPBLANKS expender.ui
+    STRIPBLANKS win_input.ui
+    STRIPBLANKS scoreswin.ui
+    STRIPBLANKS mine_menu.xml
     style.css
     reset.css
     dock_style.css
@@ -65,6 +69,19 @@ set(RESOURCE_LIST
     icons/48x48/actions/game_running.png
     icons/48x48/actions/btnabout.png
     icons/48x48/actions/My_GtkUI.png
+    icons/scalable/status/1mines.svg
+    icons/scalable/status/2mines.svg
+    icons/scalable/status/3mines.svg
+    icons/scalable/status/4mines.svg
+    icons/scalable/status/5mines.svg
+    icons/scalable/status/6mines.svg
+    icons/scalable/status/7mines.svg
+    icons/scalable/status/8mines.svg
+    icons/scalable/status/exploded.svg
+    icons/scalable/status/flag.svg
+    icons/scalable/status/incorrect.svg
+    icons/scalable/status/maybe.svg
+    icons/scalable/status/mine.svg
     icons/scalable/status/24game.svg
     icons/scalable/status/24game_running.svg
     icons/scalable/status/audacious_whitesur.svg
@@ -88,7 +105,9 @@ set(RESOURCE_LIST
     icons/scalable/status/line.svg
     icons/scalable/status/rectangle.svg
     icons/scalable/status/calcapp.svg
-    icons/scalable/status/calcapp_running.svg)
+    icons/scalable/status/calcapp_running.svg
+    icons/scalable/status/mines_app.svg
+    icons/scalable/status/mines_app_running.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

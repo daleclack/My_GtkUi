@@ -11,27 +11,24 @@
 #include "TextEditor.hh"
 #include "Game24Win.hh"
 #include "CalcApp.hh"
-
-enum class DockMode{
-    MODE_DOCK,
-    MODE_PANEL
-};
+#include "MineSweeper.hh"
 
 class MyDock : public Gtk::Box
 {
 public:
     MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade);
-    static MyDock *create();
+    static MyDock *create(DockMode mode);
     void btnset_clicked();
     void mydock_init(Gtk::Window *window, Gtk::Image *background1);
-    void set_dock_mode(DockMode mode);
+    // void set_dock_mode(DockMode mode);
 
 private:
     // Child widgets
-    Gtk::Box *finder_box, *dock_box;
+    Gtk::Box *finder_box, *dock_box, *dock_left, *dock_right, *dock_bottom, *icons_box;
     Gtk::Button *btnlaunch, *btndraw, *btnfiles, *btncalc, 
-        *btngame, *btnedit, *btnimage, *btnset, *btngame24;
-    Gtk::Separator *separator_start, *separator_end;
+        *btngame, *btnedit, *btnimage, *btnset, *btngame24, *btnmine;
+    Gtk::Separator *separator_start, *separator_2, *separator_3, *separator_end;
+    Gtk::ScrolledWindow *icons_sw;
 
     // Finder
     MyFinder finder;
@@ -41,7 +38,7 @@ private:
     Gtk::Stack *launchpad_stack;
     Gtk::Grid *default_page, *launchpad_page, *apps_grid;
     Gtk::Button *padaud, *paddraw, *padfile, *padgedit, *padgame, *padset, *padcalc, 
-        *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun, *padgame24;
+        *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun, *padgame24, *padmine;
     Gtk::Label label1;
 
     // Window Preferences
@@ -94,6 +91,12 @@ private:
     bool editor_win_closed(GdkEventAny *event);
     void btnedit_clicked();
     void padedit_clicked();
+
+    // MineSweeper
+    MineSweeper mine_win;
+    bool mine_win_closed(GdkEventAny *event);
+    void btnmine_clicked();
+    void padmine_clicked();
 
     // A Simple Runner
     GtkRunner runner1;

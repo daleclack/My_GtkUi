@@ -9,7 +9,14 @@ MyWin::MyWin()
     // Initalize window
     set_icon_name("My_GtkUI");
     set_title("My GtkUI macOS Version");
-    get_size_config(width, height);
+    get_size_config(width, height, panel_mode);
+
+    // Set the display mode of dock
+    if(panel_mode){
+        main_stack.set_mydock_mode(DockMode::MODE_PANEL);
+    }else{
+        main_stack.set_mydock_mode(DockMode::MODE_DOCK);
+    }
 
     // Add background
     auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(winpe);
@@ -80,7 +87,7 @@ void MyWin::about_activated()
 
     // Version information
     char *version;
-    version = g_strdup_printf("5.4\nRunning Against: Gtkmm %d.%d.%d",
+    version = g_strdup_printf("5.6\nRunning Against: Gtkmm %d.%d.%d",
                               GTKMM_MAJOR_VERSION,
                               GTKMM_MINOR_VERSION,
                               GTKMM_MICRO_VERSION);
