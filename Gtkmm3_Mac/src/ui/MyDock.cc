@@ -15,6 +15,8 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("dock_box", dock_box);
     ref_builder->get_widget("dock_left", dock_left);
     ref_builder->get_widget("dock_right", dock_right);
+    ref_builder->get_widget("dock_bottom", dock_bottom);
+    ref_builder->get_widget("icons_box", icons_box);
     ref_builder->get_widget("btnlaunch", btnlaunch);
     ref_builder->get_widget("btndraw", btndraw);
     ref_builder->get_widget("btnfiles", btnfiles);
@@ -26,7 +28,10 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("btncalc", btncalc);
     ref_builder->get_widget("btnmine", btnmine);
     ref_builder->get_widget("separator_start", separator_start);
+    ref_builder->get_widget("separator_2", separator_2);
+    ref_builder->get_widget("separator_3", separator_3);
     ref_builder->get_widget("separator_end", separator_end);
+    ref_builder->get_widget("icons_sw", icons_sw);
     ref_builder->get_widget("launchpad_stack", launchpad_stack);
     ref_builder->get_widget("default_page", default_page);
     ref_builder->get_widget("launchpad_page", launchpad_page);
@@ -122,6 +127,37 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     apply_style(*separator_end);
     // apps_grid->foreach(sigc::mem_fun(*this,&MyDock::apply_style));
 
+    // Set dock position
+    // The dock can be positioned at the left, right and the bottom of the window
+    auto dock_pos = prefs_win.get_dock_pos();
+    switch (dock_pos)
+    {
+    case DockPos::POS_LEFT:
+        // Set the default size of scrolled window
+        icons_sw->set_size_request(52, 340);
+        icons_sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+        dock_left->pack_start(*dock_box);
+        break;
+    case DockPos::POS_RIGHT:
+        // Set the default size of scrolled window
+        icons_sw->set_size_request(52, 340);
+        icons_sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+        dock_right->pack_start(*dock_box);
+        break;
+    case DockPos::POS_BOTTOM:
+        // Change Orientation before pack
+        dock_box->set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+        icons_box->set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+        // Set the default size of scrolled window
+        icons_sw->set_size_request(340, 52);
+        icons_sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER);
+        // Pack dock to the position
+        dock_bottom->pack_start(*dock_box);
+        break;
+    default:
+        dock_right->pack_start(*dock_box);
+    }
+
     // Set Dock or panel mode
     switch (mode1)
     {
@@ -130,26 +166,17 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
         // std::cout << "dock mode" << std::endl;
         break;
     case DockMode::MODE_PANEL:
-        dock_box->set_vexpand();
-        dock_box->set_valign(Gtk::ALIGN_FILL);
+        if(dock_pos == DockPos::POS_BOTTOM){
+            dock_box->set_hexpand();
+            dock_box->set_halign(Gtk::ALIGN_FILL);
+            icons_sw->set_hexpand();
+        }else{
+            dock_box->set_vexpand();
+            dock_box->set_valign(Gtk::ALIGN_FILL);
+            icons_sw->set_vexpand();
+        }
         // std::cout << "panel mode" << std::endl;
         break;
-    }
-
-    // Set dock position
-    // The dock can be positioned at the left, right and the bottom of the window
-    auto dock_pos = prefs_win.get_dock_pos();
-    switch (dock_pos)
-    {
-    case DockPos::POS_LEFT:
-        dock_left->pack_start(*dock_box);
-        break;
-    case DockPos::POS_RIGHT:
-        dock_right->pack_start(*dock_box);
-        break;
-    case DockPos::POS_BOTTOM:
-    default:
-        dock_right->pack_start(*dock_box);
     }
 
     show_all_children();

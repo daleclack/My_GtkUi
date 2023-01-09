@@ -24,10 +24,11 @@ public:
 
 private:
     // Child widgets
-    Gtk::Box *finder_box, *dock_box, *dock_left, *dock_right;
+    Gtk::Box *finder_box, *dock_box, *dock_left, *dock_right, *dock_bottom, *icons_box;
     Gtk::Button *btnlaunch, *btndraw, *btnfiles, *btncalc, 
         *btngame, *btnedit, *btnimage, *btnset, *btngame24, *btnmine;
-    Gtk::Separator *separator_start, *separator_end;
+    Gtk::Separator *separator_start, *separator_2, *separator_3, *separator_end;
+    Gtk::ScrolledWindow *icons_sw;
 
     // Finder
     MyFinder finder;
