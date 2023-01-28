@@ -7,12 +7,14 @@
 
 using json = nlohmann::json;
 
-enum class DockMode{
+enum class DockMode
+{
     MODE_DOCK,
     MODE_PANEL
 };
 
-enum class DockPos{
+enum class DockPos
+{
     POS_LEFT,
     POS_RIGHT,
     POS_BOTTOM
@@ -58,7 +60,7 @@ private:
     std::string path;
     bool background_internal;
 
-    //Page switcher and another page
+    // Page switcher and another page
     Glib::RefPtr<Gtk::Builder> stackbuilder;
     Gtk::Box *stack_box, *back_page, *winsize_page;
     Gtk::RadioButton *radio_default, *radio_custom;
@@ -115,15 +117,28 @@ private:
     void btnapply1_clicked();
 };
 
-//Read Config from file without use the MyPrefs class
-static inline void get_size_config(int &width, int &height, bool &panel_mode){
+// Read Config from file without use the MyPrefs class
+static inline void get_size_config(int &width, int &height, bool &panel_mode)
+{
     std::ifstream jsonfile("config.json");
-    if(jsonfile.is_open()){
+    if (jsonfile.is_open())
+    {
         json data = json::parse(jsonfile);
-        height = data["height"];
-        width = data["width"];
-        panel_mode = data["panel_mode"];
-    }else{
+        try
+        {
+            height = data["height"];
+            width = data["width"];
+            panel_mode = data["panel_mode"];
+        }
+        catch (nlohmann::detail::type_error &ex)
+        {
+            height = 720;
+            width = 1280;
+            panel_mode = false;
+        }
+    }
+    else
+    {
         height = 720;
         width = 1280;
         panel_mode = false;

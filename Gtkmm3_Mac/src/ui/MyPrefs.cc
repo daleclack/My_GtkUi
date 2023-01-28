@@ -489,7 +489,8 @@ void MyPrefs::btnGet_clicked()
     spin_height->set_value(height);
 }
 
-DockPos MyPrefs::get_dock_pos(){
+DockPos MyPrefs::get_dock_pos()
+{
     // Get config for dock position
     return dock_pos;
 }
@@ -501,10 +502,21 @@ void MyPrefs::load_winsize_config()
     if (jsonfile.is_open())
     {
         json data = json::parse(jsonfile);
-        height = data["height"];
-        width = data["width"];
-        panel_mode = data["panel_mode"];
-        dock_pos = data["position"];
+        try
+        {
+            height = data["height"];
+            width = data["width"];
+            panel_mode = data["panel_mode"];
+            dock_pos = data["position"];
+        }
+        catch (nlohmann::detail::type_error &error)
+        {
+            // Default config
+            height = 720;
+            width = 1280;
+            panel_mode = false;
+            dock_pos = DockPos::POS_LEFT;
+        }
     }
     else
     {
