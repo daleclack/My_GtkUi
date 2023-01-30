@@ -68,17 +68,19 @@ MyPrefs::MyPrefs()
     row[n_columns.m_col_internal] = false;
 
     // Append folders from config file
-    for(auto iter = back_list.begin(); iter != back_list.end(); iter++){
-        // Get pair value from vector
-        std::pair<std::string, std::string> temp;
-        temp = *iter;
+    if(!back_list.empty()){
+        for(auto iter = back_list.begin(); iter != back_list.end(); iter++){
+            // Get pair value from vector
+            std::pair<std::string, std::string> temp;
+            temp = *iter;
 
-        // Append folder to the folders store
-        auto row = *(folders_store->append());
-        row[n_columns.m_col_path] = temp.second;
-        row[n_columns.m_col_name] = temp.first;
-        row[n_columns.m_col_pixbuf] = folder_pixbuf;
-        row[n_columns.m_col_internal] = false;
+            // Append folder to the folders store
+            auto row = *(folders_store->append());
+            row[n_columns.m_col_path] = temp.second;
+            row[n_columns.m_col_name] = temp.first;
+            row[n_columns.m_col_pixbuf] = folder_pixbuf;
+            row[n_columns.m_col_internal] = false;
+        }
     }
 
     // Append Column for the folders view
