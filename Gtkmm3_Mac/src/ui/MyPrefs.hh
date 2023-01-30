@@ -3,6 +3,7 @@
 #include <gtkmm.h>
 #include <string>
 #include <fstream>
+#include <vector>
 #include "../json_nlohmann/json.hpp"
 
 using json = nlohmann::json;
@@ -42,7 +43,7 @@ protected:
         }
         Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf>> m_col_pixbuf;
         Gtk::TreeModelColumn<std::string> m_col_path;
-        Gtk::TreeModelColumn<Glib::ustring> m_col_name;
+        Gtk::TreeModelColumn<std::string> m_col_name;
         Gtk::TreeModelColumn<bool> m_col_internal;
     };
 
@@ -53,12 +54,15 @@ protected:
 
 private:
     // Background widget and properties
-    int width, height;
-    bool panel_mode;
-    DockPos dock_pos;
-    Gtk::Image *background1;
-    std::string path;
-    bool background_internal;
+    int width, height;              // Window size
+    bool panel_mode;                // dock or panel mode
+    DockPos dock_pos;               // position of dock
+    Gtk::Image *background1;        // background widget from main window
+    std::string path;               // Current background path
+    bool background_internal;       // tag for background internal
+
+    // List of inserted backgrounds
+    std::vector<std::pair<std::string, std::string>> back_list;
 
     // Page switcher and another page
     Glib::RefPtr<Gtk::Builder> stackbuilder;

@@ -19,6 +19,9 @@ MyPrefs::MyPrefs()
     set_title("Window Preferences");
     set_default_size(800, 450);
 
+    // Load config file
+    load_winsize_config();
+
     // Initalize Stores
     folders_store = Gtk::ListStore::create(n_columns);
     folders_store->set_default_sort_func(sigc::mem_fun(*this, &MyPrefs::sort_func));
@@ -63,6 +66,20 @@ MyPrefs::MyPrefs()
     row[n_columns.m_col_name] = "User's Pictures Directory";
     row[n_columns.m_col_pixbuf] = image_pixbuf;
     row[n_columns.m_col_internal] = false;
+
+    // Append folders from config file
+    for(auto iter = back_list.begin(); iter != back_list.end(); iter++){
+        // Get pair value from vector
+        std::pair<std::string, std::string> temp;
+        temp = *iter;
+
+        // Append folder to the folders store
+        auto row = *(folders_store->append());
+        row[n_columns.m_col_path] = temp.second;
+        row[n_columns.m_col_name] = temp.first;
+        row[n_columns.m_col_pixbuf] = folder_pixbuf;
+        row[n_columns.m_col_internal] = false;
+    }
 
     // Append Column for the folders view
     folders_view.append_column(" ", n_columns.m_col_pixbuf);
@@ -134,10 +151,24 @@ MyPrefs::MyPrefs()
     btnapply1->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnapply1_clicked));
 
     // Initalize Label
-    load_winsize_config();
     char *size_str = g_strdup_printf("Current Config: %d x %d", width, height);
     label_size->set_label(size_str);
     g_free(size_str);
+
+    // Change the default status of widgets
+    mode_check->set_active(panel_mode);
+    switch (dock_pos)
+    {
+    case DockPos::POS_LEFT:
+        radio_left->set_active();
+        break;
+    case DockPos::POS_RIGHT:
+        radio_right->set_active();
+        break;
+    case DockPos::POS_BOTTOM:
+        radio_bottom->set_active();
+        break;
+    }
 
     back_page->pack_start(main_box);
     add(*stack_box);
@@ -170,6 +201,9 @@ void MyPrefs::dialog_response(int response_id)
         row[n_columns.m_col_name] = basename;
         row[n_columns.m_col_pixbuf] = folder_pixbuf;
 
+        // Add for json file
+        save_config_file();
+
         file.reset();
     }
     dialog.reset();
@@ -179,7 +213,10 @@ void MyPrefs::btnremove_clicked()
 {
     // Get the selection and remove the selected item
     auto iter = folder_selection->get_selected();
-    if (iter)
+    auto row = *iter;
+
+    // The internal item should not be deleted
+    if (iter && !(row[n_columns.m_col_internal]))
     {
         folders_store->erase(iter);
     }
@@ -395,13 +432,34 @@ void MyPrefs::radiobutton_toggled()
 
 void MyPrefs::save_config_file()
 {
+    // Initalize data from store of folders
+    auto child = folders_store->children();
+    for (auto iter = child.begin(); iter != child.end(); iter++)
+    {
+        auto row = *iter;
+        // Save custom directories of background
+        // The default directories will be ignored
+        if (!row[n_columns.m_col_internal] 
+            && row.get_value(n_columns.m_col_name) != "User's Pictures Directory" 
+            && row.get_value(n_columns.m_col_name) != "User's Home")
+        {
+            // Use a pair to save the basename and path
+            std::pair<std::string, std::string> temp;
+            temp.first = row[n_columns.m_col_name];
+            temp.second = row[n_columns.m_col_path];
+            back_list.push_back(temp);
+        }
+    }
+
     // Open the file for configs
     json data = json::parse(R"(
         {
-            "height":1280,
-            "width":720,
-            "panel_mode":false,
-            "position":0
+            "background": "",
+            "background_folders": [],
+            "height": 720,
+            "panel_mode": false,
+            "position": 0,
+            "width": 1280
         }
     )");
     std::fstream outfile;
@@ -412,6 +470,7 @@ void MyPrefs::save_config_file()
         data["height"] = height;
         data["panel_mode"] = panel_mode;
         data["position"] = dock_pos;
+        data["background_folders"] = back_list;
         outfile << data;
         outfile.close();
     }
@@ -508,6 +567,7 @@ void MyPrefs::load_winsize_config()
             width = data["width"];
             panel_mode = data["panel_mode"];
             dock_pos = data["position"];
+            back_list = data["background_folders"];
         }
         catch (nlohmann::detail::type_error &error)
         {
@@ -525,20 +585,5 @@ void MyPrefs::load_winsize_config()
         width = 1280;
         panel_mode = false;
         dock_pos = DockPos::POS_LEFT;
-    }
-
-    // Load the config
-    mode_check->set_active(panel_mode);
-    switch (dock_pos)
-    {
-    case DockPos::POS_LEFT:
-        radio_left->set_active();
-        break;
-    case DockPos::POS_RIGHT:
-        radio_right->set_active();
-        break;
-    case DockPos::POS_BOTTOM:
-        radio_bottom->set_active();
-        break;
     }
 }
