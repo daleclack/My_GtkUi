@@ -87,7 +87,7 @@ MyPrefs::MyPrefs()
     folders_view.append_column(" ", n_columns.m_col_pixbuf);
     folders_view.append_column("Name", n_columns.m_col_name);
 
-    // Default Value for imags view
+    // Default Value for images view
     default_folders_view();
     images_view.append_column(" ", n_columns.m_col_pixbuf);
     images_view.append_column("Images", n_columns.m_col_name);
@@ -258,6 +258,9 @@ void MyPrefs::default_folders_view()
     row[n_columns.m_col_name] = "img7.xpm";
     row[n_columns.m_col_internal] = true;
     row[n_columns.m_col_pixbuf] = imagefile_pixbuf;
+
+    // // Default path
+    // path = ":1";
 }
 
 int MyPrefs::sort_func(const Gtk::TreeModel::iterator &a, const Gtk::TreeModel::iterator &b)
@@ -376,9 +379,11 @@ void MyPrefs::images_view_changed()
             switch (path[1])
             {
             case '1':
+                // path = "default_1";
                 set_background_internal(winpe);
                 break;
             case '2':
+                // path = "default_2";
                 set_background_internal(img7);
                 break;
             }
@@ -388,6 +393,7 @@ void MyPrefs::images_view_changed()
             path = row[n_columns.m_col_path];
             set_background_file();
         }
+        save_config_file();
     }
 }
 
@@ -405,12 +411,18 @@ void MyPrefs::set_background_internal(const char *const *data)
 void MyPrefs::set_background_file()
 {
     // Set Background from a file
-    auto pixbuf = Gdk::Pixbuf::create_from_file(path);
-    auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
-    gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
-    pixbuf.reset();
-    sized.reset();
-    background_internal = false;
+    try{
+        auto pixbuf = Gdk::Pixbuf::create_from_file(path);
+        auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
+        gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
+        pixbuf.reset();
+        sized.reset();
+        background_internal = false;
+    }
+    // When error occurs, set default background
+    catch(Glib::Error &ex){
+        set_background_internal(winpe);
+    }
 }
 
 void MyPrefs::update_background_size()
@@ -419,7 +431,24 @@ void MyPrefs::update_background_size()
 
 void MyPrefs::set_background(Gtk::Image *back)
 {
+    // Link background widget to the class
     background1 = back;
+    std::cout << path << std::endl;
+
+    // Set the background from a file or xpm data
+    switch (path[1])
+    {
+        case '1':
+            // path = "default_1";
+            set_background_internal(winpe);
+            break;
+        case '2':
+            // path = "default_2";
+            set_background_internal(img7);
+            break;
+        default:
+            set_background_file();
+    }
 }
 
 void MyPrefs::radiobutton_toggled()
@@ -434,6 +463,9 @@ void MyPrefs::radiobutton_toggled()
 
 void MyPrefs::save_config_file()
 {
+    // Refresh the data of background folders list
+    back_list.clear();
+
     // Initalize data from store of folders
     auto child = folders_store->children();
     for (auto iter = child.begin(); iter != child.end(); iter++)
@@ -472,6 +504,7 @@ void MyPrefs::save_config_file()
         data["height"] = height;
         data["panel_mode"] = panel_mode;
         data["position"] = dock_pos;
+        data["background"] = path;
         data["background_folders"] = back_list;
         outfile << data;
         outfile.close();
@@ -570,6 +603,7 @@ void MyPrefs::load_winsize_config()
             panel_mode = data["panel_mode"];
             dock_pos = data["position"];
             back_list = data["background_folders"];
+            path = data["background"];
         }
         catch (nlohmann::detail::type_error &error)
         {
@@ -578,6 +612,7 @@ void MyPrefs::load_winsize_config()
             width = 1280;
             panel_mode = false;
             dock_pos = DockPos::POS_LEFT;
+            path = ":1";
         }
     }
     else
@@ -587,5 +622,6 @@ void MyPrefs::load_winsize_config()
         width = 1280;
         panel_mode = false;
         dock_pos = DockPos::POS_LEFT;
+        path = ":1";
     }
 }

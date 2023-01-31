@@ -19,12 +19,12 @@ MyWin::MyWin()
     }
 
     // Add background
-    auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(winpe);
-    auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
-    gtk_image_set_from_pixbuf(m_background.gobj(), sized->gobj());
+    // auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(winpe);
+    // auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
+    // gtk_image_set_from_pixbuf(m_background.gobj(), sized->gobj());
     m_overlay.add(m_background);
-    pixbuf.reset();
-    sized.reset();
+    // pixbuf.reset();
+    // sized.reset();
 
     // Add Action for menus
     add_action("logout", sigc::mem_fun(*this, &MyWin::logout_activated));
