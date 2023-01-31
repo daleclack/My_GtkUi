@@ -433,7 +433,7 @@ void MyPrefs::set_background(Gtk::Image *back)
 {
     // Link background widget to the class
     background1 = back;
-    std::cout << path << std::endl;
+    // std::cout << path << std::endl;
 
     // Set the background from a file or xpm data
     switch (path[1])
