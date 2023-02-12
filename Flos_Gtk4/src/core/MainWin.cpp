@@ -86,7 +86,7 @@ static void main_win_init(MainWin *win)
 
     // Apply Style for menubar and the button
     win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
-    gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
+    gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style_dark.css");
     gtk_style_context_add_provider(gtk_widget_get_style_context(menubar), win->provider, G_MAXINT);
     gtk_style_context_add_provider(gtk_widget_get_style_context(home_button), win->provider, G_MAXINT);
 

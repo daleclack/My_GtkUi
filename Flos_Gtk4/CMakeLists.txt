@@ -27,6 +27,7 @@ set(RESOURCE_LIST
     flos.png
     menubar.xml
     style.css
+    style_dark.css
     reset.css
     dock.ui
     start.ui
@@ -35,6 +36,8 @@ set(RESOURCE_LIST
     folder.svg
     gnome-fs-regular.svg
     icons/16x16/actions/7zFM.png
+    icons/16x16/actions/arrow_left.svg
+    icons/16x16/actions/arrow_right.svg
     icons/48x48/actions/My_GtkUI.png
     icons/scalable/status/file-manager.svg
     icons/scalable/status/file-manager_running.svg

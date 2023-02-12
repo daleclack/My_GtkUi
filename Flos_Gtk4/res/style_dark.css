@@ -1,0 +1,28 @@
+/*
+您可以在这里输入任何 GTK 可识别的 CSS 规则。
+您可以点击上面的“暂停”按钮来暂时停用这个自定义 CSS。
+
+变更会立即应用到全局，影响整个应用程序。
+*/
+@import url("resource://org/gtk/daleclack/reset.css");
+
+/*Style for menubar*/
+menubar{
+	background-color: alpha(gray,0.7);
+}
+
+box{
+    background-color: alpha(gray,0.7);
+}
+
+separator{
+	background-color:rgb(59, 59, 59);
+}
+
+menubutton{
+    color:rgb(32, 32, 32);
+}
+
+button{
+	color:white;
+}

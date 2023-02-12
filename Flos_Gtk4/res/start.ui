@@ -210,7 +210,7 @@
                                   <object class="GtkImage">
                                     <property name="visible">1</property>
                                     <property name="pixel-size">16</property>
-                                    <property name="icon-name">arrow-right</property>
+                                    <property name="icon-name">arrow_right</property>
                                   </object>
                                 </child>
                                 <child>
@@ -476,7 +476,7 @@
                                     <object class="GtkImage">
                                       <property name="visible">1</property>
                                       <property name="pixel-size">16</property>
-                                      <property name="icon-name">arrow-left</property>
+                                      <property name="icon-name">arrow_left</property>
                                     </object>
                                   </child>
                                   <child>
