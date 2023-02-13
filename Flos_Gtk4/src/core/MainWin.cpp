@@ -13,6 +13,7 @@ struct _MainWin
     GtkWidget *background;
     GtkStyleProvider *provider;
     GtkWidget *main_grid;
+    bool dark_mode;
 };
 
 G_DEFINE_TYPE(MainWin, main_win, GTK_TYPE_APPLICATION_WINDOW)
@@ -90,7 +91,7 @@ static void main_win_init(MainWin *win)
     // Initalize window
     gtk_window_set_title(GTK_WINDOW(win), "My GtkUI Flos Version");
     gtk_window_set_icon_name(GTK_WINDOW(win), "My_GtkUI");
-    bool dark_mode = get_dark_mode();
+    win->dark_mode = get_dark_mode();
 
     // Create widgets
     win->overlay = gtk_overlay_new();
@@ -112,7 +113,7 @@ static void main_win_init(MainWin *win)
 
     // Add Check Button for dark mode
     GtkWidget *check_dark = gtk_check_button_new_with_label("Dark Mode");
-    gtk_check_button_set_active(GTK_CHECK_BUTTON(check_dark), dark_mode);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(check_dark), win->dark_mode);
     gtk_popover_menu_bar_add_child(GTK_POPOVER_MENU_BAR(menubar), check_dark, "check_dark");
     g_signal_connect(check_dark, "toggled", G_CALLBACK(check_dark_toggled), NULL);
 
@@ -148,7 +149,7 @@ static void main_win_init(MainWin *win)
 
     // Apply Style for menubar and the button
     win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
-    if(dark_mode){
+    if(win->dark_mode){
         gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style_dark.css");
     }else{
         gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
@@ -195,4 +196,9 @@ GtkStyleProvider *main_win_get_style(MainWin *win)
 {
     // Get Style Provider
     return win->provider;
+}
+
+bool main_win_get_dark_mode(MainWin *win){
+    // Get whether use dark mode
+    return win->dark_mode;
 }

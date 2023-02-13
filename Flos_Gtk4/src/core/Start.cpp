@@ -53,6 +53,27 @@ void add_start(MainWin *win, GtkBox *box)
     gtk_style_context_add_provider(gtk_widget_get_style_context(ext_separator),
                                    main_win_get_style(win), G_MAXINT);
 
+    // Dark mode for buttons
+    GtkMenuButton *btn_more;
+    GtkImage *image_all, *image_back;
+    btn_more = (GtkMenuButton *)gtk_builder_get_object(startbuilder, "btn_more");
+    image_all = (GtkImage *)gtk_builder_get_object(startbuilder, "image_all");
+    image_back = (GtkImage *)gtk_builder_get_object(startbuilder, "image_back");
+    if(main_win_get_dark_mode(win)){
+        gtk_menu_button_set_icon_name(btn_more, "arrow_right_dark");
+        gtk_image_set_from_icon_name(image_all, "arrow_right_dark");
+        gtk_image_set_from_icon_name(image_back, "arrow_left_dark");
+    }else{
+        gtk_menu_button_set_icon_name(btn_more, "arrow_right");
+        gtk_image_set_from_icon_name(image_all, "arrow_right");
+        gtk_image_set_from_icon_name(image_back, "arrow_left");
+    }
+
+    // Add menu for more button
+    GtkBuilder *builder_menu = gtk_builder_new_from_resource("/org/gtk/daleclack/more_menu.xml");
+    GMenuModel *menu_model = G_MENU_MODEL(gtk_builder_get_object(builder_menu, "more_menu"));
+    gtk_menu_button_set_menu_model(btn_more, menu_model);
+
     // Integrated Media Player
     GtkWidget *music_box = (GtkWidget *)gtk_builder_get_object(startbuilder, "music_box");
     GtkWidget *btn_music = (GtkWidget *)gtk_builder_get_object(startbuilder, "btnmusic");
@@ -70,19 +91,19 @@ void add_start(MainWin *win, GtkBox *box)
     g_signal_connect(btnfile1, "clicked", G_CALLBACK(btnfile_clicked), win);
     g_signal_connect(btnfile2, "clicked", G_CALLBACK(btnfile_clicked), win);
 
-    //Buttons for control panel
-    GtkWidget * user_button, * btn_computer;
-    user_button = (GtkWidget*)gtk_builder_get_object(startbuilder,"user_button");
-    btn_computer = (GtkWidget*)gtk_builder_get_object(startbuilder,"btn_computer");
+    // Buttons for control panel
+    GtkWidget *user_button, *btn_computer;
+    user_button = (GtkWidget *)gtk_builder_get_object(startbuilder, "user_button");
+    btn_computer = (GtkWidget *)gtk_builder_get_object(startbuilder, "btn_computer");
     g_signal_connect(user_button, "clicked", G_CALLBACK(btnhome_clicked), win);
     g_signal_connect(btn_computer, "clicked", G_CALLBACK(btnfile_clicked), win);
 
-    //When the button clicked, popdown the menu
-    GtkWidget * start_menu = (GtkWidget*)gtk_builder_get_object(startbuilder,"main_menu");
-    g_signal_connect_swapped(btnfile1,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
-    g_signal_connect_swapped(btnfile2,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
-    g_signal_connect_swapped(user_button,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
-    g_signal_connect_swapped(btn_computer,"clicked",G_CALLBACK(gtk_popover_popdown),start_menu);
+    // When the button clicked, popdown the menu
+    GtkWidget *start_menu = (GtkWidget *)gtk_builder_get_object(startbuilder, "main_menu");
+    g_signal_connect_swapped(btnfile1, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
+    g_signal_connect_swapped(btnfile2, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
+    g_signal_connect_swapped(user_button, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
+    g_signal_connect_swapped(btn_computer, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
 
     // Pack widgets
     gtk_box_prepend(box, menu_btn);

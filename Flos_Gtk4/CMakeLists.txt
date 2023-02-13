@@ -26,6 +26,7 @@ link_directories (${GTK4_LIBRARY_DIRS})
 set(RESOURCE_LIST
     flos.png
     menubar.xml
+    more_menu.xml
     style.css
     style_dark.css
     reset.css
@@ -36,6 +37,8 @@ set(RESOURCE_LIST
     folder.svg
     gnome-fs-regular.svg
     icons/16x16/actions/7zFM.png
+    icons/16x16/actions/arrow_left_dark.svg
+    icons/16x16/actions/arrow_right_dark.svg
     icons/16x16/actions/arrow_left.svg
     icons/16x16/actions/arrow_right.svg
     icons/48x48/actions/My_GtkUI.png

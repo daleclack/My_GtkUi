@@ -207,7 +207,7 @@
                               <object class="GtkBox">
                                 <property name="visible">1</property>
                                 <child>
-                                  <object class="GtkImage">
+                                  <object class="GtkImage" id="image_all">
                                     <property name="visible">1</property>
                                     <property name="pixel-size">16</property>
                                     <property name="icon-name">arrow_right</property>
@@ -473,7 +473,7 @@
                                 <object class="GtkBox">
                                   <property name="visible">1</property>
                                   <child>
-                                    <object class="GtkImage">
+                                    <object class="GtkImage" id="image_back">
                                       <property name="visible">1</property>
                                       <property name="pixel-size">16</property>
                                       <property name="icon-name">arrow_left</property>
@@ -623,7 +623,7 @@
                     <object class="GtkSeparator"/>
                 </child>
                 <child>
-                  <object class="GtkMenuButton">
+                  <object class="GtkMenuButton" id="btn_more">
                     <property name="visible">1</property>
                     <property name="focusable">1</property>
                     <property name="focus-on-click">0</property>

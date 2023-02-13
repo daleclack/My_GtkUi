@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <menu id="more_menu">
+        <section>
+            <item>
+                <attribute name='label'>Restart</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Sleep</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name='label'>Log off</attribute>
+            </item>
+        </section>
+    </menu>
+</interface>
