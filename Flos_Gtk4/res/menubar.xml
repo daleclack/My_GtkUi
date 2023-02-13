@@ -9,15 +9,36 @@
         </submenu>
         <submenu>
             <attribute name='label'>Edit</attribute>
+            <item>
+                <attribute name="label">Cut</attribute>
+            </item>
+            <item>
+                <attribute name="label">Copy</attribute>
+            </item>
         </submenu>
         <submenu>
             <attribute name='label'>Show</attribute>
+            <item>
+                <attribute name='custom'>check_dark</attribute>
+            </item>
         </submenu>
         <submenu>
             <attribute name='label'>Go to</attribute>
+            <item>
+                <attribute name='label'>Home</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Go to Folder</attribute>
+            </item>
         </submenu>
         <submenu>
             <attribute name='label'>windows</attribute>
+            <item>
+                <attribute name='label'>Minimize</attribute>
+            </item>
+            <item>
+                <attribute name='label'>Maximize</attribute>
+            </item>
         </submenu>
         <submenu>
             <attribute name='label'>Help</attribute>
