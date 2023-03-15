@@ -18,6 +18,20 @@ struct _MainWin
 
 G_DEFINE_TYPE(MainWin, main_win, GTK_TYPE_APPLICATION_WINDOW)
 
+static void quit_activated(GSimpleAction *action,
+                           GVariant *parmeter,
+                           gpointer data)
+{
+    // Quit the UI interface
+    gtk_window_destroy(GTK_WINDOW(data));
+}
+
+static void about_activated(GSimpleAction *action,
+                            GVariant *parmeter,
+                            gpointer data)
+{
+}
+
 static gboolean label_timer(gpointer data)
 {
     // Get Local Time
@@ -55,7 +69,8 @@ static void check_dark_toggled(GtkCheckButton *button, gpointer data)
         // Save content to a file
         std::fstream outfile;
         outfile.open("config.toml", std::ios_base::out);
-        if(outfile.is_open()){
+        if (outfile.is_open())
+        {
             outfile << tbl;
         }
         outfile.close();
@@ -67,18 +82,22 @@ static void check_dark_toggled(GtkCheckButton *button, gpointer data)
     }
 }
 
-static bool get_dark_mode(){
+static bool get_dark_mode()
+{
     bool dark_mode = false;
     // Open config file
     std::fstream infile;
     infile.open("config.toml", std::ios_base::in);
-    if(infile.is_open()){
-        try{
+    if (infile.is_open())
+    {
+        try
+        {
             // Get value from toml data
             toml::table tbl = toml::parse(infile);
             dark_mode = tbl["interface"]["dark_mode"].as_boolean();
         }
-        catch(const toml::parse_error &err){
+        catch (const toml::parse_error &err)
+        {
             toml::table tbl = toml::parse(infile);
         }
     }
@@ -110,6 +129,12 @@ static void main_win_init(MainWin *win)
     GMenuModel *model = G_MENU_MODEL(gtk_builder_get_object(builder, "model"));
     GtkWidget *menubar = gtk_popover_menu_bar_new_from_model(model);
     // gtk_button_set_child(GTK_BUTTON(back_button),menubar);
+
+    // Add actions
+    static GActionEntry action_entries[] = {
+        {"quit", quit_activated, NULL, NULL, NULL},
+        {"about", about_activated, NULL, NULL, NULL}};
+    g_action_map_add_action_entries(G_ACTION_MAP(win), action_entries, G_N_ELEMENTS(action_entries), win);
 
     // Add Check Button for dark mode
     GtkWidget *check_dark = gtk_check_button_new_with_label("Dark Mode");
@@ -149,9 +174,12 @@ static void main_win_init(MainWin *win)
 
     // Apply Style for menubar and the button
     win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
-    if(win->dark_mode){
+    if (win->dark_mode)
+    {
         gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style_dark.css");
-    }else{
+    }
+    else
+    {
         gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
     }
     gtk_style_context_add_provider(gtk_widget_get_style_context(menubar), win->provider, G_MAXINT);
@@ -198,7 +226,8 @@ GtkStyleProvider *main_win_get_style(MainWin *win)
     return win->provider;
 }
 
-bool main_win_get_dark_mode(MainWin *win){
+bool main_win_get_dark_mode(MainWin *win)
+{
     // Get whether use dark mode
     return win->dark_mode;
 }

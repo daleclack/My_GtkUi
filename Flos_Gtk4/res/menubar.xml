@@ -5,6 +5,7 @@
             <attribute name='label'>File</attribute>
             <item>
                 <attribute name="label">Exit</attribute>
+                <attribute name="action">win.quit</attribute>
             </item>
         </submenu>
         <submenu>
@@ -47,6 +48,7 @@
             </item>
             <item>
                 <attribute name="label">About</attribute>
+                <attribute name="action">win.about</attribute>
             </item>
         </submenu>
     </menu>
