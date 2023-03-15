@@ -7,22 +7,22 @@
 @import url("resource://org/gtk/daleclack/reset.css");
 
 /*Style for menubar*/
-menubar{
+menubar1{
 	background-color: alpha(white,0.7);
 }
 
-box{
+box1{
     background-color: alpha(white,0.7);
 }
 
-separator{
+separator1{
 	background-color:white;
 }
 
-menubutton{
+menubutton1{
     color:white;
 }
 
-button{
+button1{
 	color:white;
 }

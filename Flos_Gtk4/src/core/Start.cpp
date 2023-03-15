@@ -48,6 +48,8 @@ void add_start(MainWin *win, GtkBox *box)
     GtkWidget *prim_separator, *ext_separator;
     prim_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "prim_separator");
     ext_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "ext_separator");
+    gtk_widget_add_css_class(prim_separator, "separator1");
+    gtk_widget_add_css_class(ext_separator, "separator1");
     gtk_style_context_add_provider((prim_separator),
                                    main_win_get_style(win), G_MAXINT);
     gtk_style_context_add_provider((ext_separator),
@@ -100,6 +102,7 @@ void add_start(MainWin *win, GtkBox *box)
 
     // When the button clicked, popdown the menu
     GtkWidget *start_menu = (GtkWidget *)gtk_builder_get_object(startbuilder, "main_menu");
+    // gtk_widget_set_opacity(start_menu, 0.7);
     g_signal_connect_swapped(btnfile1, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
     g_signal_connect_swapped(btnfile2, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
     g_signal_connect_swapped(user_button, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);

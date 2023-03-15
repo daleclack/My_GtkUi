@@ -176,6 +176,8 @@ static void main_win_init(MainWin *win)
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), desktop_box);
 
     // Apply Style for menubar and the button
+    // gtk_widget_add_css_class(GTK_WIDGET(menubar), "menubar1");
+    gtk_widget_add_css_class(GTK_WIDGET(home_button), "button1");
     win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
     if (win->dark_mode)
     {
@@ -185,7 +187,8 @@ static void main_win_init(MainWin *win)
     {
         gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
     }
-    gtk_style_context_add_provider((menubar), win->provider, G_MAXINT);
+    gtk_widget_set_opacity(menubar, 0.7);
+    // gtk_style_context_add_provider((menubar), win->provider, G_MAXINT);
     gtk_style_context_add_provider((home_button), win->provider, G_MAXINT);
 
     // Add Label for time
