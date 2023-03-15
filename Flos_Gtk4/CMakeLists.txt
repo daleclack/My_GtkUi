@@ -36,6 +36,7 @@ set(RESOURCE_LIST
     dialog-error.png
     folder.svg
     gnome-fs-regular.svg
+    cambalache/aboutwin.ui
     icons/16x16/actions/7zFM.png
     icons/16x16/actions/arrow_left_dark.svg
     icons/16x16/actions/arrow_right_dark.svg

@@ -48,9 +48,9 @@ void add_start(MainWin *win, GtkBox *box)
     GtkWidget *prim_separator, *ext_separator;
     prim_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "prim_separator");
     ext_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "ext_separator");
-    gtk_style_context_add_provider(gtk_widget_get_style_context(prim_separator),
+    gtk_style_context_add_provider((prim_separator),
                                    main_win_get_style(win), G_MAXINT);
-    gtk_style_context_add_provider(gtk_widget_get_style_context(ext_separator),
+    gtk_style_context_add_provider((ext_separator),
                                    main_win_get_style(win), G_MAXINT);
 
     // Dark mode for buttons

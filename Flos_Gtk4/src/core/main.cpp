@@ -4,7 +4,8 @@ static void gtkmain(GtkApplication * app,gpointer user_data){
     //Create a window and show
     MainWin * window;
     window = main_win_new(app);
-    gtk_widget_show(GTK_WIDGET(window));
+    //gtk_widget_show(GTK_WIDGET(window));
+    gtk_window_present(GTK_WINDOW(window));
 }
 
 int main(int argc, char ** argv){

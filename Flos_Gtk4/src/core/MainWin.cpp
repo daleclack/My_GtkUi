@@ -1,6 +1,7 @@
 #include "MainWin.h"
 #include "MyDock.h"
 #include "src/toml.hpp"
+#include "AboutWin.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -30,6 +31,8 @@ static void about_activated(GSimpleAction *action,
                             GVariant *parmeter,
                             gpointer data)
 {
+    AboutWin *win = about_win_new();
+    gtk_window_present(GTK_WINDOW(win));
 }
 
 static gboolean label_timer(gpointer data)
@@ -182,8 +185,8 @@ static void main_win_init(MainWin *win)
     {
         gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
     }
-    gtk_style_context_add_provider(gtk_widget_get_style_context(menubar), win->provider, G_MAXINT);
-    gtk_style_context_add_provider(gtk_widget_get_style_context(home_button), win->provider, G_MAXINT);
+    gtk_style_context_add_provider((menubar), win->provider, G_MAXINT);
+    gtk_style_context_add_provider((home_button), win->provider, G_MAXINT);
 
     // Add Label for time
     GtkWidget *time_label = gtk_label_new("12:21 2022/1/9");

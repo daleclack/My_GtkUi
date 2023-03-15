@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.11.2 -->
+<interface>
+  <!-- interface-name windows.ui -->
+  <requires lib="gtk" version="4.6"/>
+  <template class="AboutWin" parent="GtkWindow">
+    <property name="halign">baseline</property>
+    <property name="height-request">400</property>
+    <property name="icon-name">My_GtkUI</property>
+    <property name="opacity">0.5</property>
+    <property name="title">About My GtkUI Flos Version</property>
+    <property name="width-request">640</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <child>
+              <object class="GtkImage">
+                <property name="resource">/org/gtk/daleclack/icons/48x48/actions/My_GtkUI.png</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

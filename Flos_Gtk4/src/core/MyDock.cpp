@@ -84,7 +84,7 @@ void add_dock(MainWin * win){
     g_signal_connect(btnfile,"clicked",G_CALLBACK(btnfile_clicked),win);
 
     //Set Style
-    gtk_style_context_add_provider(gtk_widget_get_style_context(dock_box),
+    gtk_style_context_add_provider((dock_box),
                                    main_win_get_style(win), G_MAXINT);
     
 
@@ -94,7 +94,7 @@ void add_dock(MainWin * win){
         child != NULL;
         child = gtk_widget_get_next_sibling(child))
     {
-        gtk_style_context_add_provider(gtk_widget_get_style_context(child),
+        gtk_style_context_add_provider((child),
                                        main_win_get_style(win), G_MAXINT);
     }
 }
