@@ -94,10 +94,10 @@ void add_dock(MainWin *win)
     g_signal_connect(btnfile, "clicked", G_CALLBACK(btnfile_clicked), win);
 
     // Set Style
-    gtk_widget_set_opacity(dock_box, 0.7);
-    // gtk_widget_add_css_class(dock_box, "box1");
-    // gtk_style_context_add_provider((dock_box),
-    //                                main_win_get_style(win), G_MAXINT);
+    // gtk_widget_set_opacity(dock_box, 0.7);
+    gtk_widget_add_css_class(dock_box, "dark_style");
+    gtk_style_context_add_provider((dock_box),
+                                   main_win_get_style(win), G_MAXINT);
 
     // Apply Style for all child in dock
     GtkWidget *child;
@@ -105,7 +105,7 @@ void add_dock(MainWin *win)
          child != NULL;
          child = gtk_widget_get_next_sibling(child))
     {
-        gtk_widget_add_css_class(child, "button1");
+        gtk_widget_add_css_class(child, "dark_style");
         gtk_style_context_add_provider((child),
                                        main_win_get_style(win), G_MAXINT);
     }

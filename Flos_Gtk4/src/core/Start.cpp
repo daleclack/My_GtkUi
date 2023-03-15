@@ -48,8 +48,8 @@ void add_start(MainWin *win, GtkBox *box)
     GtkWidget *prim_separator, *ext_separator;
     prim_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "prim_separator");
     ext_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "ext_separator");
-    gtk_widget_add_css_class(prim_separator, "separator1");
-    gtk_widget_add_css_class(ext_separator, "separator1");
+    gtk_widget_add_css_class(prim_separator, "dark_style");
+    gtk_widget_add_css_class(ext_separator, "dark_style");
     gtk_style_context_add_provider((prim_separator),
                                    main_win_get_style(win), G_MAXINT);
     gtk_style_context_add_provider((ext_separator),

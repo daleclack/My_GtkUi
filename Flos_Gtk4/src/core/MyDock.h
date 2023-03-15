@@ -6,7 +6,7 @@
 // This #define for gtk 4.10 changes
 #define gtk_style_context_add_provider(widget, style, priority)                            \
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(widget)), \
-                                               style, GTK_STYLE_PROVIDER_PRIORITY_FALLBACK)
+                                               style, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION)
 
 #define gtk_widget_show(widget) gtk_window_present(GTK_WINDOW(widget))
 
