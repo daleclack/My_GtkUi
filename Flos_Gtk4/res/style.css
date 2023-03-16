@@ -7,6 +7,10 @@
 @import url("resource://org/gtk/daleclack/reset.css");
 
 /*Style for menubar*/
+.dark_style {
+    background: alpha(gray, 0.7);
+}
+
 .dark_style menubar{
 	background-color: alpha(white,0.7);
 }
