@@ -4,7 +4,7 @@
 
 变更会立即应用到全局，影响整个应用程序。
 */
-@import url("resource://org/gtk/daleclack/reset.css");
+/* @import url("resource://org/gtk/daleclack/reset.css"); */
 
 /*Style for menubar*/
 .dark_style {
