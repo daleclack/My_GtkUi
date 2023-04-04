@@ -36,7 +36,7 @@
             <property name="has-frame">0</property>
             <child>
               <object class="GtkImage" id="image3">
-                <property name="icon-name">file-manager</property>
+                <property name="icon-name">file-manager1</property>
                 <property name="pixel-size">48</property>
               </object>
             </child>

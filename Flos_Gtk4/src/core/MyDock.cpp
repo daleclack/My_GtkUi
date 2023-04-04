@@ -9,7 +9,7 @@ static gboolean file_app_running = FALSE;
 static gboolean file_window_closed(GtkWindow *self, GtkButton *dock_file)
 {
     GtkWidget *child = gtk_button_get_child(dock_file);
-    gtk_image_set_from_icon_name(GTK_IMAGE(child), "file-manager");
+    gtk_image_set_from_icon_name(GTK_IMAGE(child), "file-manager1");
     file_app_running = FALSE;
     gtk_window_destroy(self);
     return TRUE;

@@ -1,598 +1,368 @@
 #include "FileWindow.h"
+#include "FileColumnView.h"
+#include "FileGridView.h"
 
-#define FOLDER_NAME "/org/gtk/daleclack/folder.svg"
-#define FILE_NAME "/org/gtk/daleclack/gnome-fs-regular.svg"
-#define ERROR_IMAGE "/org/gtk/daleclack/dialog-error.png"
-
-// IconView and TreeView Model
-enum
+enum SyncMode
 {
-    COL_PATH,
-    COL_DISPLAY_NAME,
-    COL_PIXBUF,
-    COL_IS_DIRECTORY,
-    NUM_COLS
+    MODEL_COLUMN_TO_GRID,
+    MODEL_GRID_TO_COLUMN
 };
 
-typedef enum _ViewMode
+enum ViewMode
 {
-    MODE_ICON,
-    MODE_LIST
-} ViewMode;
+    MODE_LIST,
+    MODE_GRID
+};
 
 struct _FileWindow
 {
-    GtkWindow parent;
-    GdkPixbuf *file_pixbuf, *folder_pixbuf;
-    char *parent_dir;
-    GtkWidget *up_button;
-    GtkWidget *stack, *show_hidden, *view_button, *tree_view, *icon_view, *btn_image;
-    GtkListStore *store;
-    GtkTreeSelection *selection;
-    GList *selected_items;
+    GtkApplicationWindow parent_instance;
+    GListModel *model_column, *model_grid;
+    GtkWidget *column_view, *grid_view;
+    GtkWidget *main_box, *btn_box;
+    GtkWidget *scrolled_window_column, *scrolled_window_grid;
+    GtkWidget *stack;
+    GtkWidget *folder_entry;
+    GtkWidget *btn_up, *btn_home, *btn_new, *btn_del, *btn_view;
+    GtkWidget *separator;
     ViewMode view_mode;
 };
 
-G_DEFINE_TYPE(FileWindow, file_window, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE(FileWindow, file_window, GTK_TYPE_APPLICATION_WINDOW)
 
-static void file_window_load_pixbufs(int size, FileWindow *win)
+static GFile *file_window_get_file(FileWindow *win)
 {
-    GdkPixbuf *tmp1, *tmp2;
-    if (win->file_pixbuf)
-    { // Already loaded
-        return;
-    }
-
-    tmp1 = gdk_pixbuf_new_from_resource(FILE_NAME, NULL);
-    win->file_pixbuf = gdk_pixbuf_scale_simple(tmp1, size, size, GDK_INTERP_BILINEAR);
-    // Check load state
-    g_assert(win->file_pixbuf);
-    g_object_unref(tmp1);
-
-    tmp2 = gdk_pixbuf_new_from_resource(FOLDER_NAME, NULL);
-    win->folder_pixbuf = gdk_pixbuf_scale_simple(tmp2, size, size, GDK_INTERP_BILINEAR);
-    g_assert(win->folder_pixbuf);
-    g_object_unref(tmp2);
-}
-
-static void file_window_fill_store(FileWindow *win)
-{
-    GDir *dir;
-    const gchar *name;
-    GtkTreeIter iter;
-
-    // Clear the store
-    gtk_list_store_clear(win->store);
-
-    // Go through the directory and get information
-    dir = g_dir_open(win->parent_dir, 0, NULL);
-    if (!dir)
+    GFile *file = NULL;
+    if (win->view_mode == ViewMode::MODE_LIST)
     {
-        return;
-    }
-
-    /* Ignore the files start with '.' when the button is not toggled */
-    name = g_dir_read_name(dir);
-    while (name != NULL)
-    {
-        gchar *path, *display_name;
-        gboolean is_dir;
-
-        if (name[0] == '.' && !gtk_check_button_get_active(GTK_CHECK_BUTTON(win->show_hidden)))
-        {
-            name = g_dir_read_name(dir);
-            continue;
-        }
-
-        path = g_build_filename(win->parent_dir, name, NULL);
-
-        is_dir = g_file_test(path, G_FILE_TEST_IS_DIR);
-
-        display_name = g_filename_to_utf8(name, -1, NULL, NULL, NULL);
-
-        gtk_list_store_append(win->store, &iter);
-        gtk_list_store_set(win->store, &iter,
-                           COL_PATH, path,
-                           COL_DISPLAY_NAME, display_name,
-                           COL_IS_DIRECTORY, is_dir,
-                           COL_PIXBUF, is_dir ? win->folder_pixbuf : win->file_pixbuf,
-                           -1);
-        g_free(path);
-        g_free(display_name);
-        name = g_dir_read_name(dir);
-    }
-    g_dir_close(dir);
-}
-
-static int sort_func(GtkTreeModel *model,
-                     GtkTreeIter *a,
-                     GtkTreeIter *b,
-                     gpointer user_data)
-{
-    gboolean is_dir_a, is_dir_b;
-    gchar *name_a, *name_b;
-    int ret;
-
-    // Sort Folders before files,
-    // and sort files and folders starts with a '.' in front of other files and folders
-    gtk_tree_model_get(model, a, COL_IS_DIRECTORY, &is_dir_a, COL_DISPLAY_NAME, &name_a, -1);
-    gtk_tree_model_get(model, b, COL_IS_DIRECTORY, &is_dir_b, COL_DISPLAY_NAME, &name_b, -1);
-
-    if (!is_dir_a && is_dir_b)
-    {
-        ret = 1;
-    }
-    else if (is_dir_a && !is_dir_b)
-    {
-        ret = -1;
-    }
-    else if (name_a[0] != '.' && name_b[0] == '.')
-    {
-        ret = 1;
-    }
-    else if (name_a[0] == '.' && name_b[0] != '.')
-    {
-        ret = -1;
+        // In list view mode, get current directory from the model1
+        file = gtk_directory_list_get_file(GTK_DIRECTORY_LIST(win->model_column));
     }
     else
     {
-        ret = g_utf8_collate(name_a, name_b);
+        // In list view mode, get current directory from the model2
+        file = gtk_directory_list_get_file(GTK_DIRECTORY_LIST(win->model_grid));
     }
-    g_free(name_a);
-    g_free(name_b);
-
-    return ret;
+    return file;
 }
 
-static GtkListStore *create_store(void)
+static void sync_models(gpointer model1, gpointer model2, SyncMode mode)
 {
-    GtkListStore *store;
-
-    store = gtk_list_store_new(NUM_COLS,
-                               G_TYPE_STRING,
-                               G_TYPE_STRING,
-                               GDK_TYPE_PIXBUF,
-                               G_TYPE_BOOLEAN);
-
-    gtk_tree_sortable_set_default_sort_func(GTK_TREE_SORTABLE(store),
-                                            sort_func, NULL, NULL);
-
-    gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(store),
-                                         GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID,
-                                         GTK_SORT_ASCENDING);
-
-    return store;
-}
-
-static void row_activated(GtkTreeView *view, GtkTreePath *tree_path, GtkTreeViewColumn *column, FileWindow *win)
-{
-    gchar *path;
-    GtkTreeIter iter;
-    gboolean is_dir;
-
-    gtk_tree_model_get_iter(GTK_TREE_MODEL(win->store), &iter, tree_path);
-    gtk_tree_model_get(GTK_TREE_MODEL(win->store), &iter, COL_PATH, &path, COL_IS_DIRECTORY, &is_dir, -1);
-
-    if (!is_dir)
+    if (mode == SyncMode::MODEL_COLUMN_TO_GRID)
     {
-        g_free(path);
-        return;
-    }
-
-    /* Replace parent with path and re-fill the model*/
-    g_free(win->parent_dir);
-    win->parent_dir = path;
-
-    file_window_fill_store(win);
-
-    /* Sensitize the up button */
-    gtk_widget_set_sensitive(GTK_WIDGET(win->up_button), TRUE);
-}
-
-static void item_activated(GtkIconView *view, GtkTreePath *tree_path, FileWindow *win)
-{
-    gchar *path;
-    GtkTreeIter iter;
-    gboolean is_dir;
-
-    gtk_tree_model_get_iter(GTK_TREE_MODEL(win->store), &iter, tree_path);
-    gtk_tree_model_get(GTK_TREE_MODEL(win->store), &iter, COL_PATH, &path, COL_IS_DIRECTORY, &is_dir, -1);
-
-    if (!is_dir)
-    {
-        g_free(path);
-        return;
-    }
-
-    /* Replace parent with path and re-fill the model*/
-    g_free(win->parent_dir);
-    win->parent_dir = path;
-
-    file_window_fill_store(win);
-
-    /* Sensitize the up button */
-    gtk_widget_set_sensitive(GTK_WIDGET(win->up_button), TRUE);
-}
-
-static void up_clicked(GtkWidget *item, FileWindow *win)
-{
-    gchar *dir_name;
-
-    dir_name = g_path_get_dirname(win->parent_dir);
-    g_free(win->parent_dir);
-
-    win->parent_dir = dir_name;
-    file_window_fill_store(win);
-
-    // Set Up button to sensitive
-    gtk_widget_set_sensitive(GTK_WIDGET(win->up_button), TRUE);
-}
-
-void home_clicked(GtkWidget *item, FileWindow *win)
-{
-    g_free(win->parent_dir);
-    win->parent_dir = g_strdup(g_get_home_dir());
-
-    file_window_fill_store(win);
-
-    // Set Up button to sensitive
-    gtk_widget_set_sensitive(GTK_WIDGET(win->up_button), TRUE);
-}
-
-static void btnview_clicked(GtkButton *widget, FileWindow *win)
-{
-    if (win->view_mode == MODE_ICON)
-    {
-        gtk_image_set_from_icon_name(GTK_IMAGE(win->btn_image), "view-list-symbolic");
-        gtk_stack_set_visible_child_name(GTK_STACK(win->stack), "List_view");
-        win->view_mode = MODE_LIST;
+        // Set the file from model1
+        GFile *file = gtk_directory_list_get_file(GTK_DIRECTORY_LIST(model1));
+        if (file)
+        {
+            gtk_directory_list_set_file(GTK_DIRECTORY_LIST(model2), file);
+        }
+        // g_object_unref(file);
     }
     else
     {
-        gtk_image_set_from_icon_name(GTK_IMAGE(win->btn_image), "view-grid-symbolic");
-        gtk_stack_set_visible_child_name(GTK_STACK(win->stack), "Icon_view");
-        win->view_mode = MODE_ICON;
+        // Set the file from model2
+        GFile *file = gtk_directory_list_get_file(GTK_DIRECTORY_LIST(model2));
+        if (file)
+        {
+            gtk_directory_list_set_file(GTK_DIRECTORY_LIST(model1), file);
+        }
+        // g_object_unref(file);
     }
 }
 
-static void make_directory(GtkWidget *widget, int response, GtkEntry *entry)
+static void btnview_clicked(GtkButton *button, FileWindow *win)
 {
-    // Make a new directory
-    if (response == GTK_RESPONSE_OK)
+    if (win->view_mode == ViewMode::MODE_LIST)
     {
-        FileWindow *win = FILE_WINDOW(gtk_window_get_transient_for(GTK_WINDOW(widget)));
-        const char *folder = gtk_editable_get_text(GTK_EDITABLE(entry));
-        char *path, *parent_path;
-        parent_path = win->parent_dir;
-        if (strlen(parent_path) == 1 && parent_path[0] == '/')
-        {
-            path = g_strdup_printf("%s%s", parent_path, folder);
-        }
-        else
-        {
-            path = g_strdup_printf("%s/%s", parent_path, folder);
-        }
-        if (g_mkdir_with_parents(path, 0755) == -1)
-        {
-            g_print("Error Occured!");
-        }
-        else
-        {
-            file_window_fill_store(win);
-        }
+        // Sync the models
+        sync_models(win->model_column, win->model_grid, SyncMode::MODEL_COLUMN_TO_GRID);
+
+        // Change view mode from list to grid
+        gtk_stack_set_visible_child(GTK_STACK(win->stack), win->scrolled_window_grid);
+        gtk_button_set_icon_name(button, "filewin-view-grid");
+        win->view_mode = ViewMode::MODE_GRID;
+    }
+    else
+    {
+        // Sync the models
+        sync_models(win->model_column, win->model_grid, SyncMode::MODEL_GRID_TO_COLUMN);
+
+        // Change view mode from grid to list
+        gtk_stack_set_visible_child(GTK_STACK(win->stack), win->scrolled_window_column);
+        gtk_button_set_icon_name(button, "filewin-view-list");
+        win->view_mode = ViewMode::MODE_LIST;
+    }
+}
+
+static void btnup_clicked(GtkWidget *widget, FileWindow *win)
+{
+    // Get current directory and set to the new list
+    GFile *file = file_window_get_file(win);
+    char *path_str = g_file_get_path(file);
+    if (!(g_str_equal(path_str, "/") || (path_str[2] = '\\' && strlen(path_str) == 3)))
+    {
+        GFile *file1 = g_file_get_parent(file);
+
+        // Set the directory of models
+        gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_column), file1);
+        gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_grid), file1);
+
+        // Update string in the entry for path
+        char *path = g_file_get_path(file1);
+        gtk_editable_set_text(GTK_EDITABLE(win->folder_entry), path);
         g_free(path);
+
+        g_object_unref(file1);
     }
-    gtk_window_destroy(GTK_WINDOW(widget));
-}
-
-static void btnnew_clicked(GtkWidget *item, GtkWindow *parent)
-{
-    // Create Dialog
-    GtkWidget *dialog, *content_area, *entry;
-    dialog = gtk_dialog_new_with_buttons("Create a folder", parent,
-                                         GTK_DIALOG_USE_HEADER_BAR, "New", GTK_RESPONSE_OK, "Cancel", GTK_RESPONSE_CANCEL, NULL);
-
-    gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
-
-    // Add entry
-    content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-    entry = gtk_entry_new();
-    gtk_entry_set_activates_default(GTK_ENTRY(entry), TRUE);
-    gtk_widget_set_valign(entry, GTK_ALIGN_CENTER);
-    gtk_widget_set_hexpand(entry, TRUE);
-    gtk_widget_set_vexpand(content_area, TRUE);
-    gtk_box_append(GTK_BOX(content_area), entry);
-
-    g_signal_connect(dialog, "response", G_CALLBACK(make_directory), entry);
-
-    gtk_widget_show(dialog);
-}
-
-static GtkWidget *create_list_view(FileWindow *win)
-{
-    GtkWidget *tree_view;
-    GtkCellRenderer *icon_render, *text_render;
-    GtkTreeViewColumn *column;
-
-    tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(win->store));
-    // gtk_icon_view_set_selection_mode(GTK_ICON_VIEW(tree_view),GTK_SELECTION_MULTIPLE);
-
-    /* We now set which model columns that correspond to the text
-     * and pixbuf of each item
-     */
-    icon_render = gtk_cell_renderer_pixbuf_new();
-    text_render = gtk_cell_renderer_text_new();
-    column = gtk_tree_view_column_new_with_attributes("", icon_render, "pixbuf", COL_PIXBUF, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(tree_view), column);
-    column = gtk_tree_view_column_new_with_attributes("Name", text_render, "text", COL_DISPLAY_NAME, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(tree_view), column);
-
-    /* Connect to the "item-activated" signal */
-    g_signal_connect(tree_view, "row-activated",
-                     G_CALLBACK(row_activated), win);
-
-    return tree_view;
-}
-
-static GtkWidget *create_icon_view(FileWindow *win)
-{
-    GtkWidget *icon_view;
-
-    icon_view = gtk_icon_view_new_with_model(GTK_TREE_MODEL(win->store));
-    gtk_icon_view_set_selection_mode(GTK_ICON_VIEW(icon_view), GTK_SELECTION_MULTIPLE);
-
-    /* We now set which model columns that correspond to the text
-     * and pixbuf of each item
-     */
-    gtk_icon_view_set_text_column(GTK_ICON_VIEW(icon_view), COL_DISPLAY_NAME);
-    gtk_icon_view_set_pixbuf_column(GTK_ICON_VIEW(icon_view), COL_PIXBUF);
-
-    /* Connect to the "item-activated" signal */
-    g_signal_connect(icon_view, "item-activated",
-                     G_CALLBACK(item_activated), win);
-
-    return icon_view;
-}
-
-static void create_view_button(FileWindow *win)
-{
-    win->view_button = gtk_button_new();
-    win->btn_image = gtk_image_new_from_icon_name("view-grid-symbolic");
-    gtk_button_set_has_frame(GTK_BUTTON(win->view_button), FALSE);
-    gtk_button_set_child(GTK_BUTTON(win->view_button), win->btn_image);
-}
-
-static GtkWidget *create_delete_dialog(FileWindow *win, const char *msg)
-{
-    // Message Dialog
-    GtkWidget *dialog, *hbox, *content_area, *label, *error_image, *label1, *vbox;
-    char *msg_str = g_strdup_printf("Delete Failed:%s", msg);
-
-    if (!msg)
+    else
     {
-        return NULL;
+        GFile *file1 = g_file_new_for_path("/");
+
+        // Set the directory of models
+        gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_column), file1);
+        gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_grid), file1);
+
+        // Update string in the entry for path
+        char *path = g_file_get_path(file1);
+        gtk_editable_set_text(GTK_EDITABLE(win->folder_entry), path);
+        g_free(path);
+
+        g_object_unref(file1);
     }
-
-    dialog = gtk_dialog_new_with_buttons("File", GTK_WINDOW(win), GTK_DIALOG_DESTROY_WITH_PARENT,
-                                         "OK", GTK_RESPONSE_OK, NULL);
-    gtk_window_set_default_size(GTK_WINDOW(dialog), 300, 150);
-    gtk_window_set_icon_name(GTK_WINDOW(dialog), "org.gtk.daleclack");
-    gtk_window_set_title(GTK_WINDOW(dialog), "Error");
-
-    // Child Widgets
-    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-    content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-
-    label1 = gtk_label_new("    ");
-    gtk_box_append(GTK_BOX(vbox), label1);
-
-    error_image = gtk_image_new_from_resource(ERROR_IMAGE);
-    gtk_image_set_pixel_size(GTK_IMAGE(error_image), 48);
-    gtk_widget_set_hexpand(error_image, TRUE);
-    gtk_box_append(GTK_BOX(hbox), error_image);
-
-    label = gtk_label_new(msg_str);
-    gtk_widget_set_hexpand(label, TRUE);
-    gtk_box_append(GTK_BOX(hbox), label);
-
-    gtk_widget_set_valign(hbox, GTK_ALIGN_CENTER);
-    gtk_widget_set_halign(hbox, GTK_ALIGN_CENTER);
-    gtk_box_append(GTK_BOX(vbox), hbox);
-    gtk_box_append(GTK_BOX(content_area), vbox);
-    gtk_widget_set_hexpand(content_area, TRUE);
-    gtk_widget_set_vexpand(content_area, TRUE);
-    g_signal_connect_swapped(dialog, "response", G_CALLBACK(gtk_window_destroy), dialog);
-
-    g_free(msg_str);
-    return dialog;
 }
 
-static GtkWidget *create_menubtn(FileWindow *win)
+static void btnok_clicked(GtkWidget *widget, GtkWidget *dialog)
 {
-    // Create Button and item for toolbar
-    GtkWidget *menubtn, *popover, *vbox, *btnexit, *label_exit;
-    menubtn = gtk_menu_button_new();
-    gtk_menu_button_set_has_frame(GTK_MENU_BUTTON(menubtn), FALSE);
+    // Get entry widget and the content of entry
+    GtkWidget *entry_new = gtk_widget_get_first_child(dialog);
+    const char *file_name = gtk_editable_get_text(GTK_EDITABLE(entry_new));
 
-    // Create Menu
-    popover = gtk_popover_new();
-    gtk_popover_set_has_arrow(GTK_POPOVER(popover), FALSE);
-    gtk_menu_button_set_popover(GTK_MENU_BUTTON(menubtn), popover);
+    // Get the parent dir of file
+    FileWindow *win = FILE_WINDOW(gtk_window_get_transient_for(GTK_WINDOW(dialog)));
+    GFile *file = file_window_get_file(win);
+    char *parent_dir = g_file_get_path(file);
+    char *path = NULL;
 
-    // CheckButton for show hidden dir and files
-    win->show_hidden = gtk_check_button_new_with_label("Show Hidden Files");
-    gtk_check_button_set_active(GTK_CHECK_BUTTON(win->show_hidden), FALSE);
-
-    //"Exit" Button
-    btnexit = gtk_button_new();
-    label_exit = gtk_label_new("Exit");
-    gtk_button_set_has_frame(GTK_BUTTON(btnexit), FALSE);
-    gtk_widget_set_halign(label_exit, GTK_ALIGN_START);
-    gtk_button_set_child(GTK_BUTTON(btnexit), label_exit);
-    g_signal_connect_swapped(btnexit, "clicked", G_CALLBACK(gtk_window_close), win);
-
-    // Add Widgets to popover
-    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_box_append(GTK_BOX(vbox), win->show_hidden);
-    gtk_box_append(GTK_BOX(vbox), btnexit);
-    gtk_popover_set_child(GTK_POPOVER(popover), vbox);
-    gtk_popover_set_autohide(GTK_POPOVER(popover), TRUE);
-
-    return menubtn;
-}
-
-static void btndel_clicked(GtkWidget *item, FileWindow *win)
-{
-    GtkTreeIter iter;
-    char *select_name = NULL;
-    GtkWidget *dialog = NULL;
-    switch (win->view_mode)
+    // Create a new folder
+    if (parent_dir[strlen(parent_dir) - 1] != '/')
     {
-    case MODE_ICON: // Iconfied Mode
-        GList *list, *header;
-        // Get Selected items
-        list = gtk_icon_view_get_selected_items(GTK_ICON_VIEW(win->icon_view));
-        header = list;
-        while (list != NULL)
-        {
-            GtkTreePath *path = (GtkTreePath *)(list->data);
-            // Get Iter and show dialog
-            if (gtk_tree_model_get_iter(GTK_TREE_MODEL(win->store), &iter, path))
-            {
-                gtk_tree_model_get(GTK_TREE_MODEL(win->store), &iter, COL_DISPLAY_NAME, &select_name, -1);
-                dialog = create_delete_dialog(win, select_name);
-            }
-            list = list->next;
-        }
-        g_list_free_full(header, (GDestroyNotify)gtk_tree_path_free);
-        break;
-    case MODE_LIST: // Listed Mode
-        GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(win->tree_view));
-        // Get Selected items
-        if (gtk_tree_selection_get_selected(win->selection, &model, &iter))
-        {
-            gtk_tree_model_get(model, &iter, COL_DISPLAY_NAME, &select_name, -1);
-        }
-        // g_object_unref(model);
-        dialog = create_delete_dialog(win, select_name);
-        break;
+        path = g_strdup_printf("%s/%s", parent_dir, file_name);
     }
-    if (dialog)
+    else
     {
-        gtk_widget_show(dialog);
+        path = g_strdup_printf("%s%s", parent_dir, file_name);
     }
-    g_free(select_name);
+    if (g_mkdir_with_parents(path, 0755) == -1)
+    {
+        g_print("Error Occured!");
+    }
+    // g_print("%s\n", path);
+
+    g_free(parent_dir);
+    g_free(path);
+    gtk_window_destroy(GTK_WINDOW(dialog));
 }
 
-static void file_window_init(FileWindow *window)
+static void btnnew_clicked(GtkWidget *widget, FileWindow *win)
 {
-    GtkWidget *sw, *vbox, *btnbox, *view_bar;
-    GtkWidget *home_button, *new_button, *delete_button, *view_item;
+    GtkWidget *dialog_new;
 
+    // Create the window
+    dialog_new = gtk_window_new();
+    gtk_window_set_title(GTK_WINDOW(dialog_new), "Create Folder");
+    gtk_window_set_transient_for(GTK_WINDOW(dialog_new), GTK_WINDOW(win));
+
+    // Add the entry and the "OK" button
+    GtkWidget *header, *btn_ok, *entry_new;
+    header = gtk_header_bar_new();
+    btn_ok = gtk_button_new_with_label("OK");
+    entry_new = gtk_entry_new();
+
+    // Link signal for "OK" button
+    g_signal_connect(entry_new, "activate", G_CALLBACK(btnok_clicked), dialog_new);
+    g_signal_connect(btn_ok, "clicked", G_CALLBACK(btnok_clicked), dialog_new);
+
+    // Add widgets to window
+    gtk_header_bar_pack_end(GTK_HEADER_BAR(header), btn_ok);
+    gtk_window_set_titlebar(GTK_WINDOW(dialog_new), header);
+    gtk_window_set_child(GTK_WINDOW(dialog_new), entry_new);
+
+    gtk_window_present(GTK_WINDOW(dialog_new));
+}
+
+void home_clicked(GtkWidget *widget, FileWindow *win)
+{
+    // Set Current dir to home dir
+    GFile *file = g_file_new_for_path(g_get_home_dir());
+
+    // Update string in the entry for path
+    char *path = g_file_get_path(file);
+    gtk_editable_set_text(GTK_EDITABLE(win->folder_entry), path);
+    g_free(path);
+
+    gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_column), file);
+    gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_grid), file);
+    g_object_unref(file);
+}
+
+static void btndel_clicked(GtkWidget *widget, FileWindow *win)
+{
+    GtkWidget *error_dialog;
+
+    // Create dialog
+    error_dialog = gtk_window_new();
+    gtk_window_set_title(GTK_WINDOW(error_dialog), "Error");
+    gtk_window_set_transient_for(GTK_WINDOW(error_dialog), GTK_WINDOW(win));
+
+    // Add a header bar
+    GtkWidget *header = gtk_header_bar_new();
+    GtkWidget *btn_ok = gtk_button_new_with_label("OK");
+    gtk_header_bar_pack_end(GTK_HEADER_BAR(header), btn_ok);
+    gtk_window_set_titlebar(GTK_WINDOW(error_dialog), header);
+    g_signal_connect_swapped(btn_ok, "clicked", G_CALLBACK(gtk_window_destroy), error_dialog);
+
+    // Add a label and a icon to show error
+    GtkWidget *dialog_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    GtkWidget *image = gtk_image_new_from_resource("/org/gtk/daleclack/dialog-error.png");
+    GtkWidget *label = gtk_label_new("Failed to delete file");
+    gtk_image_set_pixel_size(GTK_IMAGE(image), 48);
+
+    // Add widgets to the dialog
+    gtk_widget_set_margin_bottom(dialog_box, 20);
+    gtk_widget_set_margin_end(dialog_box, 20);
+    gtk_widget_set_margin_start(dialog_box, 20);
+    gtk_widget_set_margin_top(dialog_box, 20);
+    gtk_box_append(GTK_BOX(dialog_box), image);
+    gtk_box_append(GTK_BOX(dialog_box), label);
+    gtk_window_set_child(GTK_WINDOW(error_dialog), dialog_box);
+
+    gtk_window_present(GTK_WINDOW(error_dialog));
+}
+
+static void folder_entry_activated(GtkWidget *widget, FileWindow *win)
+{
+    // Get Path and create a associated file
+    const char *path = gtk_editable_get_text(GTK_EDITABLE(widget));
+    GFile *file = g_file_new_for_path(path);
+
+    // Set the directory of models
+    gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_column), file);
+    gtk_directory_list_set_file(GTK_DIRECTORY_LIST(win->model_grid), file);
+}
+
+GListModel *file_window_get_grid_model(FileWindow *self)
+{
+    // Get Model for grid view
+    return self->model_grid;
+}
+
+GListModel *file_window_get_column_model(FileWindow *self)
+{
+    // Get Model for list column view
+    return self->model_column;
+}
+
+GtkWidget *file_window_get_folder_entry(FileWindow *self)
+{
+    // Get the entry widget
+    return self->folder_entry;
+}
+
+static void file_window_dispose(GObject *object)
+{
+    // Clear List Model
+    G_OBJECT_CLASS(file_window_parent_class)->dispose(object);
+}
+
+static void file_window_init(FileWindow *self)
+{
+    GtkColumnViewColumn *column;
     // Initalize window
-    gtk_window_set_default_size(GTK_WINDOW(window), 650, 400);
-    gtk_window_set_icon_name(GTK_WINDOW(window), "org.gtk.daleclack");
-    gtk_window_set_title(GTK_WINDOW(window), "File Manager");
+    gtk_window_set_title(GTK_WINDOW(self), "My Finder");
+    gtk_window_set_icon_name(GTK_WINDOW(self), "org.gtk.daleclack");
+    gtk_window_set_default_size(GTK_WINDOW(self), 640, 400);
 
-    file_window_load_pixbufs(48, window);
+    // Create list model
+    GFile *file = g_file_new_for_path(g_get_home_dir());
+    self->model_column = G_LIST_MODEL(gtk_directory_list_new(
+        "standard::name,standard::display-name,standard::icon,standard::size,standard::content-type", file));
 
-    // Create child widgets
-    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    btnbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_append(GTK_BOX(vbox), btnbox);
-    gtk_window_set_child(GTK_WINDOW(window), vbox);
+    self->model_grid = G_LIST_MODEL(gtk_directory_list_new(
+        "standard::name,standard::display-name,standard::icon,standard::size,standard::content-type", file));
 
-    //"Up" Button
-    window->up_button = gtk_button_new();
-    gtk_button_set_icon_name(GTK_BUTTON(window->up_button), "go-up");
-    gtk_box_append(GTK_BOX(btnbox), window->up_button);
+    // Create column view widget
+    self->column_view = create_column_view(self);
 
-    //"Home" Button
-    home_button = gtk_button_new();
-    gtk_button_set_icon_name(GTK_BUTTON(home_button), "go-home");
-    gtk_box_append(GTK_BOX(btnbox), home_button);
+    // Create grid view widget
+    self->grid_view = create_grid_view(self);
 
-    //"New Folder" Button
-    new_button = gtk_button_new();
-    gtk_button_set_icon_name(GTK_BUTTON(new_button), "folder-new");
-    gtk_box_append(GTK_BOX(btnbox), new_button);
+    // Create buttons
+    self->btn_up = gtk_button_new_from_icon_name("filewin-go-up");
+    self->btn_home = gtk_button_new_from_icon_name("filewin-go-home");
+    self->btn_new = gtk_button_new_from_icon_name("filewin-new");
+    self->btn_del = gtk_button_new_from_icon_name("filewin-delete");
+    self->btn_view = gtk_button_new_from_icon_name("filewin-view-list");
 
-    //"Delete" Button
-    delete_button = gtk_button_new();
-    gtk_button_set_icon_name(GTK_BUTTON(delete_button), "edit-delete");
-    gtk_box_append(GTK_BOX(btnbox), delete_button);
+    // Create entry for show and change the current folder
+    self->folder_entry = gtk_entry_new();
+    gtk_editable_set_text(GTK_EDITABLE(self->folder_entry), g_get_home_dir());
 
-    // Separtor
-    GtkWidget *label = gtk_label_new(" ");
-    gtk_widget_set_hexpand(label, TRUE);
-    gtk_box_append(GTK_BOX(btnbox), label);
+    // Create widgets for layout
+    self->scrolled_window_column = gtk_scrolled_window_new();
+    self->scrolled_window_grid = gtk_scrolled_window_new();
+    self->main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    self->btn_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    self->stack = gtk_stack_new();
+    self->separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
-    //"View Mode" Button
-    window->view_mode = MODE_ICON;
-    create_view_button(window);
-    gtk_box_append(GTK_BOX(btnbox), window->view_button);
+    // Add buttons to the btn_box
+    gtk_widget_set_hexpand(self->btn_box, TRUE);
+    gtk_box_append(GTK_BOX(self->btn_box), self->btn_up);
+    gtk_box_append(GTK_BOX(self->btn_box), self->btn_home);
+    gtk_box_append(GTK_BOX(self->btn_box), self->btn_new);
+    gtk_box_append(GTK_BOX(self->btn_box), self->btn_del);
+    gtk_widget_set_hexpand(self->separator, TRUE);
+    // gtk_widget_set_halign(self->btn_view, GTK_ALIGN_END);
+    gtk_box_append(GTK_BOX(self->btn_box), self->separator);
+    gtk_box_append(GTK_BOX(self->btn_box), self->btn_view);
 
-    // Menu Button
-    GtkWidget *menubtn = create_menubtn(window);
-    gtk_box_append(GTK_BOX(btnbox), menubtn);
+    // Link signals
+    g_signal_connect(self->btn_view, "clicked", G_CALLBACK(btnview_clicked), self);
+    g_signal_connect(self->btn_up, "clicked", G_CALLBACK(btnup_clicked), self);
+    g_signal_connect(self->btn_home, "clicked", G_CALLBACK(home_clicked), self);
+    g_signal_connect(self->btn_del, "clicked", G_CALLBACK(btndel_clicked), self);
+    g_signal_connect(self->btn_new, "clicked", G_CALLBACK(btnnew_clicked), self);
+    g_signal_connect(self->folder_entry, "activate", G_CALLBACK(folder_entry_activated), self);
 
-    // Folder Container
-    sw = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_has_frame(GTK_SCROLLED_WINDOW(sw), TRUE);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_box_append(GTK_BOX(vbox), sw);
+    // Add scrolled window for columns view
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(self->scrolled_window_column),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_hexpand(self->scrolled_window_column, TRUE);
+    gtk_widget_set_vexpand(self->scrolled_window_column, TRUE);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(self->scrolled_window_column), self->column_view);
+    gtk_stack_add_named(GTK_STACK(self->stack), self->scrolled_window_column, "Column View");
 
-    window->stack = gtk_stack_new();
-    gtk_widget_set_vexpand(window->stack, TRUE);
+    // Add scrolled window for grid view
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(self->scrolled_window_grid),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_hexpand(self->scrolled_window_grid, TRUE);
+    gtk_widget_set_vexpand(self->scrolled_window_grid, TRUE);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(self->scrolled_window_grid), self->grid_view);
+    gtk_stack_add_named(GTK_STACK(self->stack), self->scrolled_window_grid, "Grid View");
 
-    // Create Store and fill it
-    window->parent_dir = g_strdup("/");
-    window->store = create_store();
-    file_window_fill_store(window);
-
-    window->tree_view = create_list_view(window);
-    window->icon_view = create_icon_view(window);
-
-    gtk_stack_add_named(GTK_STACK(window->stack), window->icon_view, "Icon_view");
-    gtk_stack_add_named(GTK_STACK(window->stack), window->tree_view, "List_view");
-
-    g_object_unref(window->store);
-
-    window->selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(window->tree_view));
-
-    /* Connect to the "clicked" signal of the "Up" tool button */
-    g_signal_connect(window->up_button, "clicked",
-                     G_CALLBACK(up_clicked), window);
-
-    /* Connect to the "clicked" signal of the "Home" tool button */
-    g_signal_connect(home_button, "clicked",
-                     G_CALLBACK(home_clicked), window);
-
-    /* Connect to the "changed" signal of the "View Mode" Button */
-    g_signal_connect(window->view_button, "clicked",
-                     G_CALLBACK(btnview_clicked), window);
-
-    /* Connect to the "clicked" signal of the "Show hidden files" tool button */
-    g_signal_connect_swapped(window->show_hidden, "toggled",
-                             G_CALLBACK(file_window_fill_store), window);
-
-    /* Connect to the "clicked" signal of the "New Directory" tool button */
-    g_signal_connect(new_button, "clicked",
-                     G_CALLBACK(btnnew_clicked), window);
-
-    /* Connect to the "clicked" signal of the "Delete" tool button */
-    g_signal_connect(delete_button, "clicked",
-                     G_CALLBACK(btndel_clicked), window);
-
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(sw), window->stack);
+    gtk_box_append(GTK_BOX(self->main_box), self->btn_box);      // Box for control buttons
+    gtk_box_append(GTK_BOX(self->main_box), self->folder_entry); // Box for folder switcher
+    gtk_box_append(GTK_BOX(self->main_box), self->stack);        // Box for main area
+    // gtk_stack_set_visible_child(GTK_STACK(self->stack), self->scrolled_window_grid);
+    gtk_window_set_child(GTK_WINDOW(self), self->main_box);
 }
 
-static void file_window_class_init(FileWindowClass *win_class)
+static void file_window_class_init(FileWindowClass *klass)
 {
+    G_OBJECT_CLASS(klass)->dispose = file_window_dispose;
 }
 
-FileWindow *file_window_new(GtkWindow *parent)
+FileWindow *file_window_new(GtkWindow *win)
 {
-    return (FileWindow *)g_object_new(file_window_get_type(), "transient-for", parent, NULL);
+    return FILE_WINDOW(g_object_new(file_window_get_type(), "transient-for", win, NULL));
 }

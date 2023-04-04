@@ -43,8 +43,14 @@ set(RESOURCE_LIST
     icons/16x16/actions/arrow_left.svg
     icons/16x16/actions/arrow_right.svg
     icons/48x48/actions/My_GtkUI.png
-    icons/scalable/status/file-manager.svg
+    icons/scalable/status/file-manager1.svg
     icons/scalable/status/file-manager_running.svg
+    icons/scalable/status/filewin-delete.svg
+    icons/scalable/status/filewin-go-home.svg
+    icons/scalable/status/filewin-go-up.svg
+    icons/scalable/status/filewin-new.svg
+    icons/scalable/status/filewin-view-grid.svg
+    icons/scalable/status/filewin-view-list.svg
     icons/scalable/status/qemu-launcher.svg
     icons/scalable/status/qq.svg
     icons/scalable/status/qqmusic.svg
@@ -67,7 +73,8 @@ add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 #SOURCE FILES LIST
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyDock.cpp src/core/Start.cpp
-    src/file_app/FileWindow.cpp src/core/AboutWin.cpp)
+    src/file_app/FileWindow.cpp src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp 
+    src/core/AboutWin.cpp)
 
 #For win32 platform,use rc resource and .ico icon
 if(WIN32)
