@@ -7,19 +7,74 @@
     <property name="halign">baseline</property>
     <property name="height-request">400</property>
     <property name="icon-name">My_GtkUI</property>
-    <property name="opacity">0</property>
     <property name="title">About My GtkUI Flos Version</property>
     <property name="width-request">640</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="main_box">
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
+          <object class="GtkLabel">
+            <property name="vexpand">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="icon_box">
             <property name="halign">center</property>
             <property name="valign">center</property>
             <child>
               <object class="GtkImage">
-                <property name="resource">/org/gtk/daleclack/icons/48x48/actions/My_GtkUI.png</property>
+                <property name="pixel-size">128</property>
+                <property name="resource">/org/gtk/daleclack/logo.png</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="halign">center</property>
+                <property name="orientation">vertical</property>
+                <property name="valign">center</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">My GtkUI Flos Version</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">4.2</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">2019-2023 The Xe Project</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="vexpand">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="links_box">
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="hexpand">True</property>
+                <property name="label">Websize</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="hexpand">True</property>
+                <property name="label">Developer</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="hexpand">True</property>
+                <property name="label">Documention</property>
               </object>
             </child>
           </object>

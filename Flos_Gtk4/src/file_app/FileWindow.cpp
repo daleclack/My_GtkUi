@@ -279,7 +279,7 @@ static void file_window_init(FileWindow *self)
     GtkColumnViewColumn *column;
     // Initalize window
     gtk_window_set_title(GTK_WINDOW(self), "My Finder");
-    gtk_window_set_icon_name(GTK_WINDOW(self), "org.gtk.daleclack");
+    gtk_window_set_icon_name(GTK_WINDOW(self), "file-manager1");
     gtk_window_set_default_size(GTK_WINDOW(self), 640, 400);
 
     // Create list model
