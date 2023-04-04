@@ -28,23 +28,43 @@
               </object>
             </child>
             <child>
+              <object class="GtkLabel">
+                <property name="label">           </property>
+              </object>
+            </child>
+            <child>
               <object class="GtkBox">
                 <property name="halign">center</property>
                 <property name="orientation">vertical</property>
                 <property name="valign">center</property>
                 <child>
                   <object class="GtkLabel">
+                    <property name="halign">start</property>
                     <property name="label">My GtkUI Flos Version</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="label">4.2</property>
+                    <property name="halign">start</property>
+                    <property name="label">4.2 The Flying Wing</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="label">2019-2023 The Xe Project</property>
+                    <property name="halign">start</property>
+                    <property name="label">© 2019-2023 The Xe Project</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">       The project is to memorize the FlWin and the flos project. 
+FlWin project started in 2016, in 2017, the name is changed 
+to flos. In 2018, the project name is reset to FlWin. The last 
+version of FlWin/Flos is FlWin 5.x, and tested in the start of 
+2019, which is never been released.
+         I think the flos 2.0 is the best release of that project, 
+so the idea is base on the flos 2.0 build.</property>
+                    <property name="selectable">True</property>
                   </object>
                 </child>
               </object>
