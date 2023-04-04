@@ -19,8 +19,16 @@
     background-color: alpha(white,0.7);
 }
 
+.dark_style entry.search{
+    background-color: alpha(white, 0.7);
+}
+
+.dark_style popover{
+    background-color: alpha(white, 0.7);
+}
+
 .dark_style separator{
-	background-color:white;
+	background-color:alpha(white, 0.7);
 }
 
 .dark_style menubutton{

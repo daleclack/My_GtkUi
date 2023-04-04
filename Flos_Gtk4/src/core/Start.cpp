@@ -44,17 +44,6 @@ void add_start(MainWin *win, GtkBox *box)
     GtkWidget *btnshut = (GtkWidget *)gtk_builder_get_object(startbuilder, "btnshut");
     g_signal_connect_swapped(btnshut, "clicked", G_CALLBACK(gtk_window_destroy), win);
 
-    // Add Style for separator
-    GtkWidget *prim_separator, *ext_separator;
-    prim_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "prim_separator");
-    ext_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "ext_separator");
-    gtk_widget_add_css_class(prim_separator, "dark_style");
-    gtk_widget_add_css_class(ext_separator, "dark_style");
-    gtk_style_context_add_provider((prim_separator),
-                                   main_win_get_style(win), G_MAXINT);
-    gtk_style_context_add_provider((ext_separator),
-                                   main_win_get_style(win), G_MAXINT);
-
     // Dark mode for buttons
     GtkMenuButton *btn_more;
     GtkImage *image_all, *image_back;
@@ -107,6 +96,27 @@ void add_start(MainWin *win, GtkBox *box)
     g_signal_connect_swapped(btnfile2, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
     g_signal_connect_swapped(user_button, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
     g_signal_connect_swapped(btn_computer, "clicked", G_CALLBACK(gtk_popover_popdown), start_menu);
+
+    // Add Style for separator and start menu
+    GtkWidget *prim_separator, *ext_separator, *start_box, *search_entry;
+    prim_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "prim_separator");
+    ext_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "ext_separator");
+    start_box = (GtkWidget *)gtk_builder_get_object(startbuilder, "start_box");
+    search_entry = (GtkWidget *)gtk_builder_get_object(startbuilder, "search_entry");
+    gtk_widget_add_css_class(prim_separator, "dark_style");
+    gtk_widget_add_css_class(ext_separator, "dark_style");
+    gtk_widget_add_css_class(start_menu, "dark_style");
+    gtk_widget_add_css_class(search_entry, "dark_style");
+    gtk_style_context_add_provider((prim_separator),
+                                   main_win_get_style(win), G_MAXINT);
+    gtk_style_context_add_provider((ext_separator),
+                                   main_win_get_style(win), G_MAXINT);
+    gtk_style_context_add_provider((start_menu),
+                                   main_win_get_style(win), G_MAXINT);
+    gtk_style_context_add_provider((start_box),
+                                   main_win_get_style(win), G_MAXINT);
+    gtk_style_context_add_provider((search_entry),
+                                   main_win_get_style(win), G_MAXINT);
 
     // Pack widgets
     gtk_box_prepend(box, menu_btn);

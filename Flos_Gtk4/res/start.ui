@@ -501,7 +501,7 @@
               <object class="GtkBox">
                 <property name="visible">1</property>
                 <child>
-                  <object class="GtkSearchEntry">
+                  <object class="GtkSearchEntry" id="search_entry">
                     <property name="visible">1</property>
                     <property name="focusable">1</property>
                   </object>
