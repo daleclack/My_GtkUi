@@ -131,6 +131,7 @@ static void main_win_init(MainWin *win)
     GtkBuilder *builder = gtk_builder_new_from_resource("/org/gtk/daleclack/menubar.xml");
     GMenuModel *model = G_MENU_MODEL(gtk_builder_get_object(builder, "model"));
     GtkWidget *menubar = gtk_popover_menu_bar_new_from_model(model);
+    // gtk_popover_set_position(GTK_POPOVER(menubar), GTK_POS_TOP);
     // gtk_button_set_child(GTK_BUTTON(back_button),menubar);
 
     // Add actions
