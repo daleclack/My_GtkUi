@@ -1,0 +1,26 @@
+### For developers
+
+To compile the code, you should clone the project, and initalize the submodule. The project is arranged by CMake, so it is easy.
+
+The dependency of the project is only gtk4, different distro may has different name of it.
+
+```shell
+# first clone the respository
+git clone https://github.com/daleclack/My_GtkUi
+or
+git clone https://gitlab.com/daleclack/My_GtkUi
+
+# Initalize the submodules
+cd My_GtkUi
+git submodule init
+git submodule update --remote
+
+# When finished, you should can see a folder named "GCR_CMake"
+# Then go to the project folder and configure by CMake
+cd Flos_Gtk4
+mkdir build
+cmake ..
+make -j12
+
+# Then the application is compiled.
+```
