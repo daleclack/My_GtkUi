@@ -76,18 +76,18 @@ TextEditor::TextEditor()
     search_down.signal_clicked().connect(sigc::mem_fun(*this, &TextEditor::search_forward));
 
     // Pack widgets
-    searchbox.append(search_entry, Gtk::PACK_SHRINK);
-    searchbox.append(search_up, Gtk::PACK_SHRINK);
-    searchbox.append(search_down, Gtk::PACK_SHRINK);
+    searchbox.append(search_entry);
+    searchbox.append(search_up);
+    searchbox.append(search_down);
     searchbar.add(searchbox);
-    vbox.append(searchbar, Gtk::PACK_SHRINK);
+    vbox.append(searchbar);
 
     // A InfoBar
     infobar.add_button("OK", Gtk::RESPONSE_OK);
     infobar.signal_response().connect(sigc::mem_fun(*this, &TextEditor::infobar_response));
     infobox = dynamic_cast<Gtk::Box *>(infobar.get_content_area());
     infobox->append(label1);
-    vbox.append(infobar, Gtk::PACK_SHRINK);
+    vbox.append(infobar);
     vbox.append(hbox);
 
     // Save config when the window is closed
@@ -100,7 +100,7 @@ TextEditor::TextEditor()
     expend_builder->get_widget("btn_caps", btncaps);
     expend_builder->get_widget("btntab", btntab);
     expend_builder->get_widget("btnenter", btnenter);
-    vbox.append(*expender, Gtk::PACK_SHRINK);
+    vbox.append(*expender);
 
     // Get alphabet buttons
     for(int i = 0; i < 26; i++){

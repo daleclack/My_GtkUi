@@ -43,25 +43,25 @@ Drawing::Drawing()
     btn_rectangle.signal_clicked().connect(sigc::mem_fun(*this, &Drawing::btnrectangle_clicked));
 
     // Left Panel
-    left_box.append(btn_free, Gtk::PACK_SHRINK);
-    left_box.append(btn_circle, Gtk::PACK_SHRINK);
-    left_box.append(btn_line, Gtk::PACK_SHRINK);
-    left_box.append(btn_rectangle, Gtk::PACK_SHRINK);
-    left_box.set_valign(Gtk::ALIGN_START);
+    left_box.append(btn_free);
+    left_box.append(btn_circle);
+    left_box.append(btn_line);
+    left_box.append(btn_rectangle);
+    left_box.set_valign(Gtk::Align::START);
 
     // Color set panel
     size_adj = Gtk::Adjustment::create(3.0, 1.0, 20.0);
     scale.set_adjustment(size_adj);
     scale.set_value_pos(Gtk::POS_BOTTOM);
-    btn_box.append(fill_check, Gtk::PACK_SHRINK);
-    btn_box.append(fill_btn, Gtk::PACK_SHRINK);
-    btn_box.append(main_label, Gtk::PACK_SHRINK);
-    btn_box.append(color_btn, Gtk::PACK_SHRINK);
-    btn_box.append(size_label, Gtk::PACK_SHRINK);
-    btn_box.append(scale, Gtk::PACK_SHRINK);
-    btn_box.append(btn_save, Gtk::PACK_SHRINK);
-    btn_box.append(btn_clear, Gtk::PACK_SHRINK);
-    btn_box.append(btn_exit, Gtk::PACK_SHRINK);
+    btn_box.append(fill_check);
+    btn_box.append(fill_btn);
+    btn_box.append(main_label);
+    btn_box.append(color_btn);
+    btn_box.append(size_label);
+    btn_box.append(scale);
+    btn_box.append(btn_save);
+    btn_box.append(btn_clear);
+    btn_box.append(btn_exit);
     btn_box.set_halign(Gtk::ALIGN_CENTER);
     btn_box.set_valign(Gtk::ALIGN_CENTER);
 
@@ -109,7 +109,7 @@ Drawing::Drawing()
     draw_area.signal_draw().connect(sigc::mem_fun(*this, &Drawing::draw_event));
     main_box.append(left_box);
     main_box.append(draw_area);
-    main_box.append(btn_box, Gtk::PACK_SHRINK);
+    main_box.append(btn_box);
     main_box.set_border_width(10);
     add(main_box);
     show_all_children();

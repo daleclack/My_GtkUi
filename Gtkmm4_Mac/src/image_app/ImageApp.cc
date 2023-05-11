@@ -24,8 +24,8 @@ ImageApp::ImageApp()
     // Add control widgets
     btnopen.set_relief(Gtk::RELIEF_NONE);
     btnbox.append(scale);
-    btnbox.append(btnopen, Gtk::PACK_SHRINK);
-    main_box.append(btnbox, Gtk::PACK_SHRINK);
+    btnbox.append(btnopen);
+    main_box.append(btnbox);
     btnopen.signal_clicked().connect(sigc::mem_fun(*this, &ImageApp::btnopen_clicked));
 
     // Add Drag Gesture

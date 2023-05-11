@@ -107,9 +107,9 @@ MyPrefs::MyPrefs()
     btnadd.signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnadd_clicked));
     btnremove.set_image_from_icon_name("list-remove");
     btnremove.signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
-    btnbox.append(btnadd, Gtk::PACK_SHRINK);
-    btnbox.append(btnremove, Gtk::PACK_SHRINK);
-    main_box.append(btnbox, Gtk::PACK_SHRINK);
+    btnbox.append(btnadd);
+    btnbox.append(btnremove);
+    main_box.append(btnbox);
 
     // Add Main Box to window
     const int margin_value = 15;

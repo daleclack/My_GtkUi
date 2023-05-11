@@ -11,53 +11,53 @@ MyFinder::MyFinder()
     btnlogo.set_relief(Gtk::RELIEF_NONE);
     btnlogo.set_use_popover(false);
     btnlogo.set_menu_model(get_menu(menubuilder, "main_menu"));
-    append(btnlogo, Gtk::PACK_SHRINK);
+    append(btnlogo);
 
     btntitle.set_label("MyFinder");
     btntitle.set_relief(Gtk::RELIEF_NONE);
     btntitle.set_use_popover(false);
     btntitle.set_menu_model(get_menu(menubuilder, "title_menu"));
-    append(btntitle, Gtk::PACK_SHRINK);
+    append(btntitle);
 
     btnfile.set_label("File");
     btnfile.set_relief(Gtk::RELIEF_NONE);
     btnfile.set_use_popover(false);
     btnfile.set_menu_model(get_menu(menubuilder, "menu_file"));
-    append(btnfile, Gtk::PACK_SHRINK);
+    append(btnfile);
 
     btnedit.set_label("Edit");
     btnedit.set_relief(Gtk::RELIEF_NONE);
     btnedit.set_use_popover(false);
     btnedit.set_menu_model(get_menu(menubuilder, "menu_edit"));
-    append(btnedit, Gtk::PACK_SHRINK);
+    append(btnedit);
 
     btnshow.set_label("Show");
     btnshow.set_relief(Gtk::RELIEF_NONE);
     btnshow.set_use_popover(false);
     btnshow.set_menu_model(get_menu(menubuilder, "menu_show"));
-    append(btnshow, Gtk::PACK_SHRINK);
+    append(btnshow);
 
     btngoto.set_label("Go to");
     btngoto.set_relief(Gtk::RELIEF_NONE);
     btngoto.set_use_popover(false);
     btngoto.set_menu_model(get_menu(menubuilder, "menu_goto"));
-    append(btngoto, Gtk::PACK_SHRINK);
+    append(btngoto);
 
     btnwin.set_label("Windows");
     btnwin.set_relief(Gtk::RELIEF_NONE);
     btnwin.set_use_popover(false);
     btnwin.set_menu_model(get_menu(menubuilder, "menu_win"));
-    append(btnwin, Gtk::PACK_SHRINK);
+    append(btnwin);
 
     btnhelp.set_label("Help");
     btnhelp.set_relief(Gtk::RELIEF_NONE);
     btnhelp.set_use_popover(false);
     btnhelp.set_menu_model(get_menu(menubuilder, "menu_help"));
-    append(btnhelp, Gtk::PACK_SHRINK);
+    append(btnhelp);
 
     // Add menu to window
     set_halign(Gtk::ALIGN_FILL);
-    set_valign(Gtk::ALIGN_START);
+    set_valign(Gtk::Align::START);
 
     // Add a timer
     time_popover.add(calender);
@@ -70,40 +70,40 @@ MyFinder::MyFinder()
     // Menu button
     menu_button.set_image_from_icon_name("open-menu");
     menu_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(menu_button, Gtk::PACK_SHRINK);
+    pack_end(menu_button);
 
     // Find Button
     find_button.set_image_from_icon_name("finder-find");
     find_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(find_button, Gtk::PACK_SHRINK);
+    pack_end(find_button);
 
     // Timer
     timer_button.set_label("2022/1/23 18:32");
     timer_button.set_relief(Gtk::RELIEF_NONE);
     timer_button.set_popover(time_popover);
-    pack_end(timer_button, Gtk::PACK_SHRINK);
+    pack_end(timer_button);
 
     mytimer = Glib::signal_timeout().connect(sigc::mem_fun(*this, &MyFinder::time_out), 1000);
 
     // finder-battery Button
     battery_button.set_image_from_icon_name("finder-battery");
     battery_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(battery_button, Gtk::PACK_SHRINK);
+    pack_end(battery_button);
 
     // NetWork Button
     network_button.set_image_from_icon_name("finder-wifi");
     network_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(network_button, Gtk::PACK_SHRINK);
+    pack_end(network_button);
 
     // Audio Button
     audio_button.set_image_from_icon_name("finder_audio");
     audio_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(audio_button, Gtk::PACK_SHRINK);
+    pack_end(audio_button);
 
     // Monitor Button
     screen_button.set_image_from_icon_name("finder-computer");
     screen_button.set_relief(Gtk::RELIEF_NONE);
-    pack_end(screen_button, Gtk::PACK_SHRINK);
+    pack_end(screen_button);
 
     // Add Style for MyFinder
     provider = Gtk::CssProvider::create();
