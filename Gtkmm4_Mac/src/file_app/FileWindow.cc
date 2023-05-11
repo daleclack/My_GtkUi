@@ -4,7 +4,7 @@
 FileWindow::FileWindow()
 :parent_str("/"),
 vbox(Gtk::ORIENTATION_VERTICAL,5),
-btnbox(Gtk::ORIENTATION_HORIZONTAL,5),
+btnbox(Gtk::Orientation::HORIZONTAL,5),
 menubox(Gtk::ORIENTATION_VERTICAL,5),
 show_hidden("Show hidden files")
 {
@@ -22,11 +22,11 @@ show_hidden("Show hidden files")
     pixbuf1.reset();
 
     //Create Child Widgets
-    vbox.pack_start(btnbox,Gtk::PACK_SHRINK);
+    vbox.append(btnbox,Gtk::PACK_SHRINK);
     add(vbox);
 
     m_toolbar.set_toolbar_style(Gtk::TOOLBAR_ICONS);
-    btnbox.pack_start(m_toolbar,Gtk::PACK_SHRINK);
+    btnbox.append(m_toolbar,Gtk::PACK_SHRINK);
     btnbox.pack_end(m_viewbar,Gtk::PACK_SHRINK);
 
     //"Up" Button
@@ -69,7 +69,7 @@ show_hidden("Show hidden files")
     m_viewbar.set_toolbar_style(Gtk::TOOLBAR_ICONS);
     show_hidden.set_active(false);
     show_hidden.signal_clicked().connect(sigc::mem_fun(*this,&FileWindow::btnhide_clicked));
-    menubox.pack_start(show_hidden,Gtk::PACK_SHRINK);
+    menubox.append(show_hidden,Gtk::PACK_SHRINK);
     popover.add(menubox);
     menubtn.set_popover(popover);
     popover.show_all_children();
@@ -78,7 +78,7 @@ show_hidden("Show hidden files")
     m_infobar.add_button("OK",Gtk::RESPONSE_OK);
     auto pbox = dynamic_cast<Gtk::Container*>(m_infobar.get_content_area());
     pbox->add(info_label);
-    vbox.pack_start(m_infobar,Gtk::PACK_SHRINK);
+    vbox.append(m_infobar,Gtk::PACK_SHRINK);
     m_infobar.signal_response().connect(sigc::mem_fun(*this,&FileWindow::infobar_response));
 
     //Create Store
@@ -89,7 +89,7 @@ show_hidden("Show hidden files")
 
     initalize_views();
     m_sw.add(stack);
-    vbox.pack_start(m_sw);
+    vbox.append(m_sw);
     
     show_all_children();
     m_infobar.hide();

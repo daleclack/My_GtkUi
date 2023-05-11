@@ -9,8 +9,8 @@ using json = nlohmann::json;
 
 TextEditor::TextEditor()
     : vbox(Gtk::ORIENTATION_VERTICAL, 5),
-      hbox(Gtk::ORIENTATION_HORIZONTAL, 5),
-      searchbox(Gtk::ORIENTATION_HORIZONTAL, 5),
+      hbox(Gtk::Orientation::HORIZONTAL, 5),
+      searchbox(Gtk::Orientation::HORIZONTAL, 5),
       file_opened(false)
 {
     // Load window config from json file
@@ -50,9 +50,9 @@ TextEditor::TextEditor()
     buffer1->signal_changed().connect(sigc::mem_fun(*this, &TextEditor::buffer1_changed));
 
     // Pack Widgets
-    sw1.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    sw1.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
     sw1.add(textview1);
-    hbox.pack_start(sw1);
+    hbox.append(sw1);
 
     // Add actions and signal handlers
     add_action("text_open", sigc::mem_fun(*this, &TextEditor::btnopen_clicked));
@@ -76,19 +76,19 @@ TextEditor::TextEditor()
     search_down.signal_clicked().connect(sigc::mem_fun(*this, &TextEditor::search_forward));
 
     // Pack widgets
-    searchbox.pack_start(search_entry, Gtk::PACK_SHRINK);
-    searchbox.pack_start(search_up, Gtk::PACK_SHRINK);
-    searchbox.pack_start(search_down, Gtk::PACK_SHRINK);
+    searchbox.append(search_entry, Gtk::PACK_SHRINK);
+    searchbox.append(search_up, Gtk::PACK_SHRINK);
+    searchbox.append(search_down, Gtk::PACK_SHRINK);
     searchbar.add(searchbox);
-    vbox.pack_start(searchbar, Gtk::PACK_SHRINK);
+    vbox.append(searchbar, Gtk::PACK_SHRINK);
 
     // A InfoBar
     infobar.add_button("OK", Gtk::RESPONSE_OK);
     infobar.signal_response().connect(sigc::mem_fun(*this, &TextEditor::infobar_response));
     infobox = dynamic_cast<Gtk::Box *>(infobar.get_content_area());
-    infobox->pack_start(label1);
-    vbox.pack_start(infobar, Gtk::PACK_SHRINK);
-    vbox.pack_start(hbox);
+    infobox->append(label1);
+    vbox.append(infobar, Gtk::PACK_SHRINK);
+    vbox.append(hbox);
 
     // Save config when the window is closed
     signal_delete_event().connect(sigc::mem_fun(*this, &TextEditor::window_delete_event));
@@ -100,7 +100,7 @@ TextEditor::TextEditor()
     expend_builder->get_widget("btn_caps", btncaps);
     expend_builder->get_widget("btntab", btntab);
     expend_builder->get_widget("btnenter", btnenter);
-    vbox.pack_start(*expender, Gtk::PACK_SHRINK);
+    vbox.append(*expender, Gtk::PACK_SHRINK);
 
     // Get alphabet buttons
     for(int i = 0; i < 26; i++){

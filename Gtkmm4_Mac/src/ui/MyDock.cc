@@ -117,7 +117,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     mine_win.signal_delete_event().connect(sigc::mem_fun(*this, &MyDock::mine_win_closed));
 
     // Add Finder
-    finder_box->pack_start(finder);
+    finder_box->append(finder);
 
     // Add Style for MyFinder
     provider = Gtk::CssProvider::create();
@@ -135,27 +135,27 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     case DockPos::POS_LEFT:
         // Set the default size of scrolled window
         icons_sw->set_size_request(52, 340);
-        icons_sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
-        dock_left->pack_start(*dock_box);
+        icons_sw->set_policy(Gtk::PolicyType::NEVER, Gtk::PolicyType::AUTOMATIC);
+        dock_left->append(*dock_box);
         break;
     case DockPos::POS_RIGHT:
         // Set the default size of scrolled window
         icons_sw->set_size_request(52, 340);
-        icons_sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
-        dock_right->pack_start(*dock_box);
+        icons_sw->set_policy(Gtk::PolicyType::NEVER, Gtk::PolicyType::AUTOMATIC);
+        dock_right->append(*dock_box);
         break;
     case DockPos::POS_BOTTOM:
         // Change Orientation before pack
-        dock_box->set_orientation(Gtk::ORIENTATION_HORIZONTAL);
-        icons_box->set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+        dock_box->set_orientation(Gtk::Orientation::HORIZONTAL);
+        icons_box->set_orientation(Gtk::Orientation::HORIZONTAL);
         // Set the default size of scrolled window
         icons_sw->set_size_request(340, 52);
-        icons_sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER);
+        icons_sw->set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::NEVER);
         // Pack dock to the position
-        dock_bottom->pack_start(*dock_box);
+        dock_bottom->append(*dock_box);
         break;
     default:
-        dock_right->pack_start(*dock_box);
+        dock_right->append(*dock_box);
     }
 
     // Set Dock or panel mode

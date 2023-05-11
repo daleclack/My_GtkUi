@@ -7,8 +7,8 @@
 
 MyPrefs::MyPrefs()
     : main_box(Gtk::ORIENTATION_VERTICAL, 10),
-      views_box(Gtk::ORIENTATION_HORIZONTAL, 5),
-      btnbox(Gtk::ORIENTATION_HORIZONTAL, 5),
+      views_box(Gtk::Orientation::HORIZONTAL, 5),
+      btnbox(Gtk::Orientation::HORIZONTAL, 5),
       width(1024),
       height(576),
       dock_pos(DockPos::POS_LEFT)
@@ -93,11 +93,11 @@ MyPrefs::MyPrefs()
     images_view.append_column("Images", n_columns.m_col_name);
 
     // Add Views
-    main_box.pack_start(views_box);
+    main_box.append(views_box);
     sw_folders.add(folders_view);
-    views_box.pack_start(sw_folders);
+    views_box.append(sw_folders);
     sw_images.add(images_view);
-    views_box.pack_start(sw_images);
+    views_box.append(sw_images);
 
     // Allow Selection
     has_selection = true;
@@ -107,9 +107,9 @@ MyPrefs::MyPrefs()
     btnadd.signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnadd_clicked));
     btnremove.set_image_from_icon_name("list-remove");
     btnremove.signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
-    btnbox.pack_start(btnadd, Gtk::PACK_SHRINK);
-    btnbox.pack_start(btnremove, Gtk::PACK_SHRINK);
-    main_box.pack_start(btnbox, Gtk::PACK_SHRINK);
+    btnbox.append(btnadd, Gtk::PACK_SHRINK);
+    btnbox.append(btnremove, Gtk::PACK_SHRINK);
+    main_box.append(btnbox, Gtk::PACK_SHRINK);
 
     // Add Main Box to window
     const int margin_value = 15;
@@ -172,7 +172,7 @@ MyPrefs::MyPrefs()
         break;
     }
 
-    back_page->pack_start(main_box);
+    back_page->append(main_box);
     add(*stack_box);
     show_all_children();
 }

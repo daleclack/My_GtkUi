@@ -53,5 +53,5 @@ void MyStack::btnlogin_clicked()
 //     main_dock = MyDock::create(mode);
 //     main_dock->set_hexpand();
 //     main_dock->set_vexpand();
-//     main_page->pack_start(*main_dock);
+//     main_page->append(*main_dock);
 // }

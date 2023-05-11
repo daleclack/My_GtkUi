@@ -4,7 +4,7 @@
 
 MineSweeper::MineSweeper()
     : main_box(Gtk::ORIENTATION_VERTICAL, 5),
-      btn_box(Gtk::ORIENTATION_HORIZONTAL, 5),
+      btn_box(Gtk::Orientation::HORIZONTAL, 5),
       cell(nullptr)
 {
     // Initalize Window
@@ -35,9 +35,9 @@ MineSweeper::MineSweeper()
     btnstart.set_label("Start/Reset");
     btnshow.set_label("Show All");
     btnexit.set_label("Exit");
-    btn_box.pack_start(btnstart, Gtk::PACK_SHRINK);
-    btn_box.pack_start(btnshow, Gtk::PACK_SHRINK);
-    btn_box.pack_start(btnexit, Gtk::PACK_SHRINK);
+    btn_box.append(btnstart, Gtk::PACK_SHRINK);
+    btn_box.append(btnshow, Gtk::PACK_SHRINK);
+    btn_box.append(btnexit, Gtk::PACK_SHRINK);
     btnstart.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::new_game));
     btnshow.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::show_mines));
     btnexit.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::hide));
@@ -46,9 +46,9 @@ MineSweeper::MineSweeper()
     status_label.set_halign(Gtk::ALIGN_CENTER);
     btn_box.set_halign(Gtk::ALIGN_CENTER);
     mine_grid.set_halign(Gtk::ALIGN_CENTER);
-    main_box.pack_start(status_label, Gtk::PACK_SHRINK);
-    main_box.pack_start(mine_grid);
-    main_box.pack_start(btn_box, Gtk::PACK_SHRINK);
+    main_box.append(status_label, Gtk::PACK_SHRINK);
+    main_box.append(mine_grid);
+    main_box.append(btn_box, Gtk::PACK_SHRINK);
 
     // Create a dialog
     input_dialog = InputBox::create();

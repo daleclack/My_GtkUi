@@ -7,7 +7,7 @@ Drawing::Drawing()
       main_label("Select a color"),
       size_label("Pen Size"),
       left_box(Gtk::ORIENTATION_VERTICAL, 5),
-      main_box(Gtk::ORIENTATION_HORIZONTAL, 5),
+      main_box(Gtk::Orientation::HORIZONTAL, 5),
       btn_box(Gtk::ORIENTATION_VERTICAL, 5),
       btn_clear("Clear Board"),
       btn_save("Save to png"),
@@ -43,25 +43,25 @@ Drawing::Drawing()
     btn_rectangle.signal_clicked().connect(sigc::mem_fun(*this, &Drawing::btnrectangle_clicked));
 
     // Left Panel
-    left_box.pack_start(btn_free, Gtk::PACK_SHRINK);
-    left_box.pack_start(btn_circle, Gtk::PACK_SHRINK);
-    left_box.pack_start(btn_line, Gtk::PACK_SHRINK);
-    left_box.pack_start(btn_rectangle, Gtk::PACK_SHRINK);
+    left_box.append(btn_free, Gtk::PACK_SHRINK);
+    left_box.append(btn_circle, Gtk::PACK_SHRINK);
+    left_box.append(btn_line, Gtk::PACK_SHRINK);
+    left_box.append(btn_rectangle, Gtk::PACK_SHRINK);
     left_box.set_valign(Gtk::ALIGN_START);
 
     // Color set panel
     size_adj = Gtk::Adjustment::create(3.0, 1.0, 20.0);
     scale.set_adjustment(size_adj);
     scale.set_value_pos(Gtk::POS_BOTTOM);
-    btn_box.pack_start(fill_check, Gtk::PACK_SHRINK);
-    btn_box.pack_start(fill_btn, Gtk::PACK_SHRINK);
-    btn_box.pack_start(main_label, Gtk::PACK_SHRINK);
-    btn_box.pack_start(color_btn, Gtk::PACK_SHRINK);
-    btn_box.pack_start(size_label, Gtk::PACK_SHRINK);
-    btn_box.pack_start(scale, Gtk::PACK_SHRINK);
-    btn_box.pack_start(btn_save, Gtk::PACK_SHRINK);
-    btn_box.pack_start(btn_clear, Gtk::PACK_SHRINK);
-    btn_box.pack_start(btn_exit, Gtk::PACK_SHRINK);
+    btn_box.append(fill_check, Gtk::PACK_SHRINK);
+    btn_box.append(fill_btn, Gtk::PACK_SHRINK);
+    btn_box.append(main_label, Gtk::PACK_SHRINK);
+    btn_box.append(color_btn, Gtk::PACK_SHRINK);
+    btn_box.append(size_label, Gtk::PACK_SHRINK);
+    btn_box.append(scale, Gtk::PACK_SHRINK);
+    btn_box.append(btn_save, Gtk::PACK_SHRINK);
+    btn_box.append(btn_clear, Gtk::PACK_SHRINK);
+    btn_box.append(btn_exit, Gtk::PACK_SHRINK);
     btn_box.set_halign(Gtk::ALIGN_CENTER);
     btn_box.set_valign(Gtk::ALIGN_CENTER);
 
@@ -107,9 +107,9 @@ Drawing::Drawing()
     // Initalize main widget
     draw_area.set_size_request(600, 480);
     draw_area.signal_draw().connect(sigc::mem_fun(*this, &Drawing::draw_event));
-    main_box.pack_start(left_box);
-    main_box.pack_start(draw_area);
-    main_box.pack_start(btn_box, Gtk::PACK_SHRINK);
+    main_box.append(left_box);
+    main_box.append(draw_area);
+    main_box.append(btn_box, Gtk::PACK_SHRINK);
     main_box.set_border_width(10);
     add(main_box);
     show_all_children();

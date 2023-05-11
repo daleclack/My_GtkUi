@@ -2,7 +2,7 @@
 
 ImageApp::ImageApp()
     : main_box(Gtk::ORIENTATION_VERTICAL, 5),
-      btnbox(Gtk::ORIENTATION_HORIZONTAL, 5),
+      btnbox(Gtk::Orientation::HORIZONTAL, 5),
       btnopen("Open Image")
 {
     // Add Widgets
@@ -11,9 +11,9 @@ ImageApp::ImageApp()
     set_title("Image Viewer");
 
     // Scrolled Window
-    sw.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    sw.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
     sw.add(image_area);
-    main_box.pack_start(sw);
+    main_box.append(sw);
 
     // Initalize Scale
     m_adjustment = Gtk::Adjustment::create(1.0, 0.1, 10.0, 0.1, 0.1);
@@ -23,9 +23,9 @@ ImageApp::ImageApp()
 
     // Add control widgets
     btnopen.set_relief(Gtk::RELIEF_NONE);
-    btnbox.pack_start(scale);
-    btnbox.pack_start(btnopen, Gtk::PACK_SHRINK);
-    main_box.pack_start(btnbox, Gtk::PACK_SHRINK);
+    btnbox.append(scale);
+    btnbox.append(btnopen, Gtk::PACK_SHRINK);
+    main_box.append(btnbox, Gtk::PACK_SHRINK);
     btnopen.signal_clicked().connect(sigc::mem_fun(*this, &ImageApp::btnopen_clicked));
 
     // Add Drag Gesture

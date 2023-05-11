@@ -2,7 +2,7 @@
 #include <thread>
 #include <iostream>
 
-GtkRunner::GtkRunner() : hbox(Gtk::ORIENTATION_HORIZONTAL, 5),
+GtkRunner::GtkRunner() : hbox(Gtk::Orientation::HORIZONTAL, 5),
                          open_btn("...")
 {
     // Ininalize window
@@ -16,8 +16,8 @@ GtkRunner::GtkRunner() : hbox(Gtk::ORIENTATION_HORIZONTAL, 5),
     // Initalize Box
     hbox.set_halign(Gtk::ALIGN_CENTER);
     hbox.set_valign(Gtk::ALIGN_CENTER);
-    hbox.pack_start(app_entry, Gtk::PACK_SHRINK);
-    hbox.pack_start(open_btn, Gtk::PACK_SHRINK);
+    hbox.append(app_entry, Gtk::PACK_SHRINK);
+    hbox.append(open_btn, Gtk::PACK_SHRINK);
 
     // Initalize entry
     app_entry.set_activates_default();
@@ -27,7 +27,7 @@ GtkRunner::GtkRunner() : hbox(Gtk::ORIENTATION_HORIZONTAL, 5),
 
     // Add Widgets
     auto pbox = get_content_area();
-    pbox->pack_start(hbox);
+    pbox->append(hbox);
 
     show_all_children();
 }
