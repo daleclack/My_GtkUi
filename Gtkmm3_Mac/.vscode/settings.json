@@ -75,6 +75,26 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "affinity": "cpp",
+        "barrier": "cpp",
+        "block": "cpp",
+        "condition": "cpp",
+        "shared_mutex": "cpp",
+        "camera": "cpp",
+        "drawable": "cpp",
+        "globjects": "cpp",
+        "graphicscontext": "cpp",
+        "graphicsthread": "cpp",
+        "group": "cpp",
+        "node": "cpp",
+        "notify": "cpp",
+        "object": "cpp",
+        "operationthread": "cpp",
+        "program": "cpp",
+        "referenced": "cpp",
+        "state": "cpp",
+        "stateset": "cpp",
+        "observer_ptr": "cpp"
     }
 }

@@ -3,16 +3,19 @@
 #include <gtkmm.h>
 #include <string>
 #include <fstream>
+#include <vector>
 #include "../json_nlohmann/json.hpp"
 
 using json = nlohmann::json;
 
-enum class DockMode{
+enum class DockMode
+{
     MODE_DOCK,
     MODE_PANEL
 };
 
-enum class DockPos{
+enum class DockPos
+{
     POS_LEFT,
     POS_RIGHT,
     POS_BOTTOM
@@ -40,7 +43,7 @@ protected:
         }
         Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf>> m_col_pixbuf;
         Gtk::TreeModelColumn<std::string> m_col_path;
-        Gtk::TreeModelColumn<Glib::ustring> m_col_name;
+        Gtk::TreeModelColumn<std::string> m_col_name;
         Gtk::TreeModelColumn<bool> m_col_internal;
     };
 
@@ -51,14 +54,17 @@ protected:
 
 private:
     // Background widget and properties
-    int width, height;
-    bool panel_mode;
-    DockPos dock_pos;
-    Gtk::Image *background1;
-    std::string path;
-    bool background_internal;
+    int width, height;              // Window size
+    bool panel_mode;                // dock or panel mode
+    DockPos dock_pos;               // position of dock
+    Gtk::Image *background1;        // background widget from main window
+    std::string path;               // Current background path
+    bool background_internal;       // tag for background internal
 
-    //Page switcher and another page
+    // List of inserted backgrounds
+    std::vector<std::pair<std::string, std::string>> back_list;
+
+    // Page switcher and another page
     Glib::RefPtr<Gtk::Builder> stackbuilder;
     Gtk::Box *stack_box, *back_page, *winsize_page;
     Gtk::RadioButton *radio_default, *radio_custom;
@@ -115,15 +121,28 @@ private:
     void btnapply1_clicked();
 };
 
-//Read Config from file without use the MyPrefs class
-static inline void get_size_config(int &width, int &height, bool &panel_mode){
+// Read Config from file without use the MyPrefs class
+static inline void get_size_config(int &width, int &height, bool &panel_mode)
+{
     std::ifstream jsonfile("config.json");
-    if(jsonfile.is_open()){
+    if (jsonfile.is_open())
+    {
         json data = json::parse(jsonfile);
-        height = data["height"];
-        width = data["width"];
-        panel_mode = data["panel_mode"];
-    }else{
+        try
+        {
+            height = data["height"];
+            width = data["width"];
+            panel_mode = data["panel_mode"];
+        }
+        catch (nlohmann::detail::type_error &ex)
+        {
+            height = 720;
+            width = 1280;
+            panel_mode = false;
+        }
+    }
+    else
+    {
         height = 720;
         width = 1280;
         panel_mode = false;
