@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
-#include "MyDock.hh"
+// #include "MyDock.hh"
 
 class MyStack
 {
@@ -10,7 +10,7 @@ public:
     void logout();
     void mystack_init(Gtk::Window *window, Gtk::Image *m_back);
     void show_prefs();
-    void set_mydock_mode(DockMode mode);
+    // void set_mydock_mode(DockMode mode);
 
     // Main Widget
     Gtk::Stack *stack;
@@ -22,7 +22,7 @@ private:
     Gtk::Button *btnlogin;
 
     // Dock Widget
-    MyDock *main_dock;
+    // MyDock *main_dock;
 
     // Signal Handlers
     void btnlogin_clicked();

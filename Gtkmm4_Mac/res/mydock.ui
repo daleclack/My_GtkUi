@@ -184,7 +184,7 @@
         <property name="can-focus">True</property>
         <property name="receives-default">True</property>
         <property name="image">image1</property>
-        <property name="relief">none</property>
+        <property name="has-frame">0</property>
         <property name="always-show-image">True</property>
       </object>
       <packing>
@@ -224,7 +224,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image3</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -239,7 +239,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image2</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -254,7 +254,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image25</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -269,7 +269,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image4</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -284,7 +284,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image5</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -299,7 +299,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image6</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -314,7 +314,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image7</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -329,7 +329,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image23</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -344,7 +344,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="image">image26</property>
-                    <property name="relief">none</property>
+                    <property name="has-frame">0</property>
                     <property name="always-show-image">True</property>
                   </object>
                   <packing>
@@ -406,7 +406,7 @@
         <property name="can-focus">True</property>
         <property name="receives-default">True</property>
         <property name="image">image21</property>
-        <property name="relief">none</property>
+        <property name="has-frame">0</property>
         <property name="always-show-image">True</property>
       </object>
       <packing>
@@ -563,7 +563,7 @@
                         <property name="receives-default">True</property>
                         <property name="action-name">win.about</property>
                         <property name="image">image8</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -581,7 +581,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image10</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -597,7 +597,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image9</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -613,7 +613,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image11</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -629,7 +629,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image12</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -645,7 +645,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image13</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -661,7 +661,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image14</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -677,7 +677,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image15</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -693,7 +693,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image16</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -709,7 +709,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image17</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -725,7 +725,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image18</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -741,7 +741,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image19</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -757,7 +757,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image20</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -773,7 +773,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image22</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -789,7 +789,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image24</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>
@@ -805,7 +805,7 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="image">image27</property>
-                        <property name="relief">none</property>
+                        <property name="has-frame">0</property>
                         <property name="image-position">top</property>
                         <property name="always-show-image">True</property>
                       </object>

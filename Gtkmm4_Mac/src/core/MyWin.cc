@@ -2,27 +2,27 @@
 #include "winpe.xpm"
 
 MyWin::MyWin()
-    : menubox(Gtk::ORIENTATION_HORIZONTAL, 0),
+    : menubox(Gtk::Orientation::HORIZONTAL, 0),
       width(1024),
       height(576)
 {
     // Initalize window
     set_icon_name("My_GtkUI");
     set_title("My GtkUI macOS Version");
-    get_size_config(width, height, panel_mode);
+    // get_size_config(width, height, panel_mode);
 
     // Set the display mode of dock
-    if(panel_mode){
-        main_stack.set_mydock_mode(DockMode::MODE_PANEL);
-    }else{
-        main_stack.set_mydock_mode(DockMode::MODE_DOCK);
-    }
+    // if(panel_mode){
+    //     main_stack.set_mydock_mode(DockMode::MODE_PANEL);
+    // }else{
+    //     main_stack.set_mydock_mode(DockMode::MODE_DOCK);
+    // }
 
     // Add background
     // auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(winpe);
     // auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
     // gtk_image_set_from_pixbuf(m_background.gobj(), sized->gobj());
-    m_overlay.add(m_background);
+    m_overlay.set_child(m_background);
     // pixbuf.reset();
     // sized.reset();
 
@@ -39,21 +39,21 @@ MyWin::MyWin()
 
     // Add context menu
     auto menubuilder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/mainmenu.xml");
-    auto object = menubuilder->get_object("model");
-    auto gmenu = Glib::RefPtr<Gio::Menu>::cast_dynamic(object);
-    context_menu.bind_model(gmenu);
-    context_menu.set_relative_to(m_overlay);
+    auto object = menubuilder->get_object<Gio::MenuModel>("model");
+    context_menu.set_menu_model(object);
+    context_menu.set_has_arrow(false);
+    context_menu.set_parent(m_overlay);
 
     // Add Gesture for control
-    gesture = Gtk::GestureMultiPress::create(m_overlay);
+    gesture = Gtk::GestureClick::create();
+    m_overlay.add_controller(gesture);
     gesture->set_button(GDK_BUTTON_SECONDARY);
     gesture->signal_pressed().connect(sigc::mem_fun(*this, &MyWin::press));
 
     // Initalize Stack
-    main_stack.mystack_init(this, &m_background);
+    // main_stack.mystack_init(this, &m_background);
 
-    add(m_overlay);
-    show_all_children();
+    set_child(m_overlay);
 }
 
 void MyWin::press(int n_press, double x, double y)
@@ -74,7 +74,7 @@ void MyWin::back_activated()
 }
 
 void MyWin::expand_activated(){
-    main_stack.set_mydock_mode(DockMode::MODE_PANEL);
+    // main_stack.set_mydock_mode(DockMode::MODE_PANEL);
 }
 
 void MyWin::about_activated()
@@ -87,7 +87,7 @@ void MyWin::about_activated()
 
     // Version information
     char *version;
-    version = g_strdup_printf("5.6\nRunning Against: Gtkmm %d.%d.%d",
+    version = g_strdup_printf("6.0\nRunning Against: Gtkmm %d.%d.%d",
                               GTKMM_MAJOR_VERSION,
                               GTKMM_MINOR_VERSION,
                               GTKMM_MICRO_VERSION);
