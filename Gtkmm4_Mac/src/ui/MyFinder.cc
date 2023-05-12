@@ -2,6 +2,13 @@
 #include <ctime>
 
 MyFinder::MyFinder()
+    : label_title("My_GtkUI"),
+      label_file("File"),
+      label_edit("Edit"),
+      label_show("Show"),
+      label_goto("Go to"),
+      label_win("Windows"),
+      label_help("Help")
 {
     // Add a menubar
     auto menubuilder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/menubar.xml");
@@ -13,49 +20,56 @@ MyFinder::MyFinder()
     btnlogo.set_menu_model(get_menu(menubuilder, "main_menu"));
     append(btnlogo);
 
-    btntitle.set_label("MyFinder");
+    // btntitle.set_label("MyFinder");
+    btntitle.set_child(label_title);
     btntitle.set_has_frame(false);
     // btntitle.set_use_popover(false);
     btntitle.set_always_show_arrow(false);
     btntitle.set_menu_model(get_menu(menubuilder, "title_menu"));
     append(btntitle);
 
-    btnfile.set_label("File");
+    // btnfile.set_label("File");
+    btnfile.set_child(label_file);
     btnfile.set_has_frame(false);
     btnfile.set_always_show_arrow(false);
     // btnfile.set_use_popover(false);
     btnfile.set_menu_model(get_menu(menubuilder, "menu_file"));
     append(btnfile);
 
-    btnedit.set_label("Edit");
+    // btnedit.set_label("Edit");
+    btnedit.set_child(label_edit);
     btnedit.set_has_frame(false);
     btnedit.set_always_show_arrow(false);
     // btnedit.set_use_popover(false);
     btnedit.set_menu_model(get_menu(menubuilder, "menu_edit"));
     append(btnedit);
 
-    btnshow.set_label("Show");
+    // btnshow.set_label("Show");
+    btnshow.set_child(label_show);
     btnshow.set_has_frame(false);
     btnshow.set_always_show_arrow(false);
     // btnshow.set_use_popover(false);
     btnshow.set_menu_model(get_menu(menubuilder, "menu_show"));
     append(btnshow);
 
-    btngoto.set_label("Go to");
+    // btngoto.set_label("Go to");
+    btngoto.set_child(label_goto);
     btngoto.set_has_frame(false);
     btngoto.set_always_show_arrow(false);
     // btngoto.set_use_popover(false);
     btngoto.set_menu_model(get_menu(menubuilder, "menu_goto"));
     append(btngoto);
 
-    btnwin.set_label("Windows");
+    // btnwin.set_label("Windows");
+    btnwin.set_child(label_win);
     btnwin.set_has_frame(false);
     btnwin.set_always_show_arrow(false);
     // btnwin.set_use_popover(false);
     btnwin.set_menu_model(get_menu(menubuilder, "menu_win"));
     append(btnwin);
 
-    btnhelp.set_label("Help");
+    // btnhelp.set_label("Help");
+    btnhelp.set_child(label_help);
     btnhelp.set_has_frame(false);
     btnhelp.set_always_show_arrow(false);
     // btnhelp.set_use_popover(false);
@@ -65,6 +79,11 @@ MyFinder::MyFinder()
     // Add menu to window
     set_halign(Gtk::Align::FILL);
     set_valign(Gtk::Align::START);
+
+    // Add a separator
+    separator.set_hexpand(true);
+    separator.set_halign(Gtk::Align::FILL);
+    append(separator);
 
     // Monitor Button
     screen_button.set_image_from_icon_name("finder-computer");
@@ -95,7 +114,8 @@ MyFinder::MyFinder()
     calender.set_margin_end(5);
 
     // Timer
-    timer_button.set_label("2022/1/23 18:32");
+    timer_label.set_label("2023/5/12 16:40");
+    timer_button.set_child(timer_label);
     timer_button.set_has_frame(false);
     timer_button.set_popover(time_popover);
     timer_button.set_always_show_arrow(false);
@@ -135,7 +155,7 @@ bool MyFinder::time_out()
     sprintf(time_string, "%04d/%d/%d %02d:%02d:%02d", local->tm_year + 1900, local->tm_mon + 1,
             local->tm_mday, local->tm_hour, local->tm_min, local->tm_sec);
 
-    timer_button.set_label(time_string);
+    timer_label.set_label(time_string);
 
     return true;
 }

@@ -118,6 +118,8 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
 
     // Add Finder
     finder_box->append(finder);
+    finder_box->set_hexpand(true);
+    finder.set_hexpand(true);
 
     // Add Style for MyFinder
     provider = Gtk::CssProvider::create();

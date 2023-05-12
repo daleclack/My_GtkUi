@@ -9,8 +9,11 @@ public:
 
 private:
     // Child Widgets
+    Gtk::Label label_title, label_file, label_edit, label_show, 
+        label_goto, label_win, label_help, timer_label;
     Gtk::MenuButton btnlogo, btntitle, btnfile, btnedit, btnshow,
         btngoto, btnwin, btnhelp;
+    Gtk::Separator separator;
     Gtk::MenuButton timer_button;
     Gtk::Popover time_popover;
     Gtk::Calendar calender;
