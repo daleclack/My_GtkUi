@@ -52,7 +52,7 @@ Drawing::Drawing()
     // Color set panel
     size_adj = Gtk::Adjustment::create(3.0, 1.0, 20.0);
     scale.set_adjustment(size_adj);
-    scale.set_value_pos(Gtk::POS_BOTTOM);
+    scale.set_value_pos(Gtk::PositionType::BOTTOM);
     btn_box.append(fill_check);
     btn_box.append(fill_btn);
     btn_box.append(main_label);
@@ -62,8 +62,8 @@ Drawing::Drawing()
     btn_box.append(btn_save);
     btn_box.append(btn_clear);
     btn_box.append(btn_exit);
-    btn_box.set_halign(Gtk::ALIGN_CENTER);
-    btn_box.set_valign(Gtk::ALIGN_CENTER);
+    btn_box.set_halign(Gtk::Align::CENTER);
+    btn_box.set_valign(Gtk::Align::CENTER);
 
     // Add Gesture
     btn_clear.signal_clicked().connect(sigc::mem_fun(*this, &Drawing::btnclear_clicked));
@@ -81,7 +81,7 @@ Drawing::Drawing()
     press->signal_pressed().connect(sigc::mem_fun(*this, &Drawing::button_press));
 
     // Create a Surface
-    surface = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 600, 480);
+    surface = Cairo::ImageSurface::create(Cairo::Surface::Format::ARGB32, 600, 480);
 
     // Set Default Color
     m_color.set_blue(0);

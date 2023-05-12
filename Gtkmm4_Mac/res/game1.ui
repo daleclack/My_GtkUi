@@ -34,8 +34,8 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="relief">none</property>
-            <property name="image-position">top</property>
-            <property name="always-show-image">True</property>
+            
+          
           </object>
           <packing>
             <property name="left-attach">1</property>
@@ -51,8 +51,8 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="relief">none</property>
-            <property name="image-position">top</property>
-            <property name="always-show-image">True</property>
+            
+          
           </object>
           <packing>
             <property name="left-attach">3</property>
@@ -68,8 +68,8 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="relief">none</property>
-            <property name="image-position">top</property>
-            <property name="always-show-image">True</property>
+            
+          
           </object>
           <packing>
             <property name="left-attach">1</property>
@@ -85,8 +85,8 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="relief">none</property>
-            <property name="image-position">top</property>
-            <property name="always-show-image">True</property>
+            
+          
           </object>
           <packing>
             <property name="left-attach">3</property>

@@ -43,9 +43,9 @@ MineSweeper::MineSweeper()
     btnexit.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::hide));
 
     // Pack widgets
-    status_label.set_halign(Gtk::ALIGN_CENTER);
-    btn_box.set_halign(Gtk::ALIGN_CENTER);
-    mine_grid.set_halign(Gtk::ALIGN_CENTER);
+    status_label.set_halign(Gtk::Align::CENTER);
+    btn_box.set_halign(Gtk::Align::CENTER);
+    mine_grid.set_halign(Gtk::Align::CENTER);
     main_box.append(status_label);
     main_box.append(mine_grid);
     main_box.append(btn_box);

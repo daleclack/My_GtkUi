@@ -14,8 +14,8 @@ GtkRunner::GtkRunner() : hbox(Gtk::Orientation::HORIZONTAL, 5),
     set_default_response(Gtk::RESPONSE_OK);
 
     // Initalize Box
-    hbox.set_halign(Gtk::ALIGN_CENTER);
-    hbox.set_valign(Gtk::ALIGN_CENTER);
+    hbox.set_halign(Gtk::Align::CENTER);
+    hbox.set_valign(Gtk::Align::CENTER);
     hbox.append(app_entry);
     hbox.append(open_btn);
 
