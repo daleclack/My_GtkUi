@@ -56,7 +56,7 @@ MyFinder::MyFinder()
     append(btnhelp);
 
     // Add menu to window
-    set_halign(Gtk::ALIGN_FILL);
+    set_halign(Gtk::Align::FILL);
     set_valign(Gtk::Align::START);
 
     // Add a timer

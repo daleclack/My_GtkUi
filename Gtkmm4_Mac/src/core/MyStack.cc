@@ -34,24 +34,24 @@ void MyStack::btnlogin_clicked()
     stack->set_visible_child(*main_page);
 }
 
-// void MyStack::set_mydock_mode(DockMode mode)
-// {
-//     // main_dock->set_dock_mode(mode);
-//     // switch (mode)
-//     // {
-//     // case DockMode::MODE_DOCK:
-//     //     std::cout << "dock mode" << std::endl;
-//     //     break;
-//     // case DockMode::MODE_PANEL:
-//     //     std::cout << "panel mode" << std::endl;
-//     //     break;
-//     // default:
-//     //     std::cout << "undefined" << std::endl;
-//     //     break;
-//     // }
-//     // Add Widget
-//     main_dock = MyDock::create(mode);
-//     main_dock->set_hexpand();
-//     main_dock->set_vexpand();
-//     main_page->append(*main_dock);
-// }
+void MyStack::set_mydock_mode(DockMode mode)
+{
+    // main_dock->set_dock_mode(mode);
+    // switch (mode)
+    // {
+    // case DockMode::MODE_DOCK:
+    //     std::cout << "dock mode" << std::endl;
+    //     break;
+    // case DockMode::MODE_PANEL:
+    //     std::cout << "panel mode" << std::endl;
+    //     break;
+    // default:
+    //     std::cout << "undefined" << std::endl;
+    //     break;
+    // }
+    // Add Widget
+    main_dock = MyDock::create(mode);
+    main_dock->set_hexpand();
+    main_dock->set_vexpand();
+    main_page->append(*main_dock);
+}
