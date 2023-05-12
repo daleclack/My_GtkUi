@@ -372,6 +372,9 @@
     </menu>
     <menu id="menu_help">
         <item>
+            <attribute name="label">Help of My GtkUI</attribute>
+        </item>
+        <item>
             <attribute name="label">About</attribute>
             <attribute name="action">win.about</attribute>
         </item>

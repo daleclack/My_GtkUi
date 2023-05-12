@@ -29,4 +29,7 @@ private:
     //Timer
     sigc::connection mytimer;
     bool time_out();
+
+    // Set popover properies
+    void popover_init(Gtk::MenuButton &menu_btn);
 };

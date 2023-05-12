@@ -295,19 +295,27 @@
                         <property name="column-homogeneous">1</property>
                         <child>
                           <object class="GtkButton" id="padabout">
-                            <property name="label" translatable="1">about</property>
                             <property name="width-request">64</property>
                             <property name="height-request">64</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="action-name">win.about</property>
                             <property name="child">
-                              <object class="GtkImage" id="image8">
-                                <property name="hexpand">0</property>
-                                <property name="vexpand">0</property>
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">btnabout</property>
-                                
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image8">
+                                    <property name="hexpand">0</property>
+                                    <property name="vexpand">0</property>
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">btnabout</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">about</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -319,17 +327,24 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padaud">
-                            <property name="label" translatable="1">audacious</property>
                             <property name="width-request">64</property>
                             <property name="height-request">64</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image10">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">
-                                                            audacious_whitesur</property>
-                                
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image10">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">audacious_whitesur</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">audacious</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -341,13 +356,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="paddraw">
-                            <property name="label" translatable="1">Drawing</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image9">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">drawing_app</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image9">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">drawing_app</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Drawing</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -359,13 +383,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padfile">
-                            <property name="label" translatable="1">MyFinder</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image11">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">file-app</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image11">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">file-app</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">MyFinder</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -377,13 +410,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padgedit">
-                            <property name="label" translatable="1">Gedit</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image12">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">my_textedit</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image12">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">my_textedit</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Gedit</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -395,13 +437,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padgame">
-                            <property name="label" translatable="1">Guess game</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image13">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">game</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image13">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">game</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Guess game</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -413,15 +464,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padimage">
-                            <property name="label" translatable="1">Image
-                                                    Viewer</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image14">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">image_app</property>
-                                
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image14">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">image_app</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Image Viewer</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -433,14 +491,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padnote">
-                            <property name="label" translatable="1">
-                                                    Notepad(win)</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image15">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">my_textedit</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image15">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">my_textedit</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Notepad(win)</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -452,13 +518,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padedit">
-                            <property name="label" translatable="1">TextEditor</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image16">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">my_textedit</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image16">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">my_textedit</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">TextEditor</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -470,13 +545,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padvlc">
-                            <property name="label" translatable="1">VLC(linux)</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image17">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">vlc_whitesur</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image17">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">vlc_whitesur</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">VLC(linux)</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -488,13 +572,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padvlc_win32">
-                            <property name="label" translatable="1">VLC(win32)</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image18">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">vlc_whitesur</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image18">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">vlc_whitesur</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">VLC(win32)</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -506,13 +599,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padrun">
-                            <property name="label" translatable="1">Run App</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image19">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">myrunner</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image19">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">myrunner</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Run App</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -524,14 +626,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padset">
-                            <property name="label" translatable="1">
-                                                    Preferences</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image20">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">my_prefs</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image20">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">my_prefs</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Preferences</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -543,14 +653,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padgame24">
-                            <property name="label" translatable="1">24Game</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image22">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">24game</property>
-                                
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image22">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">24game</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">24Game</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -562,13 +680,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padcalc">
-                            <property name="label" translatable="1">Calculator</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image24">
-                                <property name="pixel-size">48</property>
-                                <property name="icon-name">calcapp</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image24">
+                                    <property name="pixel-size">48</property>
+                                    <property name="icon-name">calcapp</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">Calculator</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -580,14 +707,22 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="padmine">
-                            <property name="label" translatable="1">
-                                                    MineSweeper</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
                             <property name="child">
-                              <object class="GtkImage" id="image27">
-                                <property name="icon-name">mines_app</property>
-                                <property name="pixel-size">48</property>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image27">
+                                    <property name="icon-name">mines_app</property>
+                                    <property name="pixel-size">48</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="1">MineSweeper</property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                             <property name="has-frame">0</property>

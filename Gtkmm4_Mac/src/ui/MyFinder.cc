@@ -2,7 +2,7 @@
 #include <ctime>
 
 MyFinder::MyFinder()
-    : label_title("My_GtkUI"),
+    : label_title("MyFinder"),
       label_file("File"),
       label_edit("Edit"),
       label_show("Show"),
@@ -10,70 +10,66 @@ MyFinder::MyFinder()
       label_win("Windows"),
       label_help("Help")
 {
+    // Setup box
+    set_spacing(10);
+
     // Add a menubar
     auto menubuilder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/menubar.xml");
 
     // Add widgets to menubox
     btnlogo.set_icon_name("My_GtkUI");
     btnlogo.set_has_frame(false);
-    // btnlogo.set_use_popover(false);
     btnlogo.set_menu_model(get_menu(menubuilder, "main_menu"));
+    popover_init(btnlogo);
     append(btnlogo);
 
-    // btntitle.set_label("MyFinder");
     btntitle.set_child(label_title);
     btntitle.set_has_frame(false);
-    // btntitle.set_use_popover(false);
     btntitle.set_always_show_arrow(false);
     btntitle.set_menu_model(get_menu(menubuilder, "title_menu"));
+    popover_init(btntitle);
     append(btntitle);
 
-    // btnfile.set_label("File");
     btnfile.set_child(label_file);
     btnfile.set_has_frame(false);
     btnfile.set_always_show_arrow(false);
-    // btnfile.set_use_popover(false);
     btnfile.set_menu_model(get_menu(menubuilder, "menu_file"));
+    popover_init(btnfile);
     append(btnfile);
 
-    // btnedit.set_label("Edit");
     btnedit.set_child(label_edit);
     btnedit.set_has_frame(false);
     btnedit.set_always_show_arrow(false);
-    // btnedit.set_use_popover(false);
     btnedit.set_menu_model(get_menu(menubuilder, "menu_edit"));
+    popover_init(btnedit);
     append(btnedit);
 
-    // btnshow.set_label("Show");
     btnshow.set_child(label_show);
     btnshow.set_has_frame(false);
     btnshow.set_always_show_arrow(false);
-    // btnshow.set_use_popover(false);
     btnshow.set_menu_model(get_menu(menubuilder, "menu_show"));
+    popover_init(btnshow);
     append(btnshow);
 
-    // btngoto.set_label("Go to");
     btngoto.set_child(label_goto);
     btngoto.set_has_frame(false);
     btngoto.set_always_show_arrow(false);
-    // btngoto.set_use_popover(false);
     btngoto.set_menu_model(get_menu(menubuilder, "menu_goto"));
+    popover_init(btngoto);
     append(btngoto);
 
-    // btnwin.set_label("Windows");
     btnwin.set_child(label_win);
     btnwin.set_has_frame(false);
     btnwin.set_always_show_arrow(false);
-    // btnwin.set_use_popover(false);
     btnwin.set_menu_model(get_menu(menubuilder, "menu_win"));
+    popover_init(btnwin);
     append(btnwin);
 
-    // btnhelp.set_label("Help");
     btnhelp.set_child(label_help);
     btnhelp.set_has_frame(false);
     btnhelp.set_always_show_arrow(false);
-    // btnhelp.set_use_popover(false);
     btnhelp.set_menu_model(get_menu(menubuilder, "menu_help"));
+    popover_init(btnhelp);
     append(btnhelp);
 
     // Add menu to window
@@ -134,10 +130,14 @@ MyFinder::MyFinder()
     append(menu_button);
 
     // Add Style for MyFinder
+    add_css_class("finder_box");
+    separator.add_css_class("finder_separator");
     provider = Gtk::CssProvider::create();
     provider->load_from_resource("/org/gtk/daleclack/style.css");
-    auto style = get_style_context();
-    style->add_provider(provider, G_MAXUINT);
+    Gtk::CssProvider::add_provider_for_display(get_display(), provider,
+                                               GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+    Gtk::CssProvider::add_provider_for_display(separator.get_display(), provider,
+                                               GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
 }
 
 bool MyFinder::time_out()
@@ -158,6 +158,13 @@ bool MyFinder::time_out()
     timer_label.set_label(time_string);
 
     return true;
+}
+
+void MyFinder::popover_init(Gtk::MenuButton &menu_btn)
+{
+    auto popover = menu_btn.get_popover();
+    popover->set_has_arrow(false);
+    popover->set_halign(Gtk::Align::START);
 }
 
 Glib::RefPtr<Gio::Menu> MyFinder::get_menu(Glib::RefPtr<Gtk::Builder> &builder, const Glib::ustring &id)

@@ -124,6 +124,9 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     // Add Style for MyFinder
     provider = Gtk::CssProvider::create();
     provider->load_from_resource("/org/gtk/daleclack/dock_style.css");
+    dock_box->add_css_class("dock_box");
+    launchpad_page->add_css_class("dock_grid");
+    separator_end->add_css_class("dock_separator");
     apply_style(*dock_box);
     apply_style(*launchpad_page);
     apply_style(*separator_end);
@@ -169,11 +172,14 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
         // std::cout << "dock mode" << std::endl;
         break;
     case DockMode::MODE_PANEL:
-        if(dock_pos == DockPos::POS_BOTTOM){
+        if (dock_pos == DockPos::POS_BOTTOM)
+        {
             dock_box->set_hexpand();
             dock_box->set_halign(Gtk::Align::FILL);
             icons_sw->set_hexpand();
-        }else{
+        }
+        else
+        {
             dock_box->set_vexpand();
             dock_box->set_valign(Gtk::Align::FILL);
             icons_sw->set_vexpand();
@@ -200,8 +206,8 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
 // Set the style of dock widget
 void MyDock::apply_style(Gtk::Widget &widget)
 {
-    auto style = widget.get_style_context();
-    style->add_provider(provider, G_MAXUINT);
+    Gtk::CssProvider::add_provider_for_display(widget.get_display(), provider,
+                                               GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
 }
 
 // Launchpad
