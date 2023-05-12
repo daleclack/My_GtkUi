@@ -16,7 +16,7 @@ MyStack::MyStack()
 
 void MyStack::mystack_init(Gtk::Window *window, Gtk::Image *m_back)
 {
-    // main_dock->mydock_init(window, m_back);
+    main_dock->mydock_init(window, m_back);
 }
 
 void MyStack::show_prefs()

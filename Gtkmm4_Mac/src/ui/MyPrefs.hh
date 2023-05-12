@@ -67,7 +67,7 @@ private:
     // Page switcher and another page
     Glib::RefPtr<Gtk::Builder> stackbuilder;
     Gtk::Box *stack_box, *back_page, *winsize_page;
-    Gtk::RadioButton *radio_default, *radio_custom;
+    // Gtk::RadioButton *radio_default, *radio_custom;
     Gtk::ComboBoxText *combo_default;
     Gtk::SpinButton *spin_width, *spin_height;
     Gtk::Button *btnapply, *btnGet;
@@ -76,7 +76,7 @@ private:
     // Dock Preferences
     Gtk::Button *btnapply1;
     Gtk::CheckButton *mode_check;
-    Gtk::RadioButton *radio_left, *radio_right, *radio_bottom;
+    // Gtk::RadioButton *radio_left, *radio_right, *radio_bottom;
 
     // Child Widgets
     Gtk::TreeView folders_view, images_view;

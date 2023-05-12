@@ -20,7 +20,7 @@
           <object class="GtkImage" id="image1">
             <property name="pixel-size">48</property>
             <property name="icon-name">My_GtkUI</property>
-            <property name="icon_size">6</property>
+            
           </object>
         </property>
         <property name="has-frame">0</property>
@@ -136,7 +136,7 @@
                       <object class="GtkImage" id="image23">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">24game</property>
-                        <property name="icon_size">6</property>
+                        
                       </object>
                     </property>
                     <property name="has-frame">0</property>
@@ -149,7 +149,7 @@
                     <property name="child">
                       <object class="GtkImage" id="image26">
                         <property name="icon-name">mines_app</property>
-                        <property name="icon_size">6</property>
+                        <property name="pixel-size">48</property>
                       </object>
                     </property>
                     <property name="has-frame">0</property>
@@ -307,7 +307,7 @@
                                 <property name="vexpand">0</property>
                                 <property name="pixel-size">48</property>
                                 <property name="icon-name">btnabout</property>
-                                <property name="icon_size">6</property>
+                                
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -329,7 +329,7 @@
                                 <property name="pixel-size">48</property>
                                 <property name="icon-name">
                                                             audacious_whitesur</property>
-                                <property name="icon_size">6</property>
+                                
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -421,7 +421,7 @@
                               <object class="GtkImage" id="image14">
                                 <property name="pixel-size">48</property>
                                 <property name="icon-name">image_app</property>
-                                <property name="icon_size">6</property>
+                                
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -550,7 +550,7 @@
                               <object class="GtkImage" id="image22">
                                 <property name="pixel-size">48</property>
                                 <property name="icon-name">24game</property>
-                                <property name="icon_size">6</property>
+                                
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -569,7 +569,6 @@
                               <object class="GtkImage" id="image24">
                                 <property name="pixel-size">48</property>
                                 <property name="icon-name">calcapp</property>
-                                <property name="icon_size">6</property>
                               </object>
                             </property>
                             <property name="has-frame">0</property>
@@ -588,7 +587,7 @@
                             <property name="child">
                               <object class="GtkImage" id="image27">
                                 <property name="icon-name">mines_app</property>
-                                <property name="icon_size">6</property>
+                                <property name="pixel-size">48</property>
                               </object>
                             </property>
                             <property name="has-frame">0</property>

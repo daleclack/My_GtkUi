@@ -14,7 +14,7 @@ public:
     MineCell()
     {
         // Set button style
-        set_relief(Gtk::RELIEF_NONE);
+        set_has_frame(false);
         mines_around = 0;
     }
 };

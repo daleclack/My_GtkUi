@@ -10,13 +10,14 @@ MyWin::MyWin()
     set_icon_name("My_GtkUI");
     set_title("My GtkUI macOS Version");
     // get_size_config(width, height, panel_mode);
+    panel_mode = true;
 
     // Set the display mode of dock
-    // if(panel_mode){
-    //     main_stack.set_mydock_mode(DockMode::MODE_PANEL);
-    // }else{
-    //     main_stack.set_mydock_mode(DockMode::MODE_DOCK);
-    // }
+    if(panel_mode){
+        main_stack.set_mydock_mode(DockMode::MODE_PANEL);
+    }else{
+        main_stack.set_mydock_mode(DockMode::MODE_DOCK);
+    }
 
     // Add background
     // auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(winpe);
@@ -51,7 +52,7 @@ MyWin::MyWin()
     gesture->signal_pressed().connect(sigc::mem_fun(*this, &MyWin::press));
 
     // Initalize Stack
-    // main_stack.mystack_init(this, &m_background);
+    main_stack.mystack_init(this, &m_background);
 
     set_child(m_overlay);
 }

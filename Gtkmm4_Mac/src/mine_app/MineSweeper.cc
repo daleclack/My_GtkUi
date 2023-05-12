@@ -12,7 +12,7 @@ MineSweeper::MineSweeper()
     set_titlebar(header);
     header.set_show_close_button();
     header.set_decoration_layout("close,minimize,maximize:menu");
-    header.pack_end(menu_btn);
+    header.prepend(menu_btn);
     set_icon_name("org.gtk.daleclack");
 
     // Initalize Menu
@@ -211,7 +211,7 @@ bool MineSweeper::timer_func()
 
 void MineSweeper::cell_clicked(MineCell *cell1)
 {
-    cell1->set_relief(Gtk::RELIEF_NONE);
+    cell1->set_has_frame(false);
     if (!game_ended && !cell1->cleared)
     {
         //
@@ -261,7 +261,7 @@ void MineSweeper::check_mines(int pos_x, int pos_y)
             }
 
             // make the cell without mines cleared
-            cell[pos_y * 7 + pos_x].set_relief(Gtk::RELIEF_NONE);
+            cell[pos_y * 7 + pos_x].set_has_frame(false);
             cell[pos_y * 7 + pos_x].cleared = true;
             
             // Check the cells around a cell that has no mines

@@ -33,8 +33,8 @@ TextEditor::TextEditor()
     header.set_show_close_button();
     menubtn.set_image_from_icon_name("open-menu");
     search_button.set_image_from_icon_name("find");
-    header.pack_end(menubtn);
-    header.pack_end(search_button);
+    header.prepend(menubtn);
+    header.prepend(search_button);
     header.set_title("Simple Text Editor");
     set_titlebar(header);
 

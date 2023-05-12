@@ -27,7 +27,7 @@ show_hidden("Show hidden files")
 
     m_toolbar.set_toolbar_style(Gtk::TOOLBAR_ICONS);
     btnbox.append(m_toolbar,Gtk::PACK_SHRINK);
-    btnbox.pack_end(m_viewbar,Gtk::PACK_SHRINK);
+    btnbox.prepend(m_viewbar,Gtk::PACK_SHRINK);
 
     //"Up" Button
     up_button.set_icon_name("go-up");
@@ -57,14 +57,14 @@ show_hidden("Show hidden files")
     //"View Mode" Button
     view_item.add(view_button);
     view_mode=ViewMode::MODE_ICON;
-    view_button.set_relief(Gtk::RELIEF_NONE);
+    view_button.set_has_frame(false);
     view_button.set_image_from_icon_name("view-grid-symbolic",Gtk::ICON_SIZE_LARGE_TOOLBAR);
     view_button.signal_clicked().connect(sigc::mem_fun(*this,&FileWindow::btnview_clicked));
     m_viewbar.insert(view_item,-1);
 
     //Menu Button
     menu_item.add(menubtn);
-    menubtn.set_relief(Gtk::RELIEF_NONE);
+    menubtn.set_has_frame(false);
     m_viewbar.insert(menu_item,-1);
     m_viewbar.set_toolbar_style(Gtk::TOOLBAR_ICONS);
     show_hidden.set_active(false);
