@@ -1,7 +1,7 @@
 #include "ImageApp.hh"
 
 ImageApp::ImageApp()
-    : main_box(Gtk::ORIENTATION_VERTICAL, 5),
+    : main_box(Gtk::Orientation::VERTICAL, 5),
       btnbox(Gtk::Orientation::HORIZONTAL, 5),
       btnopen("Open Image")
 {

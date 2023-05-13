@@ -6,7 +6,7 @@
 #include <fstream>
 
 MyPrefs::MyPrefs()
-    : main_box(Gtk::ORIENTATION_VERTICAL, 10),
+    : main_box(Gtk::Orientation::VERTICAL, 10),
       views_box(Gtk::Orientation::HORIZONTAL, 5),
       btnbox(Gtk::Orientation::HORIZONTAL, 5),
       width(1024),
@@ -22,81 +22,81 @@ MyPrefs::MyPrefs()
     // Load config file
     load_winsize_config();
 
-    // Initalize Stores
-    folders_store = Gtk::ListStore::create(n_columns);
-    folders_store->set_default_sort_func(sigc::mem_fun(*this, &MyPrefs::sort_func));
-    folders_store->set_sort_column(-1, Gtk::SORT_ASCENDING);
-    folders_view.set_model(folders_store);
-    folder_selection = folders_view.get_selection();
-    folder_selection->signal_changed().connect(sigc::mem_fun(*this, &MyPrefs::folders_view_changed));
+    // // Initalize Stores
+    // folders_store = Gtk::ListStore::create(n_columns);
+    // folders_store->set_default_sort_func(sigc::mem_fun(*this, &MyPrefs::sort_func));
+    // folders_store->set_sort_column(-1, Gtk::SORT_ASCENDING);
+    // folders_view.set_model(folders_store);
+    // folder_selection = folders_view.get_selection();
+    // folder_selection->signal_changed().connect(sigc::mem_fun(*this, &MyPrefs::folders_view_changed));
 
-    images_store = Gtk::ListStore::create(n_columns);
-    images_store->set_default_sort_func(sigc::mem_fun(*this, &MyPrefs::sort_func));
-    images_store->set_sort_column(-1, Gtk::SORT_ASCENDING);
-    images_view.set_model(images_store);
-    image_selection = images_view.get_selection();
-    image_selection->signal_changed().connect(sigc::mem_fun(*this, &MyPrefs::images_view_changed));
+    // images_store = Gtk::ListStore::create(n_columns);
+    // images_store->set_default_sort_func(sigc::mem_fun(*this, &MyPrefs::sort_func));
+    // images_store->set_sort_column(-1, Gtk::SORT_ASCENDING);
+    // images_view.set_model(images_store);
+    // image_selection = images_view.get_selection();
+    // image_selection->signal_changed().connect(sigc::mem_fun(*this, &MyPrefs::images_view_changed));
 
     // Load Pixbufs
     auto pixbuf = Gdk::Pixbuf::create_from_resource("/org/gtk/daleclack/folder.svg");
-    folder_pixbuf = pixbuf->scale_simple(24, 24, Gdk::INTERP_BILINEAR);
+    folder_pixbuf = pixbuf->scale_simple(24, 24, Gdk::InterpType::BILINEAR);
     pixbuf.reset();
     pixbuf = Gdk::Pixbuf::create_from_resource("/org/gtk/daleclack/folder-images.svg");
-    image_pixbuf = pixbuf->scale_simple(24, 24, Gdk::INTERP_BILINEAR);
+    image_pixbuf = pixbuf->scale_simple(24, 24, Gdk::InterpType::BILINEAR);
     pixbuf.reset();
     pixbuf = Gdk::Pixbuf::create_from_resource("/org/gtk/daleclack/image_file.svg");
-    imagefile_pixbuf = pixbuf->scale_simple(24, 24, Gdk::INTERP_BILINEAR);
+    imagefile_pixbuf = pixbuf->scale_simple(24, 24, Gdk::InterpType::BILINEAR);
     pixbuf.reset();
 
-    // Add Default Value for folders view
-    auto row = *(folders_store->append());
-    row[n_columns.m_col_path] = "";
-    row[n_columns.m_col_name] = "Default Backgrounds";
-    row[n_columns.m_col_pixbuf] = folder_pixbuf;
-    row[n_columns.m_col_internal] = true;
+    // // Add Default Value for folders view
+    // auto row = *(folders_store->append());
+    // row[n_columns.m_col_path] = "";
+    // row[n_columns.m_col_name] = "Default Backgrounds";
+    // row[n_columns.m_col_pixbuf] = folder_pixbuf;
+    // row[n_columns.m_col_internal] = true;
 
-    row = *(folders_store->append());
-    row[n_columns.m_col_path] = Glib::get_home_dir();
-    row[n_columns.m_col_name] = "User's Home";
-    row[n_columns.m_col_pixbuf] = folder_pixbuf;
-    row[n_columns.m_col_internal] = false;
+    // row = *(folders_store->append());
+    // row[n_columns.m_col_path] = Glib::get_home_dir();
+    // row[n_columns.m_col_name] = "User's Home";
+    // row[n_columns.m_col_pixbuf] = folder_pixbuf;
+    // row[n_columns.m_col_internal] = false;
 
-    row = *(folders_store->append());
-    row[n_columns.m_col_path] = Glib::get_user_special_dir(Glib::USER_DIRECTORY_PICTURES);
-    row[n_columns.m_col_name] = "User's Pictures Directory";
-    row[n_columns.m_col_pixbuf] = image_pixbuf;
-    row[n_columns.m_col_internal] = false;
+    // row = *(folders_store->append());
+    // row[n_columns.m_col_path] = Glib::get_user_special_dir(Glib::USER_DIRECTORY_PICTURES);
+    // row[n_columns.m_col_name] = "User's Pictures Directory";
+    // row[n_columns.m_col_pixbuf] = image_pixbuf;
+    // row[n_columns.m_col_internal] = false;
 
-    // Append folders from config file
-    if(!back_list.empty()){
-        for(auto iter = back_list.begin(); iter != back_list.end(); iter++){
-            // Get pair value from vector
-            std::pair<std::string, std::string> temp;
-            temp = *iter;
+    // // Append folders from config file
+    // if(!back_list.empty()){
+    //     for(auto iter = back_list.begin(); iter != back_list.end(); iter++){
+    //         // Get pair value from vector
+    //         std::pair<std::string, std::string> temp;
+    //         temp = *iter;
 
-            // Append folder to the folders store
-            auto row = *(folders_store->append());
-            row[n_columns.m_col_path] = temp.second;
-            row[n_columns.m_col_name] = temp.first;
-            row[n_columns.m_col_pixbuf] = folder_pixbuf;
-            row[n_columns.m_col_internal] = false;
-        }
-    }
+    //         // Append folder to the folders store
+    //         auto row = *(folders_store->append());
+    //         row[n_columns.m_col_path] = temp.second;
+    //         row[n_columns.m_col_name] = temp.first;
+    //         row[n_columns.m_col_pixbuf] = folder_pixbuf;
+    //         row[n_columns.m_col_internal] = false;
+    //     }
+    // }
 
-    // Append Column for the folders view
-    folders_view.append_column(" ", n_columns.m_col_pixbuf);
-    folders_view.append_column("Name", n_columns.m_col_name);
+    // // Append Column for the folders view
+    // folders_view.append_column(" ", n_columns.m_col_pixbuf);
+    // folders_view.append_column("Name", n_columns.m_col_name);
 
-    // Default Value for images view
-    default_folders_view();
-    images_view.append_column(" ", n_columns.m_col_pixbuf);
-    images_view.append_column("Images", n_columns.m_col_name);
+    // // Default Value for images view
+    // default_folders_view();
+    // images_view.append_column(" ", n_columns.m_col_pixbuf);
+    // images_view.append_column("Images", n_columns.m_col_name);
 
     // Add Views
     main_box.append(views_box);
-    sw_folders.add(folders_view);
+    sw_folders.set_child(folders_view);
     views_box.append(sw_folders);
-    sw_images.add(images_view);
+    sw_images.set_child(images_view);
     views_box.append(sw_images);
 
     // Allow Selection
@@ -173,15 +173,15 @@ MyPrefs::MyPrefs()
     }
 
     back_page->append(main_box);
-    add(*stack_box);
-    show_all_children();
+    set_child(*stack_box);
+    // show_all_children();
 }
 
 void MyPrefs::btnadd_clicked()
 {
     // Create a dialog
     dialog = Gtk::FileChooserNative::create("Add a folder", *this,
-                                            Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER, "OK", "Cancel");
+                                            Gtk::FileChooser::Action::SELECT_FOLDER, "OK", "Cancel");
 
     dialog->signal_response().connect(sigc::mem_fun(*this, &MyPrefs::dialog_response));
 
@@ -190,18 +190,18 @@ void MyPrefs::btnadd_clicked()
 
 void MyPrefs::dialog_response(int response_id)
 {
-    if (response_id == Gtk::RESPONSE_ACCEPT)
+    if (response_id == Gtk::ResponseType::ACCEPT)
     {
         // Get File Basename and Path
         auto file = dialog->get_file();
         auto basename = file->get_basename();
         auto filename = file->get_path();
 
-        // Add to list
-        auto row = *(folders_store->append());
-        row[n_columns.m_col_path] = filename;
-        row[n_columns.m_col_name] = basename;
-        row[n_columns.m_col_pixbuf] = folder_pixbuf;
+        // // Add to list
+        // auto row = *(folders_store->append());
+        // row[n_columns.m_col_path] = filename;
+        // row[n_columns.m_col_name] = basename;
+        // row[n_columns.m_col_pixbuf] = folder_pixbuf;
 
         // Add for json file
         save_config_file();
@@ -401,7 +401,7 @@ void MyPrefs::set_background_internal(const char *const *data)
 {
     // Set a internal background
     auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(data);
-    auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
+    auto sized = pixbuf->scale_simple(width, height, Gdk::InterpType::BILINEAR);
     gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
     pixbuf.reset();
     sized.reset();
@@ -413,7 +413,7 @@ void MyPrefs::set_background_file()
     // Set Background from a file
     try{
         auto pixbuf = Gdk::Pixbuf::create_from_file(path);
-        auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
+        auto sized = pixbuf->scale_simple(width, height, Gdk::InterpType::BILINEAR);
         gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
         pixbuf.reset();
         sized.reset();

@@ -21,7 +21,7 @@ MyWin::MyWin()
 
     // Add background
     // auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(winpe);
-    // auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
+    // auto sized = pixbuf->scale_simple(width, height, Gdk::InterpType::BILINEAR);
     // gtk_image_set_from_pixbuf(m_background.gobj(), sized->gobj());
     m_overlay.set_child(m_background);
     // pixbuf.reset();

@@ -24,7 +24,7 @@ include_directories (${GTKMM_INCLUDE_DIRS})
 link_directories (${GTKMM_LIBRARY_DIRS})
 
 set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc 
-src/ui/MyDock.cc src/ui/MyFinder.cc)
+src/ui/MyDock.cc src/ui/MyFinder.cc src/ui/MyPrefs.cc)
 
 #Compile resources with GCR_CMake
 

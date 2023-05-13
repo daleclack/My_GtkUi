@@ -8,7 +8,7 @@
 using json = nlohmann::json;
 
 TextEditor::TextEditor()
-    : vbox(Gtk::ORIENTATION_VERTICAL, 5),
+    : vbox(Gtk::Orientation::VERTICAL, 5),
       hbox(Gtk::Orientation::HORIZONTAL, 5),
       searchbox(Gtk::Orientation::HORIZONTAL, 5),
       file_opened(false)

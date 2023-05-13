@@ -3,9 +3,9 @@
 
 FileWindow::FileWindow()
 :parent_str("/"),
-vbox(Gtk::ORIENTATION_VERTICAL,5),
+vbox(Gtk::Orientation::VERTICAL,5),
 btnbox(Gtk::Orientation::HORIZONTAL,5),
-menubox(Gtk::ORIENTATION_VERTICAL,5),
+menubox(Gtk::Orientation::VERTICAL,5),
 show_hidden("Show hidden files")
 {
     //Initalize Window
@@ -15,10 +15,10 @@ show_hidden("Show hidden files")
 
     //Load Pixbufs
     auto pixbuf1 = Gdk::Pixbuf::create_from_resource("/org/gtk/daleclack/gnome-fs-regular.svg"); 
-    file_pixbuf = pixbuf1->scale_simple(48,48,Gdk::INTERP_BILINEAR);
+    file_pixbuf = pixbuf1->scale_simple(48,48,Gdk::InterpType::BILINEAR);
     pixbuf1.reset();
     pixbuf1 = Gdk::Pixbuf::create_from_resource("/org/gtk/daleclack/folder.svg");
-    folder_pixbuf = pixbuf1->scale_simple(48,48,Gdk::INTERP_BILINEAR);
+    folder_pixbuf = pixbuf1->scale_simple(48,48,Gdk::InterpType::BILINEAR);
     pixbuf1.reset();
 
     //Create Child Widgets

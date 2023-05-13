@@ -31,25 +31,7 @@ public:
     DockPos get_dock_pos();
 
 protected:
-    class ModelColumns : public Gtk::TreeModelColumnRecord
-    {
-    public:
-        ModelColumns()
-        {
-            add(m_col_pixbuf);
-            add(m_col_path);
-            add(m_col_name);
-            add(m_col_internal);
-        }
-        Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf>> m_col_pixbuf;
-        Gtk::TreeModelColumn<std::string> m_col_path;
-        Gtk::TreeModelColumn<std::string> m_col_name;
-        Gtk::TreeModelColumn<bool> m_col_internal;
-    };
 
-    ModelColumns n_columns;
-    Glib::RefPtr<Gtk::ListStore> folders_store, images_store;
-    Glib::RefPtr<Gtk::TreeSelection> folder_selection, image_selection;
     bool has_selection;
 
 private:
@@ -67,7 +49,7 @@ private:
     // Page switcher and another page
     Glib::RefPtr<Gtk::Builder> stackbuilder;
     Gtk::Box *stack_box, *back_page, *winsize_page;
-    // Gtk::RadioButton *radio_default, *radio_custom;
+    Gtk::CheckButton *radio_default, *radio_custom;
     Gtk::ComboBoxText *combo_default;
     Gtk::SpinButton *spin_width, *spin_height;
     Gtk::Button *btnapply, *btnGet;
@@ -76,10 +58,10 @@ private:
     // Dock Preferences
     Gtk::Button *btnapply1;
     Gtk::CheckButton *mode_check;
-    // Gtk::RadioButton *radio_left, *radio_right, *radio_bottom;
+    Gtk::CheckButton *radio_left, *radio_right, *radio_bottom;
 
     // Child Widgets
-    Gtk::TreeView folders_view, images_view;
+    Gtk::ListView folders_view, images_view;
     Gtk::ScrolledWindow sw_folders, sw_images;
     Gtk::Box main_box, views_box, btnbox;
     Gtk::Button btnadd, btnremove;

@@ -3,7 +3,7 @@
 #include <iostream>
 
 MineSweeper::MineSweeper()
-    : main_box(Gtk::ORIENTATION_VERTICAL, 5),
+    : main_box(Gtk::Orientation::VERTICAL, 5),
       btn_box(Gtk::Orientation::HORIZONTAL, 5),
       cell(nullptr)
 {

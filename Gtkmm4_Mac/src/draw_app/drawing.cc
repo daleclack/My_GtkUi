@@ -6,9 +6,9 @@ Drawing::Drawing()
     : fill_check("Enable Fill Color"),
       main_label("Select a color"),
       size_label("Pen Size"),
-      left_box(Gtk::ORIENTATION_VERTICAL, 5),
+      left_box(Gtk::Orientation::VERTICAL, 5),
       main_box(Gtk::Orientation::HORIZONTAL, 5),
-      btn_box(Gtk::ORIENTATION_VERTICAL, 5),
+      btn_box(Gtk::Orientation::VERTICAL, 5),
       btn_clear("Clear Board"),
       btn_save("Save to png"),
       btn_exit("Exit")
