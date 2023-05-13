@@ -61,7 +61,7 @@ private:
     Gtk::CheckButton *radio_left, *radio_right, *radio_bottom;
 
     // Child Widgets
-    Gtk::ListView folders_view, images_view;
+    Gtk::ColumnView folders_view, images_view;
     Gtk::ScrolledWindow sw_folders, sw_images;
     Gtk::Box main_box, views_box, btnbox;
     Gtk::Button btnadd, btnremove;

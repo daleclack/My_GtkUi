@@ -213,51 +213,51 @@ void MyPrefs::dialog_response(int response_id)
 
 void MyPrefs::btnremove_clicked()
 {
-    // Get the selection and remove the selected item
-    auto iter = folder_selection->get_selected();
-    auto row = *iter;
+    // // Get the selection and remove the selected item
+    // auto iter = folder_selection->get_selected();
+    // auto row = *iter;
 
-    // The internal item should not be deleted
-    if (iter && !(row[n_columns.m_col_internal]))
-    {
-        folders_store->erase(iter);
-    }
+    // // The internal item should not be deleted
+    // if (iter && !(row[n_columns.m_col_internal]))
+    // {
+    //     folders_store->erase(iter);
+    // }
 }
 
 void MyPrefs::folders_view_changed()
 {
-    // Get Selected Folder
-    auto row = *(folder_selection->get_selected());
-    if (row[n_columns.m_col_internal])
-    {
-        // The default folder
-        default_folders_view();
-    }
-    else
-    {
-        // User defined folder
-        std::string path = row[n_columns.m_col_path];
-        update_images_view(path);
-    }
+    // // Get Selected Folder
+    // auto row = *(folder_selection->get_selected());
+    // if (row[n_columns.m_col_internal])
+    // {
+    //     // The default folder
+    //     default_folders_view();
+    // }
+    // else
+    // {
+    //     // User defined folder
+    //     std::string path = row[n_columns.m_col_path];
+    //     update_images_view(path);
+    // }
 }
 
 void MyPrefs::default_folders_view()
 {
-    // Clear the store
-    images_store->clear();
+    // // Clear the store
+    // images_store->clear();
 
-    // Add Default values
-    auto row = *(images_store->append());
-    row[n_columns.m_col_path] = ":1";
-    row[n_columns.m_col_name] = "winpe.xpm";
-    row[n_columns.m_col_internal] = true;
-    row[n_columns.m_col_pixbuf] = imagefile_pixbuf;
+    // // Add Default values
+    // auto row = *(images_store->append());
+    // row[n_columns.m_col_path] = ":1";
+    // row[n_columns.m_col_name] = "winpe.xpm";
+    // row[n_columns.m_col_internal] = true;
+    // row[n_columns.m_col_pixbuf] = imagefile_pixbuf;
 
-    row = *(images_store->append());
-    row[n_columns.m_col_path] = ":2";
-    row[n_columns.m_col_name] = "img7.xpm";
-    row[n_columns.m_col_internal] = true;
-    row[n_columns.m_col_pixbuf] = imagefile_pixbuf;
+    // row = *(images_store->append());
+    // row[n_columns.m_col_path] = ":2";
+    // row[n_columns.m_col_name] = "img7.xpm";
+    // row[n_columns.m_col_internal] = true;
+    // row[n_columns.m_col_pixbuf] = imagefile_pixbuf;
 
     // // Default path
     // path = ":1";
@@ -265,27 +265,27 @@ void MyPrefs::default_folders_view()
 
 int MyPrefs::sort_func(const Gtk::TreeModel::iterator &a, const Gtk::TreeModel::iterator &b)
 {
-    Glib::ustring name_a, name_b;
+    // Glib::ustring name_a, name_b;
 
-    // Get file names
-    auto row_a = *(a);
-    auto row_b = *(b);
-    name_a = row_a[n_columns.m_col_name];
-    name_b = row_b[n_columns.m_col_name];
+    // // Get file names
+    // auto row_a = *(a);
+    // auto row_b = *(b);
+    // name_a = row_a[n_columns.m_col_name];
+    // name_b = row_b[n_columns.m_col_name];
 
-    // Proform sort process
-    if (name_a[0] != '.' && name_b[0] == '.')
-    {
-        return 1;
-    }
-    if (name_a[0] == '.' && name_b[0] != '.')
-    {
-        return -1;
-    }
-    else
-    {
-        return g_utf8_collate(name_a.c_str(), name_b.c_str());
-    }
+    // // Proform sort process
+    // if (name_a[0] != '.' && name_b[0] == '.')
+    // {
+    //     return 1;
+    // }
+    // if (name_a[0] == '.' && name_b[0] != '.')
+    // {
+    //     return -1;
+    // }
+    // else
+    // {
+    //     return g_utf8_collate(name_a.c_str(), name_b.c_str());
+    // }
 }
 
 bool MyPrefs::icasecompare(const std::string &a, const std::string &b)
@@ -306,95 +306,95 @@ bool MyPrefs::icasecompare(const std::string &a, const std::string &b)
 
 void MyPrefs::update_images_view(std::string &folder_path)
 {
-    // Unselect everything
-    has_selection = false;
+    // // Unselect everything
+    // has_selection = false;
 
-    // Clear the store
-    images_store->clear();
+    // // Clear the store
+    // images_store->clear();
 
-    // Add Files into store
-    try
-    {
-        Glib::Dir dir1(folder_path);
-        bool is_dir, file_valid;
-        Glib::ustring display_name;
-        std::string filename, pathname;
+    // // Add Files into store
+    // try
+    // {
+    //     Glib::Dir dir1(folder_path);
+    //     bool is_dir, file_valid;
+    //     Glib::ustring display_name;
+    //     std::string filename, pathname;
 
-        do
-        {
-            // Get File Name
-            filename = dir1.read_name();
+    //     do
+    //     {
+    //         // Get File Name
+    //         filename = dir1.read_name();
 
-            // Get Path for a file
-            pathname = Glib::build_filename(folder_path, filename);
-            is_dir = Glib::file_test(pathname, Glib::FILE_TEST_IS_DIR);
-            display_name = Glib::filename_to_utf8(filename);
+    //         // Get Path for a file
+    //         pathname = Glib::build_filename(folder_path, filename);
+    //         is_dir = Glib::file_test(pathname, Glib::FILE_TEST_IS_DIR);
+    //         display_name = Glib::filename_to_utf8(filename);
 
-            // Filter the file
-            // Get Pattern of the file
-            file_valid = false;
-            size_t pos = filename.find_last_of('.');
-            if (pos != std::string::npos)
-            {
-                std::string pattern = "*" + filename.substr(pos);
-                for (int i = 0; supported_globs[i] != NULL; i++)
-                {
-                    std::string glob = std::string(supported_globs[i]);
-                    if (icasecompare(glob, pattern))
-                    {
-                        file_valid = true;
-                        break;
-                    }
-                }
-            }
+    //         // Filter the file
+    //         // Get Pattern of the file
+    //         file_valid = false;
+    //         size_t pos = filename.find_last_of('.');
+    //         if (pos != std::string::npos)
+    //         {
+    //             std::string pattern = "*" + filename.substr(pos);
+    //             for (int i = 0; supported_globs[i] != NULL; i++)
+    //             {
+    //                 std::string glob = std::string(supported_globs[i]);
+    //                 if (icasecompare(glob, pattern))
+    //                 {
+    //                     file_valid = true;
+    //                     break;
+    //                 }
+    //             }
+    //         }
 
-            if (!is_dir && file_valid)
-            {
-                // Add item to store
-                auto row = *(images_store->append());
-                row[n_columns.m_col_path] = pathname;
-                row[n_columns.m_col_name] = display_name;
-                row[n_columns.m_col_internal] = false;
-                row[n_columns.m_col_pixbuf] = imagefile_pixbuf;
-            }
-        } while (filename != "");
+    //         if (!is_dir && file_valid)
+    //         {
+    //             // Add item to store
+    //             auto row = *(images_store->append());
+    //             row[n_columns.m_col_path] = pathname;
+    //             row[n_columns.m_col_name] = display_name;
+    //             row[n_columns.m_col_internal] = false;
+    //             row[n_columns.m_col_pixbuf] = imagefile_pixbuf;
+    //         }
+    //     } while (filename != "");
 
-        has_selection = true;
-    }
-    catch (Glib::Error &ex)
-    {
-        std::cout << ex.what() << std::endl;
-    }
+    //     has_selection = true;
+    // }
+    // catch (Glib::Error &ex)
+    // {
+    //     std::cout << ex.what() << std::endl;
+    // }
 }
 
 void MyPrefs::images_view_changed()
 {
     // Set the background as selected
-    if (has_selection)
-    {
-        auto row = *(image_selection->get_selected());
-        if (row[n_columns.m_col_internal])
-        {
-            path = row[n_columns.m_col_path];
-            switch (path[1])
-            {
-            case '1':
-                // path = "default_1";
-                set_background_internal(winpe);
-                break;
-            case '2':
-                // path = "default_2";
-                set_background_internal(img7);
-                break;
-            }
-        }
-        else
-        {
-            path = row[n_columns.m_col_path];
-            set_background_file();
-        }
-        save_config_file();
-    }
+    // if (has_selection)
+    // {
+    //     auto row = *(image_selection->get_selected());
+    //     if (row[n_columns.m_col_internal])
+    //     {
+    //         path = row[n_columns.m_col_path];
+    //         switch (path[1])
+    //         {
+    //         case '1':
+    //             // path = "default_1";
+    //             set_background_internal(winpe);
+    //             break;
+    //         case '2':
+    //             // path = "default_2";
+    //             set_background_internal(img7);
+    //             break;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         path = row[n_columns.m_col_path];
+    //         set_background_file();
+    //     }
+    //     save_config_file();
+    // }
 }
 
 void MyPrefs::set_background_internal(const char *const *data)
@@ -463,27 +463,27 @@ void MyPrefs::radiobutton_toggled()
 
 void MyPrefs::save_config_file()
 {
-    // Refresh the data of background folders list
-    back_list.clear();
+    // // Refresh the data of background folders list
+    // back_list.clear();
 
-    // Initalize data from store of folders
-    auto child = folders_store->children();
-    for (auto iter = child.begin(); iter != child.end(); iter++)
-    {
-        auto row = *iter;
-        // Save custom directories of background
-        // The default directories will be ignored
-        if (!row[n_columns.m_col_internal] 
-            && row.get_value(n_columns.m_col_name) != "User's Pictures Directory" 
-            && row.get_value(n_columns.m_col_name) != "User's Home")
-        {
-            // Use a pair to save the basename and path
-            std::pair<std::string, std::string> temp;
-            temp.first = row[n_columns.m_col_name];
-            temp.second = row[n_columns.m_col_path];
-            back_list.push_back(temp);
-        }
-    }
+    // // Initalize data from store of folders
+    // auto child = folders_store->children();
+    // for (auto iter = child.begin(); iter != child.end(); iter++)
+    // {
+    //     auto row = *iter;
+    //     // Save custom directories of background
+    //     // The default directories will be ignored
+    //     if (!row[n_columns.m_col_internal] 
+    //         && row.get_value(n_columns.m_col_name) != "User's Pictures Directory" 
+    //         && row.get_value(n_columns.m_col_name) != "User's Home")
+    //     {
+    //         // Use a pair to save the basename and path
+    //         std::pair<std::string, std::string> temp;
+    //         temp.first = row[n_columns.m_col_name];
+    //         temp.second = row[n_columns.m_col_path];
+    //         back_list.push_back(temp);
+    //     }
+    // }
 
     // Open the file for configs
     json data = json::parse(R"(
