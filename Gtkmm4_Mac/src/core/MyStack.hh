@@ -8,7 +8,7 @@ class MyStack
 public:
     MyStack();
     void logout();
-    void mystack_init(Gtk::Window *window, Gtk::Image *m_back);
+    void mystack_init(Gtk::Window *window, Gtk::Picture *m_back);
     void show_prefs();
     void set_mydock_mode(DockMode mode);
 

@@ -124,21 +124,27 @@ MyPrefs::MyPrefs()
 
     // Get Widgets for multi pages
     stackbuilder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/prefs_stack.ui");
-    stackbuilder->get_widget("stack_box", stack_box);
-    stackbuilder->get_widget("back_page", back_page);
-    stackbuilder->get_widget("combo_default", combo_default);
-    stackbuilder->get_widget("radio_default", radio_default);
-    stackbuilder->get_widget("radio_custom", radio_custom);
-    stackbuilder->get_widget("spin_width", spin_width);
-    stackbuilder->get_widget("spin_height", spin_height);
-    stackbuilder->get_widget("btnapply", btnapply);
-    stackbuilder->get_widget("btnGet", btnGet);
-    stackbuilder->get_widget("label_size", label_size);
-    stackbuilder->get_widget("mode_check", mode_check);
-    stackbuilder->get_widget("radio_left", radio_left);
-    stackbuilder->get_widget("radio_right", radio_right);
-    stackbuilder->get_widget("radio_bottom", radio_bottom);
-    stackbuilder->get_widget("btnapply1", btnapply1);
+    stack_box = stackbuilder->get_widget<Gtk::Box>("stack_box");
+    back_page = stackbuilder->get_widget<Gtk::Box>("back_page");
+    combo_box = stackbuilder->get_widget<Gtk::Box>("combo_box");
+    radio_default = stackbuilder->get_widget<Gtk::CheckButton>("radio_default");
+    radio_custom = stackbuilder->get_widget<Gtk::CheckButton>("radio_custom");
+    spin_width = stackbuilder->get_widget<Gtk::SpinButton>("spin_width");
+    spin_height = stackbuilder->get_widget<Gtk::SpinButton>("spin_height");
+    btnapply = stackbuilder->get_widget<Gtk::Button>("btnapply");
+    btnGet = stackbuilder->get_widget<Gtk::Button>("btnGet");
+    label_size = stackbuilder->get_widget<Gtk::Label>("label_size");
+    mode_check = stackbuilder->get_widget<Gtk::CheckButton>("mode_check");
+    radio_left = stackbuilder->get_widget<Gtk::CheckButton>("radio_left");
+    radio_right = stackbuilder->get_widget<Gtk::CheckButton>("radio_right");
+    radio_bottom = stackbuilder->get_widget<Gtk::CheckButton>("radio_bottom");
+    btnapply1 = stackbuilder->get_widget<Gtk::Button>("btnapply1");
+
+    // Create Dropdown selecter
+    sizes_list = stackbuilder->get_object<Gtk::StringList>("sizes_list");
+    combo_default.set_model(sizes_list);
+    combo_default.set_selected(2);
+    combo_box->append(combo_default);
 
     // Initalize radio buttons
     radio_default->set_active();
@@ -286,6 +292,7 @@ int MyPrefs::sort_func(const Gtk::TreeModel::iterator &a, const Gtk::TreeModel::
     // {
     //     return g_utf8_collate(name_a.c_str(), name_b.c_str());
     // }
+    return -1;
 }
 
 bool MyPrefs::icasecompare(const std::string &a, const std::string &b)
@@ -402,7 +409,8 @@ void MyPrefs::set_background_internal(const char *const *data)
     // Set a internal background
     auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(data);
     auto sized = pixbuf->scale_simple(width, height, Gdk::InterpType::BILINEAR);
-    gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
+    // gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
+    background1->set_pixbuf(sized);
     pixbuf.reset();
     sized.reset();
     background_internal = true;
@@ -414,7 +422,8 @@ void MyPrefs::set_background_file()
     try{
         auto pixbuf = Gdk::Pixbuf::create_from_file(path);
         auto sized = pixbuf->scale_simple(width, height, Gdk::InterpType::BILINEAR);
-        gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
+        // gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
+        background1->set_pixbuf(sized);
         pixbuf.reset();
         sized.reset();
         background_internal = false;
@@ -429,7 +438,7 @@ void MyPrefs::update_background_size()
 {
 }
 
-void MyPrefs::set_background(Gtk::Image *back)
+void MyPrefs::set_background(Gtk::Picture *back)
 {
     // Link background widget to the class
     background1 = back;
@@ -455,7 +464,7 @@ void MyPrefs::radiobutton_toggled()
 {
     // Change sensitive state of buttons
     bool mode = radio_default->get_active();
-    combo_default->set_sensitive(mode);
+    combo_default.set_sensitive(mode);
     spin_height->set_sensitive(!mode);
     spin_width->set_sensitive(!mode);
     btnGet->set_sensitive(!mode);
@@ -516,7 +525,7 @@ void MyPrefs::btnapply_clicked()
     // Get Config
     if (radio_default->get_active())
     {
-        int mode = combo_default->get_active_row_number();
+        int mode = combo_default.get_selected();
         switch (mode)
         {
         case 0:

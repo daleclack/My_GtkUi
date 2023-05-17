@@ -9,7 +9,7 @@ public:
 private:
     //Child widgets
     Gtk::Overlay m_overlay;
-    Gtk::Image m_background;
+    Gtk::Picture m_background;
     Gtk::Box menubox;
     Gtk::PopoverMenu context_menu;
 

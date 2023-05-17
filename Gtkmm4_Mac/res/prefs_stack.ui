@@ -13,6 +13,15 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkStringList" id="sizes_list">
+    <items>
+      <item translatable="yes">640x360</item>
+      <item translatable="yes">800x450</item>
+      <item translatable="yes">1024x576</item>
+      <item translatable="yes">1280x720</item>
+      <item translatable="yes">1366x768</item>
+    </items>
+  </object>
   <object class="GtkBox" id="stack_box">
     <property name="hexpand">1</property>
     <property name="vexpand">1</property>
@@ -74,15 +83,7 @@
                         <property name="row-spacing">5</property>
                         <property name="column-spacing">5</property>
                         <child>
-                          <object class="GtkComboBoxText" id="combo_default">
-                            <property name="active">2</property>
-                            <items>
-                              <item translatable="yes">640x360</item>
-                              <item translatable="yes">800x450</item>
-                              <item translatable="yes">1024x576</item>
-                              <item translatable="yes">1280x720</item>
-                              <item translatable="yes">1366x768</item>
-                            </items>
+                          <object class="GtkBox" id="combo_box">
                             <layout>
                               <property name="column">1</property>
                               <property name="row">1</property>
@@ -180,11 +181,8 @@
                     <property name="hexpand">1</property>
                     <property name="vexpand">1</property>
                     <child>
-                      <object class="GtkButton" id="btnapply">
-                        <property name="label" translatable="1">Apply</property>
-                        <property name="focusable">1</property>
-                        <property name="receives-default">1</property>
-                        <property name="halign">end</property>
+                      <object class="GtkLabel" id="label_size">
+                        <property name="label" translatable="1">Current Config: </property>
                       </object>
                     </child>
                     <child>
@@ -196,8 +194,11 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label_size">
-                        <property name="label" translatable="1">Current Config: </property>
+                      <object class="GtkButton" id="btnapply">
+                        <property name="label" translatable="1">Apply</property>
+                        <property name="focusable">1</property>
+                        <property name="receives-default">1</property>
+                        <property name="halign">end</property>
                       </object>
                     </child>
                   </object>
@@ -332,6 +333,12 @@
                   <object class="GtkBox">
                     <property name="hexpand">1</property>
                     <property name="vexpand">1</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="1">  </property>
+                        <property name="hexpand">1</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkButton" id="btnapply1">
                         <property name="label" translatable="1">Apply</property>

@@ -19,7 +19,7 @@ public:
     MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade);
     static MyDock *create(DockMode mode);
     void btnset_clicked();
-    void mydock_init(Gtk::Window *window, Gtk::Image *background1);
+    void mydock_init(Gtk::Window *window, Gtk::Picture *background1);
     // void set_dock_mode(DockMode mode);
 
 private:
@@ -41,10 +41,10 @@ private:
         *padimage, *padnote, *padedit, *padvlc, *padvlc_win32, *padrun, *padgame24, *padmine;
     Gtk::Label label1;
 
-    // // Window Preferences
-    // MyPrefs prefs_win;
-    // bool prefs_win_closed(GdkEventAny *event);
-    // void padset_clicked();
+    // Window Preferences
+    MyPrefs prefs_win;
+    bool prefs_win_closed();
+    void padset_clicked();
 
     // // Drawing Window
     // Drawing draw_app;
@@ -101,8 +101,9 @@ private:
     // // A Simple Runner
     // GtkRunner runner1;
 
-    // // Window Control
-    // void window_ctrl(Gtk::Window &window, bool on_dock = true);
+    // Window Control
+    bool first_launch;
+    void window_ctrl(Gtk::Window &window, bool on_dock = true);
 
     // Other
     Gtk::Window *parent_win;

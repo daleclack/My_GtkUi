@@ -76,9 +76,9 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     last 1 or 2 signals for the window
     */
 
-    // btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnset_clicked));
-    // padset->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padset_clicked));
-    // prefs_win.signal_delete_event().connect(sigc::mem_fun(*this, &MyDock::prefs_win_closed));
+    btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnset_clicked));
+    padset->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padset_clicked));
+    prefs_win.signal_close_request().connect(sigc::mem_fun(*this, &MyDock::prefs_win_closed), true);
 
     // btndraw->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btndraw_clicked));
     // paddraw->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::paddraw_clicked));
@@ -225,11 +225,11 @@ void MyDock::btnlaunch_clicked()
     }
 }
 
-void MyDock::mydock_init(Gtk::Window *window, Gtk::Image *background1)
+void MyDock::mydock_init(Gtk::Window *window, Gtk::Picture *background1)
 {
     // Initalize Preference window
-    // prefs_win.set_background(background1);
-    // prefs_win.set_transient_for(*window);
+    prefs_win.set_background(background1);
+    prefs_win.set_transient_for(*window);
     parent_win = window;
 }
 
@@ -280,28 +280,28 @@ void MyDock::padnote_clicked()
     btnlaunch_clicked();
 }
 
-// bool MyDock::prefs_win_closed(GdkEventAny *event)
-// {
-//     // Handle the "closed" signal of preference window
-//     btnset->set_image_from_icon_name("my_prefs", Gtk::ICON_SIZE_DIALOG);
-//     prefs_win.hide();
-//     return true;
-// }
+bool MyDock::prefs_win_closed()
+{
+    // Handle the "closed" signal of preference window
+    // btnset->set_image_from_icon_name("my_prefs", Gtk::ICON_SIZE_DIALOG);
+    prefs_win.set_visible(false);
+    return true;
+}
 
-// void MyDock::btnset_clicked()
-// {
-//     // Show settings window (preferences)
-//     btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
-//     window_ctrl(prefs_win);
-// }
+void MyDock::btnset_clicked()
+{
+    // Show settings window (preferences)
+    // btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(prefs_win);
+}
 
-// void MyDock::padset_clicked()
-// {
-//     // Function for button on launchpad
-//     btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
-//     window_ctrl(prefs_win, false);
-//     btnlaunch_clicked();
-// }
+void MyDock::padset_clicked()
+{
+    // Function for button on launchpad
+    // btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
+    window_ctrl(prefs_win, false);
+    btnlaunch_clicked();
+}
 
 // // Signal Handlers for drawing app window
 
@@ -511,43 +511,44 @@ void MyDock::padnote_clicked()
 //     btnlaunch_clicked();
 // }
 
-// void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
-// {
-//     // Get the GdkWindow object to get the state of a window
-//     auto gdk_win = window.get_window();
-//     if (gdk_win)
-//     {
-//         /*
-//         The State of GdkWindow (GdkSurface for Gtk4)
-//         Gdk::WINDOW_STATE_WITHDRAWN: The window is not shown
-//         Gdk::WINDOW_STATE_ICONIFIED: The window is minimized
-//         the default mode for first launch
-//         */
-//         auto state = gdk_win->get_state();
-//         switch (state)
-//         {
-//         case Gdk::WINDOW_STATE_WITHDRAWN:
-//             window.present();
-//             break;
-//         case Gdk::WINDOW_STATE_ICONIFIED:
-//             window.set_transient_for(*parent_win);
-//             window.deiconify();
-//             break;
-//         default:
-//             if (on_dock)
-//             {
-//                 window.unset_transient_for();
-//                 window.iconify();
-//                 break;
-//             }
-//         }
-//     }
-//     else
-//     {
-//         window.set_transient_for(*parent_win);
-//         window.present();
-//     }
-// }
+void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
+{
+    // Get the GdkWindow object to get the state of a window
+    auto gdk_win = window.get_surface();
+    if (gdk_win)
+    {
+        /*
+        The State of GdkWindow (GdkSurface for Gtk4)
+        Gdk::Toplevel::State::BELOW: The window is below other windows
+        Gdk::Toplevel::State::MINIMIZED: The window is minimized
+        the default mode for first launch
+        */
+        auto toplevel = Glib::wrap(GDK_TOPLEVEL(gdk_win->gobj()));
+        auto state = toplevel->get_state();
+        switch (state)
+        {
+        // case Gdk::Toplevel::State::BELOW:
+        //     window.present();
+        //     break;
+        case Gdk::Toplevel::State::MINIMIZED:
+            window.set_transient_for(*parent_win);
+            window.unminimize();
+            break;
+        default:
+            if (on_dock)
+            {
+                window.unset_transient_for();
+                window.minimize();
+                break;
+            }
+        }
+    }
+    else
+    {
+        window.set_transient_for(*parent_win);
+        window.present();
+    }
+}
 
 MyDock *MyDock::create(DockMode mode)
 {

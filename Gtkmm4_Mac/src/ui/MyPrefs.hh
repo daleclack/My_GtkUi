@@ -25,7 +25,7 @@ class MyPrefs : public Gtk::Window
 {
 public:
     MyPrefs();
-    void set_background(Gtk::Image *back);
+    void set_background(Gtk::Picture *back);
     void load_winsize_config();
     void update_background_size();
     DockPos get_dock_pos();
@@ -39,7 +39,7 @@ private:
     int width, height;              // Window size
     bool panel_mode;                // dock or panel mode
     DockPos dock_pos;               // position of dock
-    Gtk::Image *background1;        // background widget from main window
+    Gtk::Picture *background1;        // background widget from main window
     std::string path;               // Current background path
     bool background_internal;       // tag for background internal
 
@@ -48,9 +48,10 @@ private:
 
     // Page switcher and another page
     Glib::RefPtr<Gtk::Builder> stackbuilder;
-    Gtk::Box *stack_box, *back_page, *winsize_page;
+    Glib::RefPtr<Gtk::StringList> sizes_list;
+    Gtk::Box *stack_box, *back_page, *winsize_page, *combo_box;
     Gtk::CheckButton *radio_default, *radio_custom;
-    Gtk::ComboBoxText *combo_default;
+    Gtk::DropDown combo_default;
     Gtk::SpinButton *spin_width, *spin_height;
     Gtk::Button *btnapply, *btnGet;
     Gtk::Label *label_size;

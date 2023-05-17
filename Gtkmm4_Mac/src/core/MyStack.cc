@@ -14,14 +14,14 @@ MyStack::MyStack()
     btnlogin->signal_clicked().connect(sigc::mem_fun(*this, &MyStack::btnlogin_clicked));
 }
 
-void MyStack::mystack_init(Gtk::Window *window, Gtk::Image *m_back)
+void MyStack::mystack_init(Gtk::Window *window, Gtk::Picture *m_back)
 {
     main_dock->mydock_init(window, m_back);
 }
 
 void MyStack::show_prefs()
 {
-    // main_dock->btnset_clicked();
+    main_dock->btnset_clicked();
 }
 
 void MyStack::logout()
