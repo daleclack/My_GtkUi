@@ -514,8 +514,9 @@ void MyDock::padset_clicked()
 void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
 {
     // Get the GdkWindow object to get the state of a window
-    auto gdk_win = window.get_surface();
-    if (gdk_win)
+    GtkWindow *c_win =  window.gobj();
+    GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(c_win));
+    if (surface)
     {
         /*
         The State of GdkWindow (GdkSurface for Gtk4)
@@ -523,14 +524,13 @@ void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
         Gdk::Toplevel::State::MINIMIZED: The window is minimized
         the default mode for first launch
         */
-        auto toplevel = Glib::wrap(GDK_TOPLEVEL(gdk_win->gobj()));
-        auto state = toplevel->get_state();
+        auto state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
         switch (state)
         {
         // case Gdk::Toplevel::State::BELOW:
         //     window.present();
         //     break;
-        case Gdk::Toplevel::State::MINIMIZED:
+        case GDK_TOPLEVEL_STATE_MINIMIZED:
             window.set_transient_for(*parent_win);
             window.unminimize();
             break;
