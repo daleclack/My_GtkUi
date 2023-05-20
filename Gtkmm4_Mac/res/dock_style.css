@@ -5,11 +5,10 @@
 变更会立即应用到全局，影响整个应用程序。
 */
 
-@import url("resource://org/gtk/daleclack/reset.css");
+/* @import url("resource://org/gtk/daleclack/reset.css"); */
 
 dock_box{
 	background-color:alpha(gray,0.3);
-    color:white;
 }
 
 dock_separator{

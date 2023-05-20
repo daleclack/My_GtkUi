@@ -135,9 +135,9 @@ MyFinder::MyFinder()
     provider = Gtk::CssProvider::create();
     provider->load_from_resource("/org/gtk/daleclack/style.css");
     Gtk::CssProvider::add_provider_for_display(get_display(), provider,
-                                               GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     Gtk::CssProvider::add_provider_for_display(separator.get_display(), provider,
-                                               GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 bool MyFinder::time_out()

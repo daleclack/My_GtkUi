@@ -207,7 +207,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
 void MyDock::apply_style(Gtk::Widget &widget)
 {
     Gtk::CssProvider::add_provider_for_display(widget.get_display(), provider,
-                                               GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 // Launchpad
@@ -524,6 +524,7 @@ void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
         Gdk::Toplevel::State::MINIMIZED: The window is minimized
         the default mode for first launch
         */
+        // Use C API because of crash of C++ APIS
         auto state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
         switch (state)
         {
