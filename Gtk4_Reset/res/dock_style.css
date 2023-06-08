@@ -1,0 +1,24 @@
+/*
+您可以在这里输入任何 GTK+ 可识别的 CSS 规则。
+您可以点击上面的“暂停”按钮来暂时停用这个自定义 CSS。
+
+变更会立即应用到全局，影响整个应用程序。
+*/
+
+/* @import url("resource://org/gtk/daleclack/reset.css"); */
+
+dock_box{
+	background-color:alpha(gray,0.3);
+}
+
+dock_separator{
+	background-color:alpha(gray,0.3);
+}
+
+button{
+    color:gray;
+}
+
+dock_grid{
+	background-color:alpha(rgb(49, 48, 48),0.3);
+}
