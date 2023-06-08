@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.0.0)
-project(My_GtkUI VERSION 6.0.0)
+project(My_GtkUI VERSION 7.0.0)
 
 #Add GCR_CMake
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
@@ -19,12 +19,11 @@ include_directories(src/core src/ui src/apps src/panels src/image_app
                     src/game24_app src/calc_app src/mine_app)
 
 find_package (PkgConfig REQUIRED)
-pkg_check_modules (GTKMM REQUIRED gtkmm-4.0)
-include_directories (${GTKMM_INCLUDE_DIRS})
-link_directories (${GTKMM_LIBRARY_DIRS})
+pkg_check_modules (GTK REQUIRED gtk4)
+include_directories (${GTK_INCLUDE_DIRS})
+link_directories (${GTK_LIBRARY_DIRS})
 
-set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc 
-src/ui/MyDock.cc src/ui/MyFinder.cc src/ui/MyPrefs.cc)
+set(SOURCES src/core/main.c)
 
 #Compile resources with GCR_CMake
 
@@ -132,5 +131,5 @@ add_custom_command(TARGET ${PROJECT_NAME}
                    COMMAND echo \"*\" > ${CMAKE_BINARY_DIR}/.gitignore
                    COMMAND echo \"**/*\" > ${CMAKE_BINARY_DIR}/.hgignore)
 
-SET (CMAKE_EXTRA_CXX_FLAGS ${GTKMM_CFLAGS_OTHER})
-target_link_libraries (${PROJECT_NAME} ${GTKMM_LIBRARIES} -lpthread)
+SET (CMAKE_EXTRA_CXX_FLAGS ${GTK_CFLAGS_OTHER})
+target_link_libraries (${PROJECT_NAME} ${GTK_LIBRARIES} -lpthread)
