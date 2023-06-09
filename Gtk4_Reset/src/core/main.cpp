@@ -1,9 +1,9 @@
-#include <gtk/gtk.h>
+#include "MainWin.h"
 
 static void gtkmain(GtkApplication *app, gpointer data)
 {
-    GtkWidget *window;
-    window = gtk_application_window_new(app);
+    MainWin *window;
+    window = main_win_new(app);
     gtk_window_present(GTK_WINDOW(window));
 }
 
