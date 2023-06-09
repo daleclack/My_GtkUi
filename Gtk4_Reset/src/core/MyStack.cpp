@@ -1,4 +1,5 @@
 #include "MyStack.h"
+#include "MyDock.h"
 #include "winpe.xpm"
 
 static void btnlogin_clicked(GtkWidget *widget, GtkStack *stack)

@@ -11,6 +11,7 @@ static void main_win_init(MainWin *win){
     // Initalize window
     gtk_window_set_default_size(GTK_WINDOW(win), 1024, 576);
     gtk_window_set_icon_name(GTK_WINDOW(win), "My_GtkUI");
+    gtk_window_set_title(GTK_WINDOW(win), "My Gtk UI Gtk4 Version");
 
     // Add Main Stack
     create_main_stack(GTK_WINDOW(win));
