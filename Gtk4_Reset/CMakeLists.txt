@@ -23,7 +23,7 @@ pkg_check_modules (GTK REQUIRED gtk4)
 include_directories (${GTK_INCLUDE_DIRS})
 link_directories (${GTK_LIBRARY_DIRS})
 
-set(SOURCES src/core/main.cpp src/core/MainWin.cpp)
+set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp)
 
 #Compile resources with GCR_CMake
 
