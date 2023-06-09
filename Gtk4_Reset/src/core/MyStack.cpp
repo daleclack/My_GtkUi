@@ -45,6 +45,9 @@ void create_main_stack(GtkWindow *win)
     g_action_map_add_action_entries(G_ACTION_MAP(win), entries,
                                     G_N_ELEMENTS(entries), win);
 
+    // Add dock and finder
+    add_dock(main_page);
+
     // Link Signals
     g_signal_connect(btnlogin, "clicked", G_CALLBACK(btnlogin_clicked), stack);
 
