@@ -46,7 +46,10 @@ void create_main_stack(GtkWindow *win)
                                     G_N_ELEMENTS(entries), win);
 
     // Add dock and finder
-    add_dock(main_page);
+    GtkWidget *dock = my_dock_new();
+    gtk_widget_set_hexpand(dock, TRUE);
+    gtk_widget_set_vexpand(dock, TRUE);
+    gtk_box_append(GTK_BOX(main_page), dock);
 
     // Link Signals
     g_signal_connect(btnlogin, "clicked", G_CALLBACK(btnlogin_clicked), stack);

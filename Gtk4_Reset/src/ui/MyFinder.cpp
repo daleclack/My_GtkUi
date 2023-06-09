@@ -80,7 +80,7 @@ static void my_finder_init(MyFinder *self)
     gtk_button_set_has_frame(GTK_BUTTON(self->audio_button), FALSE);
     gtk_button_set_has_frame(GTK_BUTTON(self->network_button), FALSE);
     gtk_button_set_has_frame(GTK_BUTTON(self->menu_button), FALSE);
-    gtk_button_set_has_frame(GTK_BUTTON(self->time_button), FALSE);
+    gtk_menu_button_set_has_frame(GTK_MENU_BUTTON(self->time_button), FALSE);
 
     // Add labels to the menu button
     gtk_menu_button_set_child(GTK_MENU_BUTTON(self->btntitle), self->label_title);

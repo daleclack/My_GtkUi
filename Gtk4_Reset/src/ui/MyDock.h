@@ -2,4 +2,6 @@
 
 #include <gtk/gtk.h>
 
-void add_dock(GtkWidget *main_page1);
+G_DECLARE_FINAL_TYPE(MyDock, my_dock, MY, DOCK, GtkBox)
+
+GtkWidget *my_dock_new();
