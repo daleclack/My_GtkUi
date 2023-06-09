@@ -1,18 +1,42 @@
 #include "MyDock.h"
 #include "MyFinder.h"
 
+enum PadPage
+{
+    MainPage,
+    LaunchPage
+};
+
 struct _MyDock
 {
     GtkBox parent_instance;
-    GtkBuilder *dock_builder;
+    GtkBuilder *dock_builder; // Main builder
     GtkWidget *dock_box, *main_box, *finder_box,
-        *dock_left, *icons_sw, *main_overlay;
+        *dock_left, *icons_sw, *main_overlay; // Dock, finder
     GtkWidget *main_pic, *finder;
-    GtkWidget *btnlaunch, *launchpad_stack,
+    GtkWidget *btnlaunch, *launchpad_stack, // launchpad
         *default_page, *launchpad_page;
+    PadPage current_page;
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
+
+static void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // Check is launchpad page is shown and switch pages
+    if (dock->current_page == MainPage)
+    {
+        gtk_stack_set_visible_child(GTK_STACK(dock->launchpad_stack),
+                                    dock->launchpad_page);
+        dock->current_page = LaunchPage;
+    }
+    else
+    {
+        gtk_stack_set_visible_child(GTK_STACK(dock->launchpad_stack),
+                                    dock->default_page);
+        dock->current_page = MainPage;
+    }
+}
 
 static void my_dock_init(MyDock *self)
 {
@@ -26,6 +50,12 @@ static void my_dock_init(MyDock *self)
     self->dock_left = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "dock_left"));
     self->icons_sw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "icons_sw"));
     self->btnlaunch = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnlaunch"));
+    self->launchpad_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_stack"));
+    self->default_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_page"));
+    self->launchpad_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_page"));
+
+    // Launchpad default
+    self->current_page = MainPage;
 
     // Add background widget
     self->main_overlay = gtk_overlay_new();
@@ -40,6 +70,9 @@ static void my_dock_init(MyDock *self)
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
     gtk_box_append(GTK_BOX(self->finder_box), self->finder);
+
+    // Link Signals
+    g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
 
     // Pack widgets
 
