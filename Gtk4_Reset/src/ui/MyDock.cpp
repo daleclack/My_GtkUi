@@ -25,7 +25,15 @@ struct _MyDock
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
 
-void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
+void hide_launchpad(MyDock *dock)
+{
+    // Hide the launchpad
+    gtk_stack_set_visible_child(GTK_STACK(dock->launchpad_stack),
+                                dock->default_page);
+    dock->current_page = MainPage;
+}
+
+static void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
 {
     // Check is launchpad page is shown and switch pages
     if (dock->current_page == MainPage)

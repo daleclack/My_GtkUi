@@ -53,7 +53,7 @@ static void about_activated(GSimpleAction *action,
     char *copyright;
     copyright = g_strdup_printf("© 2019—%04d The Xe Project", local->tm_year + 1900);
 
-    btnlaunch_clicked(NULL, MY_DOCK(dock));
+    hide_launchpad(MY_DOCK(dock));
     // Show the about dialog
     gtk_show_about_dialog(GTK_WINDOW(win),
                           "program-name", "My_GtkUI",
