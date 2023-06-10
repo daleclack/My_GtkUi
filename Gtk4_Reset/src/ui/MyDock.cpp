@@ -25,7 +25,7 @@ struct _MyDock
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
 
-static void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
+void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
 {
     // Check is launchpad page is shown and switch pages
     if (dock->current_page == MainPage)

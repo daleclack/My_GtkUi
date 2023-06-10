@@ -2,6 +2,8 @@
 #include "MyDock.h"
 #include "winpe.xpm"
 
+static GtkWidget *dock;
+
 static void btnlogin_clicked(GtkWidget *widget, GtkStack *stack)
 {
     gtk_stack_set_visible_child_name(stack, "main_page1");
@@ -11,14 +13,70 @@ static void logout_activated(GSimpleAction *action,
                              GVariant *parmeter,
                              gpointer win)
 {
+    // Logout
     GtkWidget *stack = gtk_window_get_child(GTK_WINDOW(win));
     gtk_stack_set_visible_child_name(GTK_STACK(stack), "login_page1");
+}
+
+static void quit_activated(GSimpleAction *action,
+                           GVariant *parmeter,
+                           gpointer win)
+{
+    // Destroy the main window
+    gtk_window_destroy(GTK_WINDOW(win));
+}
+
+static void about_activated(GSimpleAction *action,
+                            GVariant *parmeter,
+                            gpointer win)
+{
+    // Authors information
+    const char *authors[] = {
+        "Dale Clack",
+        "GCR_CMake on github https://github.com/Makman2/GCR_CMake",
+        NULL};
+
+    // Version information
+    char *version;
+    version = g_strdup_printf("7.0\nRunning Against: Gtk %d.%d.%d",
+                              gtk_get_major_version(),
+                              gtk_get_minor_version(),
+                              gtk_get_micro_version());
+
+    // Get Year information
+    time_t t;
+    t = time(NULL);
+    struct tm *local;
+    local = localtime(&t);
+
+    // Copyright
+    char *copyright;
+    copyright = g_strdup_printf("© 2019—%04d The Xe Project", local->tm_year + 1900);
+
+    btnlaunch_clicked(NULL, MY_DOCK(dock));
+    // Show the about dialog
+    gtk_show_about_dialog(GTK_WINDOW(win),
+                          "program-name", "My_GtkUI",
+                          "version", version,
+                          "copyright", copyright,
+                          "comments", "A program that simulates desktop (Mac Version)",
+                          "authors", authors,
+                          "license-type", GTK_LICENSE_GPL_3_0,
+                          "logo-icon-name", "My_GtkUI",
+                          "title", "About My GtkUI Mac Version",
+                          NULL);
+
+    // Free Memory
+    g_free(version);
+    g_free(copyright);
 }
 
 void create_main_stack(GtkWindow *win)
 {
     static GActionEntry entries[] = {
-        {"logout", logout_activated, NULL, NULL, NULL}};
+        {"logout", logout_activated, NULL, NULL, NULL},
+        {"quit", quit_activated, NULL, NULL, NULL},
+        {"about", about_activated, NULL, NULL, NULL}};
 
     // Create a builder
     GtkBuilder *builder = gtk_builder_new_from_resource("/org/gtk/daleclack/stack.ui");
@@ -46,7 +104,7 @@ void create_main_stack(GtkWindow *win)
                                     G_N_ELEMENTS(entries), win);
 
     // Add dock and finder
-    GtkWidget *dock = my_dock_new();
+    dock = my_dock_new();
     gtk_widget_set_hexpand(dock, TRUE);
     gtk_widget_set_vexpand(dock, TRUE);
     gtk_box_append(GTK_BOX(main_page), dock);
