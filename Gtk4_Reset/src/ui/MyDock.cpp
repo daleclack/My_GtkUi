@@ -17,6 +17,10 @@ struct _MyDock
     GtkWidget *btnlaunch, *launchpad_stack, // launchpad
         *default_page, *launchpad_page;
     PadPage current_page;
+    GtkBuilder *menu_builder;
+    GMenuModel *menu_model;
+    GtkGesture *gesture;
+    GtkWidget *context_menu; // Context menu
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -36,6 +40,15 @@ static void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
                                     dock->default_page);
         dock->current_page = MainPage;
     }
+}
+
+static void pressed(GtkGesture *gesture, int n_press,
+                    double x, double y, MyDock *dock)
+{
+    // Show the context menu at the mouse position
+    GdkRectangle rectangle = {(int)x, (int)y, 1, 1};
+    gtk_popover_set_pointing_to(GTK_POPOVER(dock->context_menu), &rectangle);
+    gtk_popover_popup(GTK_POPOVER(dock->context_menu));
 }
 
 static void my_dock_init(MyDock *self)
@@ -59,6 +72,19 @@ static void my_dock_init(MyDock *self)
 
     // Add background widget
     self->main_overlay = gtk_overlay_new();
+
+    // Add Gesture to control the menu
+    self->gesture = gtk_gesture_click_new();
+    gtk_widget_add_controller(self->main_overlay, GTK_EVENT_CONTROLLER(self->gesture));
+    gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(self->gesture), GDK_BUTTON_SECONDARY);
+    g_signal_connect(self->gesture, "pressed", G_CALLBACK(pressed), self);
+
+    // Add context menu
+    self->menu_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/mainmenu.xml");
+    self->menu_model = G_MENU_MODEL(gtk_builder_get_object(self->menu_builder, "model"));
+    self->context_menu = gtk_popover_menu_new_from_model(self->menu_model);
+    gtk_popover_set_has_arrow(GTK_POPOVER(self->context_menu), FALSE);
+    gtk_widget_set_parent(self->context_menu, self->main_overlay);
 
     // Set default background
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/final_approach.png", NULL);
