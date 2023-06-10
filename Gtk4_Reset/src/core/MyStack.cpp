@@ -1,5 +1,6 @@
 #include "MyStack.h"
 #include "MyDock.h"
+#include "MyPrefs.h"
 #include "winpe.xpm"
 
 static GtkWidget *dock;

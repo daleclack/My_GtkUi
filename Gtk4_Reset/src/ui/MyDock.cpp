@@ -126,6 +126,10 @@ static void my_dock_class_init(MyDockClass *klass)
 {
 }
 
+GtkWidget *my_dock_get_background(MyDock *dock){
+    return dock->main_pic;
+}
+
 GtkWidget *my_dock_new()
 {
     return GTK_WIDGET(g_object_new(my_dock_get_type(), NULL));
