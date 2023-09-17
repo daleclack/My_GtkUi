@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<cambalache-project version="0.11.2" target_tk="gtk-4.0">
+<cambalache-project version="0.12.0" target_tk="gtk-4.0">
   <ui>
 	(1,1,"windows.ui","aboutwin.ui",None,None,None,None,None,None,None),
 	(2,None,None,"temp.ui",None,None,None,None,None,None,None)
@@ -26,37 +26,37 @@
 	(2,2,"GtkBox",None,1,None,None,None,None,None)
   </object>
   <object_property>
-	(1,1,"GtkWidget","halign","baseline",None,None,None,None,None),
-	(1,1,"GtkWidget","height-request","400",None,None,None,None,None),
-	(1,1,"GtkWidget","width-request","640",None,None,None,None,None),
-	(1,1,"GtkWindow","icon-name","My_GtkUI",None,None,None,None,None),
-	(1,1,"GtkWindow","title","About My GtkUI Flos Version",None,None,None,None,None),
-	(1,2,"GtkOrientable","orientation","vertical",None,None,None,None,None),
-	(1,3,"GtkWidget","vexpand","True",None,None,None,None,None),
-	(1,4,"GtkWidget","halign","center",None,None,None,None,None),
-	(1,4,"GtkWidget","valign","center",None,None,None,None,None),
-	(1,5,"GtkImage","pixel-size","128",None,None,None,None,None),
-	(1,5,"GtkImage","resource","/org/gtk/daleclack/logo.png",None,None,None,None,None),
-	(1,7,"GtkWidget","vexpand","True",None,None,None,None,None),
-	(1,8,"GtkBox","homogeneous","True",None,None,None,None,None),
-	(1,9,"GtkButton","label","Websize",None,None,None,None,None),
-	(1,9,"GtkWidget","hexpand","True",None,None,None,None,None),
-	(1,10,"GtkButton","label","Developer",None,None,None,None,None),
-	(1,10,"GtkWidget","hexpand","True",None,None,None,None,None),
-	(1,11,"GtkButton","label","Documention",None,None,None,None,None),
-	(1,11,"GtkWidget","hexpand","True",None,None,None,None,None),
-	(1,12,"GtkLabel","label","           ",None,None,None,None,None),
-	(1,13,"GtkOrientable","orientation","vertical",None,None,None,None,None),
-	(1,13,"GtkWidget","halign","center",None,None,None,None,None),
-	(1,13,"GtkWidget","valign","center",None,None,None,None,None),
-	(1,14,"GtkLabel","label","My GtkUI Flos Version",None,None,None,None,None),
-	(1,14,"GtkWidget","halign","start",None,None,None,None,None),
-	(1,15,"GtkLabel","label","4.2 The Flying Wing",None,None,None,None,None),
-	(1,15,"GtkWidget","halign","start",None,None,None,None,None),
-	(1,16,"GtkLabel","label","© 2019-2023 The Xe Project",None,None,None,None,None),
-	(1,16,"GtkWidget","halign","start",None,None,None,None,None),
-	(1,17,"GtkLabel","label","       The project is to memorize the FlWin and the flos project. \nFlWin project started in 2016, in 2017, the name is changed \nto flos. In 2018, the project name is reset to FlWin. The last \nversion of FlWin/Flos is FlWin 5.x, and tested in the start of \n2019, which is never been released.\n         I think the flos 2.0 is the best release of that project, \nso the idea is base on the flos 2.0 build.",None,None,None,None,None),
-	(1,17,"GtkLabel","selectable","True",None,None,None,None,None),
-	(2,2,"GtkOrientable","orientation","vertical",None,None,None,None,None)
+	(1,1,"GtkWidget","halign","baseline",None,None,None,None,None,None,None,None,None),
+	(1,1,"GtkWidget","height-request","400",None,None,None,None,None,None,None,None,None),
+	(1,1,"GtkWidget","width-request","640",None,None,None,None,None,None,None,None,None),
+	(1,1,"GtkWindow","icon-name","My_GtkUI",None,None,None,None,None,None,None,None,None),
+	(1,1,"GtkWindow","title","About My GtkUI Flos Version",None,None,None,None,None,None,None,None,None),
+	(1,2,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None),
+	(1,3,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,4,"GtkWidget","halign","center",None,None,None,None,None,None,None,None,None),
+	(1,4,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
+	(1,5,"GtkImage","pixel-size","128",None,None,None,None,None,None,None,None,None),
+	(1,5,"GtkImage","resource","/org/gtk/daleclack/logo.png",None,None,None,None,None,None,None,None,None),
+	(1,7,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,8,"GtkBox","homogeneous","True",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkButton","label","Websize",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,10,"GtkButton","label","Developer",None,None,None,None,None,None,None,None,None),
+	(1,10,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,11,"GtkButton","label","Documention",None,None,None,None,None,None,None,None,None),
+	(1,11,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,12,"GtkLabel","label","           ",None,None,None,None,None,None,None,None,None),
+	(1,13,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None),
+	(1,13,"GtkWidget","halign","center",None,None,None,None,None,None,None,None,None),
+	(1,13,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
+	(1,14,"GtkLabel","label","My GtkUI Flos Version",None,None,None,None,None,None,None,None,None),
+	(1,14,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
+	(1,15,"GtkLabel","label","4.3 The Flying Wing",None,None,None,None,None,None,None,None,None),
+	(1,15,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
+	(1,16,"GtkLabel","label","© 2019-2023 The Xe Project",None,None,None,None,None,None,None,None,None),
+	(1,16,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
+	(1,17,"GtkLabel","label","       The project is to memorize the FlWin and the flos project. \nFlWin project started in 2016, in 2017, the name is changed \nto flos. In 2018, the project name is reset to FlWin. The last \nversion of FlWin/Flos is FlWin 5.x, and tested in the start of \n2019, which is never been released.\n         I think the flos 2.0 is the best release of that project, \nso the idea is base on the flos 2.0 build.",None,None,None,None,None,None,None,None,None),
+	(1,17,"GtkLabel","selectable","True",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None)
   </object_property>
 </cambalache-project>

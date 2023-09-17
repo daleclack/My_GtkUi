@@ -3,7 +3,7 @@
     <menu id="more_menu">
         <section>
             <item>
-                <attribute name='label'>Restart</attribute>
+                <attribute name='label'>Restart             </attribute>
             </item>
             <item>
                 <attribute name='label'>Sleep</attribute>
