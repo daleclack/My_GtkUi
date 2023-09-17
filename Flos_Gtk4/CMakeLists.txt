@@ -25,8 +25,8 @@ link_directories (${GTK4_LIBRARY_DIRS})
 
 set(RESOURCE_LIST
     flos.png
-    menubar.xml
-    more_menu.xml
+    STRIPBLANKS menubar.xml
+    STRIPBLANKS more_menu.xml
     style.css
     style_dark.css
     reset.css

@@ -12,6 +12,7 @@
         <section>
             <item>
                 <attribute name='label'>Log off</attribute>
+                <attribute name='action'>win.quit</attribute>
             </item>
         </section>
     </menu>

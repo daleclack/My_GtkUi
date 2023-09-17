@@ -110,6 +110,17 @@ static bool get_dark_mode()
     return dark_mode;
 }
 
+static void gesture_pressed(GtkGestureSingle *gesture, 
+                            int n_press, 
+                            double x, 
+                            double y, 
+                            MainWin *win)
+{   // for right-click process
+    GdkRectangle rect = {(int)x, (int)y, 1, 1};     // Set popover position
+    gtk_popover_set_pointing_to(GTK_POPOVER(win->context_menu), &rect);
+    gtk_popover_popup(GTK_POPOVER(win->context_menu));  // Show popover
+}
+
 static void main_win_init(MainWin *win)
 {
     // Initalize window
@@ -179,6 +190,19 @@ static void main_win_init(MainWin *win)
     gtk_widget_set_valign(desktop_box, GTK_ALIGN_START);
     gtk_widget_set_halign(desktop_box, GTK_ALIGN_FILL);
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), desktop_box);
+
+    // Add a gesture for right click
+    win->gesture_click = gtk_gesture_click_new();
+    gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(win->gesture_click), GDK_BUTTON_SECONDARY);
+    g_signal_connect(win->gesture_click, "pressed", G_CALLBACK(gesture_pressed), win);
+    gtk_widget_add_controller(win->overlay, GTK_EVENT_CONTROLLER(win->gesture_click));
+
+    // Create context menu
+    GtkBuilder *menu_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/more_menu.xml");
+    GMenuModel *menu_model = G_MENU_MODEL(gtk_builder_get_object(menu_builder, "more_menu"));
+    win->context_menu = gtk_popover_menu_new_from_model(menu_model);
+    gtk_popover_set_has_arrow(GTK_POPOVER(win->context_menu), FALSE);
+    gtk_widget_set_parent(win->context_menu, win->overlay);
 
     // Apply Style for menubar and the button
     gtk_widget_add_css_class(GTK_WIDGET(menubar), "dark_style");
