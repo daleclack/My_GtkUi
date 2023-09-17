@@ -14,6 +14,8 @@ struct _MainWin
     GtkWidget *background;
     GtkStyleProvider *provider;
     GtkWidget *main_grid;
+    GtkWidget *context_menu;
+    GtkGesture *gesture_click;
     bool dark_mode;
 };
 
@@ -123,7 +125,9 @@ static void main_win_init(MainWin *win)
     // Add Background
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/flos.png", NULL);
     GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
-    gtk_picture_set_pixbuf(GTK_PICTURE(win->background), sized);
+    GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
+    gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
+    // gtk_picture_set_pixbuf(GTK_PICTURE(win->background), sized); Deprecated with gtk4.12
     g_object_unref(pixbuf);
     g_object_unref(sized);
 
