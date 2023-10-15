@@ -61,21 +61,29 @@ MineSweeper::MineSweeper()
     scores_win->set_transient_for(*this);
     input_dialog->set_scores_window(scores_win);
 
+    // In default, the game is in ended status
+    game_ended = true;
+    status_label.set_label("Start a new game first");
+    mine_grid.set_sensitive(false);
+
     // Show everything
     add(main_box);
     show_all_children();
 }
 
-MineSweeper::~MineSweeper(){
+MineSweeper::~MineSweeper()
+{
     // Delete all resources
     delete input_dialog;
     delete scores_win;
-    if(cell != nullptr){
+    if (cell != nullptr)
+    {
         delete[] cell;
     }
 }
 
-void MineSweeper::new_game(){
+void MineSweeper::new_game()
+{
     // New game = reset game
     reset_game();
 }
@@ -83,7 +91,8 @@ void MineSweeper::new_game(){
 void MineSweeper::reset_game(int width, int height, int mines)
 {
     // Clear the cells
-    if(cell != nullptr){
+    if (cell != nullptr)
+    {
         delete[] cell;
     }
 
@@ -146,6 +155,9 @@ void MineSweeper::reset_game(int width, int height, int mines)
     }
 
     mine_grid.show_all();
+
+    // Reset time label
+    status_label.set_label("Time:0");
 }
 
 void MineSweeper::calc_mines()
@@ -183,12 +195,14 @@ void MineSweeper::show_mines()
     }
 }
 
-void MineSweeper::show_scores(){
+void MineSweeper::show_scores()
+{
     // Show Scores Window
     input_dialog->read_scores();
 }
 
-void MineSweeper::game_lost(int explode_index){
+void MineSweeper::game_lost(int explode_index)
+{
     // When a cell with mine is clicked, show other mines
     for (int i = 0; i < 49; i++)
     {
@@ -201,11 +215,14 @@ void MineSweeper::game_lost(int explode_index){
 
 bool MineSweeper::timer_func()
 {
-    // Set timer
-    char tmp[50];
-    timer_count++;
-    sprintf(tmp, "Time:%d", timer_count);
-    status_label.set_label(tmp);
+    if (!game_ended)
+    {
+        // Set timer
+        char tmp[50];
+        timer_count++;
+        sprintf(tmp, "Time:%d", timer_count);
+        status_label.set_label(tmp);
+    }
     return true;
 }
 
@@ -263,7 +280,7 @@ void MineSweeper::check_mines(int pos_x, int pos_y)
             // make the cell without mines cleared
             cell[pos_y * 7 + pos_x].set_relief(Gtk::RELIEF_NONE);
             cell[pos_y * 7 + pos_x].cleared = true;
-            
+
             // Check the cells around a cell that has no mines
             if (cell[pos_y * 7 + pos_x].mines_around == 0)
             {
