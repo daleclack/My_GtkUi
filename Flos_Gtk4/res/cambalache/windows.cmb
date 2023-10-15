@@ -51,7 +51,7 @@
 	(1,13,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
 	(1,14,"GtkLabel","label","My GtkUI Flos Version",None,None,None,None,None,None,None,None,None),
 	(1,14,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
-	(1,15,"GtkLabel","label","4.3 The Flying Wing",None,None,None,None,None,None,None,None,None),
+	(1,15,"GtkLabel","label","4.4 The Flying Wing",None,None,None,None,None,None,None,None,None),
 	(1,15,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
 	(1,16,"GtkLabel","label","© 2019-2023 The Xe Project",None,None,None,None,None,None,None,None,None),
 	(1,16,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
