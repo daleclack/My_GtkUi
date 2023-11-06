@@ -65,7 +65,7 @@ static void about_activated(GSimpleAction *action,
                           "license-type", GTK_LICENSE_GPL_3_0,
                           "logo-icon-name", "My_GtkUI",
                           "title", "About My GtkUI Mac Version",
-                          NULL);
+                          NULL, nullptr);
 
     // Free Memory
     g_free(version);
