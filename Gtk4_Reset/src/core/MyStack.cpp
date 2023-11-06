@@ -92,7 +92,8 @@ void create_main_stack(GtkWindow *win)
     // Add background for login page
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_xpm_data(winpe);
     GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
-    GtkWidget *login_pic = gtk_picture_new_for_pixbuf(sized);
+    GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
+    GtkWidget *login_pic = gtk_picture_new_for_paintable(GDK_PAINTABLE(texture));
     g_object_unref(pixbuf);
     g_object_unref(sized);
     gtk_overlay_set_child(GTK_OVERLAY(login_overlay), login_pic);
