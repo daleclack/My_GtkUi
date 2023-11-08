@@ -8,7 +8,7 @@
 /* @import url("resource://org/gtk/daleclack/reset.css"); */
 
 .finder_box box{
-	background-color:alpha(gray,0.7);
+	background-color:alpha(white,0.55);
 }
 
 /* Background color in the box should be transparent*/
@@ -18,4 +18,8 @@
 
 .finder_buttons separator{
     background-color: transparent;
+}
+
+.dock_style grid{
+    background-color: alpha(white, 0.5);
 }
