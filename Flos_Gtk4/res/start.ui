@@ -62,7 +62,7 @@
                                       <object class="GtkImage">
                                         <property name="visible">1</property>
                                         <property name="pixel-size">32</property>
-                                        <property name="icon-name">file-manager</property>
+                                        <property name="icon-name">file-manager1</property>
                                       </object>
                                     </child>
                                     <child>
