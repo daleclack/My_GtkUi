@@ -141,42 +141,47 @@ void my_finder_add_style(MyFinder *finder, GtkCssProvider *provider)
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    gtk_widget_add_css_class(GTK_WIDGET(finder->btntitle), "finder_buttons");
+    gtk_widget_add_css_class(finder->btntitle, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btntitle),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    gtk_widget_add_css_class(GTK_WIDGET(finder->btnfile), "finder_buttons");
+    gtk_widget_add_css_class(finder->btnfile, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnfile),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     
-    gtk_widget_add_css_class(GTK_WIDGET(finder->btnedit), "finder_buttons");
+    gtk_widget_add_css_class(finder->btnedit, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnedit),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    gtk_widget_add_css_class(GTK_WIDGET(finder->btnshow), "finder_buttons");
+    gtk_widget_add_css_class(finder->btnshow, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnshow),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     
-    gtk_widget_add_css_class(GTK_WIDGET(finder->btngoto), "finder_buttons");
+    gtk_widget_add_css_class(finder->btngoto, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btngoto),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     
-    gtk_widget_add_css_class(GTK_WIDGET(finder->btnwin), "finder_buttons");
+    gtk_widget_add_css_class(finder->btnwin, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnwin),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     
-    gtk_widget_add_css_class(GTK_WIDGET(finder->btnhelp), "finder_buttons");
+    gtk_widget_add_css_class(finder->btnhelp, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnhelp),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     
-    gtk_widget_add_css_class(GTK_WIDGET(finder->menu_button), "finder_buttons");
+    gtk_widget_add_css_class(finder->time_button, "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->time_button),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    gtk_widget_add_css_class(finder->menu_button, "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->menu_button),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
