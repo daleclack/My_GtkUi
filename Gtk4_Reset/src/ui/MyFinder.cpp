@@ -66,13 +66,15 @@ static void my_finder_init(MyFinder *self)
     self->labelwin = gtk_label_new("Windows");
     self->labelhelp = gtk_label_new("Help");
     self->time_label = gtk_label_new("2023/6/9 22:29:00");
-    self->separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+    self->separator = gtk_label_new("   ");
     self->find_button = gtk_button_new_from_icon_name("finder-find");
     self->screen_button = gtk_button_new_from_icon_name("finder-computer");
     self->battery_button = gtk_button_new_from_icon_name("finder-battery");
     self->audio_button = gtk_button_new_from_icon_name("finder_audio");
     self->network_button = gtk_button_new_from_icon_name("finder-wifi");
     self->menu_button = gtk_button_new_from_icon_name("open-menu");
+    gtk_widget_set_hexpand(self->separator, TRUE);
+    gtk_widget_set_halign(self->separator, GTK_ALIGN_FILL);
     gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(self->btn_icon), "My_GtkUI");
     gtk_button_set_has_frame(GTK_BUTTON(self->find_button), FALSE);
     gtk_button_set_has_frame(GTK_BUTTON(self->screen_button), FALSE);
@@ -171,11 +173,6 @@ void my_finder_add_style(MyFinder *finder, GtkCssProvider *provider)
     
     gtk_widget_add_css_class(GTK_WIDGET(finder->btnhelp), "finder_buttons");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnhelp),
-                                               GTK_STYLE_PROVIDER(provider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    
-    gtk_widget_add_css_class(GTK_WIDGET(finder->separator), "finder_buttons");
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->separator),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     
