@@ -131,6 +131,61 @@ static void my_finder_init(MyFinder *self)
     gtk_box_append(GTK_BOX(self), self->menu_button);
 }
 
+void my_finder_add_style(MyFinder *finder, GtkCssProvider *provider)
+{
+    // Make box in the buttons transparent
+    gtk_widget_add_css_class(finder->btn_icon, "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btn_icon),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    gtk_widget_add_css_class(GTK_WIDGET(finder->btntitle), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btntitle),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    gtk_widget_add_css_class(GTK_WIDGET(finder->btnfile), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnfile),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    
+    gtk_widget_add_css_class(GTK_WIDGET(finder->btnedit), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnedit),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    gtk_widget_add_css_class(GTK_WIDGET(finder->btnshow), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnshow),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    
+    gtk_widget_add_css_class(GTK_WIDGET(finder->btngoto), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btngoto),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    
+    gtk_widget_add_css_class(GTK_WIDGET(finder->btnwin), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnwin),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    
+    gtk_widget_add_css_class(GTK_WIDGET(finder->btnhelp), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->btnhelp),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    
+    gtk_widget_add_css_class(GTK_WIDGET(finder->separator), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->separator),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    
+    gtk_widget_add_css_class(GTK_WIDGET(finder->menu_button), "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(finder->menu_button),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    
+}
+
 static void my_finder_class_init(MyFinderClass *klass)
 {
 }

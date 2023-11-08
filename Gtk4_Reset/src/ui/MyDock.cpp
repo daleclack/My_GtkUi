@@ -104,16 +104,17 @@ static void my_dock_init(MyDock *self)
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
-    GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(provider, "/org/gtk/daleclack/style.css");
-    gtk_widget_add_css_class(self->finder_box, "finder_box");
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->finder_box),
-        GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     gtk_box_append(GTK_BOX(self->finder_box), self->finder);
 
     // Link Signals
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
 
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_resource(provider, "/org/gtk/daleclack/style.css");
+    gtk_widget_add_css_class(GTK_WIDGET(self->finder_box), "finder_box");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self->finder_box)),
+        GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    my_finder_add_style(MY_FINDER(self->finder), provider);
     // Pack widgets
 
     // Dock position and mode, will be changable soon

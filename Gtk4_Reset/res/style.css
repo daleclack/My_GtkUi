@@ -8,13 +8,14 @@
 /* @import url("resource://org/gtk/daleclack/reset.css"); */
 
 .finder_box box{
-	background-color:alpha(white,0.7);
+	background-color:alpha(gray,0.7);
 }
 
-.finder_separator{
-    background-color:alpha(white ,0.7);
+/* Background color in the box should be transparent*/
+.finder_buttons box{
+    background-color: transparent;
 }
 
-label{
-    color:rgb(35, 27, 27);
+.finder_buttons separator{
+    background-color: transparent;
 }
