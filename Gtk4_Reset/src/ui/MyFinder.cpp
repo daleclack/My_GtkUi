@@ -40,7 +40,7 @@ static gboolean timeout_func(gpointer data)
     struct tm *local;
     local = localtime(&t);
     char time_data[57];
-    snprintf(time_data, sizeof(time_data), "%d/%d/%d %d:%d:%d", local->tm_year + 1900,
+    snprintf(time_data, sizeof(time_data), "%04d/%02d/%02d %02d:%02d:%02d", local->tm_year + 1900,
              local->tm_mon + 1, local->tm_mday, local->tm_hour, local->tm_min, local->tm_sec);
     gtk_label_set_label(GTK_LABEL(data), time_data);
     return TRUE;

@@ -8,13 +8,13 @@
 /* @import url("resource://org/gtk/daleclack/reset.css"); */
 
 .finder_box{
-	background-color:alpha(gray,0.7);
+	background-color:alpha(white,0.7);
 }
 
 .finder_separator{
-    background-color:alpha(gray,0.7);
+    background-color:alpha(white ,0.7);
 }
 
 label{
-    color:black;
+    color:rgb(35, 27, 27);
 }
