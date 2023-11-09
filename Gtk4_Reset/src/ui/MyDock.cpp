@@ -149,7 +149,6 @@ static void my_dock_init(MyDock *self)
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     // Pack widgets
-
     // Dock position and mode, will be changable soon
     gtk_widget_set_vexpand(self->icons_sw, TRUE);
     gtk_widget_set_valign(self->icons_sw, GTK_ALIGN_FILL);

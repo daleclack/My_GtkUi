@@ -7,8 +7,8 @@
 
 /* @import url("resource://org/gtk/daleclack/reset.css"); */
 
-.finder_box box{
-	background-color:alpha(white,0.55);
+.finder_style box{
+	background-color:alpha(white,0.5);
 }
 
 .dock_style grid{

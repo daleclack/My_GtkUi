@@ -137,7 +137,7 @@ void my_finder_add_style(MyFinder *finder, GtkCssProvider *provider)
 {
     // Main finder style
     GtkWidget *parent = gtk_widget_get_parent(GTK_WIDGET(finder));
-    gtk_widget_add_css_class(parent, "finder_box");
+    gtk_widget_add_css_class(parent, "finder_style");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(parent),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
