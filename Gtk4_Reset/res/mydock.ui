@@ -288,9 +288,13 @@
               <object class="GtkStackPage">
                 <property name="title" translatable="1">page1</property>
                 <property name="child">
-                  <object class="GtkGrid" id="launchpad_page">
+                  <object class="GtkBox" id="launchpad_page">
                     <child>
                       <object class="GtkGrid" id="apps_grid">
+                        <property name="hexpand">0</property>
+                        <property name="vexpand">0</property>
+                        <property name="halign">center</property>
+                        <property name="valign">start</property>
                         <property name="row-homogeneous">1</property>
                         <property name="column-homogeneous">1</property>
                         <child>

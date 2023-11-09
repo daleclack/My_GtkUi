@@ -59,6 +59,14 @@ static void pressed(GtkGesture *gesture, int n_press,
     gtk_popover_popup(GTK_POPOVER(dock->context_menu));
 }
 
+static void my_dock_add_style(MyDock *self, GtkStyleProvider *provider)
+{
+    gtk_widget_add_css_class(self->launchpad_page, "finder_buttons");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->launchpad_page),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
 static void my_dock_init(MyDock *self)
 {
     // Builder for the main dock
@@ -119,8 +127,10 @@ static void my_dock_init(MyDock *self)
 
     my_finder_add_style(MY_FINDER(self->finder), provider);
 
-    gtk_widget_add_css_class(self->launchpad_page, "dock_style");
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->launchpad_page),
+    // Add Style to launchpad page
+    GtkWidget *parent = gtk_widget_get_parent(self->launchpad_page);
+    gtk_widget_add_css_class(parent, "dock_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(parent),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     // Pack widgets

@@ -20,6 +20,6 @@
     background-color: transparent;
 }
 
-.dock_style grid{
+.dock_style box{
     background-color: alpha(white, 0.5);
 }
