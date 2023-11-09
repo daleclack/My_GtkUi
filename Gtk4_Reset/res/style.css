@@ -15,6 +15,10 @@
     background-color: alpha(white, 0.5);
 }
 
+.dock_style box{
+    background-color: alpha(white, 0.5);
+}
+
 /* Background color in the box should be transparent*/
 .default_style box{
     background-color: transparent;

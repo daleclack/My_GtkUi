@@ -148,6 +148,18 @@ static void my_dock_init(MyDock *self)
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+    // Add Style to the Dock
+    gtk_widget_add_css_class(self->dock_left, "dock_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->dock_left),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // The widget in the dock should use default style
+    gtk_widget_add_css_class(self->dock_box, "default_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->dock_box),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
     // Pack widgets
     // Dock position and mode, will be changable soon
     gtk_widget_set_vexpand(self->icons_sw, TRUE);
