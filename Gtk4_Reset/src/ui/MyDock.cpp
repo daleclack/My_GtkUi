@@ -16,6 +16,9 @@ struct _MyDock
     GtkWidget *main_pic, *finder;
     GtkWidget *btnlaunch, *launchpad_stack, // launchpad
         *default_page, *launchpad_page;
+    GtkWidget *padabout, *padaud, *paddraw, *padfile, *padgedit,    // Launchpad icons
+        *padgame, *padimage, *padnote, *padedit, *padvlc, *padvlc_win32,
+        *padrun, *padset, *padgame24, *padcalc, *padmine;
     PadPage current_page;
     GtkBuilder *menu_builder;
     GMenuModel *menu_model;
@@ -59,14 +62,6 @@ static void pressed(GtkGesture *gesture, int n_press,
     gtk_popover_popup(GTK_POPOVER(dock->context_menu));
 }
 
-static void my_dock_add_style(MyDock *self, GtkStyleProvider *provider)
-{
-    gtk_widget_add_css_class(self->launchpad_page, "finder_buttons");
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->launchpad_page),
-                                               GTK_STYLE_PROVIDER(provider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-}
-
 static void my_dock_init(MyDock *self)
 {
     // Builder for the main dock
@@ -82,6 +77,22 @@ static void my_dock_init(MyDock *self)
     self->launchpad_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_stack"));
     self->default_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_page"));
     self->launchpad_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_page"));
+    self->padaud = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padaud"));
+    self->padabout = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padabout"));
+    self->padcalc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padcalc"));
+    self->paddraw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "paddraw"));
+    self->padedit = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padedit"));
+    self->padfile = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padfile"));
+    self->padgame24 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padgame24"));
+    self->padgame = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padgame"));
+    self->padgedit = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padgedit"));
+    self->padimage = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padimage"));
+    self->padmine = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padmine"));
+    self->padnote = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padnote"));
+    self->padrun = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padrun"));
+    self->padset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padset"));
+    self->padvlc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc"));
+    self->padvlc_win32 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc_win32"));
 
     // Launchpad default
     self->current_page = MainPage;
@@ -117,22 +128,26 @@ static void my_dock_init(MyDock *self)
     // Link Signals
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
 
-    // Add Style for finder
+    // Create Css Provider for styling 
     GtkCssProvider *provider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(provider, "/org/gtk/daleclack/style.css");
-    gtk_widget_add_css_class(self->finder_box, "finder_box");
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->finder_box),
-                                               GTK_STYLE_PROVIDER(provider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+    // Add Style for finder
     my_finder_add_style(MY_FINDER(self->finder), provider);
 
     // Add Style to launchpad page
-    GtkWidget *parent = gtk_widget_get_parent(self->launchpad_page);
-    gtk_widget_add_css_class(parent, "dock_style");
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(parent),
+    gtk_widget_add_css_class(self->launchpad_page, "dock_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->launchpad_page),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // The widget in the launchpad page should use default style
+    GtkWidget *child = gtk_grid_get_child_at(GTK_GRID(self->launchpad_page), 0, 0);
+    gtk_widget_add_css_class(child, "default_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(child),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
     // Pack widgets
 
     // Dock position and mode, will be changable soon

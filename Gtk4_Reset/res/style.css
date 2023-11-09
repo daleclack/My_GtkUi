@@ -11,15 +11,20 @@
 	background-color:alpha(white,0.55);
 }
 
-/* Background color in the box should be transparent*/
-.finder_buttons box{
-    background-color: transparent;
-}
-
-.finder_buttons separator{
-    background-color: transparent;
-}
-
-.dock_style box{
+.dock_style grid{
     background-color: alpha(white, 0.5);
 }
+
+/* Background color in the box should be transparent*/
+.default_style box{
+    background-color: transparent;
+}
+
+.default_style separator{
+    background-color: transparent;
+}
+
+.default_style grid{
+    background-color: transparent;
+}
+
