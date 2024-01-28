@@ -1,3 +1,4 @@
+#include "MainWin.h"
 #include "MyStack.h"
 #include "MyDock.h"
 #include "MyPrefs.h"
@@ -8,6 +9,15 @@ static GtkWidget *dock;
 static void btnlogin_clicked(GtkWidget *widget, GtkStack *stack)
 {
     gtk_stack_set_visible_child_name(stack, "main_page1");
+}
+
+static void back_activated(GSimpleAction *actions,
+                           GVariant *parmeter,
+                           gpointer win)
+{
+    // Show preferences window
+    MyPrefs *prefs = main_win_get_prefs(MAIN_WIN(win));
+    gtk_window_present(GTK_WINDOW(prefs));
 }
 
 static void logout_activated(GSimpleAction *action,
@@ -77,6 +87,7 @@ void create_main_stack(GtkWindow *win)
     static GActionEntry entries[] = {
         {"logout", logout_activated, NULL, NULL, NULL},
         {"quit", quit_activated, NULL, NULL, NULL},
+        {"back", back_activated, NULL, NULL, NULL},
         {"about", about_activated, NULL, NULL, NULL}};
 
     // Create a builder
@@ -113,6 +124,12 @@ void create_main_stack(GtkWindow *win)
 
     // Link Signals
     g_signal_connect(btnlogin, "clicked", G_CALLBACK(btnlogin_clicked), stack);
+
+    // Add Preferences window
+    GtkWidget *main_back = my_dock_get_background(MY_DOCK(dock));
+    MyPrefs *prefs = my_prefs_new(main_back);
+    gtk_window_set_transient_for(GTK_WINDOW(prefs), win);
+    main_win_set_prefs(MAIN_WIN(win), prefs);
 
     gtk_window_set_child(win, stack);
 }

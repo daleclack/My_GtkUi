@@ -4,4 +4,4 @@
 
 G_DECLARE_FINAL_TYPE(MyPrefs, my_prefs, MY, PREFS, GtkWindow)
 
-GtkWidget *my_prefs_new(GtkWidget *back);
+MyPrefs *my_prefs_new(GtkWidget *back);
