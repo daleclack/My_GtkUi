@@ -16,7 +16,9 @@ struct _MyDock
     GtkWidget *main_pic, *finder;
     GtkWidget *btnlaunch, *launchpad_stack, // launchpad
         *default_page, *launchpad_page;
-    GtkWidget *padabout, *padaud, *paddraw, *padfile, *padgedit,    // Launchpad icons
+    GtkWidget *btnfiles, *btndraw, *btncalc, *btnedit, *btnimage, // Dock buttons
+        *btnset, *btngame, *btngame24, *btnmine;
+    GtkWidget *padabout, *padaud, *paddraw, *padfile, *padgedit, // Launchpad icons
         *padgame, *padimage, *padnote, *padedit, *padvlc, *padvlc_win32,
         *padrun, *padset, *padgame24, *padcalc, *padmine;
     PadPage current_page;
@@ -28,6 +30,7 @@ struct _MyDock
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
 
+// Launchpad control
 void hide_launchpad(MyDock *dock)
 {
     // Hide the launchpad
@@ -53,6 +56,7 @@ static void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
     }
 }
 
+// The context menu control
 static void pressed(GtkGesture *gesture, int n_press,
                     double x, double y, MyDock *dock)
 {
@@ -61,6 +65,56 @@ static void pressed(GtkGesture *gesture, int n_press,
     gtk_popover_set_pointing_to(GTK_POPOVER(dock->context_menu), &rectangle);
     gtk_popover_popup(GTK_POPOVER(dock->context_menu));
 }
+
+static void padset_clicked(GtkWidget *widget, MyDock *dock)
+{
+    
+}
+
+static void btnset_clicked(GtkWidget *widget, MyDock *dock)
+{
+}
+
+static gboolean prefs_win_closed()
+{
+    return TRUE;
+}
+
+// Window control func
+static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
+{
+    // Get GdkSurface for window state
+    GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(window));
+    if (surface)
+    {
+        // The state will available when the window open
+        auto state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        switch (state)
+        {
+        // Minimized
+        case GDK_TOPLEVEL_STATE_MINIMIZED:
+            gtk_window_set_transient_for(window, parent);
+            gtk_window_unminimize(window);
+            break;
+        default:
+            // The controlled window is on dock
+            if (on_dock)
+            {
+                gtk_window_set_transient_for(window, NULL);
+                gtk_window_minimize(window);
+                break;
+            }
+        }
+    }
+    else
+    {
+        // Create a window
+        gtk_window_set_transient_for(window, parent);
+        gtk_window_present(window);
+    }
+}
+
+//
 
 static void my_dock_init(MyDock *self)
 {
@@ -74,6 +128,15 @@ static void my_dock_init(MyDock *self)
     self->dock_left = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "dock_left"));
     self->icons_sw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "icons_sw"));
     self->btnlaunch = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnlaunch"));
+    self->btnfiles = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnfiles"));
+    self->btncalc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btncalc"));
+    self->btndraw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btndraw"));
+    self->btnedit = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnedit"));
+    self->btngame24 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btngame24"));
+    self->btngame = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btngame"));
+    self->btnimage = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnimage"));
+    self->btnmine = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnmine"));
+    self->btnset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnset"));
     self->launchpad_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_stack"));
     self->default_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_page"));
     self->launchpad_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_page"));
@@ -128,7 +191,7 @@ static void my_dock_init(MyDock *self)
     // Link Signals
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
 
-    // Create Css Provider for styling 
+    // Create Css Provider for styling
     GtkCssProvider *provider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(provider, "/org/gtk/daleclack/style.css");
 
@@ -185,4 +248,10 @@ GtkWidget *my_dock_get_background(MyDock *dock)
 GtkWidget *my_dock_new()
 {
     return GTK_WIDGET(g_object_new(my_dock_get_type(), NULL));
+}
+
+void my_dock_set_prefs(MyPrefs *prefs)
+{
+    // Bind prefs to MyDock
+    
 }
