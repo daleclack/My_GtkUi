@@ -142,8 +142,6 @@ static gboolean prefs_win_closed(GtkWindow *window, MyDock *dock)
     return TRUE;
 }
 
-//
-
 static void my_dock_init(MyDock *self)
 {
     // Builder for the main dock
