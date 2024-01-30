@@ -69,14 +69,14 @@ static void pressed(GtkGesture *gesture, int n_press,
 }
 
 // Window control func
-static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
+static void window_ctrl(GtkWindow *window, GtkWindow *parent)
 {
     // Get GdkSurface for window state
     GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(window));
     if (surface)
     {
         // The state will available when the window open
-        short state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        unsigned short state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
         switch (state)
         {
         // Minimized
@@ -86,11 +86,8 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
             break;
         default:
             // The controlled window is on dock
-            if (on_dock)
-            {
-                gtk_window_set_transient_for(window, NULL);
-                gtk_window_minimize(window);
-            }
+            gtk_window_set_transient_for(window, NULL);
+            gtk_window_minimize(window);
             break;
         }
     }
@@ -104,15 +101,38 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
 
 static void padset_clicked(GtkWidget *widget, MyDock *dock)
 {
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->prefs_win))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->prefs_win));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->prefs_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->prefs_win));
+    }
 }
 
 static void btnset_clicked(GtkWidget *widget, MyDock *dock)
 {
-    window_ctrl(GTK_WINDOW(dock->prefs_win), dock->parent_win, TRUE);
+    // When the window visible, control the window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->prefs_win))))
+    {
+        window_ctrl(GTK_WINDOW(dock->prefs_win), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->prefs_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->prefs_win));
+    }
 }
 
-static gboolean prefs_win_closed()
+static gboolean prefs_win_closed(GtkWindow *window, MyDock *dock)
 {
+    // For the preferences window, hide it
+    gtk_widget_set_visible(GTK_WIDGET(dock->prefs_win), FALSE);
     return TRUE;
 }
 
@@ -209,6 +229,7 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
     g_signal_connect(self->btnset, "clicked", G_CALLBACK(btnset_clicked), self);
     g_signal_connect(self->padset, "clicked", G_CALLBACK(padset_clicked), self);
+    g_signal_connect(self->prefs_win, "close-request", G_CALLBACK(prefs_win_closed), self);
 
     // Create Css Provider for styling
     GtkCssProvider *provider = gtk_css_provider_new();
