@@ -42,7 +42,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image3">
+                      <object class="GtkImage" id="image_file">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">file-app</property>
                       </object>
@@ -55,7 +55,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image2">
+                      <object class="GtkImage" id="image_draw">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">drawing_app</property>
                       </object>
@@ -68,7 +68,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image25">
+                      <object class="GtkImage" id="image_calc">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">calcapp</property>
                       </object>
@@ -81,7 +81,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image4">
+                      <object class="GtkImage" id="image_game">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">game</property>
                       </object>
@@ -94,7 +94,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image5">
+                      <object class="GtkImage" id="image_edit">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">my_textedit</property>
                       </object>
@@ -107,7 +107,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image6">
+                      <object class="GtkImage" id="image_viewer">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">image_app</property>
                       </object>
@@ -120,7 +120,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image7">
+                      <object class="GtkImage" id="image_set">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">my_prefs</property>
                       </object>
@@ -133,7 +133,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image23">
+                      <object class="GtkImage" id="image_game24">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">24game</property>
                         
@@ -147,7 +147,7 @@
                     <property name="focusable">1</property>
                     <property name="receives-default">1</property>
                     <property name="child">
-                      <object class="GtkImage" id="image26">
+                      <object class="GtkImage" id="image_mine">
                         <property name="icon-name">mines_app</property>
                         <property name="pixel-size">48</property>
                       </object>

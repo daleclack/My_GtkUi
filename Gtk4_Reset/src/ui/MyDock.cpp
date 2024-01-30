@@ -19,6 +19,8 @@ struct _MyDock
         *default_page, *launchpad_page;
     GtkWidget *btnfiles, *btndraw, *btncalc, *btnedit, *btnimage, // Dock buttons
         *btnset, *btngame, *btngame24, *btnmine;
+    GtkWidget *image_file, *image_draw, *image_calc, *image_game, // Image widget for dock buttons
+        *image_edit, *image_viewer, *image_game24, *image_mine, *image_set;
     GtkWidget *padabout, *padaud, *paddraw, *padfile, *padgedit, // Launchpad icons
         *padgame, *padimage, *padnote, *padedit, *padvlc, *padvlc_win32,
         *padrun, *padset, *padgame24, *padcalc, *padmine;
@@ -112,6 +114,8 @@ static void padset_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->prefs_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->prefs_win));
     }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
+    btnlaunch_clicked(NULL, dock);
 }
 
 static void btnset_clicked(GtkWidget *widget, MyDock *dock)
@@ -127,12 +131,14 @@ static void btnset_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->prefs_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->prefs_win));
     }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
 }
 
 static gboolean prefs_win_closed(GtkWindow *window, MyDock *dock)
 {
     // For the preferences window, hide it
     gtk_widget_set_visible(GTK_WIDGET(dock->prefs_win), FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs");
     return TRUE;
 }
 
@@ -151,14 +157,23 @@ static void my_dock_init(MyDock *self)
     self->icons_sw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "icons_sw"));
     self->btnlaunch = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnlaunch"));
     self->btnfiles = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnfiles"));
+    self->image_file = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_file"));
     self->btncalc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btncalc"));
+    self->image_calc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_calc"));
     self->btndraw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btndraw"));
+    self->image_draw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_draw"));
     self->btnedit = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnedit"));
+    self->image_edit = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_edit"));
     self->btngame24 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btngame24"));
+    self->image_game24 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_game24"));
     self->btngame = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btngame"));
+    self->image_game = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_game"));
     self->btnimage = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnimage"));
+    self->image_viewer = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_viewer"));
     self->btnmine = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnmine"));
+    self->image_mine = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_mine"));
     self->btnset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnset"));
+    self->image_set = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_set"));
     self->launchpad_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_stack"));
     self->default_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_page"));
     self->launchpad_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_page"));
