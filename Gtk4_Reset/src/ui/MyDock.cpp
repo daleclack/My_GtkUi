@@ -68,19 +68,6 @@ static void pressed(GtkGesture *gesture, int n_press,
     gtk_popover_popup(GTK_POPOVER(dock->context_menu));
 }
 
-static void padset_clicked(GtkWidget *widget, MyDock *dock)
-{
-}
-
-static void btnset_clicked(GtkWidget *widget, MyDock *dock)
-{
-}
-
-static gboolean prefs_win_closed()
-{
-    return TRUE;
-}
-
 // Window control func
 static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
 {
@@ -89,7 +76,7 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
     if (surface)
     {
         // The state will available when the window open
-        auto state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        short state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
         switch (state)
         {
         // Minimized
@@ -103,8 +90,8 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
             {
                 gtk_window_set_transient_for(window, NULL);
                 gtk_window_minimize(window);
-                break;
             }
+            break;
         }
     }
     else
@@ -113,6 +100,20 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent, gboolean on_dock)
         gtk_window_set_transient_for(window, parent);
         gtk_window_present(window);
     }
+}
+
+static void padset_clicked(GtkWidget *widget, MyDock *dock)
+{
+}
+
+static void btnset_clicked(GtkWidget *widget, MyDock *dock)
+{
+    window_ctrl(GTK_WINDOW(dock->prefs_win), dock->parent_win, TRUE);
+}
+
+static gboolean prefs_win_closed()
+{
+    return TRUE;
 }
 
 //
@@ -196,7 +197,7 @@ static void my_dock_init(MyDock *self)
     gtk_widget_set_valign(self->dock_box, GTK_ALIGN_FILL);
     gtk_box_append(GTK_BOX(self->dock_left), self->dock_box);
 
-    // Others
+    // The Main widget, for background
     gtk_overlay_set_child(GTK_OVERLAY(self->main_overlay), self->main_pic);
     gtk_overlay_add_overlay(GTK_OVERLAY(self->main_overlay), self->main_box);
     gtk_box_append(GTK_BOX(self), self->main_overlay);
@@ -206,6 +207,8 @@ static void my_dock_init(MyDock *self)
 
     // Link Signals
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
+    g_signal_connect(self->btnset, "clicked", G_CALLBACK(btnset_clicked), self);
+    g_signal_connect(self->padset, "clicked", G_CALLBACK(padset_clicked), self);
 
     // Create Css Provider for styling
     GtkCssProvider *provider = gtk_css_provider_new();
