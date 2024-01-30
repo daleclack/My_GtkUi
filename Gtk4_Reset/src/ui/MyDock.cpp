@@ -10,6 +10,7 @@ enum PadPage
 struct _MyDock
 {
     GtkBox parent_instance;
+    GtkWindow *parent_win;
     GtkBuilder *dock_builder; // Main builder
     GtkWidget *dock_box, *main_box, *finder_box,
         *dock_left, *icons_sw, *main_overlay; // Dock, finder
@@ -26,6 +27,7 @@ struct _MyDock
     GMenuModel *menu_model;
     GtkGesture *gesture;
     GtkWidget *context_menu; // Context menu
+    MyPrefs *prefs_win;      // Prefs window
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -68,7 +70,6 @@ static void pressed(GtkGesture *gesture, int n_press,
 
 static void padset_clicked(GtkWidget *widget, MyDock *dock)
 {
-    
 }
 
 static void btnset_clicked(GtkWidget *widget, MyDock *dock)
@@ -188,6 +189,21 @@ static void my_dock_init(MyDock *self)
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
     gtk_box_append(GTK_BOX(self->finder_box), self->finder);
 
+    // Pack widgets
+    // Dock position and mode, will be changable soon
+    gtk_widget_set_vexpand(self->icons_sw, TRUE);
+    gtk_widget_set_valign(self->icons_sw, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(self->dock_box, GTK_ALIGN_FILL);
+    gtk_box_append(GTK_BOX(self->dock_left), self->dock_box);
+
+    // Others
+    gtk_overlay_set_child(GTK_OVERLAY(self->main_overlay), self->main_pic);
+    gtk_overlay_add_overlay(GTK_OVERLAY(self->main_overlay), self->main_box);
+    gtk_box_append(GTK_BOX(self), self->main_overlay);
+
+    // Create prefs window
+    self->prefs_win = my_prefs_new(self->main_pic);
+
     // Link Signals
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
 
@@ -222,18 +238,6 @@ static void my_dock_init(MyDock *self)
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->dock_box),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-    // Pack widgets
-    // Dock position and mode, will be changable soon
-    gtk_widget_set_vexpand(self->icons_sw, TRUE);
-    gtk_widget_set_valign(self->icons_sw, GTK_ALIGN_FILL);
-    gtk_widget_set_valign(self->dock_box, GTK_ALIGN_FILL);
-    gtk_box_append(GTK_BOX(self->dock_left), self->dock_box);
-
-    // Others
-    gtk_overlay_set_child(GTK_OVERLAY(self->main_overlay), self->main_pic);
-    gtk_overlay_add_overlay(GTK_OVERLAY(self->main_overlay), self->main_box);
-    gtk_box_append(GTK_BOX(self), self->main_overlay);
 }
 
 static void my_dock_class_init(MyDockClass *klass)
@@ -245,13 +249,16 @@ GtkWidget *my_dock_get_background(MyDock *dock)
     return dock->main_pic;
 }
 
-GtkWidget *my_dock_new()
+GtkWidget *my_dock_new(GtkWindow *parent)
 {
-    return GTK_WIDGET(g_object_new(my_dock_get_type(), NULL));
+    // Create the dock and set parent window
+    GtkWidget *dock = GTK_WIDGET(g_object_new(my_dock_get_type(), NULL));
+    MY_DOCK(dock)->parent_win = parent;
+    return dock;
 }
 
-void my_dock_set_prefs(MyPrefs *prefs)
+MyPrefs *my_dock_get_prefs(MyDock *dock)
 {
-    // Bind prefs to MyDock
-    
+    // Get the prefs window
+    return dock->prefs_win;
 }

@@ -117,7 +117,7 @@ void create_main_stack(GtkWindow *win)
                                     G_N_ELEMENTS(entries), win);
 
     // Add dock and finder
-    dock = my_dock_new();
+    dock = my_dock_new(win);
     gtk_widget_set_hexpand(dock, TRUE);
     gtk_widget_set_vexpand(dock, TRUE);
     gtk_box_append(GTK_BOX(main_page), dock);
@@ -126,9 +126,7 @@ void create_main_stack(GtkWindow *win)
     g_signal_connect(btnlogin, "clicked", G_CALLBACK(btnlogin_clicked), stack);
 
     // Add Preferences window
-    GtkWidget *main_back = my_dock_get_background(MY_DOCK(dock));
-    MyPrefs *prefs = my_prefs_new(main_back);
-    gtk_window_set_transient_for(GTK_WINDOW(prefs), win);
+    MyPrefs *prefs = my_dock_get_prefs(MY_DOCK(dock));
     main_win_set_prefs(MAIN_WIN(win), prefs);
 
     gtk_window_set_child(win, stack);

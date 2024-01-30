@@ -26,6 +26,7 @@ void main_win_set_prefs(MainWin *win, MyPrefs *prefs)
 {
     // Set Preferences widget
     win->prefs_win = prefs;
+    gtk_window_set_transient_for(GTK_WINDOW(win), GTK_WINDOW(prefs));
 }
 
 MyPrefs *main_win_get_prefs(MainWin *win)
