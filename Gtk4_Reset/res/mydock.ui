@@ -20,7 +20,6 @@
           <object class="GtkImage" id="image1">
             <property name="pixel-size">48</property>
             <property name="icon-name">My_GtkUI</property>
-            
           </object>
         </property>
         <property name="has-frame">0</property>
@@ -136,7 +135,6 @@
                       <object class="GtkImage" id="image_game24">
                         <property name="pixel-size">48</property>
                         <property name="icon-name">24game</property>
-                        
                       </object>
                     </property>
                     <property name="has-frame">0</property>
@@ -841,53 +839,53 @@
                             </layout>
                           </object>
                         </child>
-                          <child>
-                            <object class="GtkLabel">
-                              <property name="hexpand">1</property>
-                              <property name="vexpand">1</property>
-                              <layout>
-                                <property name="column">0</property>
-                                <property name="row">2</property>
-                              </layout>
-                            </object>
-                          </child>
-                          <child>
-                            <object class="GtkLabel">
-                              <property name="hexpand">1</property>
-                              <property name="vexpand">1</property>
-                              <layout>
-                                <property name="column">2</property>
-                                <property name="row">2</property>
-                              </layout>
-                            </object>
-                          </child>
-                          <child>
-                            <object class="GtkLabel">
-                              <layout>
-                                <property name="column">1</property>
-                                <property name="row">0</property>
-                              </layout>
-                            </object>
-                          </child>
-                          <child>
-                            <placeholder/>
-                          </child>
-                          <child>
-                            <placeholder/>
-                          </child>
-                          <child>
-                            <placeholder/>
-                          </child>
-                          <child>
-                            <placeholder/>
-                          </child>
-                          <child>
-                            <placeholder/>
-                          </child>
-                          <layout>
-                            <property name="column">0</property>
-                            <property name="row">0</property>
-                          </layout>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="hexpand">1</property>
+                            <property name="vexpand">1</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">2</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="hexpand">1</property>
+                            <property name="vexpand">1</property>
+                            <layout>
+                              <property name="column">2</property>
+                              <property name="row">2</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
                       </object>
                     </child>
                   </object>
