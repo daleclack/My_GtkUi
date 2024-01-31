@@ -15,8 +15,8 @@ struct _MyDock
     GtkWidget *dock_box, *main_box, *finder_box,
         *dock_left, *icons_sw, *main_overlay; // Dock, finder
     GtkWidget *main_pic, *finder;
-    GtkWidget *btnlaunch, *launchpad_stack, // launchpad
-        *default_page, *launchpad_page;
+    GtkWidget *btnlaunch, *launchpad_stack, *default_page, // launchpad
+        *launchpad_page, *apps_grid, *apps_stack, *default_box, *addon_box;
     GtkWidget *btnfiles, *btndraw, *btncalc, *btnedit, *btnimage, // Dock buttons
         *btnset, *btngame, *btngame24, *btnmine;
     GtkWidget *image_file, *image_draw, *image_calc, *image_game, // Image widget for dock buttons
@@ -175,6 +175,10 @@ static void my_dock_init(MyDock *self)
     self->launchpad_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_stack"));
     self->default_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_page"));
     self->launchpad_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_page"));
+    self->apps_grid = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "apps_grid"));
+    self->apps_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "apps_stack"));
+    self->default_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_box"));
+    self->addon_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "addon_box"));
     self->padaud = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padaud"));
     self->padabout = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padabout"));
     self->padcalc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padcalc"));
@@ -250,6 +254,9 @@ static void my_dock_init(MyDock *self)
 
     // Add Style for finder
     my_finder_add_style(MY_FINDER(self->finder), provider);
+
+    // Add Apps grid
+    gtk_box_append(GTK_BOX(self->default_box), self->apps_grid);
 
     // Add Style to launchpad page
     gtk_widget_add_css_class(self->launchpad_page, "dock_style");
