@@ -1,5 +1,6 @@
 #include "MyDock.h"
 #include "MyFinder.h"
+#include "AppView.h"
 
 enum PadPage
 {
@@ -15,8 +16,9 @@ struct _MyDock
     GtkWidget *dock_box, *main_box, *finder_box,
         *dock_left, *icons_sw, *main_overlay; // Dock, finder
     GtkWidget *main_pic, *finder;
-    GtkWidget *btnlaunch, *launchpad_stack, *default_page, // launchpad
-        *launchpad_page, *apps_grid, *apps_stack, *default_box, *addon_box;
+    GtkWidget *btnlaunch, *launchpad_stack, *default_page, *apps_grid, // launchpad
+        *launchpad_page, *apps_stack, *default_box, *addon_box,
+        *apps_switcher, *apps_view, *appgrid_box, *appgrid_label;
     GtkWidget *btnfiles, *btndraw, *btncalc, *btnedit, *btnimage, // Dock buttons
         *btnset, *btngame, *btngame24, *btnmine;
     GtkWidget *image_file, *image_draw, *image_calc, *image_game, // Image widget for dock buttons
@@ -256,7 +258,29 @@ static void my_dock_init(MyDock *self)
     my_finder_add_style(MY_FINDER(self->finder), provider);
 
     // Add Apps grid
-    gtk_box_append(GTK_BOX(self->default_box), self->apps_grid);
+
+    // To make the default view layout same as the addon apps view
+    self->appgrid_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    self->appgrid_label = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+    gtk_box_append(GTK_BOX(self->appgrid_box), self->appgrid_label);
+    gtk_box_append(GTK_BOX(self->appgrid_box), self->apps_grid);
+    gtk_box_append(GTK_BOX(self->default_box), self->appgrid_box);
+    gtk_widget_set_halign(self->apps_grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_spacing(GTK_GRID(self->apps_grid), 20);
+
+    // Add Addon apps view
+    self->apps_view = app_view_new();
+    gtk_box_append(GTK_BOX(self->addon_box), self->apps_view);
+    gtk_widget_set_halign(self->apps_view, GTK_ALIGN_CENTER);
+
+    // Add a switcher for the apps shown
+    GtkWidget *child = gtk_grid_get_child_at(GTK_GRID(self->launchpad_page), 0, 0);
+    self->apps_switcher = gtk_stack_switcher_new();
+    gtk_stack_switcher_set_stack(GTK_STACK_SWITCHER(self->apps_switcher),
+                                 GTK_STACK(self->apps_stack));
+    gtk_widget_set_halign(self->apps_switcher, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(self->apps_switcher, GTK_ALIGN_END);
+    gtk_grid_attach(GTK_GRID(child), self->apps_switcher, 1, 2, 1, 1);
 
     // Add Style to launchpad page
     gtk_widget_add_css_class(self->launchpad_page, "dock_style");
@@ -265,7 +289,6 @@ static void my_dock_init(MyDock *self)
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     // The widget in the launchpad page should use default style
-    GtkWidget *child = gtk_grid_get_child_at(GTK_GRID(self->launchpad_page), 0, 0);
     gtk_widget_add_css_class(child, "default_style");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(child),
                                                GTK_STYLE_PROVIDER(provider),
@@ -280,6 +303,18 @@ static void my_dock_init(MyDock *self)
     // The widget in the dock should use default style
     gtk_widget_add_css_class(self->dock_box, "default_style");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->dock_box),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // The widget in the dock should use default style
+    gtk_widget_add_css_class(self->apps_switcher, "default_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->apps_switcher),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // The widget in the dock should use default style
+    gtk_widget_add_css_class(self->apps_view, "default_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->apps_view),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }

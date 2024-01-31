@@ -7,28 +7,36 @@
 
 /* @import url("resource://org/gtk/daleclack/reset.css"); */
 
-.finder_style box{
-	background-color:alpha(white,0.5);
-}
-
-.dock_style grid{
+.finder_style box {
     background-color: alpha(white, 0.5);
 }
 
-.dock_style box{
+.dock_style grid {
+    background-color: alpha(white, 0.5);
+}
+
+.dock_style box {
     background-color: alpha(white, 0.5);
 }
 
 /* Background color in the box should be transparent*/
-.default_style box{
+.default_style box {
     background-color: transparent;
 }
 
-.default_style separator{
+.default_style separator {
     background-color: transparent;
 }
 
-.default_style grid{
+.default_style grid {
     background-color: transparent;
 }
 
+.default_style stackswitcher {
+    color: transparent;
+    background-color: transparent;
+}
+
+.default_style gridview{
+    background-color: transparent;
+}
