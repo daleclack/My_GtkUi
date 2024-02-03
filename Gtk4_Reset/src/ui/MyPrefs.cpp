@@ -176,9 +176,11 @@ static void images_list_default(GListStore *store1)
 
     // Append default items
     g_list_store_append(store1,
-                        my_item_new("img7.xpm", ":1", TRUE));
+                        my_item_new("final_approach.png", ":1", TRUE));
     g_list_store_append(store1,
-                        my_item_new("winpe.xpm", ":2", TRUE));
+                        my_item_new("img7.xpm", ":2", TRUE));
+    g_list_store_append(store1,
+                        my_item_new("winpe.xpm", ":3", TRUE));
 }
 
 static void update_images_list(MyPrefs *prefs1)
@@ -281,6 +283,19 @@ static void pics_view_init(MyPrefs *self)
                                                           self->factory_pics_string);
     gtk_column_view_append_column(GTK_COLUMN_VIEW(self->images_view),
                                   self->pics_string_column);
+}
+
+static void update_resource_image(MyPrefs *prefs, const char *resource_id)
+{
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource(resource_id, NULL);
+    GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, prefs->width,
+                                               prefs->height, GDK_INTERP_BILINEAR);
+    GdkTexture *texture = gdk_texture_new_for_pixbuf(pixbuf);
+    // gtk_picture_set_content_fit(GTK_PICTURE(prefs->background), GTK_CONTENT_FIT_FILL);
+    gtk_picture_set_paintable(GTK_PICTURE(prefs->background), GDK_PAINTABLE(texture));
+    // gtk_picture_set_pixbuf(GTK_PICTURE(prefs->background), pixbuf);
+    g_object_unref(pixbuf);
+    g_object_unref(sized);
 }
 
 static void update_internal_image(MyPrefs *prefs, const char **id)
@@ -416,9 +431,12 @@ static gboolean scan_func(gpointer data)
             switch (file_name[1])
             {
             case '1':
-                update_internal_image(prefs, img7);
+                update_resource_image(prefs, "/org/gtk/daleclack/final_approach.png");
                 break;
             case '2':
+                update_internal_image(prefs, img7);
+                break;
+            case '3':
                 update_internal_image(prefs, winpe);
                 break;
             }
