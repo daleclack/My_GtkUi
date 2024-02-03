@@ -218,12 +218,15 @@ static void my_dock_init(MyDock *self)
     gtk_widget_set_parent(self->context_menu, self->main_overlay);
 
     // Set default background
-    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/final_approach.png", NULL);
-    GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
-    GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
-    self->main_pic = gtk_picture_new_for_paintable(GDK_PAINTABLE(texture));
-    g_object_unref(pixbuf);
-    g_object_unref(sized);
+    self->main_pic = gtk_picture_new();
+    gtk_widget_set_size_request(self->main_pic, 1024, 576);
+    gtk_picture_set_content_fit(GTK_PICTURE(self->main_pic), GTK_CONTENT_FIT_FILL);
+    // GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/final_approach.png", NULL);
+    // GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
+    // GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
+    // self->main_pic = gtk_picture_new_for_paintable(GDK_PAINTABLE(texture));
+    // g_object_unref(pixbuf);
+    // g_object_unref(sized);
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);

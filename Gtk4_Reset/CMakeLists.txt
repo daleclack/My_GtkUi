@@ -24,7 +24,7 @@ include_directories (${GTK_INCLUDE_DIRS})
 link_directories (${GTK_LIBRARY_DIRS})
 
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
-    src/ui/MyDock.cpp src/ui/MyFinder.cpp src/ui/MyPrefs.cpp
+    src/core/MyItem.cpp src/ui/MyDock.cpp src/ui/MyFinder.cpp src/ui/MyPrefs.cpp
     src/ui/AppView.cpp) 
 
 #Compile resources with GCR_CMake
@@ -56,10 +56,12 @@ set(RESOURCE_LIST
     icons/16x16/actions/finder-battery.svg
     icons/16x16/actions/finder-computer.svg
     icons/16x16/actions/finder-wifi.svg
+    icons/16x16/actions/folder-images.svg
     icons/16x16/actions/My_GtkUI.png
     icons/16x16/actions/open-menu.svg
     icons/16x16/actions/list-add.svg
     icons/16x16/actions/list-remove.svg
+    icons/16x16/actions/prefs_folder.svg
     icons/48x48/actions/dialog-error.png
     icons/48x48/actions/game.png
     icons/48x48/actions/game_running.png
