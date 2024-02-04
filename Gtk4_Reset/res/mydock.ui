@@ -811,6 +811,8 @@
                 <property name="title" translatable="1">page0</property>
                 <property name="child">
                   <object class="GtkGrid" id="default_page">
+                    <property name="hexpand">1</property>
+                    <property name="vexpand">1</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -858,7 +860,10 @@
                               <object class="GtkStackPage">
                                 <property name="title" translatable="1">Integrated</property>
                                 <property name="child">
-                                  <object class="GtkBox" id="default_box"></object>
+                                  <object class="GtkBox" id="default_box">
+                                    <property name="hexpand">1</property>
+                                    <property name="vexpand">1</property>
+                                  </object>
                                 </property>
                               </object>
                             </child>
@@ -866,7 +871,10 @@
                               <object class="GtkStackPage">
                                 <property name="title" translatable="1">Addons</property>
                                 <property name="child">
-                                  <object class="GtkBox" id="addon_box"></object>
+                                  <object class="GtkBox" id="addon_box">
+                                    <property name="hexpand">1</property>
+                                    <property name="vexpand">1</property>
+                                  </object>
                                 </property>
                               </object>
                             </child>

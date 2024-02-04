@@ -219,7 +219,7 @@ static void my_dock_init(MyDock *self)
 
     // Set default background
     self->main_pic = gtk_picture_new();
-    gtk_widget_set_size_request(self->main_pic, 1024, 576);
+    // gtk_widget_set_size_request(self->main_pic, 1024, 576);
     gtk_picture_set_content_fit(GTK_PICTURE(self->main_pic), GTK_CONTENT_FIT_FILL);
     // GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/final_approach.png", NULL);
     // GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
@@ -268,12 +268,13 @@ static void my_dock_init(MyDock *self)
     gtk_box_append(GTK_BOX(self->appgrid_box), self->appgrid_label);
     gtk_box_append(GTK_BOX(self->appgrid_box), self->apps_grid);
     gtk_box_append(GTK_BOX(self->default_box), self->appgrid_box);
-    gtk_widget_set_halign(self->apps_grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_halign(self->default_box, GTK_ALIGN_CENTER);
     gtk_grid_set_row_spacing(GTK_GRID(self->apps_grid), 20);
 
     // Add Addon apps view
     self->apps_view = app_view_new();
     gtk_box_append(GTK_BOX(self->addon_box), self->apps_view);
+    gtk_widget_set_halign(self->addon_box, GTK_ALIGN_CENTER);
     gtk_widget_set_halign(self->apps_view, GTK_ALIGN_CENTER);
 
     // Add a switcher for the apps shown
@@ -283,6 +284,8 @@ static void my_dock_init(MyDock *self)
                                  GTK_STACK(self->apps_stack));
     gtk_widget_set_halign(self->apps_switcher, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(self->apps_switcher, GTK_ALIGN_END);
+    gtk_widget_set_halign(self->apps_grid, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(self->apps_grid, GTK_ALIGN_FILL);
     gtk_grid_attach(GTK_GRID(child), self->apps_switcher, 1, 2, 1, 1);
 
     // Add Style to launchpad page

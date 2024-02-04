@@ -4,6 +4,11 @@
 #include "img7.xpm"
 #include "image_types.h"
 #include <string>
+#include <vector>
+#include <fstream>
+#include "../json_nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 struct _MyPrefs
 {
@@ -15,6 +20,9 @@ struct _MyPrefs
     // Widget for window size config
     GtkWidget *label_size;
     GtkWidget *sizes_drop;
+    GtkWidget *radio_default, *radio_custom;
+    GtkWidget *spin_width, *spin_height;
+    GtkWidget *btnGet, *btnapply;
 
     // Widget for dock position and mode
     GtkWidget *mode_check;
@@ -368,6 +376,12 @@ static void btnadd_clicked(GtkWidget *widget, MyPrefs *prefs)
 
 static void btnremove_clicked(GtkWidget *widget, MyPrefs *prefs)
 {
+    // Remove the selected item, and the default item will not be removed
+    guint index = gtk_single_selection_get_selected(prefs->folders_select);
+    if (index > 2)
+    {
+        g_list_store_remove(prefs->folders_list, index);
+    }
 }
 
 // Scan the selection of two column views
@@ -452,29 +466,120 @@ static gboolean scan_func(gpointer data)
     return TRUE;
 }
 
-static void my_prefs_close_request(GtkWindow *self, gpointer user_data)
+// static void my_prefs_close_request(GtkWindow *self, gpointer user_data)
+// {
+//     gtk_widget_set_visible(GTK_WIDGET(self), FALSE);
+// }
+
+// Load config from the json config file
+static void my_prefs_load_config(MyPrefs *self)
 {
-    gtk_widget_set_visible(GTK_WIDGET(self), FALSE);
+    // Default values to load the internal image
+    self->current_folder_index = -1;
+    self->current_image_index = -1;
+
+    // Open config from json file
+    std::fstream json_file;
+    json_file.open("my_gtkui.json", std::ios_base::in);
+    if (json_file.is_open())
+    {
+        // Load data from json
+        json data = json::parse(json_file);
+        self->width = data["width"];
+        self->height = data["height"];
+    }
+    else
+    {
+        // Default window size
+        self->width = 1024;
+        self->height = 576;
+    }
+    json_file.close();
+}
+
+// Save configs
+static void my_prefs_save_config(MyPrefs *self)
+{
+    int width = 1280, height = 720;
+    // Get size config
+    gboolean default_actived;
+
+    // Check the size config type
+    default_actived = gtk_check_button_get_active(GTK_CHECK_BUTTON(self->radio_default));
+
+    if (default_actived)
+    {
+        // Get default sizes
+        guint index = gtk_drop_down_get_selected(GTK_DROP_DOWN(self->sizes_drop));
+        switch (index)
+        {
+        case 0:
+            width = 640;
+            height = 360;
+            break;
+        case 1:
+            width = 800;
+            height = 450;
+            break;
+        case 2:
+            width = 1024;
+            height = 576;
+            break;
+        case 3:
+            width = 1280;
+            height = 720;
+            break;
+        case 4:
+            width = 1366;
+            height = 768;
+            break;
+        }
+    }
+    else
+    {
+        width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_width));
+        height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
+    }
+
+    // Open file for json data
+    std::fstream outfile;
+    outfile.open("my_gtkui.json", std::ios_base::out);
+
+    if (outfile.is_open())
+    {
+        // Create json data
+        json data = json::parse(R"(
+            {
+                "width":1280,
+                "height":720
+            }
+        )");
+        data["width"] = width;
+        data["height"] = height;
+        outfile << data;
+    }
+    outfile.close();
+}
+
+// Apply config ==> Save the config file
+static void btnapply_clicked(GtkWidget *widget, MyPrefs *self)
+{
+    my_prefs_save_config(self);
 }
 
 static void my_prefs_init(MyPrefs *self)
 {
     // Options strings for dropdown
     const char *strings[] = {
-        "640x480",
+        "640x360",
         "800x450",
         "1024x576",
         "1280x720",
         "1366x768",
         NULL};
 
-    // Default window size
-    self->width = 1024;
-    self->height = 576;
-
-    // Default values to load the internal image
-    self->current_folder_index = -1;
-    self->current_image_index = -1;
+    // Load config
+    my_prefs_load_config(self);
 
     // Initalize window
     gtk_window_set_default_size(GTK_WINDOW(self), 800, 450);
@@ -489,6 +594,12 @@ static void my_prefs_init(MyPrefs *self)
     self->combo_box = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "combo_box"));
     self->mode_check = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "mode_check"));
     self->label_size = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "label_size"));
+    self->radio_custom = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "radio_custom"));
+    self->radio_default = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "radio_default"));
+    self->spin_height = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "spin_height"));
+    self->spin_width = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "spin_width"));
+    self->btnGet = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "btnGet"));
+    self->btnapply = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "btnapply"));
 
     // Initalize folder and image views and append to the box
     gtk_widget_set_margin_bottom(self->back_page, 20);
@@ -546,9 +657,18 @@ static void my_prefs_init(MyPrefs *self)
     // Add timer to scan the list
     g_timeout_add(1, scan_func, self);
 
+    // Bind properties for radio buttons and other widgets
+    g_object_bind_property(self->radio_custom, "active",
+                           self->spin_height, "sensitive", G_BINDING_DEFAULT);
+    g_object_bind_property(self->radio_custom, "active",
+                           self->spin_width, "sensitive", G_BINDING_DEFAULT);
+    g_object_bind_property(self->radio_default, "active",
+                           self->sizes_drop, "sensitive", G_BINDING_DEFAULT);
+
     // Connect signals
-    // g_signal_connect(self, "close-request", G_CALLBACK(my_prefs_close_request), NULL);
     g_signal_connect(self->btn_add, "clicked", G_CALLBACK(btnadd_clicked), self);
+    g_signal_connect(self->btn_remove, "clicked", G_CALLBACK(btnremove_clicked), self);
+    g_signal_connect(self->btnapply, "clicked", G_CALLBACK(btnapply_clicked), self);
 }
 
 static void my_prefs_class_init(MyPrefsClass *klass)
@@ -557,7 +677,11 @@ static void my_prefs_class_init(MyPrefsClass *klass)
 
 MyPrefs *my_prefs_new(GtkWidget *back)
 {
+    // Create Prefs widget
     MyPrefs *prefs_win = MY_PREFS(g_object_new(my_prefs_get_type(), NULL));
+
+    // The size for the background widget
     prefs_win->background = back;
+    gtk_widget_set_size_request(back, prefs_win->width, prefs_win->height);
     return prefs_win;
 }
