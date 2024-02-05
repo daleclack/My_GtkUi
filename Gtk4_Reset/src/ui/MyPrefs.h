@@ -15,4 +15,6 @@ void my_prefs_start_scan(MyPrefs *self);
 
 void my_prefs_first_load(MyPrefs *self);
 
+DockPos my_prefs_get_dock_pos(MyPrefs *self);
+
 MyPrefs *my_prefs_new(GtkWidget *back);

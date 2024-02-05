@@ -58,6 +58,7 @@ struct _MyPrefs
     int current_folder_index, current_image_index; // Index of images
     DockPos curr_dock_pos;                         // Dock Position
     gboolean panel_mode;                           // Whether panel mode is activated
+    DockPos dock_pos;                              // Dock Position
 };
 
 G_DEFINE_TYPE(MyPrefs, my_prefs, GTK_TYPE_WINDOW)
@@ -401,6 +402,7 @@ static void my_prefs_load_config(MyPrefs *self)
         self->height = data["height"];
         self->current_folder_index = data["folder_index"];
         self->current_image_index = data["image_index"];
+        self->dock_pos = data["position"];
     }
     else
     {
@@ -409,6 +411,7 @@ static void my_prefs_load_config(MyPrefs *self)
         self->height = 576;
         self->current_folder_index = 0;
         self->current_image_index = 0;
+        self->dock_pos = DockPos::Pos_Left;
     }
     json_file.close();
 }
@@ -759,6 +762,20 @@ static void my_prefs_init(MyPrefs *self)
     // Set default mode for check button
     gtk_check_button_set_active(GTK_CHECK_BUTTON(self->mode_check), TRUE);
 
+    // Default value for dock position
+    switch (self->dock_pos)
+    {
+    case DockPos::Pos_Bottom:
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_bottom), TRUE);
+        break;
+    case DockPos::Pos_Left:
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_left), TRUE);
+        break;
+    case DockPos::Pos_Right:
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_right), TRUE);
+        break;
+    }
+
     // Set Child
     gtk_window_set_child(GTK_WINDOW(self), self->stack_box);
 
@@ -792,6 +809,12 @@ void my_prefs_start_scan(MyPrefs *self)
 {
     // Add timer to scan the list
     g_timeout_add(1, scan_func, self);
+}
+
+// Get Dock position
+DockPos my_prefs_get_dock_pos(MyPrefs *self)
+{
+    return self->dock_pos;
 }
 
 MyPrefs *my_prefs_new(GtkWidget *back)

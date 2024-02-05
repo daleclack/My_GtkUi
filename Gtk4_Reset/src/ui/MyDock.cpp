@@ -13,8 +13,8 @@ struct _MyDock
     GtkBox parent_instance;
     GtkWindow *parent_win;
     GtkBuilder *dock_builder; // Main builder
-    GtkWidget *dock_box, *main_box, *finder_box,
-        *dock_left, *icons_sw, *main_overlay; // Dock, finder
+    GtkWidget *dock_box, *main_box, *finder_box, *icons_box,
+        *dock_left, *dock_right, *dock_bottom, *icons_sw, *main_overlay; // Dock, finder
     GtkWidget *main_pic, *finder;
     GtkWidget *btnlaunch, *launchpad_stack, *default_page, *apps_grid, // launchpad
         *launchpad_page, *apps_stack, *default_box, *addon_box,
@@ -154,7 +154,10 @@ static void my_dock_init(MyDock *self)
     self->main_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "main_box"));
     self->finder_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "finder_box"));
     self->dock_left = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "dock_left"));
+    self->dock_right = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "dock_right"));
+    self->dock_bottom = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "dock_bottom"));
     self->icons_sw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "icons_sw"));
+    self->icons_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "icons_box"));
     self->btnlaunch = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnlaunch"));
     self->btnfiles = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnfiles"));
     self->image_file = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_file"));
@@ -227,24 +230,49 @@ static void my_dock_init(MyDock *self)
     // g_object_unref(pixbuf);
     // g_object_unref(sized);
 
+    // Create prefs window
+    self->prefs_win = my_prefs_new(self->main_pic);
+
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
     gtk_box_append(GTK_BOX(self->finder_box), self->finder);
 
-    // Pack widgets
-    // Dock position and mode, will be changable soon
-    gtk_widget_set_vexpand(self->icons_sw, TRUE);
-    gtk_widget_set_valign(self->icons_sw, GTK_ALIGN_FILL);
-    gtk_widget_set_valign(self->dock_box, GTK_ALIGN_FILL);
-    gtk_box_append(GTK_BOX(self->dock_left), self->dock_box);
+    // Pack widgets for dock
+
+    // Dock position and mode
+    DockPos dock_pos = my_prefs_get_dock_pos(self->prefs_win);
+    switch (dock_pos)
+    {
+    case DockPos::Pos_Left:
+        gtk_widget_set_vexpand(self->icons_sw, TRUE);
+        gtk_widget_set_valign(self->icons_sw, GTK_ALIGN_FILL);
+        gtk_widget_set_valign(self->dock_box, GTK_ALIGN_FILL);
+        gtk_box_append(GTK_BOX(self->dock_left), self->dock_box);
+        break;
+    case DockPos::Pos_Right:
+        gtk_widget_set_vexpand(self->icons_sw, TRUE);
+        gtk_widget_set_valign(self->icons_sw, GTK_ALIGN_FILL);
+        gtk_widget_set_valign(self->dock_box, GTK_ALIGN_FILL);
+        gtk_box_append(GTK_BOX(self->dock_right), self->dock_box);
+        break;
+    case DockPos::Pos_Bottom:
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(self->dock_box),
+                                       GTK_ORIENTATION_HORIZONTAL);
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(self->icons_box),
+                                       GTK_ORIENTATION_HORIZONTAL);
+        gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(self->icons_sw),
+            GTK_POLICY_AUTOMATIC, GTK_POLICY_NEVER);
+        gtk_widget_set_hexpand(self->icons_sw, TRUE);
+        gtk_widget_set_halign(self->icons_sw, GTK_ALIGN_FILL);
+        gtk_widget_set_halign(self->dock_box, GTK_ALIGN_FILL);
+        gtk_box_append(GTK_BOX(self->dock_bottom), self->dock_box);
+        break;
+    }
 
     // The Main widget, for background
     gtk_overlay_set_child(GTK_OVERLAY(self->main_overlay), self->main_pic);
     gtk_overlay_add_overlay(GTK_OVERLAY(self->main_overlay), self->main_box);
     gtk_box_append(GTK_BOX(self), self->main_overlay);
-
-    // Create prefs window
-    self->prefs_win = my_prefs_new(self->main_pic);
 
     // Link Signals
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
