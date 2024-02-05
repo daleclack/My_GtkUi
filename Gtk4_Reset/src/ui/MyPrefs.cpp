@@ -197,6 +197,7 @@ static void images_list_default(GListStore *store1)
 
 static void update_images_list(MyPrefs *prefs1)
 {
+    GtkDirectoryList *dir_list = prefs1->file_list;
     // if the store is not empty, clear it
     if (g_list_model_get_n_items(G_LIST_MODEL(prefs1->images_list)))
     {
@@ -204,13 +205,13 @@ static void update_images_list(MyPrefs *prefs1)
     }
 
     // Iterate the objects and add to the list
-    for (int i = 0; i < g_list_model_get_n_items(G_LIST_MODEL(prefs1->file_list)); i++)
+    for (int i = 0; i < g_list_model_get_n_items(G_LIST_MODEL(dir_list)); i++)
     {
         if (mime_type_supported())
         {
             // Get file info
             GFileInfo *info = G_FILE_INFO(g_list_model_get_item(
-                G_LIST_MODEL(prefs1->file_list), i));
+                G_LIST_MODEL(dir_list), i));
             const char *content_type = g_file_info_get_content_type(info);
 
             // Append image file info to the list
@@ -230,7 +231,7 @@ static void update_images_list(MyPrefs *prefs1)
         {
             // Get file info
             GFileInfo *info = G_FILE_INFO(g_list_model_get_item(
-                G_LIST_MODEL(prefs1->file_list), i));
+                G_LIST_MODEL(dir_list), i));
             const char *content_type = g_file_info_get_content_type(info);
             char *pattern = g_strdup_printf("*%s", content_type);
 
@@ -615,6 +616,7 @@ void my_prefs_first_load(MyPrefs *self)
     // File name and properties
     const char *folder_name = my_item_get_path(MY_ITEM(folder_item));
     gboolean is_internal = my_item_get_internal(MY_ITEM(folder_item));
+    // g_print("%s", folder_name);
 
     if (is_internal)
     {
@@ -636,29 +638,32 @@ void my_prefs_first_load(MyPrefs *self)
     auto item = gtk_single_selection_get_selected_item(self->image_select);
 
     // File name and properties
-    const char *file_name = my_item_get_path(MY_ITEM(item));
-    is_internal = my_item_get_internal(MY_ITEM(item));
-    // Update image
-    if (is_internal)
+    if (item != NULL)
     {
-        // For image which is internal
-        switch (file_name[1])
+        const char *file_name = my_item_get_path(MY_ITEM(item));
+        is_internal = my_item_get_internal(MY_ITEM(item));
+        // Update image
+        if (is_internal)
         {
-        case '1':
-            update_resource_image(self, "/org/gtk/daleclack/final_approach.png");
-            break;
-        case '2':
-            update_internal_image(self, img7);
-            break;
-        case '3':
-            update_internal_image(self, winpe);
-            break;
+            // For image which is internal
+            switch (file_name[1])
+            {
+            case '1':
+                update_resource_image(self, "/org/gtk/daleclack/final_approach.png");
+                break;
+            case '2':
+                update_internal_image(self, img7);
+                break;
+            case '3':
+                update_internal_image(self, winpe);
+                break;
+            }
         }
-    }
-    else
-    {
-        // For image which is outside
-        update_external_image(self, file_name);
+        else
+        {
+            // For image which is outside
+            update_external_image(self, file_name);
+        }
     }
 }
 
@@ -791,6 +796,8 @@ static void my_prefs_init(MyPrefs *self)
                            self->spin_height, "sensitive", G_BINDING_DEFAULT);
     g_object_bind_property(self->radio_custom, "active",
                            self->spin_width, "sensitive", G_BINDING_DEFAULT);
+    g_object_bind_property(self->radio_custom, "active",
+                           self->btnGet, "sensitive", G_BINDING_DEFAULT);
     g_object_bind_property(self->radio_default, "active",
                            self->sizes_drop, "sensitive", G_BINDING_DEFAULT);
 
