@@ -301,7 +301,7 @@ static void update_resource_image(MyPrefs *prefs, const char *resource_id)
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource(resource_id, NULL);
     GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, prefs->width,
                                                prefs->height, GDK_INTERP_BILINEAR);
-    GdkTexture *texture = gdk_texture_new_for_pixbuf(pixbuf);
+    GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
     // gtk_picture_set_content_fit(GTK_PICTURE(prefs->background), GTK_CONTENT_FIT_FILL);
     gtk_picture_set_paintable(GTK_PICTURE(prefs->background), GDK_PAINTABLE(texture));
     // gtk_picture_set_pixbuf(GTK_PICTURE(prefs->background), pixbuf);
@@ -314,7 +314,7 @@ static void update_internal_image(MyPrefs *prefs, const char **id)
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_xpm_data(id);
     GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, prefs->width,
                                                prefs->height, GDK_INTERP_BILINEAR);
-    GdkTexture *texture = gdk_texture_new_for_pixbuf(pixbuf);
+    GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
     // gtk_picture_set_content_fit(GTK_PICTURE(prefs->background), GTK_CONTENT_FIT_FILL);
     gtk_picture_set_paintable(GTK_PICTURE(prefs->background), GDK_PAINTABLE(texture));
     // gtk_picture_set_pixbuf(GTK_PICTURE(prefs->background), pixbuf);
@@ -332,7 +332,7 @@ static void update_external_image(MyPrefs *prefs, const char *file_name)
         // Load the image with pixbuf
         GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, prefs->width,
                                                    prefs->height, GDK_INTERP_BILINEAR);
-        GdkTexture *texture = gdk_texture_new_for_pixbuf(pixbuf);
+        GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
         gtk_picture_set_paintable(GTK_PICTURE(prefs->background), GDK_PAINTABLE(texture));
         // gtk_picture_set_pixbuf(GTK_PICTURE(prefs->background), sized);
         g_object_unref(sized);
@@ -385,6 +385,135 @@ static void btnremove_clicked(GtkWidget *widget, MyPrefs *prefs)
     {
         g_list_store_remove(prefs->folders_list, index);
     }
+}
+
+// Load config from the json config file
+static void my_prefs_load_config(MyPrefs *self)
+{
+    // Open config from json file
+    std::fstream json_file;
+    json_file.open("my_gtkui.json", std::ios_base::in);
+    if (json_file.is_open())
+    {
+        // Load data from json
+        json data = json::parse(json_file);
+        self->width = data["width"];
+        self->height = data["height"];
+        self->current_folder_index = data["folder_index"];
+        self->current_image_index = data["image_index"];
+    }
+    else
+    {
+        // Default window size
+        self->width = 1024;
+        self->height = 576;
+        self->current_folder_index = 0;
+        self->current_image_index = 0;
+    }
+    json_file.close();
+}
+
+// Save configs
+static void my_prefs_save_config(MyPrefs *self)
+{
+    int width = 1280, height = 720;
+    // Get size config
+    gboolean default_actived;
+
+    // Check the size config type
+    default_actived = gtk_check_button_get_active(GTK_CHECK_BUTTON(self->radio_default));
+
+    if (default_actived)
+    {
+        // Get default sizes
+        guint index = gtk_drop_down_get_selected(GTK_DROP_DOWN(self->sizes_drop));
+        switch (index)
+        {
+        case 0:
+            width = 640;
+            height = 360;
+            break;
+        case 1:
+            width = 800;
+            height = 450;
+            break;
+        case 2:
+            width = 1024;
+            height = 576;
+            break;
+        case 3:
+            width = 1280;
+            height = 720;
+            break;
+        case 4:
+            width = 1366;
+            height = 768;
+            break;
+        }
+    }
+    else
+    {
+        width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_width));
+        height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
+    }
+
+    // Get the config of backgrounds
+    guint folder_index, image_index;
+    folder_index = gtk_single_selection_get_selected(
+        GTK_SINGLE_SELECTION(self->folders_select));
+    image_index = gtk_single_selection_get_selected(
+        GTK_SINGLE_SELECTION(self->image_select));
+
+    // Get Dock Position config
+    if (gtk_check_button_get_active(
+            GTK_CHECK_BUTTON(self->radio_bottom)))
+    {
+        self->curr_dock_pos = DockPos::Pos_Bottom;
+    }
+
+    if (gtk_check_button_get_active(
+            GTK_CHECK_BUTTON(self->radio_left)))
+    {
+        self->curr_dock_pos = DockPos::Pos_Left;
+    }
+
+    if (gtk_check_button_get_active(
+            GTK_CHECK_BUTTON(self->radio_right)))
+    {
+        self->curr_dock_pos = DockPos::Pos_Right;
+    }
+
+    // Get Panel mode config
+    self->panel_mode = gtk_check_button_get_active(
+        GTK_CHECK_BUTTON(self->mode_check));
+
+    // Open file for json data
+    std::fstream outfile;
+    outfile.open("my_gtkui.json", std::ios_base::out);
+
+    if (outfile.is_open())
+    {
+        // Create json data
+        json data = json::parse(R"(
+            {
+                "background_folders": [],
+                "folder_index": 0,
+                "height": 576,
+                "image_index": 0,
+                "panel_mode": 1,
+                "position": 0,
+                "width": 1024
+            }
+        )");
+        data["folder_index"] = folder_index;
+        data["height"] = height;
+        data["image_index"] = image_index;
+        data["panel_mode"] = self->panel_mode;
+        data["position"] = self->curr_dock_pos;
+        data["width"] = width;
+        outfile << data;
+    }
+    outfile.close();
 }
 
 // Scan the selection of two column views
@@ -458,138 +587,82 @@ static gboolean scan_func(gpointer data)
                 break;
             }
             prefs->current_image_index = image_item_index;
+            my_prefs_save_config(prefs);
         }
         else
         {
             // For image which is outside
             update_external_image(prefs, file_name);
             prefs->current_image_index = image_item_index;
+            my_prefs_save_config(prefs);
         }
     }
     return TRUE;
+}
+
+void my_prefs_first_load(MyPrefs *self)
+{
+    gtk_widget_set_size_request(self->background, self->width, self->height);
+    // Get the selection of folders view
+    // The model and item of folders view
+    gtk_single_selection_set_selected(
+        self->folders_select, self->current_folder_index);
+    auto folder_item = gtk_single_selection_get_selected_item(self->folders_select);
+
+    // File name and properties
+    const char *folder_name = my_item_get_path(MY_ITEM(folder_item));
+    gboolean is_internal = my_item_get_internal(MY_ITEM(folder_item));
+
+    if (is_internal)
+    {
+        // Update image list to default
+        images_list_default(self->images_list);
+    }
+    else
+    {
+        // Update image list by the folder selection
+        self->file = g_file_new_for_path(folder_name);
+        gtk_directory_list_set_file(self->file_list, self->file);
+        update_images_list(self);
+        g_object_unref(self->file);
+    }
+
+    // Get the selected image item
+    gtk_single_selection_set_selected(
+        self->image_select, self->current_image_index);
+    auto item = gtk_single_selection_get_selected_item(self->image_select);
+
+    // File name and properties
+    const char *file_name = my_item_get_path(MY_ITEM(item));
+    is_internal = my_item_get_internal(MY_ITEM(item));
+    // Update image
+    if (is_internal)
+    {
+        // For image which is internal
+        switch (file_name[1])
+        {
+        case '1':
+            update_resource_image(self, "/org/gtk/daleclack/final_approach.png");
+            break;
+        case '2':
+            update_internal_image(self, img7);
+            break;
+        case '3':
+            update_internal_image(self, winpe);
+            break;
+        }
+    }
+    else
+    {
+        // For image which is outside
+        update_external_image(self, file_name);
+    }
 }
 
 // static void my_prefs_close_request(GtkWindow *self, gpointer user_data)
 // {
 //     gtk_widget_set_visible(GTK_WIDGET(self), FALSE);
 // }
-
-// Load config from the json config file
-static void my_prefs_load_config(MyPrefs *self)
-{
-    // Default values to load the internal image
-    self->current_folder_index = -1;
-    self->current_image_index = -1;
-
-    // Open config from json file
-    std::fstream json_file;
-    json_file.open("my_gtkui.json", std::ios_base::in);
-    if (json_file.is_open())
-    {
-        // Load data from json
-        json data = json::parse(json_file);
-        self->width = data["width"];
-        self->height = data["height"];
-    }
-    else
-    {
-        // Default window size
-        self->width = 1024;
-        self->height = 576;
-    }
-    json_file.close();
-}
-
-// Save configs
-static void my_prefs_save_config(MyPrefs *self)
-{
-    int width = 1280, height = 720;
-    // Get size config
-    gboolean default_actived;
-
-    // Check the size config type
-    default_actived = gtk_check_button_get_active(GTK_CHECK_BUTTON(self->radio_default));
-
-    if (default_actived)
-    {
-        // Get default sizes
-        guint index = gtk_drop_down_get_selected(GTK_DROP_DOWN(self->sizes_drop));
-        switch (index)
-        {
-        case 0:
-            width = 640;
-            height = 360;
-            break;
-        case 1:
-            width = 800;
-            height = 450;
-            break;
-        case 2:
-            width = 1024;
-            height = 576;
-            break;
-        case 3:
-            width = 1280;
-            height = 720;
-            break;
-        case 4:
-            width = 1366;
-            height = 768;
-            break;
-        }
-    }
-    else
-    {
-        width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_width));
-        height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
-    }
-
-    // Get Dock Position config
-    if (gtk_check_button_get_active(
-            GTK_CHECK_BUTTON(self->radio_bottom)))
-    {
-        self->curr_dock_pos = DockPos::Pos_Bottom;
-    }
-
-    if (gtk_check_button_get_active(
-            GTK_CHECK_BUTTON(self->radio_left)))
-    {
-        self->curr_dock_pos = DockPos::Pos_Left;
-    }
-
-    if (gtk_check_button_get_active(
-            GTK_CHECK_BUTTON(self->radio_right)))
-    {
-        self->curr_dock_pos = DockPos::Pos_Right;
-    }
-
-    // Get Panel mode config
-    self->panel_mode = gtk_check_button_get_active(
-        GTK_CHECK_BUTTON(self->mode_check));
-
-    // Open file for json data
-    std::fstream outfile;
-    outfile.open("my_gtkui.json", std::ios_base::out);
-
-    if (outfile.is_open())
-    {
-        // Create json data
-        json data = json::parse(R"(
-            {
-                "width":1280,
-                "height":720,
-                "dock_pos":0,
-                "panel_mode":1
-            }
-        )");
-        data["width"] = width;
-        data["height"] = height;
-        data["dock_pos"] = self->curr_dock_pos;
-        data["panel_mode"] = self->panel_mode;
-        outfile << data;
-    }
-    outfile.close();
-}
 
 // Apply config ==> Save the config file
 static void btnapply_clicked(GtkWidget *widget, MyPrefs *self)
@@ -689,8 +762,12 @@ static void my_prefs_init(MyPrefs *self)
     // Set Child
     gtk_window_set_child(GTK_WINDOW(self), self->stack_box);
 
-    // Add timer to scan the list
-    g_timeout_add(1, scan_func, self);
+    // Update Default selection of images
+
+    // Default values to load the internal image
+    // This value for the first scan
+    // self->current_folder_index = -1;
+    // self->current_image_index = -1;
 
     // Bind properties for radio buttons and other widgets
     g_object_bind_property(self->radio_custom, "active",
@@ -711,6 +788,12 @@ static void my_prefs_class_init(MyPrefsClass *klass)
 {
 }
 
+void my_prefs_start_scan(MyPrefs *self)
+{
+    // Add timer to scan the list
+    g_timeout_add(1, scan_func, self);
+}
+
 MyPrefs *my_prefs_new(GtkWidget *back)
 {
     // Create Prefs widget
@@ -719,5 +802,6 @@ MyPrefs *my_prefs_new(GtkWidget *back)
     // The size for the background widget
     prefs_win->background = back;
     gtk_widget_set_size_request(back, prefs_win->width, prefs_win->height);
+    gtk_picture_set_content_fit(GTK_PICTURE(back), GTK_CONTENT_FIT_FILL);
     return prefs_win;
 }

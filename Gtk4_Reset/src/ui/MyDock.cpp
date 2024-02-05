@@ -220,7 +220,6 @@ static void my_dock_init(MyDock *self)
     // Set default background
     self->main_pic = gtk_picture_new();
     // gtk_widget_set_size_request(self->main_pic, 1024, 576);
-    gtk_picture_set_content_fit(GTK_PICTURE(self->main_pic), GTK_CONTENT_FIT_FILL);
     // GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/final_approach.png", NULL);
     // GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
     // GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
@@ -287,6 +286,9 @@ static void my_dock_init(MyDock *self)
     gtk_widget_set_halign(self->apps_grid, GTK_ALIGN_FILL);
     gtk_widget_set_valign(self->apps_grid, GTK_ALIGN_FILL);
     gtk_grid_attach(GTK_GRID(child), self->apps_switcher, 1, 2, 1, 1);
+
+    my_prefs_first_load(self->prefs_win);
+    my_prefs_start_scan(self->prefs_win);
 
     // Add Style to launchpad page
     gtk_widget_add_css_class(self->launchpad_page, "dock_style");
