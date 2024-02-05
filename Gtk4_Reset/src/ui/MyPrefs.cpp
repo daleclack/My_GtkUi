@@ -26,6 +26,8 @@ struct _MyPrefs
 
     // Widget for dock position and mode
     GtkWidget *mode_check;
+    GtkWidget *radio_left, *radio_right, *radio_bottom;
+    GtkWidget *btnapply1;
 
     // Widget for background selection
     GtkWidget *folders_view, *images_view;
@@ -51,10 +53,11 @@ struct _MyPrefs
     GtkListItemFactory *factory_pics_image;
     GtkListItemFactory *factory_pics_string;
 
-    // Pixbufs
-    GdkPixbuf *pixbuf, *sized;
-    int width, height;
-    int current_folder_index, current_image_index;
+    GdkPixbuf *pixbuf, *sized;                     // Pixbufs
+    int width, height;                             // The Size of window
+    int current_folder_index, current_image_index; // Index of images
+    DockPos curr_dock_pos;                         // Dock Position
+    gboolean panel_mode;                           // Whether panel mode is activated
 };
 
 G_DEFINE_TYPE(MyPrefs, my_prefs, GTK_TYPE_WINDOW)
@@ -541,6 +544,29 @@ static void my_prefs_save_config(MyPrefs *self)
         height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
     }
 
+    // Get Dock Position config
+    if (gtk_check_button_get_active(
+            GTK_CHECK_BUTTON(self->radio_bottom)))
+    {
+        self->curr_dock_pos = DockPos::Pos_Bottom;
+    }
+
+    if (gtk_check_button_get_active(
+            GTK_CHECK_BUTTON(self->radio_left)))
+    {
+        self->curr_dock_pos = DockPos::Pos_Left;
+    }
+
+    if (gtk_check_button_get_active(
+            GTK_CHECK_BUTTON(self->radio_right)))
+    {
+        self->curr_dock_pos = DockPos::Pos_Right;
+    }
+
+    // Get Panel mode config
+    self->panel_mode = gtk_check_button_get_active(
+        GTK_CHECK_BUTTON(self->mode_check));
+
     // Open file for json data
     std::fstream outfile;
     outfile.open("my_gtkui.json", std::ios_base::out);
@@ -551,11 +577,15 @@ static void my_prefs_save_config(MyPrefs *self)
         json data = json::parse(R"(
             {
                 "width":1280,
-                "height":720
+                "height":720,
+                "dock_pos":0,
+                "panel_mode":1
             }
         )");
         data["width"] = width;
         data["height"] = height;
+        data["dock_pos"] = self->curr_dock_pos;
+        data["panel_mode"] = self->panel_mode;
         outfile << data;
     }
     outfile.close();
@@ -584,6 +614,7 @@ static void my_prefs_init(MyPrefs *self)
     // Initalize window
     gtk_window_set_default_size(GTK_WINDOW(self), 800, 450);
     gtk_window_set_icon_name(GTK_WINDOW(self), "My_GtkUI");
+    gtk_window_set_title(GTK_WINDOW(self), "Preferences");
 
     // Create builder
     self->prefs_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/prefs_stack.ui");
@@ -600,6 +631,10 @@ static void my_prefs_init(MyPrefs *self)
     self->spin_width = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "spin_width"));
     self->btnGet = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "btnGet"));
     self->btnapply = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "btnapply"));
+    self->radio_bottom = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "radio_bottom"));
+    self->radio_left = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "radio_left"));
+    self->radio_right = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "radio_right"));
+    self->btnapply1 = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "btnapply1"));
 
     // Initalize folder and image views and append to the box
     gtk_widget_set_margin_bottom(self->back_page, 20);
@@ -669,6 +704,7 @@ static void my_prefs_init(MyPrefs *self)
     g_signal_connect(self->btn_add, "clicked", G_CALLBACK(btnadd_clicked), self);
     g_signal_connect(self->btn_remove, "clicked", G_CALLBACK(btnremove_clicked), self);
     g_signal_connect(self->btnapply, "clicked", G_CALLBACK(btnapply_clicked), self);
+    g_signal_connect(self->btnapply1, "clicked", G_CALLBACK(btnapply_clicked), self);
 }
 
 static void my_prefs_class_init(MyPrefsClass *klass)
