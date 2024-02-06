@@ -518,7 +518,7 @@ static void my_prefs_save_config(MyPrefs *self)
                 "width": 1024
             }
         )");
-        g_print("%s", self->image_file_name);
+        // g_print("%s", self->image_file_name);
         data["folder_index"] = folder_index;
         data["background"] = std::string(self->image_file_name);
         data["height"] = height;
@@ -646,7 +646,7 @@ void my_prefs_first_load(MyPrefs *self)
         // Update image list by the folder selection
         do
         {
-            g_print("%s", folder_name);
+            // g_print("%s", folder_name);
             self->file = g_file_new_for_path(folder_name);
             GtkDirectoryList *dir_list = gtk_directory_list_new("", self->file);
             gtk_directory_list_set_file(self->file_list, self->file);
