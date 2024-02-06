@@ -116,6 +116,8 @@ static void padset_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->prefs_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->prefs_win));
     }
+    my_prefs_first_load(dock->prefs_win);
+    my_prefs_start_scan(dock->prefs_win);
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
     btnlaunch_clicked(NULL, dock);
 }

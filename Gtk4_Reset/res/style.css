@@ -19,6 +19,21 @@
     background-color: alpha(white, 0.5);
 }
 
+.dock_style button.toggle {
+    background-color: white;
+    border-color: transparent;
+    color: black;
+}
+
+.dock_style button.toggle:checked {
+    background-color: rgba(0, 106, 255, 0.5);
+    color: white;
+}
+
+.dock_style .stackswitcher{
+    background-color: transparent;
+}
+
 /* Background color in the box should be transparent*/
 .default_style box {
     background-color: transparent;
@@ -47,10 +62,11 @@
 }
 
 .default_style popover contents {
-    background-color: alpha(white, 0.5);
+    background-color: alpha(white, 0.7);
 }
 
 popover contents {
-    background-color: alpha(white, 0.5);
+    background-color: alpha(white, 0.7);
+    border-color: transparent;
     color: black;
 }
