@@ -233,7 +233,8 @@ static void my_dock_init(MyDock *self)
     // g_object_unref(sized);
 
     // Create prefs window
-    self->prefs_win = my_prefs_new(self->main_pic);
+    self->prefs_win = my_prefs_new();
+    my_prefs_set_background(self->prefs_win, self->main_pic);
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);

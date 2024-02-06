@@ -56,6 +56,7 @@ struct _MyPrefs
     GdkPixbuf *pixbuf, *sized;                     // Pixbufs
     int width, height;                             // The Size of window
     int current_folder_index, current_image_index; // Index of images
+    char image_file_name[PATH_MAX];                // File name of the image
     DockPos curr_dock_pos;                         // Dock Position
     gboolean panel_mode;                           // Whether panel mode is activated
     DockPos dock_pos;                              // Dock Position
@@ -339,6 +340,9 @@ static void update_external_image(MyPrefs *prefs, const char *file_name)
         // gtk_picture_set_pixbuf(GTK_PICTURE(prefs->background), sized);
         g_object_unref(sized);
         g_object_unref(pixbuf);
+
+        // Load current file name
+        strncpy(prefs->image_file_name, file_name, PATH_MAX);
     }
     else
     {
@@ -397,6 +401,7 @@ static void my_prefs_load_config(MyPrefs *self)
     json_file.open("my_gtkui.json", std::ios_base::in);
     if (json_file.is_open())
     {
+        std::string back_filename;
         // Load data from json
         json data = json::parse(json_file);
         self->width = data["width"];
@@ -404,6 +409,8 @@ static void my_prefs_load_config(MyPrefs *self)
         self->current_folder_index = data["folder_index"];
         self->current_image_index = data["image_index"];
         self->dock_pos = data["position"];
+        back_filename = data["background"];
+        strncpy(self->image_file_name, back_filename.c_str(), PATH_MAX);
     }
     else
     {
@@ -413,6 +420,7 @@ static void my_prefs_load_config(MyPrefs *self)
         self->current_folder_index = 0;
         self->current_image_index = 0;
         self->dock_pos = DockPos::Pos_Left;
+        strncpy(self->image_file_name, ":1", PATH_MAX);
     }
     json_file.close();
 }
@@ -501,6 +509,7 @@ static void my_prefs_save_config(MyPrefs *self)
         json data = json::parse(R"(
             {
                 "background_folders": [],
+                "background":"",
                 "folder_index": 0,
                 "height": 576,
                 "image_index": 0,
@@ -509,7 +518,9 @@ static void my_prefs_save_config(MyPrefs *self)
                 "width": 1024
             }
         )");
+        g_print("%s", self->image_file_name);
         data["folder_index"] = folder_index;
+        data["background"] = std::string(self->image_file_name);
         data["height"] = height;
         data["image_index"] = image_index;
         data["panel_mode"] = self->panel_mode;
@@ -518,6 +529,38 @@ static void my_prefs_save_config(MyPrefs *self)
         outfile << data;
     }
     outfile.close();
+}
+
+static void load_image(const char *file_name, int image_item_index,
+                       gboolean is_internal, MyPrefs *prefs)
+{
+    // Update image
+    if (is_internal)
+    {
+        // For image which is internal
+        switch (file_name[1])
+        {
+        case '1':
+            update_resource_image(prefs, "/org/gtk/daleclack/final_approach.png");
+            break;
+        case '2':
+            update_internal_image(prefs, img7);
+            break;
+        case '3':
+            update_internal_image(prefs, winpe);
+            break;
+        }
+        prefs->current_image_index = image_item_index;
+        strncpy(prefs->image_file_name, file_name, PATH_MAX);
+        my_prefs_save_config(prefs);
+    }
+    else
+    {
+        // For image which is outside
+        update_external_image(prefs, file_name);
+        prefs->current_image_index = image_item_index;
+        my_prefs_save_config(prefs);
+    }
 }
 
 // Scan the selection of two column views
@@ -574,32 +617,7 @@ static gboolean scan_func(gpointer data)
     // Check weather the selection changed
     if (image_item_index != prefs->current_image_index)
     {
-        // Update image
-        if (is_internal)
-        {
-            // For image which is internal
-            switch (file_name[1])
-            {
-            case '1':
-                update_resource_image(prefs, "/org/gtk/daleclack/final_approach.png");
-                break;
-            case '2':
-                update_internal_image(prefs, img7);
-                break;
-            case '3':
-                update_internal_image(prefs, winpe);
-                break;
-            }
-            prefs->current_image_index = image_item_index;
-            my_prefs_save_config(prefs);
-        }
-        else
-        {
-            // For image which is outside
-            update_external_image(prefs, file_name);
-            prefs->current_image_index = image_item_index;
-            my_prefs_save_config(prefs);
-        }
+        load_image(file_name, image_item_index, is_internal, prefs);
     }
     return TRUE;
 }
@@ -634,8 +652,7 @@ void my_prefs_first_load(MyPrefs *self)
             gtk_directory_list_set_file(self->file_list, self->file);
             update_images_list(self);
             g_object_unref(self->file);
-        }while (g_list_model_get_n_items(G_LIST_MODEL(self->images_list)) == 0);
-        
+        } while (g_list_model_get_n_items(G_LIST_MODEL(self->images_list)) == 0);
     }
 
     // Get the selected image item
@@ -838,14 +855,28 @@ DockPos my_prefs_get_dock_pos(MyPrefs *self)
     return self->dock_pos;
 }
 
-MyPrefs *my_prefs_new(GtkWidget *back)
+void my_prefs_set_background(MyPrefs *prefs_win, GtkWidget *back)
 {
-    // Create Prefs widget
-    MyPrefs *prefs_win = MY_PREFS(g_object_new(my_prefs_get_type(), NULL));
-
     // The size for the background widget
     prefs_win->background = back;
     gtk_widget_set_size_request(back, prefs_win->width, prefs_win->height);
     gtk_picture_set_content_fit(GTK_PICTURE(back), GTK_CONTENT_FIT_FILL);
-    return prefs_win;
+
+    // Load default image
+    gboolean is_internal;
+    if (prefs_win->image_file_name[0] == ':')
+    {
+        is_internal = TRUE;
+    }
+    else
+    {
+        is_internal = FALSE;
+    }
+    load_image(prefs_win->image_file_name, prefs_win->current_image_index, is_internal, prefs_win);
+}
+
+MyPrefs *my_prefs_new()
+{
+    // Create Prefs widget
+    return MY_PREFS(g_object_new(my_prefs_get_type(), NULL));
 }

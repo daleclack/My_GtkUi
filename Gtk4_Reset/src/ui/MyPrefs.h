@@ -17,4 +17,6 @@ void my_prefs_first_load(MyPrefs *self);
 
 DockPos my_prefs_get_dock_pos(MyPrefs *self);
 
-MyPrefs *my_prefs_new(GtkWidget *back);
+void my_prefs_set_background(MyPrefs *prefs_win, GtkWidget *back);
+
+MyPrefs *my_prefs_new();
