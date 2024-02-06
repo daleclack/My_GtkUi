@@ -133,6 +133,8 @@ static void btnset_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->prefs_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->prefs_win));
     }
+    my_prefs_first_load(dock->prefs_win);
+    my_prefs_start_scan(dock->prefs_win);
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
 }
 
@@ -314,9 +316,6 @@ static void my_dock_init(MyDock *self)
     gtk_widget_set_halign(self->apps_grid, GTK_ALIGN_FILL);
     gtk_widget_set_valign(self->apps_grid, GTK_ALIGN_FILL);
     gtk_grid_attach(GTK_GRID(child), self->apps_switcher, 1, 2, 1, 1);
-
-    my_prefs_first_load(self->prefs_win);
-    my_prefs_start_scan(self->prefs_win);
 
     // Add Style to launchpad page
     gtk_widget_add_css_class(self->launchpad_page, "dock_style");

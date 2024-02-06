@@ -626,45 +626,51 @@ void my_prefs_first_load(MyPrefs *self)
     else
     {
         // Update image list by the folder selection
-        self->file = g_file_new_for_path(folder_name);
-        gtk_directory_list_set_file(self->file_list, self->file);
-        update_images_list(self);
-        g_object_unref(self->file);
+        do
+        {
+            g_print("%s", folder_name);
+            self->file = g_file_new_for_path(folder_name);
+            GtkDirectoryList *dir_list = gtk_directory_list_new("", self->file);
+            gtk_directory_list_set_file(self->file_list, self->file);
+            update_images_list(self);
+            g_object_unref(self->file);
+        }while (g_list_model_get_n_items(G_LIST_MODEL(self->images_list)) == 0);
+        
     }
 
     // Get the selected image item
     gtk_single_selection_set_selected(
         self->image_select, self->current_image_index);
-    auto item = gtk_single_selection_get_selected_item(self->image_select);
+    // auto item = gtk_single_selection_get_selected_item(self->image_select);
 
-    // File name and properties
-    if (item != NULL)
-    {
-        const char *file_name = my_item_get_path(MY_ITEM(item));
-        is_internal = my_item_get_internal(MY_ITEM(item));
-        // Update image
-        if (is_internal)
-        {
-            // For image which is internal
-            switch (file_name[1])
-            {
-            case '1':
-                update_resource_image(self, "/org/gtk/daleclack/final_approach.png");
-                break;
-            case '2':
-                update_internal_image(self, img7);
-                break;
-            case '3':
-                update_internal_image(self, winpe);
-                break;
-            }
-        }
-        else
-        {
-            // For image which is outside
-            update_external_image(self, file_name);
-        }
-    }
+    // // File name and properties
+    // if (item != NULL)
+    // {
+    //     const char *file_name = my_item_get_path(MY_ITEM(item));
+    //     is_internal = my_item_get_internal(MY_ITEM(item));
+    //     // Update image
+    //     if (is_internal)
+    //     {
+    //         // For image which is internal
+    //         switch (file_name[1])
+    //         {
+    //         case '1':
+    //             update_resource_image(self, "/org/gtk/daleclack/final_approach.png");
+    //             break;
+    //         case '2':
+    //             update_internal_image(self, img7);
+    //             break;
+    //         case '3':
+    //             update_internal_image(self, winpe);
+    //             break;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // For image which is outside
+    //         update_external_image(self, file_name);
+    //     }
+    // }
 }
 
 // static void my_prefs_close_request(GtkWindow *self, gpointer user_data)
@@ -749,8 +755,16 @@ static void my_prefs_init(MyPrefs *self)
     gtk_box_append(GTK_BOX(self->btns_box), self->btn_remove);
     gtk_box_append(GTK_BOX(self->back_page), self->btns_box);
 
+    // The model and item of folders view
+    gtk_single_selection_set_selected(
+        self->folders_select, self->current_folder_index);
+    auto folder_item = gtk_single_selection_get_selected_item(self->folders_select);
+
+    // File name and properties
+    const char *folder_name = my_item_get_path(MY_ITEM(folder_item));
+
     // Create file list
-    self->file = g_file_new_for_path(g_get_home_dir());
+    self->file = g_file_new_for_path(folder_name);
     self->file_list = gtk_directory_list_new(
         "standard::name,standard::display-name,standard::icon,standard::size,standard::content-type", self->file);
     g_object_unref(self->file);
