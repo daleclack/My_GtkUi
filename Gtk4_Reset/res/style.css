@@ -22,21 +22,26 @@
 /* Background color in the box should be transparent*/
 .default_style box {
     background-color: transparent;
+    color: black;
 }
 
 .default_style separator {
     background-color: transparent;
+    color: black;
 }
 
 .default_style grid {
     background-color: transparent;
+    color: black;
 }
 
 .default_style stackswitcher {
     color: transparent;
     background-color: transparent;
+    color: black;
 }
 
 .default_style gridview{
     background-color: transparent;
+    color: black;
 }
