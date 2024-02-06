@@ -41,7 +41,16 @@
     color: black;
 }
 
-.default_style gridview{
+.default_style gridview {
     background-color: transparent;
+    color: black;
+}
+
+.default_style popover contents {
+    background-color: alpha(white, 0.5);
+}
+
+popover contents {
+    background-color: alpha(white, 0.5);
     color: black;
 }

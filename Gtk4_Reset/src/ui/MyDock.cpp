@@ -353,6 +353,12 @@ static void my_dock_init(MyDock *self)
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->apps_view),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // // The style for context menu
+    // gtk_widget_add_css_class(self->context_menu, "default_style");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->context_menu),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 static void my_dock_class_init(MyDockClass *klass)
