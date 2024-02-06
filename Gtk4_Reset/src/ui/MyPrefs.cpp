@@ -428,47 +428,6 @@ static void my_prefs_load_config(MyPrefs *self)
 // Save configs
 static void my_prefs_save_config(MyPrefs *self)
 {
-    int width = 1280, height = 720;
-    // Get size config
-    gboolean default_actived;
-
-    // Check the size config type
-    default_actived = gtk_check_button_get_active(GTK_CHECK_BUTTON(self->radio_default));
-
-    if (default_actived)
-    {
-        // Get default sizes
-        guint index = gtk_drop_down_get_selected(GTK_DROP_DOWN(self->sizes_drop));
-        switch (index)
-        {
-        case 0:
-            width = 640;
-            height = 360;
-            break;
-        case 1:
-            width = 800;
-            height = 450;
-            break;
-        case 2:
-            width = 1024;
-            height = 576;
-            break;
-        case 3:
-            width = 1280;
-            height = 720;
-            break;
-        case 4:
-            width = 1366;
-            height = 768;
-            break;
-        }
-    }
-    else
-    {
-        width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_width));
-        height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
-    }
-
     // Get the config of backgrounds
     guint folder_index, image_index;
     folder_index = gtk_single_selection_get_selected(
@@ -521,11 +480,11 @@ static void my_prefs_save_config(MyPrefs *self)
         // g_print("%s", self->image_file_name);
         data["folder_index"] = folder_index;
         data["background"] = std::string(self->image_file_name);
-        data["height"] = height;
+        data["height"] = self->height;
         data["image_index"] = image_index;
         data["panel_mode"] = self->panel_mode;
         data["position"] = self->curr_dock_pos;
-        data["width"] = width;
+        data["width"] = self->width;
         outfile << data;
     }
     outfile.close();
@@ -698,6 +657,45 @@ void my_prefs_first_load(MyPrefs *self)
 // Apply config ==> Save the config file
 static void btnapply_clicked(GtkWidget *widget, MyPrefs *self)
 {
+    // Get size config
+    gboolean default_actived;
+
+    // Check the size config type
+    default_actived = gtk_check_button_get_active(GTK_CHECK_BUTTON(self->radio_default));
+
+    if (default_actived)
+    {
+        // Get default sizes
+        guint index = gtk_drop_down_get_selected(GTK_DROP_DOWN(self->sizes_drop));
+        switch (index)
+        {
+        case 0:
+            self->width = 640;
+            self->height = 360;
+            break;
+        case 1:
+            self->width = 800;
+            self->height = 450;
+            break;
+        case 2:
+            self->width = 1024;
+            self->height = 576;
+            break;
+        case 3:
+            self->width = 1280;
+            self->height = 720;
+            break;
+        case 4:
+            self->width = 1366;
+            self->height = 768;
+            break;
+        }
+    }
+    else
+    {
+        self->width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_width));
+        self->height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
+    }
     my_prefs_save_config(self);
 }
 
