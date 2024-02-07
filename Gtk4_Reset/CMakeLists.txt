@@ -46,8 +46,7 @@ set(RESOURCE_LIST
     STRIPBLANKS mine_menu.xml
     final_approach.png
     style.css
-    reset.css
-    dock_style.css
+    style_dark.css
     folder.svg
     folder-images.svg
     image_file.svg

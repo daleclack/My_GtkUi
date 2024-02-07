@@ -1,0 +1,72 @@
+/*
+您可以在这里输入任何 GTK+ 可识别的 CSS 规则。
+您可以点击上面的“暂停”按钮来暂时停用这个自定义 CSS。
+
+变更会立即应用到全局，影响整个应用程序。
+*/
+
+/* @import url("resource://org/gtk/daleclack/reset.css"); */
+
+.finder_style box {
+    background-color: alpha(white, 0.5);
+}
+
+.dock_style grid {
+    background-color: alpha(white, 0.5);
+}
+
+.dock_style box {
+    background-color: alpha(white, 0.5);
+}
+
+.dock_style button.toggle {
+    background-color: white;
+    border-color: transparent;
+    color: black;
+}
+
+.dock_style button.toggle:checked {
+    background-color: rgba(0, 106, 255, 0.5);
+    color: white;
+}
+
+.dock_style .stackswitcher{
+    background-color: transparent;
+}
+
+/* Background color in the box should be transparent*/
+.default_style box {
+    background-color: transparent;
+    color: black;
+}
+
+.default_style separator {
+    background-color: transparent;
+    color: black;
+}
+
+.default_style grid {
+    background-color: transparent;
+    color: black;
+}
+
+.default_style stackswitcher {
+    color: transparent;
+    background-color: transparent;
+    color: black;
+}
+
+.default_style gridview {
+    background-color: transparent;
+    color: black;
+}
+
+.default_style popover contents {
+    background-color: alpha(white, 0.7);
+}
+
+popover contents {
+    background-color: alpha(white, 0.7);
+    border-color: transparent;
+    color: black;
+}
