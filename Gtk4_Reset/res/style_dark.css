@@ -8,26 +8,26 @@
 /* @import url("resource://org/gtk/daleclack/reset.css"); */
 
 .finder_style box {
-    background-color: alpha(white, 0.5);
+    background-color: rgba(56, 60, 74, 0.5);
 }
 
 .dock_style grid {
-    background-color: alpha(white, 0.5);
+    background-color: rgba(56, 60, 74, 0.5);
 }
 
 .dock_style box {
-    background-color: alpha(white, 0.5);
+    background-color: rgba(56, 60, 74, 0.5);
 }
 
 .dock_style button.toggle {
-    background-color: white;
+    background-color: black;
     border-color: transparent;
-    color: black;
+    color: white;
 }
 
 .dock_style button.toggle:checked {
     background-color: rgba(0, 106, 255, 0.5);
-    color: white;
+    color: black;
 }
 
 .dock_style .stackswitcher{
@@ -37,36 +37,36 @@
 /* Background color in the box should be transparent*/
 .default_style box {
     background-color: transparent;
-    color: black;
+    color: white;
 }
 
 .default_style separator {
     background-color: transparent;
-    color: black;
+    color: white;
 }
 
 .default_style grid {
     background-color: transparent;
-    color: black;
+    color: white;
 }
 
 .default_style stackswitcher {
     color: transparent;
     background-color: transparent;
-    color: black;
+    color: white;
 }
 
 .default_style gridview {
     background-color: transparent;
-    color: black;
+    color: white;
 }
 
 .default_style popover contents {
-    background-color: alpha(white, 0.7);
+    background-color: rgba(56, 60, 74, 0.7);
 }
 
 popover contents {
-    background-color: alpha(white, 0.7);
+    background-color: rgba(56, 60, 74, 0.7);
     border-color: transparent;
-    color: black;
+    color: white;
 }
