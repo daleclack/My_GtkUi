@@ -25,7 +25,8 @@ link_directories (${GTK_LIBRARY_DIRS})
 
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
     src/core/MyItem.cpp src/ui/MyDock.cpp src/ui/MyFinder.cpp src/ui/MyPrefs.cpp
-    src/ui/AppView.cpp) 
+    src/ui/AppView.cpp src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp 
+    src/file_app/FileWindow.cpp) 
 
 #Compile resources with GCR_CMake
 
@@ -51,6 +52,7 @@ set(RESOURCE_LIST
     folder-images.svg
     image_file.svg
     gnome-fs-regular.svg
+    dialog-error.png
     icons/16x16/actions/finder_audio.svg
     icons/16x16/actions/finder-battery.svg
     icons/16x16/actions/finder-computer.svg
@@ -94,6 +96,12 @@ set(RESOURCE_LIST
     icons/scalable/status/finder-find-dark.svg
     icons/scalable/status/file-app.svg
     icons/scalable/status/file-app_running.svg
+    icons/scalable/status/filewin-delete.svg
+    icons/scalable/status/filewin-go-home.svg
+    icons/scalable/status/filewin-go-up.svg
+    icons/scalable/status/filewin-new.svg
+    icons/scalable/status/filewin-view-grid.svg
+    icons/scalable/status/filewin-view-list.svg
     icons/scalable/status/display_prefs.svg
     icons/scalable/status/myrunner.svg
     icons/scalable/status/image_app.svg

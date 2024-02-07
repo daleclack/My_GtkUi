@@ -1,6 +1,7 @@
 #include "MyDock.h"
 #include "MyFinder.h"
 #include "AppView.h"
+#include "FileWindow.h"
 
 enum PadPage
 {
@@ -32,6 +33,7 @@ struct _MyDock
     GtkGesture *gesture;
     GtkWidget *context_menu; // Context menu
     MyPrefs *prefs_win;      // Prefs window
+    FileWindow *file_win;    // File Broswer window
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -140,11 +142,51 @@ static void btnset_clicked(GtkWidget *widget, MyDock *dock)
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
 }
 
-static gboolean prefs_win_closed(GtkWindow *window, MyDock *dock)
+static gboolean prefs_win_closed(GtkWidget *window, MyDock *dock)
 {
     // For the preferences window, hide it
-    gtk_widget_set_visible(GTK_WIDGET(dock->prefs_win), FALSE);
+    gtk_widget_set_visible(window, FALSE);
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs");
+    return TRUE;
+}
+
+static void btnfiles_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->file_win))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->file_win));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->file_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->file_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_file), "file-app_running");
+}
+
+static void padfiles_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->file_win))))
+    {
+        window_ctrl(GTK_WINDOW(dock->file_win), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->file_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->file_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_file), "file-app_running");
+}
+
+static gboolean file_window_closed(GtkWidget *window, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(window, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_file), "file-app");
     return TRUE;
 }
 
@@ -242,6 +284,15 @@ static void my_dock_init(MyDock *self)
     // Create prefs window
     self->prefs_win = my_prefs_new();
     my_prefs_set_background(self->prefs_win, self->main_pic);
+    g_signal_connect(self->btnset, "clicked", G_CALLBACK(btnset_clicked), self);
+    g_signal_connect(self->padset, "clicked", G_CALLBACK(padset_clicked), self);
+    g_signal_connect(self->prefs_win, "close-request", G_CALLBACK(prefs_win_closed), self);
+
+    // Create File Browser Window
+    self->file_win = file_window_new(self->parent_win);
+    g_signal_connect(self->btnfiles, "clicked", G_CALLBACK(btnfiles_clicked), self);
+    g_signal_connect(self->padfile, "clicked", G_CALLBACK(padfiles_clicked), self);
+    g_signal_connect(self->file_win, "close-request", G_CALLBACK(file_window_closed), self);
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
@@ -286,9 +337,6 @@ static void my_dock_init(MyDock *self)
 
     // Link Signals
     g_signal_connect(self->btnlaunch, "clicked", G_CALLBACK(btnlaunch_clicked), self);
-    g_signal_connect(self->btnset, "clicked", G_CALLBACK(btnset_clicked), self);
-    g_signal_connect(self->padset, "clicked", G_CALLBACK(padset_clicked), self);
-    g_signal_connect(self->prefs_win, "close-request", G_CALLBACK(prefs_win_closed), self);
 
     // Create Css Provider for styling
     GtkCssProvider *provider = gtk_css_provider_new();
@@ -304,7 +352,6 @@ static void my_dock_init(MyDock *self)
     my_finder_add_style(MY_FINDER(self->finder), provider);
 
     // Add Apps grid
-
     // To make the default view layout same as the addon apps view
     self->appgrid_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     self->appgrid_label = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
