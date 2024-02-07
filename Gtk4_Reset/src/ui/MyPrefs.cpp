@@ -9,6 +9,7 @@
 #include "../json_nlohmann/json.hpp"
 
 using json = nlohmann::json;
+typedef std::vector<std::string> str_vec;
 
 struct _MyPrefs
 {
@@ -60,6 +61,7 @@ struct _MyPrefs
     DockPos curr_dock_pos;                         // Dock Position
     gboolean panel_mode;                           // Whether panel mode is activated
     DockPos dock_pos;                              // Dock Position
+    str_vec back_vec;                              // Vector of backgrounds
 };
 
 G_DEFINE_TYPE(MyPrefs, my_prefs, GTK_TYPE_WINDOW)
@@ -113,6 +115,20 @@ static void folder_view_init(MyPrefs *self)
                         my_item_new("User's Picture directory",
                                     g_get_user_special_dir(G_USER_DIRECTORY_PICTURES),
                                     FALSE));
+
+    // Append external folders
+    if (!(self->back_vec).empty())
+    {
+        for (int i = 0; i < (self->back_vec).size(); i++)
+        {
+            GFile *file = g_file_new_for_path((self->back_vec)[i].c_str());
+            g_list_store_append(self->folders_list,
+                                my_item_new(g_file_get_basename(file),
+                                            (self->back_vec)[i].c_str(), FALSE));
+            g_object_unref(file);
+        }
+    }
+
     self->folders_select = gtk_single_selection_new(G_LIST_MODEL(self->folders_list));
     gtk_single_selection_set_selected(self->folders_select, 0);
 
@@ -351,48 +367,6 @@ static void update_external_image(MyPrefs *prefs, const char *file_name)
     }
 }
 
-static void file_dialog_opened(GObject *dialog, GAsyncResult *result, gpointer data)
-{
-    GFile *file;
-    MyPrefs *prefs = MY_PREFS(data);
-
-    // Get the file
-    file = gtk_file_dialog_select_folder_finish(GTK_FILE_DIALOG(dialog), result, NULL);
-    if (file != NULL)
-    {
-        // g_print("Dialog Accepted!");
-        char *path = g_file_get_path(file);
-        char *name = g_file_get_basename(file);
-        g_list_store_append(prefs->folders_list,
-                            my_item_new(name, path, FALSE));
-        g_object_unref(file);
-        g_free(path);
-        g_free(name);
-    }
-    else
-    {
-        // g_print("Dialog Cancelled!");
-    }
-}
-
-static void btnadd_clicked(GtkWidget *widget, MyPrefs *prefs)
-{
-    GtkFileDialog *dialog;
-    // Create a file dialog
-    dialog = gtk_file_dialog_new();
-    gtk_file_dialog_select_folder(dialog, GTK_WINDOW(prefs), NULL, file_dialog_opened, prefs);
-}
-
-static void btnremove_clicked(GtkWidget *widget, MyPrefs *prefs)
-{
-    // Remove the selected item, and the default item will not be removed
-    guint index = gtk_single_selection_get_selected(prefs->folders_select);
-    if (index > 2)
-    {
-        g_list_store_remove(prefs->folders_list, index);
-    }
-}
-
 // Load config from the json config file
 static void my_prefs_load_config(MyPrefs *self)
 {
@@ -410,7 +384,9 @@ static void my_prefs_load_config(MyPrefs *self)
         self->current_image_index = data["image_index"];
         self->dock_pos = data["position"];
         back_filename = data["background"];
+        str_vec tmp_vec = data["background_folders"];
         strncpy(self->image_file_name, back_filename.c_str(), PATH_MAX);
+        self->back_vec = tmp_vec;
     }
     else
     {
@@ -434,6 +410,16 @@ static void my_prefs_save_config(MyPrefs *self)
         GTK_SINGLE_SELECTION(self->folders_select));
     image_index = gtk_single_selection_get_selected(
         GTK_SINGLE_SELECTION(self->image_select));
+
+    // Get All backgrounds index
+    self->back_vec.clear();
+    auto folders_count = g_list_model_get_n_items(G_LIST_MODEL(self->folders_list));
+    for (int i = 3; i < folders_count; i++)
+    {
+        // Get String for background folders
+        auto item = g_list_model_get_item(G_LIST_MODEL(self->folders_list), i);
+        self->back_vec.push_back(std::string(my_item_get_path(MY_ITEM(item))));
+    }
 
     // Get Dock Position config
     if (gtk_check_button_get_active(
@@ -485,9 +471,54 @@ static void my_prefs_save_config(MyPrefs *self)
         data["panel_mode"] = self->panel_mode;
         data["position"] = self->curr_dock_pos;
         data["width"] = self->width;
+        data["background_folders"] = self->back_vec;
         outfile << data;
     }
     outfile.close();
+}
+
+static void file_dialog_opened(GObject *dialog, GAsyncResult *result, gpointer data)
+{
+    GFile *file;
+    MyPrefs *prefs = MY_PREFS(data);
+
+    // Get the file
+    file = gtk_file_dialog_select_folder_finish(GTK_FILE_DIALOG(dialog), result, NULL);
+    if (file != NULL)
+    {
+        // g_print("Dialog Accepted!");
+        char *path = g_file_get_path(file);
+        char *name = g_file_get_basename(file);
+        g_list_store_append(prefs->folders_list,
+                            my_item_new(name, path, FALSE));
+        g_object_unref(file);
+        g_free(path);
+        g_free(name);
+        my_prefs_save_config(prefs);
+    }
+    else
+    {
+        // g_print("Dialog Cancelled!");
+    }
+}
+
+static void btnadd_clicked(GtkWidget *widget, MyPrefs *prefs)
+{
+    GtkFileDialog *dialog;
+    // Create a file dialog
+    dialog = gtk_file_dialog_new();
+    gtk_file_dialog_select_folder(dialog, GTK_WINDOW(prefs), NULL, file_dialog_opened, prefs);
+}
+
+static void btnremove_clicked(GtkWidget *widget, MyPrefs *prefs)
+{
+    // Remove the selected item, and the default item will not be removed
+    guint index = gtk_single_selection_get_selected(prefs->folders_select);
+    if (index > 2)
+    {
+        g_list_store_remove(prefs->folders_list, index);
+        my_prefs_save_config(prefs);
+    }
 }
 
 static void load_image(const char *file_name, int image_item_index,
@@ -870,7 +901,8 @@ void my_prefs_set_background(MyPrefs *prefs_win, GtkWidget *back)
     {
         is_internal = FALSE;
     }
-    load_image(prefs_win->image_file_name, prefs_win->current_image_index, is_internal, prefs_win);
+    load_image(prefs_win->image_file_name, prefs_win->current_image_index,
+               is_internal, prefs_win);
 }
 
 MyPrefs *my_prefs_new()
