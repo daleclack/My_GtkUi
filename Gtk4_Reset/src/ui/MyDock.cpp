@@ -148,11 +148,8 @@ static gboolean prefs_win_closed(GtkWindow *window, MyDock *dock)
     return TRUE;
 }
 
-static void my_dock_init(MyDock *self)
+static void my_dock_get_widgets(MyDock *self)
 {
-    // Builder for the main dock
-    self->dock_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/mydock.ui");
-
     // Get widgets
     self->dock_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "dock_box"));
     self->main_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "main_box"));
@@ -204,6 +201,14 @@ static void my_dock_init(MyDock *self)
     self->padset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padset"));
     self->padvlc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc"));
     self->padvlc_win32 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc_win32"));
+}
+
+static void my_dock_init(MyDock *self)
+{
+    // Builder for the main dock
+    self->dock_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/mydock.ui");
+
+    my_dock_get_widgets(self);
 
     // Launchpad default
     self->current_page = MainPage;
