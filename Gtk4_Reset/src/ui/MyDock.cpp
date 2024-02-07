@@ -1,7 +1,6 @@
 #include "MyDock.h"
 #include "MyFinder.h"
 #include "AppView.h"
-#include <string>
 
 enum PadPage
 {
@@ -288,19 +287,7 @@ static void my_dock_init(MyDock *self)
 
     // Create Css Provider for styling
     GtkCssProvider *provider = gtk_css_provider_new();
-    GtkIconTheme *theme = gtk_icon_theme_get_for_display(
-        gtk_widget_get_display(GTK_WIDGET(self)));
-    char *theme_name = gtk_icon_theme_get_theme_name(theme);
-    
-    // Get Last 4 chars
-    char tmp_str[5] = {0};
-    for(int i = 0; i < 4; i++)
-    {
-        tmp_str[i] = tolower(theme_name[strlen(theme_name) - 4 + i]);
-    }
-    g_print("%s", tmp_str);
-
-    if (strncmp(tmp_str, "dark", 4) == 0)
+    if (get_dark_mode(self))
     {
         gtk_css_provider_load_from_resource(provider, "/org/gtk/daleclack/style_dark.css");
     }
@@ -308,7 +295,6 @@ static void my_dock_init(MyDock *self)
     {
         gtk_css_provider_load_from_resource(provider, "/org/gtk/daleclack/style.css");
     }
-    g_free(theme_name);
     // Add Style for finder
     my_finder_add_style(MY_FINDER(self->finder), provider);
 

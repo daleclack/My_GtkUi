@@ -1,6 +1,7 @@
 #include "MyFinder.h"
 #include <cstdio>
 #include <ctime>
+#include <string>
 
 struct _MyFinder
 {
@@ -67,11 +68,22 @@ static void my_finder_init(MyFinder *self)
     self->labelhelp = gtk_label_new("Help");
     self->time_label = gtk_label_new("2023/6/9 22:29:00");
     self->separator = gtk_label_new("   ");
-    self->find_button = gtk_button_new_from_icon_name("finder-find");
-    self->screen_button = gtk_button_new_from_icon_name("finder-computer");
-    self->battery_button = gtk_button_new_from_icon_name("finder-battery");
-    self->audio_button = gtk_button_new_from_icon_name("finder_audio");
-    self->network_button = gtk_button_new_from_icon_name("finder-wifi");
+    if (get_dark_mode(self))
+    {
+        self->find_button = gtk_button_new_from_icon_name("finder-find-dark");
+        self->screen_button = gtk_button_new_from_icon_name("finder-computer-dark");
+        self->battery_button = gtk_button_new_from_icon_name("finder-battery-dark");
+        self->audio_button = gtk_button_new_from_icon_name("finder_audio-dark");
+        self->network_button = gtk_button_new_from_icon_name("finder-wifi-dark");
+    }
+    else
+    {
+        self->find_button = gtk_button_new_from_icon_name("finder-find");
+        self->screen_button = gtk_button_new_from_icon_name("finder-computer");
+        self->battery_button = gtk_button_new_from_icon_name("finder-battery");
+        self->audio_button = gtk_button_new_from_icon_name("finder_audio");
+        self->network_button = gtk_button_new_from_icon_name("finder-wifi");
+    }
     self->menu_button = gtk_button_new_from_icon_name("open-menu");
     gtk_widget_set_hexpand(self->separator, TRUE);
     gtk_widget_set_halign(self->separator, GTK_ALIGN_FILL);
@@ -156,4 +168,28 @@ GtkWidget *my_finder_new(GtkOrientation orientation, int spacing)
 {
     return GTK_WIDGET(g_object_new(my_finder_get_type(),
                                    "orientation", orientation, "spacing", spacing, NULL));
+}
+
+gboolean get_dark_mode(gpointer self)
+{
+    GtkIconTheme *theme = gtk_icon_theme_get_for_display(
+        gtk_widget_get_display(GTK_WIDGET(self)));
+    char *theme_name = gtk_icon_theme_get_theme_name(theme);
+
+    // Get Last 4 chars
+    char tmp_str[5] = {0};
+    for (int i = 0; i < 4; i++)
+    {
+        tmp_str[i] = tolower(theme_name[strlen(theme_name) - 4 + i]);
+    }
+    g_free(theme_name);
+    // g_print("%s", tmp_str);
+    if (strncmp(tmp_str, "dark", 4) == 0)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
