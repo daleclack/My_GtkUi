@@ -62,6 +62,7 @@ struct _MyPrefs
     gboolean panel_mode;                           // Whether panel mode is activated
     DockPos dock_pos;                              // Dock Position
     str_vec back_vec;                              // Vector of backgrounds
+    gboolean scan_ctrl;                            // Control the scan func
 };
 
 G_DEFINE_TYPE(MyPrefs, my_prefs, GTK_TYPE_WINDOW)
@@ -609,7 +610,7 @@ static gboolean scan_func(gpointer data)
     {
         load_image(file_name, image_item_index, is_internal, prefs);
     }
-    return TRUE;
+    return prefs->scan_ctrl;
 }
 
 void my_prefs_first_load(MyPrefs *self)
@@ -875,7 +876,14 @@ static void my_prefs_class_init(MyPrefsClass *klass)
 void my_prefs_start_scan(MyPrefs *self)
 {
     // Add timer to scan the list
+    self->scan_ctrl = TRUE;
     g_timeout_add(1, scan_func, self);
+}
+
+void my_prefs_stop_scan(MyPrefs *self)
+{
+    // Stop scan for background update
+    self->scan_ctrl = FALSE;
 }
 
 // Get Dock position

@@ -17,6 +17,8 @@ static void back_activated(GSimpleAction *actions,
 {
     // Show preferences window
     MyPrefs *prefs = main_win_get_prefs(MAIN_WIN(win));
+    my_prefs_first_load(prefs);
+    my_prefs_start_scan(prefs);
     gtk_window_present(GTK_WINDOW(prefs));
 }
 

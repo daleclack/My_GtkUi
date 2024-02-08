@@ -146,6 +146,7 @@ static gboolean prefs_win_closed(GtkWidget *window, MyDock *dock)
 {
     // For the preferences window, hide it
     gtk_widget_set_visible(window, FALSE);
+    my_prefs_stop_scan(dock->prefs_win);
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs");
     return TRUE;
 }
