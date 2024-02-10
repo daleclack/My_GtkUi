@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
-#include "calc.hh"
+#include "calc.h"
 
 static int pos = 0;
 
