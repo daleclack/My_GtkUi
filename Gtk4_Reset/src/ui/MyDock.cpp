@@ -2,6 +2,7 @@
 #include "MyFinder.h"
 #include "AppView.h"
 #include "FileWindow.h"
+#include "GameApp.h"
 
 enum PadPage
 {
@@ -34,6 +35,7 @@ struct _MyDock
     GtkWidget *context_menu; // Context menu
     MyPrefs *prefs_win;      // Prefs window
     FileWindow *file_win;    // File Broswer window
+    GameApp *game_win;       // The Guess Game
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -105,6 +107,7 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent)
     }
 }
 
+// Prefs funcs
 static void padset_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
@@ -151,7 +154,7 @@ static gboolean prefs_win_closed(GtkWidget *window, MyDock *dock)
     return TRUE;
 }
 
-static void btnfiles_clicked(GtkWindow *window, MyDock *dock)
+static void padfiles_clicked(GtkWindow *window, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->file_win))))
@@ -165,9 +168,10 @@ static void btnfiles_clicked(GtkWindow *window, MyDock *dock)
         gtk_window_present(GTK_WINDOW(dock->file_win));
     }
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_file), "file-app_running");
+    btnlaunch_clicked(NULL, dock);
 }
 
-static void padfiles_clicked(GtkWindow *window, MyDock *dock)
+static void btnfiles_clicked(GtkWindow *window, MyDock *dock)
 {
     // When the window visible, control window state
     if (gtk_widget_get_visible(GTK_WIDGET((dock->file_win))))
@@ -188,6 +192,47 @@ static gboolean file_window_closed(GtkWidget *window, MyDock *dock)
     // Hide the window
     gtk_widget_set_visible(window, FALSE);
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_file), "file-app");
+    return TRUE;
+}
+
+static void padgame_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->game_win))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->game_win));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->game_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->game_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game), "game_running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btngame_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->game_win))))
+    {
+        window_ctrl(GTK_WINDOW(dock->game_win), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->game_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->game_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game), "game_running");
+}
+
+static gboolean game_win_closed(GtkWidget *game_win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(game_win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game), "game");
     return TRUE;
 }
 
@@ -294,6 +339,12 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btnfiles, "clicked", G_CALLBACK(btnfiles_clicked), self);
     g_signal_connect(self->padfile, "clicked", G_CALLBACK(padfiles_clicked), self);
     g_signal_connect(self->file_win, "close-request", G_CALLBACK(file_window_closed), self);
+
+    // Create Game App Window
+    self->game_win = game_app_new();
+    g_signal_connect(self->btngame, "clicked", G_CALLBACK(btngame_clicked), self);
+    g_signal_connect(self->padgame, "clicked", G_CALLBACK(padgame_clicked), self);
+    g_signal_connect(self->game_win, "close-request", G_CALLBACK(game_win_closed), self);
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);

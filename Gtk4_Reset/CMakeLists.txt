@@ -26,7 +26,7 @@ link_directories (${GTK_LIBRARY_DIRS})
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
     src/core/MyItem.cpp src/ui/MyDock.cpp src/ui/MyFinder.cpp src/ui/MyPrefs.cpp
     src/ui/AppView.cpp src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp 
-    src/file_app/FileWindow.cpp) 
+    src/file_app/FileWindow.cpp src/game_app/GameApp.cpp) 
 
 #Compile resources with GCR_CMake
 
