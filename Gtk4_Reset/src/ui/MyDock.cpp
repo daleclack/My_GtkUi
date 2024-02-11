@@ -3,6 +3,7 @@
 #include "AppView.h"
 #include "FileWindow.h"
 #include "GameApp.h"
+#include "CalcApp.h"
 
 enum PadPage
 {
@@ -36,6 +37,7 @@ struct _MyDock
     MyPrefs *prefs_win;      // Prefs window
     FileWindow *file_win;    // File Broswer window
     GameApp *game_win;       // The Guess Game
+    CalcApp *calc_win;       // Calc App
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -236,6 +238,47 @@ static gboolean game_win_closed(GtkWidget *game_win, MyDock *dock)
     return TRUE;
 }
 
+static void padcalc_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->calc_win))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->calc_win));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->calc_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->calc_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_calc), "calcapp_running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btncalc_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->calc_win))))
+    {
+        window_ctrl(GTK_WINDOW(dock->calc_win), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->calc_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->calc_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_calc), "calcapp_running");
+}
+
+static gboolean calc_win_closed(GtkWidget *calc_win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(calc_win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_calc), "calcapp");
+    return TRUE;
+}
+
 static void my_dock_get_widgets(MyDock *self)
 {
     // Get widgets
@@ -345,6 +388,12 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btngame, "clicked", G_CALLBACK(btngame_clicked), self);
     g_signal_connect(self->padgame, "clicked", G_CALLBACK(padgame_clicked), self);
     g_signal_connect(self->game_win, "close-request", G_CALLBACK(game_win_closed), self);
+
+    // Create Calculator App Window
+    self->calc_win = calc_app_new();
+    g_signal_connect(self->btncalc, "clicked", G_CALLBACK(btncalc_clicked), self);
+    g_signal_connect(self->padcalc, "clicked", G_CALLBACK(padcalc_clicked), self);
+    g_signal_connect(self->calc_win, "close-request", G_CALLBACK(calc_win_closed), self);
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
