@@ -102,6 +102,11 @@ static void btnanswer_clicked(GtkButton *btn, CalcApp *self)
 static void calc_app_init(CalcApp *self)
 {
     gtk_widget_init_template(GTK_WIDGET(self));
+    // Initalize window
+    gtk_window_set_title(GTK_WINDOW(self), "Calculator");
+    gtk_window_set_icon_name(GTK_WINDOW(self), "calcapp");
+    
+    // Link Signals
     g_signal_connect(self->btnanswer, "clicked", G_CALLBACK(btnanswer_clicked), self);
     g_signal_connect(self->btn0, "clicked", G_CALLBACK(btns_clicked), self);
     g_signal_connect(self->btn1, "clicked", G_CALLBACK(btns_clicked), self);
