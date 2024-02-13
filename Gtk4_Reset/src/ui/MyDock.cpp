@@ -4,6 +4,7 @@
 #include "FileWindow.h"
 #include "GameApp.h"
 #include "CalcApp.h"
+#include "RunApp.h"
 
 enum PadPage
 {
@@ -279,6 +280,13 @@ static gboolean calc_win_closed(GtkWidget *calc_win, MyDock *dock)
     return TRUE;
 }
 
+static void padrun_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // Create "Run App" Window and show
+    RunApp *run_win = run_app_new(dock->parent_win);
+    gtk_window_present(GTK_WINDOW(run_win));
+}
+
 static void my_dock_get_widgets(MyDock *self)
 {
     // Get widgets
@@ -394,6 +402,9 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btncalc, "clicked", G_CALLBACK(btncalc_clicked), self);
     g_signal_connect(self->padcalc, "clicked", G_CALLBACK(padcalc_clicked), self);
     g_signal_connect(self->calc_win, "close-request", G_CALLBACK(calc_win_closed), self);
+
+    // Signal for app runner
+    g_signal_connect(self->padrun, "clicked", G_CALLBACK(padrun_clicked), self);
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);

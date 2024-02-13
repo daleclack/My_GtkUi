@@ -27,7 +27,7 @@ set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
     src/core/MyItem.cpp src/ui/MyDock.cpp src/ui/MyFinder.cpp src/ui/MyPrefs.cpp
     src/ui/AppView.cpp src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp 
     src/file_app/FileWindow.cpp src/game_app/GameApp.cpp src/calc_app/calc.cpp 
-    src/calc_app/CalcApp.cpp) 
+    src/calc_app/CalcApp.cpp src/run_app/RunApp.cpp) 
 
 #Compile resources with GCR_CMake
 
@@ -138,7 +138,7 @@ if(WIN32)
 	set_property(SOURCE icon.rc APPEND PROPERTY
         OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
-	add_executable(My_GtkUI ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
+	add_executable(My_GtkUI WIN32 ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
 else()
 	add_executable(My_GtkUI ${SOURCES} ${RESOURCE_FILE})
 
