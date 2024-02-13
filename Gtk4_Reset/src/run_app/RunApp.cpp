@@ -5,6 +5,7 @@
 struct _RunApp
 {
     GtkWindow parent_instance;
+    GtkWindow *parent_win;
     GtkWidget *main_box, *entry_box, *btn_box;
     GtkWidget *entry_run;
     GtkWidget *btnok, *btncel, *btnpath;
@@ -26,8 +27,26 @@ static void btncancel_clicked(GtkButton *btn, RunApp *self)
     gtk_window_destroy(GTK_WINDOW(self));
 }
 
+static void file_dialog_opened(GObject *dialog, GAsyncResult *result, gpointer data)
+{
+    GFile *file;
+    RunApp *run_app = RUN_APP(data);
+
+    // Get File path to open
+    file = gtk_file_dialog_open_finish(GTK_FILE_DIALOG(dialog), result, NULL);
+    if(file != NULL)
+    {
+        char *name = g_file_get_path(file);
+        gtk_editable_set_text(GTK_EDITABLE(run_app->entry_run), name);
+        g_free(name);
+        g_object_unref(file);
+    }
+}
+
 static void btnpath_clicked(GtkButton *btn, RunApp *self)
 {
+    GtkFileDialog *dialog = gtk_file_dialog_new();
+    gtk_file_dialog_open(dialog, self->parent_win, NULL, file_dialog_opened, self);
 }
 
 static void run_app_init(RunApp *self)
@@ -76,6 +95,8 @@ static void run_app_class_init(RunAppClass *klass)
 
 RunApp *run_app_new(GtkWindow *parent)
 {
-    return RUN_APP(g_object_new(run_app_get_type(),
-                                "transient-for", parent, NULL));
+    RunApp *run_app = RUN_APP(g_object_new(run_app_get_type(),
+                                           "transient-for", parent, NULL));
+    run_app->parent_win = parent;
+    return run_app;
 }
