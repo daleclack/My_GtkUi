@@ -5,6 +5,7 @@
 #include "GameApp.h"
 #include "CalcApp.h"
 #include "RunApp.h"
+#include "Game24App.h"
 
 enum PadPage
 {
@@ -39,6 +40,7 @@ struct _MyDock
     FileWindow *file_win;    // File Broswer window
     GameApp *game_win;       // The Guess Game
     CalcApp *calc_win;       // Calc App
+    Game24App *game24_win;   // 24 Game Window
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -157,6 +159,7 @@ static gboolean prefs_win_closed(GtkWidget *window, MyDock *dock)
     return TRUE;
 }
 
+// File Broswer control functions
 static void padfiles_clicked(GtkWindow *window, MyDock *dock)
 {
     // When the window visible, unminimize it
@@ -198,6 +201,7 @@ static gboolean file_window_closed(GtkWidget *window, MyDock *dock)
     return TRUE;
 }
 
+// Guess Game control functions
 static void padgame_clicked(GtkWindow *window, MyDock *dock)
 {
     // When the window visible, unminimize it
@@ -239,6 +243,7 @@ static gboolean game_win_closed(GtkWidget *game_win, MyDock *dock)
     return TRUE;
 }
 
+// Calculator App control functions
 static void padcalc_clicked(GtkWindow *window, MyDock *dock)
 {
     // When the window visible, unminimize it
@@ -280,11 +285,54 @@ static gboolean calc_win_closed(GtkWidget *calc_win, MyDock *dock)
     return TRUE;
 }
 
+// The Run App is just a popup window
 static void padrun_clicked(GtkWidget *widget, MyDock *dock)
 {
     // Create "Run App" Window and show
     RunApp *run_win = run_app_new(dock->parent_win);
+    btnlaunch_clicked(NULL, dock);
     gtk_window_present(GTK_WINDOW(run_win));
+}
+
+static void padgame24_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->game24_win))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->game24_win));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->game24_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->game24_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game24), "24game_running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btngame24_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->game24_win))))
+    {
+        window_ctrl(GTK_WINDOW(dock->game24_win), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->game24_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->game24_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game24), "24game_running");
+}
+
+static gboolean game24_win_closed(GtkWidget *game24_win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(game24_win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game24), "24game");
+    return TRUE;
 }
 
 static void my_dock_get_widgets(MyDock *self)
@@ -402,6 +450,12 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btncalc, "clicked", G_CALLBACK(btncalc_clicked), self);
     g_signal_connect(self->padcalc, "clicked", G_CALLBACK(padcalc_clicked), self);
     g_signal_connect(self->calc_win, "close-request", G_CALLBACK(calc_win_closed), self);
+
+    // Create 24 Game App Window
+    self->game24_win = game24_app_new();
+    g_signal_connect(self->btngame24, "clicked", G_CALLBACK(btngame24_clicked), self);
+    g_signal_connect(self->padgame24, "clicked", G_CALLBACK(padgame24_clicked), self);
+    g_signal_connect(self->game24_win, "close-request", G_CALLBACK(game24_win_closed), self);
 
     // Signal for app runner
     g_signal_connect(self->padrun, "clicked", G_CALLBACK(padrun_clicked), self);

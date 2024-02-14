@@ -1,5 +1,5 @@
 // Reference code: https://www.jb51.net/article/182079.htm
-#include "Game24.hh"
+#include "Game24.h"
 
 // Generate a number in [begin,end]
 static double randnum(int begin = 0, int end = 1)
