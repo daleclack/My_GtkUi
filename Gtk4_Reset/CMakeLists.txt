@@ -29,7 +29,7 @@ set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
     src/file_app/FileWindow.cpp src/game_app/GameApp.cpp src/calc_app/calc.cpp 
     src/calc_app/CalcApp.cpp src/run_app/RunApp.cpp src/draw_app/DrawApp.cpp
     src/game24_app/Game24.cpp src/game24_app/Game24App.cpp src/text_app/TextEditor.cpp 
-    src/image_app/ImageApp.cpp) 
+    src/text_app/MyInfoBar.cpp src/image_app/ImageApp.cpp) 
 
 #Compile resources with GCR_CMake
 
@@ -44,7 +44,7 @@ set(RESOURCE_LIST
     STRIPBLANKS game24.ui
     STRIPBLANKS calcapp.ui
     STRIPBLANKS text_menu.xml
-    STRIPBLANKS expender.ui
+    STRIPBLANKS expander.ui
     STRIPBLANKS win_input.ui
     STRIPBLANKS scoreswin.ui
     STRIPBLANKS mine_menu.xml

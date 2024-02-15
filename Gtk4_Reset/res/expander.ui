@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkExpander" id="key_expand">
+    <property name="focusable">1</property>
+    <property name="resize-toplevel">1</property>
+    <child>
+      <object class="GtkGrid">
+        <property name="row-homogeneous">1</property>
+        <property name="column-homogeneous">1</property>
+        <child>
+          <object class="GtkButton" id="btn16">
+            <property name="label" translatable="1">Q</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">2</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn22">
+            <property name="label" translatable="1">W</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">4</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn4">
+            <property name="label" translatable="1">E</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">6</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn17">
+            <property name="label" translatable="1">R</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">8</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn19">
+            <property name="label" translatable="1">T</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">10</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn24">
+            <property name="label" translatable="1">Y</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">12</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn20">
+            <property name="label" translatable="1">U</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">14</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn8">
+            <property name="label" translatable="1">I</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">16</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn14">
+            <property name="label" translatable="1">O</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">18</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn15">
+            <property name="label" translatable="1">P</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">20</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn0">
+            <property name="label" translatable="1">A</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">3</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn25">
+            <property name="label" translatable="1">Z</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">4</property>
+              <property name="row">2</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn18">
+            <property name="label" translatable="1">S</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">5</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn3">
+            <property name="label" translatable="1">D</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">7</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn5">
+            <property name="label" translatable="1">F</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">9</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn6">
+            <property name="label" translatable="1">G</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">11</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn7">
+            <property name="label" translatable="1">H</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">13</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn9">
+            <property name="label" translatable="1">J</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">15</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn10">
+            <property name="label" translatable="1">K</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">17</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn11">
+            <property name="label" translatable="1">L</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">19</property>
+              <property name="row">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="btn_caps">
+            <property name="label" translatable="1">CapsLK</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+              <property name="column-span">3</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn23">
+            <property name="label" translatable="1">X</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">6</property>
+              <property name="row">2</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn2">
+            <property name="label" translatable="1">C</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">8</property>
+              <property name="row">2</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn21">
+            <property name="label" translatable="1">V</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">10</property>
+              <property name="row">2</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn1">
+            <property name="label" translatable="1">B</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">12</property>
+              <property name="row">2</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn13">
+            <property name="label" translatable="1">N</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">14</property>
+              <property name="row">2</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn12">
+            <property name="label" translatable="1">M</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">16</property>
+              <property name="row">2</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="btnshift">
+            <property name="label" translatable="1">Shift</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">2</property>
+              <property name="column-span">4</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btntab">
+            <property name="label" translatable="1">tab</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnenter">
+            <property name="label" translatable="1">enter</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">21</property>
+              <property name="row">1</property>
+              <property name="column-span">3</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="label" translatable="1">Keyboard</property>
+      </object>
+    </child>
+  </object>
+</interface>
