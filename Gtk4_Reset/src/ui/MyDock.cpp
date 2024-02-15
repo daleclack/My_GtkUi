@@ -6,6 +6,9 @@
 #include "CalcApp.h"
 #include "RunApp.h"
 #include "Game24App.h"
+#include "DrawApp.h"
+#include "TextEditor.h"
+#include "ImageApp.h"
 
 enum PadPage
 {
@@ -41,6 +44,9 @@ struct _MyDock
     GameApp *game_win;       // The Guess Game
     CalcApp *calc_win;       // Calc App
     Game24App *game24_win;   // 24 Game Window
+    DrawApp *draw_win;       // A Drawing App
+    TextEditor *edit_win;    // Text Editor
+    ImageApp *image_app;     // Image Viewer
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -294,6 +300,7 @@ static void padrun_clicked(GtkWidget *widget, MyDock *dock)
     gtk_window_present(GTK_WINDOW(run_win));
 }
 
+// 24 Game control functions
 static void padgame24_clicked(GtkWindow *window, MyDock *dock)
 {
     // When the window visible, unminimize it
@@ -332,6 +339,132 @@ static gboolean game24_win_closed(GtkWidget *game24_win, MyDock *dock)
     // Hide the window
     gtk_widget_set_visible(game24_win, FALSE);
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game24), "24game");
+    return TRUE;
+}
+
+// Drawing App control functions
+static void paddraw_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->draw_win))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->draw_win));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->draw_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->draw_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_draw), "drawing_app_running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btndraw_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->draw_win))))
+    {
+        window_ctrl(GTK_WINDOW(dock->draw_win), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->draw_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->draw_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_draw), "drawing_app_running");
+}
+
+static gboolean draw_win_closed(GtkWidget *draw_win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(draw_win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_draw), "drawing_app");
+    return TRUE;
+}
+
+// Text Editor control functions
+static void padedit_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->edit_win))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->edit_win));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->edit_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->edit_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_edit), "my_textedit_running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btnedit_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->edit_win))))
+    {
+        window_ctrl(GTK_WINDOW(dock->edit_win), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->edit_win), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->edit_win));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_edit), "my_textedit_running");
+}
+
+static gboolean edit_win_closed(GtkWidget *win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_edit), "my_textedit");
+    return TRUE;
+}
+
+// Image viewer control functions
+static void padimage_clicked(GtkWindow *window, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->image_app))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->image_app));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->image_app), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->image_app));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_viewer), "image_app_running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btnimage_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->image_app))))
+    {
+        window_ctrl(GTK_WINDOW(dock->image_app), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->image_app), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->image_app));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_viewer), "image_app_running");
+}
+
+static gboolean image_win_closed(GtkWidget *win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_viewer), "image_app");
     return TRUE;
 }
 
@@ -456,6 +589,24 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btngame24, "clicked", G_CALLBACK(btngame24_clicked), self);
     g_signal_connect(self->padgame24, "clicked", G_CALLBACK(padgame24_clicked), self);
     g_signal_connect(self->game24_win, "close-request", G_CALLBACK(game24_win_closed), self);
+
+    // Create Drawing App Window
+    self->draw_win = draw_app_new();
+    g_signal_connect(self->btndraw, "clicked", G_CALLBACK(btndraw_clicked), self);
+    g_signal_connect(self->paddraw, "clicked", G_CALLBACK(paddraw_clicked), self);
+    g_signal_connect(self->draw_win, "close-request", G_CALLBACK(draw_win_closed), self);
+
+    // Create Text Editor Window
+    self->edit_win = text_editor_new();
+    g_signal_connect(self->btnedit, "clicked", G_CALLBACK(btnedit_clicked), self);
+    g_signal_connect(self->padedit, "clicked", G_CALLBACK(padedit_clicked), self);
+    g_signal_connect(self->edit_win, "close-request", G_CALLBACK(edit_win_closed), self);
+
+    // Image Viewer window
+    self->image_app = image_app_new();
+    g_signal_connect(self->btnimage, "clicked", G_CALLBACK(btnimage_clicked), self);
+    g_signal_connect(self->padimage, "clicked", G_CALLBACK(padimage_clicked), self);
+    g_signal_connect(self->image_app, "close-request", G_CALLBACK(image_win_closed), self);
 
     // Signal for app runner
     g_signal_connect(self->padrun, "clicked", G_CALLBACK(padrun_clicked), self);
