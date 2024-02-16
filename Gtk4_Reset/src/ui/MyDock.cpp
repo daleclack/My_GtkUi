@@ -421,6 +421,7 @@ static void btnedit_clicked(GtkWidget *widget, MyDock *dock)
 static gboolean edit_win_closed(GtkWidget *win, MyDock *dock)
 {
     // Hide the window
+    text_editor_save_config(TEXT_EDITOR(win));
     gtk_widget_set_visible(win, FALSE);
     gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_edit), "my_textedit");
     return TRUE;

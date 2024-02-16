@@ -23,6 +23,11 @@
                 <attribute name="accel">&lt;Control&gt;c</attribute>
             </item>
             <item>
+                <attribute name="label">Cut</attribute>
+                <attribute name="action">win.text_cut</attribute>
+                <attribute name="accel">&lt;Control&gt;c</attribute>
+            </item>
+            <item>
                 <attribute name="label">Paste</attribute>
                 <attribute name="action">win.text_paste</attribute>
                 <attribute name="accel">&lt;Control&gt;v</attribute>
