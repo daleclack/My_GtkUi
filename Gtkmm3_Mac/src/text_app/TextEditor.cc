@@ -157,7 +157,7 @@ bool TextEditor::window_delete_event(GdkEventAny *event)
 
     // Output json data to file
     std::fstream outfile;
-    outfile.open("config.json", std::ios_base::out);
+    outfile.open("text_config.json", std::ios_base::out);
     if (outfile.is_open())
     {
         outfile << data;
