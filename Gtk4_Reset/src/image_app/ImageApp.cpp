@@ -14,6 +14,10 @@ struct _ImageApp
     GtkBuilder *builder;
     GtkWidget *image_menu;
 
+    // Drag for image position
+    GtkAdjustment *hadjustment, *vadjustment;
+    int start_x, start_y;
+
     // Main Image View
     MyImage *image_view;
 };
@@ -86,6 +90,40 @@ static void gesture_pressed(GtkGesture *gesture,
     gtk_popover_popup(GTK_POPOVER(app->image_menu));
 }
 
+static void drag_update(GtkGesture *gesture, double x, double y, ImageApp *app)
+{
+    // g_print("Draging");
+    // Get Current position
+    double curr_x, curr_y, max_x, max_y;
+    curr_x = gtk_adjustment_get_value(app->hadjustment);
+    curr_y = gtk_adjustment_get_value(app->vadjustment);
+    max_x = gtk_adjustment_get_upper(app->hadjustment);
+    max_y = gtk_adjustment_get_upper(app->vadjustment);
+
+    // Calculate position change
+    curr_x -= x;
+    curr_y -= y;
+
+    if (curr_x > max_x)
+    {
+        curr_x = max_x;
+    }
+    if (curr_x < 0)
+    {
+        curr_x = 0.0;
+    }
+    if (curr_y > max_y)
+    {
+        curr_y = max_y;
+    }
+    if (curr_x < 0)
+    {
+        curr_x = 0.0;
+    }
+    gtk_adjustment_set_value(app->hadjustment, curr_x);
+    gtk_adjustment_set_value(app->vadjustment, curr_y);
+}
+
 static void image_app_dialog_response(GObject *dialog, GAsyncResult *result, gpointer data)
 {
     GFile *file;
@@ -133,6 +171,8 @@ static void image_app_init(ImageApp *self)
     self->image_sw = gtk_scrolled_window_new();
     self->image_scale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 0.1, 10.0, 0.1);
     self->btnopen = gtk_button_new_with_label("Open Image");
+    self->hadjustment = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(self->image_sw));
+    self->vadjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(self->image_sw));
     g_signal_connect(self->btnopen, "clicked", G_CALLBACK(btnopen_clicked), self);
     g_signal_connect(self->image_scale, "change-value", G_CALLBACK(image_app_change_scale), self);
 
@@ -159,6 +199,14 @@ static void image_app_init(ImageApp *self)
     gtk_popover_set_has_arrow(GTK_POPOVER(self->image_menu), FALSE);
     gtk_widget_set_parent(self->image_menu, GTK_WIDGET(self->image_view));
     gtk_popover_present(GTK_POPOVER(self->image_menu));
+
+    // Add drag gesture
+    self->gesture_drag = gtk_gesture_drag_new();
+    gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(self->gesture_drag), GDK_BUTTON_PRIMARY);
+    gtk_widget_add_controller(GTK_WIDGET(self->image_view), GTK_EVENT_CONTROLLER(self->gesture_drag));
+    // g_signal_connect(self->gesture_drag, "drag-begin", G_CALLBACK(drag_begin), self);
+    g_signal_connect(self->gesture_drag, "drag-update", G_CALLBACK(drag_update), self);
+    g_signal_connect(self->gesture_drag, "drag-end", G_CALLBACK(drag_update), self);
 
     // Pack Widgets
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(self->image_sw), GTK_WIDGET(self->image_view));
