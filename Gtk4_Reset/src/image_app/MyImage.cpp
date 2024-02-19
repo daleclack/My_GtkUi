@@ -24,6 +24,7 @@ static void my_image_draw(GtkDrawingArea *area, cairo_t *cr,
     gtk_widget_set_size_request(GTK_WIDGET(area), width, height);
 
     // Scale the image and draw
+    cairo_set_source_surface(cr, image_view->surface, 0, 0);
     cairo_surface_set_device_scale(image_view->surface,
                                    image_view->scale_radio, image_view->scale_radio);
     cairo_paint(cr);
@@ -48,6 +49,7 @@ MyImage *my_image_new()
 
 void my_image_set_source_pixbuf(MyImage *image, GdkPixbuf *pixbuf)
 {
+    int width, height;
     if (!pixbuf)
     {
         return;
@@ -58,13 +60,15 @@ void my_image_set_source_pixbuf(MyImage *image, GdkPixbuf *pixbuf)
         g_object_unref(image->pixbuf);
     }
     image->pixbuf = pixbuf;
+    width = gdk_pixbuf_get_width(pixbuf);
+    height = gdk_pixbuf_get_height(pixbuf);
 
     if (!image->surface)
     {
-        image->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-                                                    gdk_pixbuf_get_width(pixbuf),
-                                                    gdk_pixbuf_get_height(pixbuf));
+        image->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     }
+    gtk_drawing_area_set_content_width(GTK_DRAWING_AREA(image), width);
+    gtk_drawing_area_set_content_height(GTK_DRAWING_AREA(image), height);
 
     cairo_t *cr = cairo_create(image->surface);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
