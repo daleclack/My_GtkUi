@@ -19,6 +19,14 @@ struct _ImageApp
 
 G_DEFINE_TYPE(ImageApp, image_app, GTK_TYPE_APPLICATION_WINDOW)
 
+static gboolean image_app_change_scale(GtkRange *range, GtkScrollType *scroll,
+                                   double scale_value, ImageApp *app)
+{
+    my_image_scale_draw(app->image_view, scale_value);
+    gtk_range_set_value(range, scale_value);
+    return TRUE;
+}
+
 static void image_app_dialog_response(GObject *dialog, GAsyncResult *result, gpointer data)
 {
     GFile *file;
@@ -57,6 +65,7 @@ static void image_app_init(ImageApp *self)
     self->image_scale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 0.1, 10.0, 0.1);
     self->btnopen = gtk_button_new_with_label("Open Image");
     g_signal_connect(self->btnopen, "clicked", G_CALLBACK(btnopen_clicked), self);
+    g_signal_connect(self->image_scale, "change-value", G_CALLBACK(image_app_change_scale), self);
 
     // Initalize widgets
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(self->image_sw),

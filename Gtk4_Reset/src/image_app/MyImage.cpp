@@ -25,6 +25,7 @@ static void my_image_draw(GtkDrawingArea *area, cairo_t *cr,
 
     // Scale the image and draw
     cairo_set_source_surface(cr, image_view->surface, 0, 0);
+    
     cairo_surface_set_device_scale(image_view->surface,
                                    image_view->scale_radio, image_view->scale_radio);
     cairo_paint(cr);
@@ -81,14 +82,14 @@ void my_image_scale_draw(MyImage *image, double scale)
     // Set the scale radio and scale
     if (scale <= 0)
     {
-        image->scale_radio = 0.1;
+        image->scale_radio = 10.0;
         return;
     }
     if (scale > 10.0)
     {
-        image->scale_radio = 10.0;
+        image->scale_radio = 0.1;
         return;
     }
-    image->scale_radio = scale;
+    image->scale_radio = 1.0 / scale;
     gtk_widget_queue_draw(GTK_WIDGET(image));
 }
