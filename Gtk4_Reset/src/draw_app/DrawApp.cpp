@@ -17,6 +17,7 @@ struct _DrawApp
     cairo_surface_t *surface;
     GtkGesture *drag;
     double start_x, start_y;
+    double prev_x, prev_y;
 };
 
 G_DEFINE_TYPE(DrawApp, draw_app, GTK_TYPE_WINDOW)
@@ -63,7 +64,7 @@ static void draw_app_draw(GtkDrawingArea *da,
     cairo_paint(cr);
 }
 
-static void draw_brush(DrawApp *app, double x, double y)
+static void draw_brush(DrawApp *app, double x, double y, gboolean first)
 {
     GdkRectangle update_rect;
     cairo_t *cr;
@@ -81,9 +82,22 @@ static void draw_brush(DrawApp *app, double x, double y)
 
     /* Paint to the surface, where we store our state */
     cr = cairo_create(app->surface);
+    cairo_set_line_width(cr, 6);
 
     gdk_cairo_rectangle(cr, &update_rect);
     cairo_fill(cr);
+
+    // Draw lines to link points
+    if (!first)
+    {
+        cairo_move_to(cr, app->prev_x, app->prev_y);
+        cairo_line_to(cr, x, y);
+        cairo_stroke(cr);
+    }
+
+    // Update position for next point
+    app->prev_x = x;
+    app->prev_y = y;
 
     cairo_destroy(cr);
 
@@ -97,7 +111,7 @@ static void drag_begin(GtkGestureDrag *gesture,
 {
     app->start_x = x;
     app->start_y = y;
-    draw_brush(app, x, y);
+    draw_brush(app, x, y, TRUE);
 }
 
 static void drag_update(GtkGestureDrag *gesture,
@@ -105,7 +119,7 @@ static void drag_update(GtkGestureDrag *gesture,
                         double y,
                         DrawApp *app)
 {
-    draw_brush(app, (app->start_x) + x, (app->start_y) + y);
+    draw_brush(app, (app->start_x) + x, (app->start_y) + y, FALSE);
 }
 
 static void drag_end(GtkGestureDrag *gesture,
@@ -113,7 +127,7 @@ static void drag_end(GtkGestureDrag *gesture,
                      double y,
                      DrawApp *app)
 {
-    draw_brush(app, (app->start_x) + x, (app->start_y) + y);
+    draw_brush(app, (app->start_x) + x, (app->start_y) + y, FALSE);
 }
 
 static void draw_app_init(DrawApp *self)
