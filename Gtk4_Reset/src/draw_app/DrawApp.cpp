@@ -1,6 +1,7 @@
 #include "DrawApp.h"
 
-struct _DrawApp{
+struct _DrawApp
+{
     GtkWindow parent_instance;
 
     // Child widgets
@@ -14,13 +15,140 @@ struct _DrawApp{
 
     // Drawing Area
     cairo_surface_t *surface;
+    GtkGesture *drag;
+    double start_x, start_y;
 };
 
 G_DEFINE_TYPE(DrawApp, draw_app, GTK_TYPE_WINDOW)
 
+// Create a surface for drawing area
+static void create_surface(DrawApp *app)
+{
+    cairo_t *cr;
+    GtkWidget *widget = app->draw_area;
+
+    if (app->surface)
+        cairo_surface_destroy(app->surface);
+
+    app->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+                                              gtk_widget_get_width(widget),
+                                              gtk_widget_get_height(widget));
+
+    /* Initialize the surface to white */
+    cr = cairo_create(app->surface);
+
+    cairo_set_source_rgb(cr, 1, 1, 1);
+    cairo_paint(cr);
+
+    cairo_destroy(cr);
+}
+
+static void draw_app_resize(GtkWidget *widget,
+                            int width,
+                            int height,
+                            DrawApp *app)
+{
+    create_surface(app);
+}
+
+/* Redraw the screen from the surface */
+static void draw_app_draw(GtkDrawingArea *da,
+                          cairo_t *cr,
+                          int width,
+                          int height,
+                          gpointer data)
+{
+    DrawApp *app = DRAW_APP(data);
+    cairo_set_source_surface(cr, app->surface, 0, 0);
+    cairo_paint(cr);
+}
+
+static void draw_brush(DrawApp *app, double x, double y)
+{
+    GdkRectangle update_rect;
+    cairo_t *cr;
+    GtkWidget *widget = app->draw_area;
+
+    if (app->surface == NULL ||
+        cairo_image_surface_get_width(app->surface) != gtk_widget_get_width(widget) ||
+        cairo_image_surface_get_height(app->surface) != gtk_widget_get_height(widget))
+        create_surface(app);
+
+    update_rect.x = x - 3;
+    update_rect.y = y - 3;
+    update_rect.width = 6;
+    update_rect.height = 6;
+
+    /* Paint to the surface, where we store our state */
+    cr = cairo_create(app->surface);
+
+    gdk_cairo_rectangle(cr, &update_rect);
+    cairo_fill(cr);
+
+    cairo_destroy(cr);
+
+    gtk_widget_queue_draw(widget);
+}
+
+static void drag_begin(GtkGestureDrag *gesture,
+                       double x,
+                       double y,
+                       DrawApp *app)
+{
+    app->start_x = x;
+    app->start_y = y;
+    draw_brush(app, x, y);
+}
+
+static void drag_update(GtkGestureDrag *gesture,
+                        double x,
+                        double y,
+                        DrawApp *app)
+{
+    draw_brush(app, (app->start_x) + x, (app->start_y) + y);
+}
+
+static void drag_end(GtkGestureDrag *gesture,
+                     double x,
+                     double y,
+                     DrawApp *app)
+{
+    draw_brush(app, (app->start_x) + x, (app->start_y) + y);
+}
+
 static void draw_app_init(DrawApp *self)
 {
+    // Initalize window
     gtk_window_set_title(GTK_WINDOW(self), "Drawing App");
+    gtk_window_set_icon_name(GTK_WINDOW(self), "drawing_app");
+    // gtk_window_set_default_size(GTK_WINDOW(self), 640, 480);
+
+    // Create widgets
+    self->left_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    self->main_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    self->btn_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+
+    // Create Drawing Area
+    self->draw_area = gtk_drawing_area_new();
+    gtk_widget_set_size_request(self->draw_area, 640, 480);
+    gtk_drawing_area_set_content_height(GTK_DRAWING_AREA(self->draw_area), 640);
+    gtk_drawing_area_set_content_height(GTK_DRAWING_AREA(self->draw_area), 480);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(self->draw_area), draw_app_draw, self, NULL);
+    g_signal_connect(self->draw_area, "resize", G_CALLBACK(draw_app_resize), self);
+
+    // Create Gesture for drawing
+    self->drag = gtk_gesture_drag_new();
+    gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(self->drag), 0);
+    gtk_widget_add_controller(self->draw_area, GTK_EVENT_CONTROLLER(self->drag));
+    g_signal_connect(self->drag, "drag-begin", G_CALLBACK(drag_begin), self);
+    g_signal_connect(self->drag, "drag-update", G_CALLBACK(drag_update), self);
+    g_signal_connect(self->drag, "drag-end", G_CALLBACK(drag_end), self);
+
+    // Add widget to the window
+    gtk_box_append(GTK_BOX(self->main_box), self->left_box);
+    gtk_box_append(GTK_BOX(self->main_box), self->draw_area);
+    gtk_box_append(GTK_BOX(self->main_box), self->btn_box);
+    gtk_window_set_child(GTK_WINDOW(self), self->main_box);
 }
 
 static void draw_app_class_init(DrawAppClass *klass)
