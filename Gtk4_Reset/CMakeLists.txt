@@ -114,9 +114,13 @@ set(RESOURCE_LIST
     icons/scalable/status/vlc_whitesur.svg
     icons/scalable/status/my_trash.svg
     icons/scalable/status/circle.svg
+    icons/scalable/status/circle-dark.svg
     icons/scalable/status/freehand.svg
+    icons/scalable/status/freehand-dark.svg
     icons/scalable/status/line.svg
+    icons/scalable/status/line-dark.svg
     icons/scalable/status/rectangle.svg
+    icons/scalable/status/rectangle-dark.svg
     icons/scalable/status/calcapp.svg
     icons/scalable/status/calcapp_running.svg
     icons/scalable/status/mines_app.svg

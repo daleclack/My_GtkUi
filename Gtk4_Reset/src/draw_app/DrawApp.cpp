@@ -1,4 +1,5 @@
 #include "DrawApp.h"
+#include "MyFinder.h"
 
 struct _DrawApp
 {
@@ -130,6 +131,19 @@ static void drag_end(GtkGestureDrag *gesture,
     draw_brush(app, (app->start_x) + x, (app->start_y) + y, FALSE);
 }
 
+static GtkWidget *my_toggle_button_new_from_icon_name(DrawApp *self, const char *icon_name)
+{
+    char icon_name1[NAME_MAX + 1];
+    GtkWidget *toggle_button = gtk_toggle_button_new();
+    strncpy(icon_name1, icon_name, NAME_MAX);
+    if (get_dark_mode(self))
+    {
+        strncat(icon_name1, "-dark", 5);
+    }
+    gtk_button_set_icon_name(GTK_BUTTON(toggle_button), icon_name1);
+    return toggle_button;
+}
+
 static void draw_app_init(DrawApp *self)
 {
     // Initalize window
@@ -141,6 +155,15 @@ static void draw_app_init(DrawApp *self)
     self->left_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     self->main_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
     self->btn_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+
+    // Add buttons for left box
+    self->btn_free = my_toggle_button_new_from_icon_name(self, "freehand");
+    self->btn_circle = my_toggle_button_new_from_icon_name(self, "circle");
+    gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(self->btn_circle), GTK_TOGGLE_BUTTON(self->btn_free));
+    self->btn_line = my_toggle_button_new_from_icon_name(self, "line");
+    gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(self->btn_line), GTK_TOGGLE_BUTTON(self->btn_free));
+    self->btn_rectangle = my_toggle_button_new_from_icon_name(self, "rectangle");
+    gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(self->btn_rectangle), GTK_TOGGLE_BUTTON(self->btn_free));
 
     // Create Drawing Area
     self->draw_area = gtk_drawing_area_new();
@@ -159,6 +182,10 @@ static void draw_app_init(DrawApp *self)
     g_signal_connect(self->drag, "drag-end", G_CALLBACK(drag_end), self);
 
     // Add widget to the window
+    gtk_box_append(GTK_BOX(self->left_box), self->btn_free);
+    gtk_box_append(GTK_BOX(self->left_box), self->btn_circle);
+    gtk_box_append(GTK_BOX(self->left_box), self->btn_line);
+    gtk_box_append(GTK_BOX(self->left_box), self->btn_rectangle);
     gtk_box_append(GTK_BOX(self->main_box), self->left_box);
     gtk_box_append(GTK_BOX(self->main_box), self->draw_area);
     gtk_box_append(GTK_BOX(self->main_box), self->btn_box);
