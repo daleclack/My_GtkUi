@@ -525,7 +525,7 @@ void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
         the default mode for first launch
         */
         // Use C API because of crash of C++ APIS
-        auto state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        short state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
         switch (state)
         {
         // case Gdk::Toplevel::State::BELOW:
