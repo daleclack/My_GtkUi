@@ -19,7 +19,7 @@ include_directories(src/core src/ui src/apps src/panels src/image_app
                     src/game24_app src/calc_app src/mine_app)
 
 find_package (PkgConfig REQUIRED)
-pkg_check_modules (GTK REQUIRED gtk4)
+pkg_check_modules (GTK REQUIRED gtkmm-4.0)
 include_directories (${GTK_INCLUDE_DIRS})
 link_directories (${GTK_LIBRARY_DIRS})
 
