@@ -29,7 +29,8 @@ set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
     src/file_app/FileWindow.cpp src/game_app/GameApp.cpp src/calc_app/calc.cpp 
     src/calc_app/CalcApp.cpp src/run_app/RunApp.cpp src/draw_app/DrawApp.cpp
     src/game24_app/Game24.cpp src/game24_app/Game24App.cpp src/text_app/TextEditor.cpp 
-    src/text_app/MyInfoBar.cpp src/image_app/ImageApp.cpp src/image_app/MyImage.cpp) 
+    src/text_app/MyInfoBar.cpp src/image_app/ImageApp.cpp src/image_app/MyImage.cpp
+    src/mine_app/MineSweeper.cpp src/mine_app/MineCell.cpp) 
 
 #Compile resources with GCR_CMake
 

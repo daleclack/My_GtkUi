@@ -9,6 +9,7 @@
 #include "DrawApp.h"
 #include "TextEditor.h"
 #include "ImageApp.h"
+#include "MineSweeper.h"
 
 enum PadPage
 {
@@ -47,6 +48,7 @@ struct _MyDock
     DrawApp *draw_win;       // A Drawing App
     TextEditor *edit_win;    // Text Editor
     ImageApp *image_app;     // Image Viewer
+    MineSweeper *mine_app;   // Mine Sweeper
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -166,7 +168,7 @@ static gboolean prefs_win_closed(GtkWidget *window, MyDock *dock)
 }
 
 // File Broswer control functions
-static void padfiles_clicked(GtkWindow *window, MyDock *dock)
+static void padfiles_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->file_win))))
@@ -183,7 +185,7 @@ static void padfiles_clicked(GtkWindow *window, MyDock *dock)
     btnlaunch_clicked(NULL, dock);
 }
 
-static void btnfiles_clicked(GtkWindow *window, MyDock *dock)
+static void btnfiles_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, control window state
     if (gtk_widget_get_visible(GTK_WIDGET((dock->file_win))))
@@ -208,7 +210,7 @@ static gboolean file_window_closed(GtkWidget *window, MyDock *dock)
 }
 
 // Guess Game control functions
-static void padgame_clicked(GtkWindow *window, MyDock *dock)
+static void padgame_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->game_win))))
@@ -250,7 +252,7 @@ static gboolean game_win_closed(GtkWidget *game_win, MyDock *dock)
 }
 
 // Calculator App control functions
-static void padcalc_clicked(GtkWindow *window, MyDock *dock)
+static void padcalc_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->calc_win))))
@@ -301,7 +303,7 @@ static void padrun_clicked(GtkWidget *widget, MyDock *dock)
 }
 
 // 24 Game control functions
-static void padgame24_clicked(GtkWindow *window, MyDock *dock)
+static void padgame24_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->game24_win))))
@@ -343,7 +345,7 @@ static gboolean game24_win_closed(GtkWidget *game24_win, MyDock *dock)
 }
 
 // Drawing App control functions
-static void paddraw_clicked(GtkWindow *window, MyDock *dock)
+static void paddraw_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->draw_win))))
@@ -385,7 +387,7 @@ static gboolean draw_win_closed(GtkWidget *draw_win, MyDock *dock)
 }
 
 // Text Editor control functions
-static void padedit_clicked(GtkWindow *window, MyDock *dock)
+static void padedit_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->edit_win))))
@@ -428,7 +430,7 @@ static gboolean edit_win_closed(GtkWidget *win, MyDock *dock)
 }
 
 // Image viewer control functions
-static void padimage_clicked(GtkWindow *window, MyDock *dock)
+static void padimage_clicked(GtkWidget *widget, MyDock *dock)
 {
     // When the window visible, unminimize it
     if (gtk_widget_get_visible(GTK_WIDGET((dock->image_app))))
