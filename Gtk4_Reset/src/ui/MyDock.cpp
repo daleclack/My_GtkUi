@@ -10,6 +10,8 @@
 #include "TextEditor.h"
 #include "ImageApp.h"
 #include "MineSweeper.h"
+#include <thread>
+#include <cstdlib>
 
 enum PadPage
 {
@@ -513,6 +515,42 @@ static gboolean mine_win_closed(GtkWidget *win, MyDock *dock)
     return TRUE;
 }
 
+// Add-on Apps launch functions
+static void padvlc_clicked(GtkWidget *widget, MyDock *dock)
+{
+    std::thread first(system, "vlc");
+    first.detach();
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void padgedit_clicked(GtkWidget *widget, MyDock *dock)
+{
+    std::thread second(system, "gedit");
+    second.detach();
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void padaud_clicked(GtkWidget *widget, MyDock *dock)
+{
+    std::thread third(system, "audacious");
+    third.detach();
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void padnote_clicked(GtkWidget *widget, MyDock *dock)
+{
+    std::thread fourth(system, "start notepad");
+    fourth.detach();
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void padvlc_win32(GtkWidget *widget, MyDock *dock)
+{
+    std::thread fifth(system, "start ..\\vlc\\vlc.exe");
+    fifth.detach();
+    btnlaunch_clicked(NULL, dock);
+}
+
 static void my_dock_get_widgets(MyDock *self)
 {
     // Get widgets
@@ -661,6 +699,13 @@ static void my_dock_init(MyDock *self)
 
     // Signal for app runner
     g_signal_connect(self->padrun, "clicked", G_CALLBACK(padrun_clicked), self);
+
+    // Signal for addon app launchers
+    g_signal_connect(self->padaud, "clicked", G_CALLBACK(padaud_clicked), self);
+    g_signal_connect(self->padgedit, "clicked", G_CALLBACK(padgedit_clicked), self);
+    g_signal_connect(self->padvlc, "clicked", G_CALLBACK(padvlc_clicked), self);
+    g_signal_connect(self->padvlc_win32, "clicked", G_CALLBACK(padvlc_win32), self);
+    g_signal_connect(self->padnote, "clicked", G_CALLBACK(padnote_clicked), self);
 
     // Add finder
     self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
