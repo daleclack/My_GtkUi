@@ -293,7 +293,7 @@ static void mine_sweeper_init(MineSweeper *self)
     self->main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     self->mine_grid = gtk_grid_new();
     self->time_label = gtk_label_new("");
-    self->status_label = gtk_label_new("");
+    self->status_label = gtk_label_new("Game not started");
     self->btn_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
     self->btn_start = gtk_button_new_with_label("Start/Reset");
     self->btn_show = gtk_button_new_with_label("Show All");

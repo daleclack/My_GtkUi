@@ -471,6 +471,48 @@ static gboolean image_win_closed(GtkWidget *win, MyDock *dock)
     return TRUE;
 }
 
+// MineSweeper control functions
+static void padmine_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->mine_app))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->mine_app));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->mine_app), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->mine_app));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_mine), "mines_app_running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btnmine_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->mine_app))))
+    {
+        window_ctrl(GTK_WINDOW(dock->mine_app), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->mine_app), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->mine_app));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_mine), "mines_app_running");
+}
+
+static gboolean mine_win_closed(GtkWidget *win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_mine), "mines_app");
+    return TRUE;
+}
+
 static void my_dock_get_widgets(MyDock *self)
 {
     // Get widgets
@@ -610,6 +652,12 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btnimage, "clicked", G_CALLBACK(btnimage_clicked), self);
     g_signal_connect(self->padimage, "clicked", G_CALLBACK(padimage_clicked), self);
     g_signal_connect(self->image_app, "close-request", G_CALLBACK(image_win_closed), self);
+
+    // Mine Sweeper Window
+    self->mine_app = mine_sweeper_new();
+    g_signal_connect(self->btnmine, "clicked", G_CALLBACK(btnmine_clicked), self);
+    g_signal_connect(self->padmine, "clicked", G_CALLBACK(padmine_clicked), self);
+    g_signal_connect(self->mine_app, "close-request", G_CALLBACK(mine_win_closed), self);
 
     // Signal for app runner
     g_signal_connect(self->padrun, "clicked", G_CALLBACK(padrun_clicked), self);
