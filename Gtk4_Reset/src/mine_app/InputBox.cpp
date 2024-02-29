@@ -24,7 +24,7 @@ static std::vector<std::string> names;
 static std::vector<int> times;
 static json data;
 
-static void btnok_clicked(GtkButton *btn, InputBox *self)
+static void update_score(GtkWidget *btn, InputBox *self)
 {
     // Save score to json file
     // Open a file to save json data
@@ -51,6 +51,7 @@ static void btnok_clicked(GtkButton *btn, InputBox *self)
         scores_win_update_and_show(self->scores_win);
     }
     gtk_window_close(GTK_WINDOW(self));
+    gtk_window_present(GTK_WINDOW(self->scores_win));
 }
 
 static gboolean input_box_closed(GtkWidget *win, InputBox *self)
@@ -79,8 +80,9 @@ static void input_box_init(InputBox *self)
     self->scores_win = scores_win_new(window);
 
     // Link signals
-    g_signal_connect(self->btn_ok, "clicked", G_CALLBACK(btnok_clicked), self);
+    g_signal_connect(self->btn_ok, "clicked", G_CALLBACK(update_score), self);
     g_signal_connect(self, "close-request", G_CALLBACK(input_box_closed), self);
+    g_signal_connect(self->entry_name, "activate", G_CALLBACK(update_score), self);
     g_signal_connect_swapped(self->btn_cancel, "clicked", G_CALLBACK(gtk_window_close), self);
 
     // Pack widgets
