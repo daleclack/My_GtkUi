@@ -1,5 +1,6 @@
 #include "MineSweeper.h"
 #include "MineCell.h"
+#include "InputBox.h"
 #include <cstdlib>
 #include <string>
 
@@ -16,6 +17,10 @@ struct _MineSweeper
 {
     GtkApplicationWindow parent_instance;
 
+    // Header widgets
+    GtkWidget *header, *menu_btn;
+    GtkBuilder *menu_builder;
+
     // Child widgets
     GtkWidget *main_box, *btn_box;
     GtkWidget *mine_grid;
@@ -28,6 +33,9 @@ struct _MineSweeper
     gboolean started;
     int mines_clear, mine_count;
     GameStatus game_status;
+
+    // InputBox for game win
+    InputBox *input_box;
 };
 
 G_DEFINE_TYPE(MineSweeper, mine_sweeper, GTK_TYPE_APPLICATION_WINDOW)
@@ -170,9 +178,9 @@ static void mine_sweeper_check_mines(MineSweeper *self, int pos_x, int pos_y)
         self->game_status = GameStatus::Winned;
         self->started = FALSE;
 
-        // // Save the time of game
-        // input_dialog->set_game_time(timer_count);
-        // input_dialog->show();
+        // Save the time of game
+        input_box_set_game_time(self->input_box, self->time_count);
+        input_box_present(self->input_box);
     }
 }
 
@@ -244,9 +252,13 @@ static gboolean time_func(gpointer data)
 {
     MineSweeper *mine_app = MINE_SWEEPER(data);
     char tmp[50];
-    (mine_app->time_count)++;
-    sprintf(tmp, "Time:%d", mine_app->time_count);
-    gtk_label_set_label(GTK_LABEL(mine_app->time_label), tmp);
+    // Update time when game is running
+    if (mine_app->game_status == GameStatus::Running)
+    {
+        (mine_app->time_count)++;
+        sprintf(tmp, "Time:%d", mine_app->time_count);
+        gtk_label_set_label(GTK_LABEL(mine_app->time_label), tmp);
+    }
     return mine_app->started;
 }
 
@@ -284,16 +296,67 @@ static void btnshow_clicked(GtkButton *btn, MineSweeper *self)
     }
 }
 
+// Signal Handler for menus
+static void newgame_activated(GSimpleAction *action, GVariant *parmeter, gpointer data)
+{
+    btnstart_clicked(NULL, MINE_SWEEPER(data));
+}
+
+static void scores_activated(GSimpleAction *action, GVariant *parmeter, gpointer data)
+{
+    MineSweeper *app = MINE_SWEEPER(data);
+    input_box_show_scores(app->input_box);
+}
+
+static void showmines_activated(GSimpleAction *action, GVariant *parmeter, gpointer data)
+{
+    btnshow_clicked(NULL, MINE_SWEEPER(data));
+}
+
+static void quit_activated(GSimpleAction *action, GVariant *parmeter, gpointer data)
+{
+    gtk_window_destroy(GTK_WINDOW(data));
+}
+
 static void mine_sweeper_init(MineSweeper *self)
 {
     // Initalize window
     gtk_window_set_title(GTK_WINDOW(self), "MineSweeper");
+    gtk_window_set_icon_name(GTK_WINDOW(self), "mine_app");
+    self->header = gtk_header_bar_new();
+    gtk_window_set_titlebar(GTK_WINDOW(self), self->header);
+
+    // Add action for menu
+    GActionEntry entries[] =
+        {
+            {"new_game", newgame_activated, NULL, NULL, NULL},
+            {"scores", scores_activated, NULL, NULL, NULL},
+            {"show_mines", showmines_activated, NULL, NULL, NULL},
+            {"quit", quit_activated, NULL, NULL, NULL}};
+    g_action_map_add_action_entries(G_ACTION_MAP(self), entries,
+                                    G_N_ELEMENTS(entries), self);
+
+    // Create Menu and button
+    self->menu_btn = gtk_menu_button_new();
+    gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(self->menu_btn), "open-menu");
+    gtk_header_bar_pack_end(GTK_HEADER_BAR(self->header), self->menu_btn);
+
+    // Create Menu
+    self->menu_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/mine_menu.xml");
+    GMenuModel *model = G_MENU_MODEL(gtk_builder_get_object(self->menu_builder, "mine_menu"));
+    gtk_menu_button_set_menu_model(GTK_MENU_BUTTON(self->menu_btn), model);
+    GtkPopover *popover = gtk_menu_button_get_popover(GTK_MENU_BUTTON(self->menu_btn));
+    gtk_popover_set_has_arrow(popover, FALSE);
+    gtk_widget_set_halign(GTK_WIDGET(popover), GTK_ALIGN_END);
+
+    // Create Input Box
+    self->input_box = input_box_new(GTK_WINDOW(self));
 
     // Create widgets
     self->main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     self->mine_grid = gtk_grid_new();
     self->time_label = gtk_label_new("");
-    self->status_label = gtk_label_new("Game not started");
+    self->status_label = gtk_label_new("");
     self->btn_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
     self->btn_start = gtk_button_new_with_label("Start/Reset");
     self->btn_show = gtk_button_new_with_label("Show All");
