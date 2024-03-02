@@ -53,6 +53,7 @@ set(RESOURCE_LIST
     final_approach.png
     style.css
     style_dark.css
+    mine_app.css
     folder.svg
     folder-images.svg
     image_file.svg

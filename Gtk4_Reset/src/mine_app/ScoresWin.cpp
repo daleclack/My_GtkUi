@@ -13,7 +13,7 @@ struct _ScoresWin
 
     // List widgets
     GtkWidget *list_view;
-    GtkSingleSelection *selection;
+    GtkNoSelection *selection;
     GtkListItemFactory *factory_name, *factory_time;
     GtkColumnViewColumn *column_name, *column_time;
     GListStore *store;
@@ -118,7 +118,7 @@ static void scores_win_init(ScoresWin *self)
 
     // Create store
     self->store = g_list_store_new(scores_item_get_type());
-    self->selection = gtk_single_selection_new(G_LIST_MODEL(self->store));
+    self->selection = gtk_no_selection_new(G_LIST_MODEL(self->store));
 
     // Create Column View
     self->list_view = gtk_column_view_new(GTK_SELECTION_MODEL(self->selection));

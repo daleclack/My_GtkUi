@@ -36,6 +36,9 @@ struct _MineSweeper
 
     // InputBox for game win
     InputBox *input_box;
+
+    // Theme for Mine Cells
+    GtkCssProvider *provider;
 };
 
 G_DEFINE_TYPE(MineSweeper, mine_sweeper, GTK_TYPE_APPLICATION_WINDOW)
@@ -364,6 +367,14 @@ static void mine_sweeper_init(MineSweeper *self)
     g_signal_connect(self->btn_start, "clicked", G_CALLBACK(btnstart_clicked), self);
     g_signal_connect(self->btn_show, "clicked", G_CALLBACK(btnshow_clicked), self);
     g_signal_connect_swapped(self->btn_exit, "clicked", G_CALLBACK(gtk_window_close), self);
+
+    // Add css theme for Mine Cells
+    self->provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_resource(self->provider, "/org/gtk/daleclack/mine_app.css");
+    gtk_widget_add_css_class(self->main_box, "mine_app");
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->main_box),
+                                               GTK_STYLE_PROVIDER(self->provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     // Create mine cells
     mine_sweeper_cells_init(self, 7, 7);
