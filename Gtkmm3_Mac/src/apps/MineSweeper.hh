@@ -45,6 +45,9 @@ private:
     // Menu
     Glib::RefPtr<Gtk::Builder> menu_builder;
 
+    // Style for mine field
+    Glib::RefPtr<Gtk::CssProvider> provider;
+
     // Timer
     int timer_count;
     sigc::connection mytimer;

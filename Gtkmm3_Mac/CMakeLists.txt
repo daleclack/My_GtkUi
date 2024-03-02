@@ -49,6 +49,7 @@ set(RESOURCE_LIST
     STRIPBLANKS win_input.ui
     STRIPBLANKS scoreswin.ui
     STRIPBLANKS mine_menu.xml
+    mine_style.css
     style.css
     reset.css
     dock_style.css

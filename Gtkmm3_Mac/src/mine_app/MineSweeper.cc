@@ -66,6 +66,12 @@ MineSweeper::MineSweeper()
     status_label.set_label("Start a new game first");
     mine_grid.set_sensitive(false);
 
+    // Add Style for mine grid
+    provider = Gtk::CssProvider::create();
+    provider->load_from_resource("/org/gtk/daleclack/mine_style.css");
+    auto style = mine_grid.get_style_context();
+    style->add_provider(provider, G_MAXUINT);
+
     // Show everything
     add(main_box);
     show_all_children();
