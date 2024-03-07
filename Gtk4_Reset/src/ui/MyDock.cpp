@@ -106,6 +106,7 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent)
         case GDK_TOPLEVEL_STATE_MINIMIZED:
             gtk_window_set_transient_for(window, parent);
             gtk_window_unminimize(window);
+            gtk_window_present(window);
             break;
         default:
             // The controlled window is on dock

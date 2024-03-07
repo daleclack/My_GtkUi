@@ -1,4 +1,5 @@
 #include "ScoresItem.h"
+#define NAME_MAX 256
 
 struct _ScoresItem
 {
