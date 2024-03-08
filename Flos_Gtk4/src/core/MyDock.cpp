@@ -33,6 +33,7 @@ static void file_window_ctrl(FileWindow *window, GtkWindow *parent)
         case GDK_TOPLEVEL_STATE_MINIMIZED:
             gtk_window_set_transient_for(GTK_WINDOW(window), parent);
             gtk_window_unminimize(GTK_WINDOW(window));
+            gtk_window_present(GTK_WINDOW(window));
             break;
         default:
             gtk_window_set_transient_for(GTK_WINDOW(window), NULL);
