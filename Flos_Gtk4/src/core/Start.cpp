@@ -103,10 +103,10 @@ void add_start(MainWin *win, GtkBox *box)
     ext_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "ext_separator");
     start_box = (GtkWidget *)gtk_builder_get_object(startbuilder, "start_box");
     search_entry = (GtkWidget *)gtk_builder_get_object(startbuilder, "search_entry");
-    gtk_widget_add_css_class(prim_separator, "dark_style");
-    gtk_widget_add_css_class(ext_separator, "dark_style");
-    gtk_widget_add_css_class(start_menu, "dark_style");
-    gtk_widget_add_css_class(search_entry, "dark_style");
+    gtk_widget_add_css_class(prim_separator, "main_style");
+    gtk_widget_add_css_class(ext_separator, "main_style");
+    gtk_widget_add_css_class(start_menu, "main_style");
+    gtk_widget_add_css_class(search_entry, "main_style");
     gtk_style_context_add_provider((prim_separator),
                                    main_win_get_style(win), G_MAXINT);
     gtk_style_context_add_provider((ext_separator),

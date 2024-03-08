@@ -7,34 +7,42 @@
 /* @import url("resource://org/gtk/daleclack/reset.css"); */
 
 /*Style for menubar*/
-.dark_style {
+.main_style {
     background: alpha(gray, 0.7);
 }
 
-.dark_style menubar{
-	background-color: alpha(white,0.7);
-}
-
-.dark_style box{
-    background-color: alpha(white,0.7);
-}
-
-.dark_style entry.search{
+.main_style menubar {
     background-color: alpha(white, 0.7);
 }
 
-.dark_style popover{
+.main_style box {
     background-color: alpha(white, 0.7);
 }
 
-.dark_style separator{
-	background-color:alpha(white, 0.7);
+.main_style entry.search {
+    background-color: alpha(white, 0.7);
 }
 
-.dark_style menubutton{
-    color:white;
+.main_style popover {
+    background-color: alpha(white, 0.7);
 }
 
-.dark_style button{
-	color:white;
+.main_style separator {
+    background-color: alpha(white, 0.7);
+}
+
+.main_style menubutton {
+    color: white;
+}
+
+.main_style button {
+    color: white;
+}
+
+.default_style box {
+    background-color: transparent;
+}
+
+.default_style separator {
+    background-color: transparent;
 }
