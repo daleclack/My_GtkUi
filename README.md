@@ -19,6 +19,8 @@ mingw-w64-ucrt-x86_64-gst-plugins-ugly
 
 The project is to memorize the FlWin and the flos project. FlWin project started in 2016, in 2017, the name is changed to flos. In 2018, the project name is reset to FlWin. The last version of FlWin/Flos is FlWin 5.x, and tested in the start of 2019, which is never been released. I think the flos 2.0 is the best release of that project, so the idea is base on the flos 2.0 build.
 
+The link of the original flash file is [here](https://github.com/daleclack/My_GtkUi/releases/download/v4.1_flos/Flos2.0.swf), and it should can be played with recent ruffle builds and official Adobe Flash Player.
+
 Thanks for these author of libraries used by the project:
 
 [The Gtk Project](https://www.gtk.org/)
