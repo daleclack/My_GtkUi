@@ -10,6 +10,7 @@
 #include "TextEditor.h"
 #include "ImageApp.h"
 #include "MineSweeper.h"
+#include "MyMediaPlayer.h"
 #include <thread>
 #include <cstdlib>
 
@@ -31,26 +32,27 @@ struct _MyDock
         *launchpad_page, *apps_stack, *default_box, *addon_box,
         *apps_switcher, *apps_view, *appgrid_box, *appgrid_label;
     GtkWidget *btnfiles, *btndraw, *btncalc, *btnedit, *btnimage, // Dock buttons
-        *btnset, *btngame, *btngame24, *btnmine;
+        *btnset, *btngame, *btngame24, *btnmine, *btnmedia;
     GtkWidget *image_file, *image_draw, *image_calc, *image_game, // Image widget for dock buttons
-        *image_edit, *image_viewer, *image_game24, *image_mine, *image_set;
+        *image_edit, *image_viewer, *image_game24, *image_mine, *image_set, *image_media;
     GtkWidget *padabout, *padaud, *paddraw, *padfile, *padgedit, // Launchpad icons
         *padgame, *padimage, *padnote, *padedit, *padvlc, *padvlc_win32,
-        *padrun, *padset, *padgame24, *padcalc, *padmine;
+        *padrun, *padset, *padgame24, *padcalc, *padmine, *padmedia;
     PadPage current_page;
     GtkBuilder *menu_builder;
     GMenuModel *menu_model;
     GtkGesture *gesture;
-    GtkWidget *context_menu; // Context menu
-    MyPrefs *prefs_win;      // Prefs window
-    FileWindow *file_win;    // File Broswer window
-    GameApp *game_win;       // The Guess Game
-    CalcApp *calc_win;       // Calc App
-    Game24App *game24_win;   // 24 Game Window
-    DrawApp *draw_win;       // A Drawing App
-    TextEditor *edit_win;    // Text Editor
-    ImageApp *image_app;     // Image Viewer
-    MineSweeper *mine_app;   // Mine Sweeper
+    GtkWidget *context_menu;  // Context menu
+    MyPrefs *prefs_win;       // Prefs window
+    FileWindow *file_win;     // File Broswer window
+    GameApp *game_win;        // The Guess Game
+    CalcApp *calc_win;        // Calc App
+    Game24App *game24_win;    // 24 Game Window
+    DrawApp *draw_win;        // A Drawing App
+    TextEditor *edit_win;     // Text Editor
+    ImageApp *image_app;      // Image Viewer
+    MineSweeper *mine_app;    // Mine Sweeper
+    MyMediaPlayer *media_app; // Media Player
 };
 
 G_DEFINE_TYPE(MyDock, my_dock, GTK_TYPE_BOX)
@@ -516,6 +518,48 @@ static gboolean mine_win_closed(GtkWidget *win, MyDock *dock)
     return TRUE;
 }
 
+// Media Player control functions
+static void padmedia_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, unminimize it
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->media_app))))
+    {
+        gtk_window_unminimize(GTK_WINDOW(dock->media_app));
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->media_app), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->media_app));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app-running");
+    btnlaunch_clicked(NULL, dock);
+}
+
+static void btnmedia_clicked(GtkWidget *widget, MyDock *dock)
+{
+    // When the window visible, control window state
+    if (gtk_widget_get_visible(GTK_WIDGET((dock->media_app))))
+    {
+        window_ctrl(GTK_WINDOW(dock->media_app), dock->parent_win);
+    }
+    else
+    {
+        // Show the window
+        gtk_window_set_transient_for(GTK_WINDOW(dock->media_app), dock->parent_win);
+        gtk_window_present(GTK_WINDOW(dock->media_app));
+    }
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app-running");
+}
+
+static gboolean media_win_closed(GtkWidget *win, MyDock *dock)
+{
+    // Hide the window
+    gtk_widget_set_visible(win, FALSE);
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app");
+    return TRUE;
+}
+
 // Add-on Apps launch functions
 static void padvlc_clicked(GtkWidget *widget, MyDock *dock)
 {
@@ -582,6 +626,8 @@ static void my_dock_get_widgets(MyDock *self)
     self->image_mine = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_mine"));
     self->btnset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnset"));
     self->image_set = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_set"));
+    self->btnmedia = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnmedia"));
+    self->image_media = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_media"));
     self->launchpad_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_stack"));
     self->default_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_page"));
     self->launchpad_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_page"));
@@ -600,6 +646,7 @@ static void my_dock_get_widgets(MyDock *self)
     self->padgedit = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padgedit"));
     self->padimage = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padimage"));
     self->padmine = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padmine"));
+    self->padmedia = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padmedia"));
     self->padnote = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padnote"));
     self->padrun = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padrun"));
     self->padset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padset"));
@@ -697,6 +744,12 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->btnmine, "clicked", G_CALLBACK(btnmine_clicked), self);
     g_signal_connect(self->padmine, "clicked", G_CALLBACK(padmine_clicked), self);
     g_signal_connect(self->mine_app, "close-request", G_CALLBACK(mine_win_closed), self);
+
+    // Media Player Window
+    self->media_app = my_media_player_new();
+    g_signal_connect(self->btnmedia, "clicked", G_CALLBACK(btnmedia_clicked), self);
+    g_signal_connect(self->padmedia, "clicked", G_CALLBACK(padmedia_clicked), self);
+    g_signal_connect(self->media_app, "close-request", G_CALLBACK(media_win_closed), self);
 
     // Signal for app runner
     g_signal_connect(self->padrun, "clicked", G_CALLBACK(padrun_clicked), self);

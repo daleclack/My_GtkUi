@@ -754,9 +754,8 @@ static void my_media_player_class_init(MyMediaPlayerClass *klass)
     GTK_WINDOW_CLASS(klass)->close_request = my_media_player_close_request;
 }
 
-MyMediaPlayer *my_media_player_new(GtkApplication *app)
+MyMediaPlayer *my_media_player_new()
 {
     // Create a window for media player
-    return MYMEDIA_PLAYER(g_object_new(my_media_player_get_type(),
-                                       "application", app, NULL));
+    return MYMEDIA_PLAYER(g_object_new(my_media_player_get_type(), NULL));
 }

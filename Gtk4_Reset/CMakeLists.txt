@@ -128,7 +128,35 @@ set(RESOURCE_LIST
     icons/scalable/status/calcapp.svg
     icons/scalable/status/calcapp_running.svg
     icons/scalable/status/mines_app.svg
-    icons/scalable/status/mines_app_running.svg)
+    icons/scalable/status/mines_app_running.svg
+    icons/scalable/status/media-app.svg
+    icons/scalable/status/media-app-running.svg
+    icons/scalable/status/media-eject-dark.svg
+    icons/scalable/status/media-eject.svg
+    icons/scalable/status/media-mount-dark.svg
+    icons/scalable/status/media-mount.svg
+    icons/scalable/status/media-playback-pause-dark.svg
+    icons/scalable/status/media-playback-pause.svg
+    icons/scalable/status/media-playback-start-dark.svg
+    icons/scalable/status/media-playback-start.svg
+    icons/scalable/status/media-playback-stop-dark.svg
+    icons/scalable/status/media-playback-stop.svg
+    icons/scalable/status/media-playlist-append-dark.svg
+    icons/scalable/status/media-playlist-append.svg
+    icons/scalable/status/media-playlist-normal-dark.svg
+    icons/scalable/status/media-playlist-normal.svg
+    icons/scalable/status/media-playlist-play-dark.svg
+    icons/scalable/status/media-playlist-play.svg
+    icons/scalable/status/media-playlist-repeat-dark.svg
+    icons/scalable/status/media-playlist-repeat-one-dark.svg
+    icons/scalable/status/media-playlist-repeat.svg
+    icons/scalable/status/media-playlist-repeat-one.svg
+    icons/scalable/status/media-playlist-shuffle-dark.svg
+    icons/scalable/status/media-playlist-shuffle.svg
+    icons/scalable/status/media-seek-backward-dark.svg
+    icons/scalable/status/media-seek-backward.svg
+    icons/scalable/status/media-seek-forward-dark.svg
+    icons/scalable/status/media-seek-forward.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT

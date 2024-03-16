@@ -154,6 +154,19 @@
                   </object>
                 </child>
                 <child>
+                  <object class="GtkButton" id="btnmedia">
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="child">
+                      <object class="GtkImage" id="image_media">
+                        <property name="icon-name">media-app</property>
+                        <property name="pixel-size">48</property>
+                      </object>
+                    </property>
+                    <property name="has-frame">0</property>
+                  </object>
+                </child>
+                <child>
                   <placeholder/>
                 </child>
               </object>
@@ -672,6 +685,34 @@
         <property name="has-frame">0</property>
         <layout>
           <property name="column">1</property>
+          <property name="row">2</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="padmedia">
+        <property name="focusable">1</property>
+        <property name="receives-default">1</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkImage" id="image28">
+                <property name="icon-name">media-app</property>
+                <property name="pixel-size">48</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Media Player</property>
+              </object>
+            </child>
+          </object>
+        </property>
+        <property name="has-frame">0</property>
+        <layout>
+          <property name="column">2</property>
           <property name="row">2</property>
         </layout>
       </object>
