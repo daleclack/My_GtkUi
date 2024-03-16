@@ -156,7 +156,11 @@ set(RESOURCE_LIST
     icons/scalable/status/media-seek-backward-dark.svg
     icons/scalable/status/media-seek-backward.svg
     icons/scalable/status/media-seek-forward-dark.svg
-    icons/scalable/status/media-seek-forward.svg)
+    icons/scalable/status/media-seek-forward.svg
+    icons/scalable/status/media-skip-backward-dark.svg
+    icons/scalable/status/media-skip-backward.svg
+    icons/scalable/status/media-skip-forward-dark.svg
+    icons/scalable/status/media-skip-forward.svg)
 
 compile_gresources(RESOURCE_FILE
                    XML_OUT
