@@ -31,7 +31,8 @@ set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
     src/game24_app/Game24.cpp src/game24_app/Game24App.cpp src/text_app/TextEditor.cpp 
     src/text_app/MyInfoBar.cpp src/image_app/ImageApp.cpp src/image_app/MyImage.cpp
     src/mine_app/MineSweeper.cpp src/mine_app/MineCell.cpp src/mine_app/InputBox.cpp 
-    src/mine_app/ScoresItem.cpp src/mine_app/ScoresWin.cpp) 
+    src/mine_app/ScoresItem.cpp src/mine_app/ScoresWin.cpp src/media_app/LyricsParser.cpp 
+    src/media_app/MyMediaPlayer.cpp src/media_app/MediaItem.cpp) 
 
 #Compile resources with GCR_CMake
 

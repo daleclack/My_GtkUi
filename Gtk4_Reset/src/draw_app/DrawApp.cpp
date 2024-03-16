@@ -1,6 +1,6 @@
 #include "DrawApp.h"
 #include "MyFinder.h"
-#define NAME_MAX 256
+#include "MyLimit.h"
 
 typedef enum
 {
