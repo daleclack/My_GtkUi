@@ -17,7 +17,7 @@ struct _MyMediaPlayer
     GtkWidget *btn_priv, *btn_play, *btn_next,
         *btn_stop, *btn_playmode;
     PlayMode current_play_mode;
-    GtkWidget *main_box, *btn_box;
+    GtkWidget *main_box, *play_box, *btn_box;
     GtkWidget *btn_add, *btn_remove;
     GtkWidget *btn_load, *btn_save;
     GtkWidget *list_expander, *list_box;
@@ -641,16 +641,17 @@ static gboolean my_media_player_check_dark_theme(MyMediaPlayer *player)
 static void my_media_player_init(MyMediaPlayer *self)
 {
     // Initalize window
-    gtk_window_set_icon_name(GTK_WINDOW(self), "org.gtk.daleclack");
-    gtk_window_set_title(GTK_WINDOW(self), "Gtk4 Media Player 3");
-    gtk_window_set_default_size(GTK_WINDOW(self), 300, 270);
+    gtk_window_set_icon_name(GTK_WINDOW(self), "media-app");
+    gtk_window_set_title(GTK_WINDOW(self), "Media Player");
+    gtk_window_set_default_size(GTK_WINDOW(self), 480, 270);
     gtk_window_set_resizable(GTK_WINDOW(self), TRUE);
 
     // Check whether use dark icon name
     self->dark_mode = my_media_player_check_dark_theme(self);
 
     // Create widgets
-    self->main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    self->main_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    self->play_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     self->video = gtk_video_new();
     self->label_lyrics = gtk_label_new(" ");
     self->ctrl_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
@@ -726,16 +727,16 @@ static void my_media_player_init(MyMediaPlayer *self)
     self->current_play_mode = PlayMode::List_Repeat;
 
     // Add widgets
-    gtk_box_append(GTK_BOX(self->main_box), self->video);
+    gtk_box_append(GTK_BOX(self->play_box), self->video);
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(self->scrolled_lyrics),
                                   self->label_lyrics);
-    gtk_box_append(GTK_BOX(self->main_box), self->scrolled_lyrics);
+    gtk_box_append(GTK_BOX(self->play_box), self->scrolled_lyrics);
     gtk_box_append(GTK_BOX(self->ctrl_box), self->btn_priv);
     gtk_box_append(GTK_BOX(self->ctrl_box), self->btn_play);
     gtk_box_append(GTK_BOX(self->ctrl_box), self->btn_next);
     gtk_box_append(GTK_BOX(self->ctrl_box), self->btn_stop);
     gtk_box_append(GTK_BOX(self->ctrl_box), self->btn_playmode);
-    gtk_box_append(GTK_BOX(self->main_box), self->ctrl_box);
+    gtk_box_append(GTK_BOX(self->play_box), self->ctrl_box);
     gtk_box_append(GTK_BOX(self->btn_box), self->btn_add);
     gtk_box_append(GTK_BOX(self->btn_box), self->btn_remove);
     gtk_box_append(GTK_BOX(self->btn_box), self->btn_load);
@@ -745,6 +746,7 @@ static void my_media_player_init(MyMediaPlayer *self)
                                   self->column_view);
     gtk_box_append(GTK_BOX(self->list_box), self->scrolled_window);
     gtk_expander_set_child(GTK_EXPANDER(self->list_expander), self->list_box);
+    gtk_box_append(GTK_BOX(self->main_box), self->play_box);
     gtk_box_append(GTK_BOX(self->main_box), self->list_expander);
     gtk_window_set_child(GTK_WINDOW(self), self->main_box);
 }
