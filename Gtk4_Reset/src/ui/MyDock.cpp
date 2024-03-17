@@ -132,6 +132,7 @@ static void padset_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->prefs_win))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->prefs_win));
+        gtk_window_present(GTK_WINDOW(dock->prefs_win));
     }
     else
     {
@@ -179,6 +180,7 @@ static void padfiles_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->file_win))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->file_win));
+        gtk_window_present(GTK_WINDOW(dock->file_win));
     }
     else
     {
@@ -221,6 +223,7 @@ static void padgame_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->game_win))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->game_win));
+        gtk_window_present(GTK_WINDOW(dock->game_win));
     }
     else
     {
@@ -263,6 +266,7 @@ static void padcalc_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->calc_win))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->calc_win));
+        gtk_window_present(GTK_WINDOW(dock->calc_win));
     }
     else
     {
@@ -314,6 +318,7 @@ static void padgame24_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->game24_win))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->game24_win));
+        gtk_window_present(GTK_WINDOW(dock->game24_win));
     }
     else
     {
@@ -356,6 +361,7 @@ static void paddraw_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->draw_win))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->draw_win));
+        gtk_window_present(GTK_WINDOW(dock->draw_win));
     }
     else
     {
@@ -398,6 +404,7 @@ static void padedit_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->edit_win))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->edit_win));
+        gtk_window_present(GTK_WINDOW(dock->edit_win));
     }
     else
     {
@@ -441,6 +448,7 @@ static void padimage_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->image_app))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->image_app));
+        gtk_window_present(GTK_WINDOW(dock->image_app));
     }
     else
     {
@@ -483,6 +491,7 @@ static void padmine_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->mine_app))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->mine_app));
+        gtk_window_present(GTK_WINDOW(dock->mine_app));
     }
     else
     {
@@ -525,6 +534,7 @@ static void padmedia_clicked(GtkWidget *widget, MyDock *dock)
     if (gtk_widget_get_visible(GTK_WIDGET((dock->media_app))))
     {
         gtk_window_unminimize(GTK_WINDOW(dock->media_app));
+        gtk_window_present(GTK_WINDOW(dock->media_app));
     }
     else
     {
