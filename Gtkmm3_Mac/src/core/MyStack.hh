@@ -20,9 +20,13 @@ private:
     // Child widgets
     Gtk::Box *login_page, *main_page;
     Gtk::Button *btnlogin;
+    Gtk::Label *user_label;
 
     // Dock Widget
     MyDock *main_dock;
+
+    // CssProvider for login page
+    Glib::RefPtr<Gtk::CssProvider> provider;
 
     // Signal Handlers
     void btnlogin_clicked();

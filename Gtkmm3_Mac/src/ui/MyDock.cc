@@ -119,12 +119,19 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     // Add Finder
     finder_box->pack_start(finder);
 
-    // Add Style for MyFinder
+    // Add Style for MyFinder and Dock
     provider = Gtk::CssProvider::create();
     provider->load_from_resource("/org/gtk/daleclack/dock_style.css");
     apply_style(*dock_box);
     apply_style(*launchpad_page);
     apply_style(*separator_end);
+
+    // Add Style for grid
+    auto childrens = apps_grid->get_children();
+    for(int i = 0; i < childrens.size(); i++)
+    {
+        apply_style(*childrens[i]);
+    }
     // apps_grid->foreach(sigc::mem_fun(*this,&MyDock::apply_style));
 
     // Set dock position

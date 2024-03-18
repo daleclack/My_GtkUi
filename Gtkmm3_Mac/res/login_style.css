@@ -1,0 +1,16 @@
+/* Style for login page */
+
+
+button{
+    color:white;
+    border: 0;
+}
+
+button:hover{
+	color:black;
+}
+
+label{
+    color:white;
+    background-color: transparent;
+}

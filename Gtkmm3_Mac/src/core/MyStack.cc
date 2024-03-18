@@ -9,9 +9,18 @@ MyStack::MyStack()
     stackbuilder->get_widget("login_page", login_page);
     stackbuilder->get_widget("main_page", main_page);
     stackbuilder->get_widget("btnlogin", btnlogin);
+    stackbuilder->get_widget("user_label", user_label);
 
     // Link Signals
     btnlogin->signal_clicked().connect(sigc::mem_fun(*this, &MyStack::btnlogin_clicked));
+
+    // Create provider
+    provider = Gtk::CssProvider::create();
+    provider->load_from_resource("/org/gtk/daleclack/login_style.css");
+    auto style1 = user_label->get_style_context();
+    style1->add_provider(provider, G_MAXUINT);
+    auto style2 = btnlogin->get_style_context();
+    style2->add_provider(provider, G_MAXUINT);
 }
 
 void MyStack::mystack_init(Gtk::Window *window, Gtk::Image *m_back)
