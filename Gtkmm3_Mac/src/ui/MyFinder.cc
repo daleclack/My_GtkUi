@@ -132,6 +132,16 @@ bool MyFinder::time_out()
     return true;
 }
 
+void MyFinder::set_title(Glib::ustring &title)
+{
+    btntitle.set_label(title);
+}
+
+void MyFinder::set_title(const char *title)
+{
+    btntitle.set_label(title);
+}
+
 Glib::RefPtr<Gio::Menu> MyFinder::get_menu(Glib::RefPtr<Gtk::Builder> &builder, const Glib::ustring &id)
 {
     auto object = builder->get_object(id);

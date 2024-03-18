@@ -6,6 +6,9 @@ class MyFinder : public Gtk::Box
 {
 public:
     MyFinder();
+    // Update title for finder
+    void set_title(Glib::ustring &title);
+    void set_title(const char *title);
 
 private:
     // Child Widgets
