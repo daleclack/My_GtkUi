@@ -18,6 +18,7 @@ separator{
 
 button{
     color:white;
+	border: 0;
 }
 
 button:hover{

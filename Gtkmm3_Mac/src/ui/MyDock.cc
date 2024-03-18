@@ -125,12 +125,13 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     apply_style(*dock_box);
     apply_style(*launchpad_page);
     apply_style(*separator_end);
+    apply_style(*btnlaunch);
 
     // Add Style for grid
-    auto childrens = apps_grid->get_children();
-    for(int i = 0; i < childrens.size(); i++)
+    auto childrens1 = apps_grid->get_children();
+    for(int i = 0; i < childrens1.size(); i++)
     {
-        apply_style(*childrens[i]);
+        apply_style(*childrens1[i]);
     }
     // apps_grid->foreach(sigc::mem_fun(*this,&MyDock::apply_style));
 
