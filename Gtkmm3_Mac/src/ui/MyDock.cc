@@ -53,13 +53,16 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("padcalc", padcalc);
     ref_builder->get_widget("padmine", padmine);
 
+    // Hide Scrollbar
+    auto scrollbar = icons_sw->get_vscrollbar();
+    scrollbar->set_visible(false);
+
     // Create window
     game_win = Game::create();
     game24_win = Game24Win::create();
     calc_win = CalcApp::create();
 
     // Link signals
-
     // These signal handlers not contain a icon on the dock
     btnlaunch->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::btnlaunch_clicked));
     padaud->signal_clicked().connect(sigc::mem_fun(*this, &MyDock::padaud_clicked));
