@@ -23,6 +23,7 @@ button{
 
 button:hover{
 	color:black;
+	background-color: alpha(gray, 0.7);
 }
 
 grid{

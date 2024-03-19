@@ -25,6 +25,7 @@ private:
 
     //Style for finder
     Glib::RefPtr<Gtk::CssProvider> provider;
+    void apply_style(Gtk::Widget &widget);
 
     //Timer
     sigc::connection mytimer;

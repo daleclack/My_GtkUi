@@ -108,7 +108,27 @@ MyFinder::MyFinder()
     // Add Style for MyFinder
     provider = Gtk::CssProvider::create();
     provider->load_from_resource("/org/gtk/daleclack/style.css");
-    auto style = get_style_context();
+    apply_style(*this);
+    apply_style(btnlogo);
+    apply_style(btntitle);
+    apply_style(btnedit);
+    apply_style(btnfile);
+    apply_style(btngoto);
+    apply_style(btnhelp);
+    apply_style(btnshow);
+    apply_style(btnwin);
+    apply_style(battery_button);
+    apply_style(network_button);
+    apply_style(audio_button);
+    apply_style(screen_button);
+    apply_style(find_button);
+    apply_style(menu_button);
+    apply_style(timer_button);
+}
+
+void MyFinder::apply_style(Gtk::Widget &widget)
+{
+    auto style = widget.get_style_context();
     style->add_provider(provider, G_MAXUINT);
 }
 

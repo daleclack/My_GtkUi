@@ -8,9 +8,14 @@ button{
 
 button:hover{
 	color:black;
+    background-color: alpha(gray, 0.7);
 }
 
 label{
     color:white;
     background-color: transparent;
+}
+
+box{
+    background-color: alpha(gray, 0.5);
 }

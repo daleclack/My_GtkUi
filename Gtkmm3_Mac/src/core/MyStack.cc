@@ -21,6 +21,8 @@ MyStack::MyStack()
     style1->add_provider(provider, G_MAXUINT);
     auto style2 = btnlogin->get_style_context();
     style2->add_provider(provider, G_MAXUINT);
+    auto style3 = login_page->get_style_context();
+    style3->add_provider(provider, G_MAXUINT);
 }
 
 void MyStack::mystack_init(Gtk::Window *window, Gtk::Image *m_back)
