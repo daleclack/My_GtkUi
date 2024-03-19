@@ -1,9 +1,9 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.5.0)
-project(My_GtkUI VERSION 7.3.0)
+project(My_GtkUI_Wayland VERSION 7.3.0)
 
 #Add GCR_CMake
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../../GCR_CMake/macros)
 include(GlibCompileResourcesSupport)
 
 include(CTest)
@@ -13,26 +13,28 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 
 include(CPack)
-include_directories(.)
 include_directories(..)
-include_directories(src/core src/ui src/apps src/panels src/image_app 
-                    src/game24_app src/calc_app src/mine_app)
+include_directories(../..)
+include_directories(../src/core ../src/ui ../src/apps ../src/panels ../src/image_app 
+                    ../src/game24_app ../src/calc_app ../src/mine_app)
 
 find_package (PkgConfig REQUIRED)
-pkg_check_modules (GTK REQUIRED gtk4)
+pkg_check_modules (GTK REQUIRED gtk4-wayland)
 include_directories (${GTK_INCLUDE_DIRS})
 link_directories (${GTK_LIBRARY_DIRS})
 
-set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyStack.cpp
-    src/core/MyItem.cpp src/ui/MyDock.cpp src/ui/MyFinder.cpp src/ui/MyPrefs.cpp
-    src/ui/AppView.cpp src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp 
-    src/file_app/FileWindow.cpp src/game_app/GameApp.cpp src/calc_app/calc.cpp 
-    src/calc_app/CalcApp.cpp src/run_app/RunApp.cpp src/draw_app/DrawApp.cpp
-    src/game24_app/Game24.cpp src/game24_app/Game24App.cpp src/text_app/TextEditor.cpp 
-    src/text_app/MyInfoBar.cpp src/image_app/ImageApp.cpp src/image_app/MyImage.cpp
-    src/mine_app/MineSweeper.cpp src/mine_app/MineCell.cpp src/mine_app/InputBox.cpp 
-    src/mine_app/ScoresItem.cpp src/mine_app/ScoresWin.cpp src/media_app/LyricsParser.cpp 
-    src/media_app/MyMediaPlayer.cpp src/media_app/MediaItem.cpp) 
+add_definitions(-DWAYLAND_FIX)
+
+set(SOURCES ../src/core/main.cpp ../src/core/MainWin.cpp ../src/core/MyStack.cpp
+    ../src/core/MyItem.cpp ../src/ui/MyDock.cpp ../src/ui/MyFinder.cpp ../src/ui/MyPrefs.cpp
+    ../src/ui/AppView.cpp ../src/file_app/FileColumnView.cpp ../src/file_app/FileGridView.cpp 
+    ../src/file_app/FileWindow.cpp ../src/game_app/GameApp.cpp ../src/calc_app/calc.cpp 
+    ../src/calc_app/CalcApp.cpp ../src/run_app/RunApp.cpp ../src/draw_app/DrawApp.cpp
+    ../src/game24_app/Game24.cpp ../src/game24_app/Game24App.cpp ../src/text_app/TextEditor.cpp 
+    ../src/text_app/MyInfoBar.cpp ../src/image_app/ImageApp.cpp ../src/image_app/MyImage.cpp
+    ../src/mine_app/MineSweeper.cpp ../src/mine_app/MineCell.cpp ../src/mine_app/InputBox.cpp 
+    ../src/mine_app/ScoresItem.cpp ../src/mine_app/ScoresWin.cpp ../src/media_app/LyricsParser.cpp 
+    ../src/media_app/MyMediaPlayer.cpp ../src/media_app/MediaItem.cpp) 
 
 #Compile resources with GCR_CMake
 
@@ -167,7 +169,7 @@ compile_gresources(RESOURCE_FILE
                    TYPE EMBED_C
                    RESOURCES ${RESOURCE_LIST}
                    PREFIX "/org/gtk/daleclack"
-                   SOURCE_DIR ${PROJECT_SOURCE_DIR}/res)
+                   SOURCE_DIR ${PROJECT_SOURCE_DIR}/../res)
                    
 # Add a custom target to the makefile. Now make builds our resource file.
 # It depends on the output RESOURCE_FILE.
@@ -180,9 +182,9 @@ if(WIN32)
 	set_property(SOURCE icon.rc APPEND PROPERTY
         OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
-	add_executable(My_GtkUI WIN32 ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
+	add_executable(My_GtkUI_Wayland WIN32 ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
 else()
-	add_executable(My_GtkUI ${SOURCES} ${RESOURCE_FILE})
+	add_executable(My_GtkUI_Wayland ${SOURCES} ${RESOURCE_FILE})
 
 endif(WIN32)
 

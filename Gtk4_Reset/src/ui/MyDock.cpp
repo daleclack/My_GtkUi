@@ -14,6 +14,8 @@
 #include <thread>
 #include <cstdlib>
 
+typedef unsigned short ushort;
+
 enum PadPage
 {
     MainPage,
@@ -66,7 +68,6 @@ void hide_launchpad(MyDock *dock)
     dock->current_page = MainPage;
 }
 
-
 static void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
 {
     // Check is launchpad page is shown and switch pages
@@ -102,17 +103,20 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent)
     if (surface)
     {
         // The state will available when the window open
-        unsigned state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        ushort state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        static ushort state1 = state;
+        g_print("%d\n", state);
+        state -= state1;
         switch (state)
         {
         // Minimized
         case GDK_TOPLEVEL_STATE_MINIMIZED:
-            // g_print("Try to unminimize window");
+            g_print("Try to unminimize");
             gtk_window_set_transient_for(window, parent);
             gtk_window_unminimize(window);
-#ifdef _WIN32
-            // Fix for Microsoft Windows
-            gtk_window_present(window);
+#ifdef WAYLAND_FIX
+                // Fix for non-x11 environments
+                gtk_window_present(window);
 #endif
             break;
         default:
