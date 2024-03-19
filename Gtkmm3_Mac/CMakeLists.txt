@@ -62,8 +62,13 @@ set(RESOURCE_LIST
     icons/16x16/actions/finder-battery.svg
     icons/16x16/actions/finder-computer.svg
     icons/16x16/actions/finder-wifi.svg
+    icons/16x16/actions/finder_audio-dark.svg
+    icons/16x16/actions/finder-battery-dark.svg
+    icons/16x16/actions/finder-computer-dark.svg
+    icons/16x16/actions/finder-wifi-dark.svg
     icons/16x16/actions/My_GtkUI.png
     icons/16x16/actions/open-menu.svg
+    icons/16x16/actions/open-menu-dark.svg
     icons/16x16/actions/list-add.svg
     icons/16x16/actions/list-remove.svg
     icons/48x48/actions/dialog-error.png
@@ -92,6 +97,7 @@ set(RESOURCE_LIST
     icons/scalable/status/drawing_app.svg
     icons/scalable/status/drawing_app_running.svg
     icons/scalable/status/finder-find.svg
+    icons/scalable/status/finder-find-dark.svg
     icons/scalable/status/file-app.svg
     icons/scalable/status/file-app_running.svg
     icons/scalable/status/display_prefs.svg

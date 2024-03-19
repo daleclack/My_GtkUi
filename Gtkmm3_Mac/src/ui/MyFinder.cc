@@ -68,12 +68,12 @@ MyFinder::MyFinder()
     calender.set_margin_end(5);
 
     // Menu button
-    menu_button.set_image_from_icon_name("open-menu");
+    menu_button.set_image_from_icon_name("open-menu-dark");
     menu_button.set_relief(Gtk::RELIEF_NONE);
     pack_end(menu_button, Gtk::PACK_SHRINK);
 
     // Find Button
-    find_button.set_image_from_icon_name("finder-find");
+    find_button.set_image_from_icon_name("finder-find-dark");
     find_button.set_relief(Gtk::RELIEF_NONE);
     pack_end(find_button, Gtk::PACK_SHRINK);
 
@@ -86,22 +86,22 @@ MyFinder::MyFinder()
     mytimer = Glib::signal_timeout().connect(sigc::mem_fun(*this, &MyFinder::time_out), 1000);
 
     // finder-battery Button
-    battery_button.set_image_from_icon_name("finder-battery");
+    battery_button.set_image_from_icon_name("finder-battery-dark");
     battery_button.set_relief(Gtk::RELIEF_NONE);
     pack_end(battery_button, Gtk::PACK_SHRINK);
 
     // NetWork Button
-    network_button.set_image_from_icon_name("finder-wifi");
+    network_button.set_image_from_icon_name("finder-wifi-dark");
     network_button.set_relief(Gtk::RELIEF_NONE);
     pack_end(network_button, Gtk::PACK_SHRINK);
 
     // Audio Button
-    audio_button.set_image_from_icon_name("finder_audio");
+    audio_button.set_image_from_icon_name("finder_audio-dark");
     audio_button.set_relief(Gtk::RELIEF_NONE);
     pack_end(audio_button, Gtk::PACK_SHRINK);
 
     // Monitor Button
-    screen_button.set_image_from_icon_name("finder-computer");
+    screen_button.set_image_from_icon_name("finder-computer-dark");
     screen_button.set_relief(Gtk::RELIEF_NONE);
     pack_end(screen_button, Gtk::PACK_SHRINK);
 
