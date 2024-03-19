@@ -66,6 +66,7 @@ void hide_launchpad(MyDock *dock)
     dock->current_page = MainPage;
 }
 
+
 static void btnlaunch_clicked(GtkWidget *widget, MyDock *dock)
 {
     // Check is launchpad page is shown and switch pages
@@ -93,7 +94,7 @@ static void pressed(GtkGesture *gesture, int n_press,
     gtk_popover_popup(GTK_POPOVER(dock->context_menu));
 }
 
-// Window control func
+// Window control func, X11/Windows Only!
 static void window_ctrl(GtkWindow *window, GtkWindow *parent)
 {
     // Get GdkSurface for window state
@@ -101,14 +102,18 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent)
     if (surface)
     {
         // The state will available when the window open
-        unsigned short state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+        unsigned state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
         switch (state)
         {
         // Minimized
         case GDK_TOPLEVEL_STATE_MINIMIZED:
+            // g_print("Try to unminimize window");
             gtk_window_set_transient_for(window, parent);
             gtk_window_unminimize(window);
+#ifdef _WIN32
+            // Fix for Microsoft Windows
             gtk_window_present(window);
+#endif
             break;
         default:
             // The controlled window is on dock
