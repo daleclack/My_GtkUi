@@ -1,6 +1,7 @@
 #include "FileWindow.h"
 #include "FileColumnView.h"
 #include "FileGridView.h"
+#include "MyTitleBar.h"
 
 enum SyncMode
 {
@@ -17,6 +18,7 @@ enum ViewMode
 struct _FileWindow
 {
     GtkApplicationWindow parent_instance;
+    MyTitleBar *header;
     GListModel *model_column, *model_grid;
     GtkWidget *column_view, *grid_view;
     GtkWidget *main_box, *btn_box;
@@ -282,6 +284,10 @@ static void file_window_init(FileWindow *self)
     gtk_window_set_icon_name(GTK_WINDOW(self), "file-manager1");
     gtk_window_set_default_size(GTK_WINDOW(self), 640, 400);
 
+    // Replace Title Bar
+    self->header = my_titlebar_new();
+    my_titlebar_set_window(self->header, GTK_WIDGET(self));
+
     // Create list model
     GFile *file = g_file_new_for_path(g_get_home_dir());
     self->model_column = G_LIST_MODEL(gtk_directory_list_new(
@@ -355,6 +361,9 @@ static void file_window_init(FileWindow *self)
     gtk_box_append(GTK_BOX(self->main_box), self->stack);        // Box for main area
     // gtk_stack_set_visible_child(GTK_STACK(self->stack), self->scrolled_window_grid);
     gtk_window_set_child(GTK_WINDOW(self), self->main_box);
+
+    // Hide the window defaultly
+    gtk_widget_set_visible(GTK_WIDGET(self), FALSE);
 }
 
 static void file_window_class_init(FileWindowClass *klass)

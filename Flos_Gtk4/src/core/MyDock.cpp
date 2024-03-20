@@ -15,30 +15,46 @@ static gboolean file_window_closed(GtkWindow *self, GtkButton *dock_file)
     return TRUE;
 }
 
+// Deprecated for issues with wayland
+// static void file_window_ctrl(FileWindow *window, GtkWindow *parent)
+// {
+//     GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(window));
+//     if (surface)
+//     {
+//         GdkToplevelState state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+//         // Unknown bug: when a window minimized the state will be 65537 :(
+//         // This is a fix
+//         if(state > 65536){
+//             state = (GdkToplevelState)(state - 65536);
+//         }
+
+//         switch (state)
+//         {
+//         // When the window is minimized, unminimized it.
+//         case GDK_TOPLEVEL_STATE_MINIMIZED:
+//             gtk_window_set_transient_for(GTK_WINDOW(window), parent);
+//             gtk_window_unminimize(GTK_WINDOW(window));
+//             gtk_window_present(GTK_WINDOW(window));
+//             break;
+//         default:
+//             gtk_window_set_transient_for(GTK_WINDOW(window), NULL);
+//             gtk_window_minimize(GTK_WINDOW(window));
+//         }
+//     }
+// }
+
 static void file_window_ctrl(FileWindow *window, GtkWindow *parent)
 {
-    GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(window));
-    if (surface)
+    gboolean visible = gtk_widget_get_visible(GTK_WIDGET(window));
+    // The unminimize if changed to hide
+    if (!visible)
     {
-        GdkToplevelState state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
-        // Unknown bug: when a window minimized the state will be 65537 :(
-        // This is a fix
-        if(state > 65536){
-            state = (GdkToplevelState)(state - 65536);
-        }
-
-        switch (state)
-        {
-        // When the window is minimized, unminimized it.
-        case GDK_TOPLEVEL_STATE_MINIMIZED:
-            gtk_window_set_transient_for(GTK_WINDOW(window), parent);
-            gtk_window_unminimize(GTK_WINDOW(window));
-            gtk_window_present(GTK_WINDOW(window));
-            break;
-        default:
-            gtk_window_set_transient_for(GTK_WINDOW(window), NULL);
-            gtk_window_minimize(GTK_WINDOW(window));
-        }
+        gtk_widget_set_visible(GTK_WIDGET(window), TRUE);
+        gtk_window_present(GTK_WINDOW(window));
+    }
+    else
+    {
+        gtk_widget_set_visible(GTK_WIDGET(window), FALSE);
     }
 }
 

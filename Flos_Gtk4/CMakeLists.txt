@@ -30,6 +30,7 @@ set(RESOURCE_LIST
     style.css
     style_dark.css
     reset.css
+    title_style.css
     dock.ui
     start.ui
     Yanni-Nightingale.mp3
@@ -75,7 +76,7 @@ add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 #SOURCE FILES LIST
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MyDock.cpp src/core/Start.cpp
     src/file_app/FileWindow.cpp src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp 
-    src/core/AboutWin.cpp)
+    src/core/AboutWin.cpp src/core/MyTitleBar.cpp)
 
 #For win32 platform,use rc resource and .ico icon
 if(WIN32)
