@@ -205,23 +205,6 @@ static void main_win_init(MainWin *win)
     gtk_popover_set_has_arrow(GTK_POPOVER(win->context_menu), FALSE);
     gtk_widget_set_parent(win->context_menu, win->overlay);
 
-    // Apply Style for menubar and the button
-    gtk_widget_add_css_class(GTK_WIDGET(menubar), "main_style");
-    gtk_widget_add_css_class(home_button, "btn_style");
-    // gtk_widget_add_css_class(GTK_WIDGET(home_button), "main_style");
-    win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
-    // if (win->dark_mode)
-    // {
-        gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style_dark.css");
-    // }
-    // else
-    // {
-    //     gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
-    // }
-    // gtk_widget_set_opacity(menubar, 0.7);
-    gtk_style_context_add_provider((menubar), win->provider, G_MAXINT);
-    gtk_style_context_add_provider((home_button), win->provider, G_MAXINT);
-
     // Add Label for time
     GtkWidget *time_label = gtk_label_new("12:21 2022/1/9");
     g_timeout_add(1000, label_timer, time_label);
@@ -235,6 +218,25 @@ static void main_win_init(MainWin *win)
     gtk_widget_set_margin_end(time_label, 10);
     gtk_widget_set_margin_top(time_label, 3);
     gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), time_label);
+
+    // Apply Style for menubar and the button
+    gtk_widget_add_css_class(GTK_WIDGET(menubar), "main_style");
+    gtk_widget_add_css_class(home_button, "btn_style");
+    gtk_widget_add_css_class(time_label, "label_style");
+    // gtk_widget_add_css_class(GTK_WIDGET(home_button), "main_style");
+    win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
+    // if (win->dark_mode)
+    // {
+        gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style_dark.css");
+    // }
+    // else
+    // {
+    //     gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
+    // }
+    // gtk_widget_set_opacity(menubar, 0.7);
+    gtk_style_context_add_provider((menubar), win->provider, G_MAXINT);
+    gtk_style_context_add_provider((home_button), win->provider, G_MAXINT);
+    gtk_style_context_add_provider((time_label), win->provider, G_MAXINT);
 
     // Add a dock
     add_dock(win);
