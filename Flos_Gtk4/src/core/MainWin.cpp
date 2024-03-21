@@ -69,7 +69,7 @@ static void check_dark_toggled(GtkCheckButton *button, gpointer data)
         gboolean dark_mode = gtk_check_button_get_active(button);
         tbl = toml::parse(toml_str);
         auto tbl1 = tbl["interface"].as_table();
-        tbl1->insert_or_assign("dark_mode", true);
+        tbl1->insert_or_assign("dark_mode", dark_mode);
 
         // Save content to a file
         std::fstream outfile;
