@@ -108,6 +108,7 @@ void add_start(MainWin *win, GtkBox *box)
     gtk_widget_add_css_class(start_menu, "main_style");
     gtk_widget_add_css_class(search_entry, "main_style");
     gtk_widget_add_css_class(start_box, "default_style");
+    // gtk_widget_add_css_class(menu_btn, "default_style");
     gtk_style_context_add_provider((prim_separator),
                                    main_win_get_style(win), G_MAXINT);
     gtk_style_context_add_provider((ext_separator),
@@ -118,6 +119,8 @@ void add_start(MainWin *win, GtkBox *box)
                                    main_win_get_style(win), G_MAXINT);
     gtk_style_context_add_provider((search_entry),
                                    main_win_get_style(win), G_MAXINT);
+    // gtk_style_context_add_provider((menu_btn),
+    //                                main_win_get_style(win), G_MAXINT);
 
     // Pack widgets
     gtk_box_prepend(box, menu_btn);

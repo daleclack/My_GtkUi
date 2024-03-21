@@ -54,61 +54,62 @@ static gboolean label_timer(gpointer data)
     return TRUE;
 }
 
-static void check_dark_toggled(GtkCheckButton *button, gpointer data)
-{
-    // Create toml data
-    static constexpr std::string_view toml_str = R"(
-        [interface]
-        dark_mode = false
-    )";
-    toml::table tbl;
+// These are not working well now :(
+// static void check_dark_toggled(GtkCheckButton *button, gpointer data)
+// {
+//     // Create toml data
+//     static constexpr std::string_view toml_str = R"(
+//         [interface]
+//         dark_mode = false
+//     )";
+//     toml::table tbl;
 
-    try
-    {
-        // Assign value for the key
-        gboolean dark_mode = gtk_check_button_get_active(button);
-        tbl = toml::parse(toml_str);
-        auto tbl1 = tbl["interface"].as_table();
-        tbl1->insert_or_assign("dark_mode", (bool)dark_mode);
+//     try
+//     {
+//         // Assign value for the key
+//         gboolean dark_mode = gtk_check_button_get_active(button);
+//         tbl = toml::parse(toml_str);
+//         auto tbl1 = tbl["interface"].as_table();
+//         tbl1->insert_or_assign("dark_mode", (bool)dark_mode);
 
-        // Save content to a file
-        std::fstream outfile;
-        outfile.open("config.toml", std::ios_base::out);
-        if (outfile.is_open())
-        {
-            outfile << tbl;
-        }
-        outfile.close();
-    }
-    catch (const toml::parse_error &err)
-    {
-        // If error occurs, output the error
-        std::cout << err.what() << std::endl;
-    }
-}
+//         // Save content to a file
+//         std::fstream outfile;
+//         outfile.open("config.toml", std::ios_base::out);
+//         if (outfile.is_open())
+//         {
+//             outfile << tbl;
+//         }
+//         outfile.close();
+//     }
+//     catch (const toml::parse_error &err)
+//     {
+//         // If error occurs, output the error
+//         std::cout << err.what() << std::endl;
+//     }
+// }
 
-static bool get_dark_mode()
-{
-    bool dark_mode = false;
-    // Open config file
-    std::fstream infile;
-    infile.open("config.toml", std::ios_base::in);
-    if (infile.is_open())
-    {
-        try
-        {
-            // Get value from toml data
-            toml::table tbl = toml::parse(infile);
-            dark_mode = tbl["interface"]["dark_mode"].as_boolean();
-        }
-        catch (const toml::parse_error &err)
-        {
-            toml::table tbl = toml::parse(infile);
-        }
-    }
-    infile.close();
-    return dark_mode;
-}
+// static bool get_dark_mode()
+// {
+//     bool dark_mode = false;
+//     // Open config file
+//     std::fstream infile;
+//     infile.open("config.toml", std::ios_base::in);
+//     if (infile.is_open())
+//     {
+//         try
+//         {
+//             // Get value from toml data
+//             toml::table tbl = toml::parse(infile);
+//             dark_mode = tbl["interface"]["dark_mode"].as_boolean();
+//         }
+//         catch (const toml::parse_error &err)
+//         {
+//             toml::table tbl = toml::parse(infile);
+//         }
+//     }
+//     infile.close();
+//     return dark_mode;
+// }
 
 static void gesture_pressed(GtkGestureSingle *gesture, 
                             int n_press, 
@@ -126,7 +127,7 @@ static void main_win_init(MainWin *win)
     // Initalize window
     gtk_window_set_title(GTK_WINDOW(win), "My GtkUI Flos Version");
     gtk_window_set_icon_name(GTK_WINDOW(win), "My_GtkUI");
-    win->dark_mode = get_dark_mode();
+    // win->dark_mode = get_dark_mode();
 
     // Create widgets
     win->overlay = gtk_overlay_new();
@@ -159,7 +160,7 @@ static void main_win_init(MainWin *win)
     GtkWidget *check_dark = gtk_check_button_new_with_label("Dark Mode");
     gtk_check_button_set_active(GTK_CHECK_BUTTON(check_dark), win->dark_mode);
     gtk_popover_menu_bar_add_child(GTK_POPOVER_MENU_BAR(menubar), check_dark, "check_dark");
-    g_signal_connect(check_dark, "toggled", G_CALLBACK(check_dark_toggled), NULL);
+    // g_signal_connect(check_dark, "toggled", G_CALLBACK(check_dark_toggled), NULL);
 
     // Add a grid
     win->main_grid = gtk_grid_new();
@@ -208,14 +209,14 @@ static void main_win_init(MainWin *win)
     gtk_widget_add_css_class(GTK_WIDGET(menubar), "main_style");
     // gtk_widget_add_css_class(GTK_WIDGET(home_button), "main_style");
     win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
-    if (win->dark_mode)
-    {
+    // if (win->dark_mode)
+    // {
         gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style_dark.css");
-    }
-    else
-    {
-        gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
-    }
+    // }
+    // else
+    // {
+    //     gtk_css_provider_load_from_resource(GTK_CSS_PROVIDER(win->provider), "/org/gtk/daleclack/style.css");
+    // }
     // gtk_widget_set_opacity(menubar, 0.7);
     gtk_style_context_add_provider((menubar), win->provider, G_MAXINT);
     gtk_style_context_add_provider((home_button), win->provider, G_MAXINT);
