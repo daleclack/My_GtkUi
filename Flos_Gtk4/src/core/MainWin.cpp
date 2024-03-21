@@ -207,6 +207,7 @@ static void main_win_init(MainWin *win)
 
     // Apply Style for menubar and the button
     gtk_widget_add_css_class(GTK_WIDGET(menubar), "main_style");
+    gtk_widget_add_css_class(home_button, "btn_style");
     // gtk_widget_add_css_class(GTK_WIDGET(home_button), "main_style");
     win->provider = GTK_STYLE_PROVIDER(gtk_css_provider_new());
     // if (win->dark_mode)
