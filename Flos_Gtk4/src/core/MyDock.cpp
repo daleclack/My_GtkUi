@@ -129,7 +129,7 @@ void add_dock(MainWin *win)
          child != NULL;
          child = gtk_widget_get_next_sibling(child))
     {
-        gtk_widget_add_css_class(child, "main_style");
+        gtk_widget_add_css_class(child, "dock_button");
         gtk_style_context_add_provider((child),
                                        main_win_get_style(win), G_MAXINT);
     }

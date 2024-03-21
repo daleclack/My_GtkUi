@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<cambalache-project version="0.12.0" target_tk="gtk-4.0">
+<cambalache-project version="0.13.1" target_tk="gtk-4.0">
   <ui>
 	(1,1,"windows.ui","aboutwin.ui",None,None,None,None,None,None,None),
 	(2,None,None,"temp.ui",None,None,None,None,None,None,None)
@@ -57,6 +57,7 @@
 	(1,16,"GtkWidget","halign","start",None,None,None,None,None,None,None,None,None),
 	(1,17,"GtkLabel","label","       The project is to memorize the FlWin and the flos project. \nFlWin project started in 2016, in 2017, the name is changed \nto flos. In 2018, the project name is reset to FlWin. The last \nversion of FlWin/Flos is FlWin 5.x, and tested in the start of \n2019, which is never been released.\n         I think the flos 2.0 is the best release of that project, \nso the idea is base on the flos 2.0 build.",None,None,None,None,None,None,None,None,None),
 	(1,17,"GtkLabel","selectable","True",None,None,None,None,None,None,None,None,None),
-	(2,2,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None)
+	(2,2,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None),
+	(2,2,"GtkWidget","css-classes","test",None,None,None,None,None,None,None,None,None)
   </object_property>
 </cambalache-project>

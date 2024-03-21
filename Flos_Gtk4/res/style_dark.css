@@ -24,7 +24,11 @@
 }
 
 .main_style popover {
-    background-color: alpha(gray, 0.7);
+    background-color: alpha(gray, 0.8);
+}
+
+.main_style popover contents {
+    background-color: transparent;
 }
 
 .main_style separator {
@@ -40,10 +44,27 @@
     color: white;
 }
 
+.dock_button {
+    background-color: transparent;
+}
+
+.dock_button box {
+    background-color: transparent;
+}
+
+.dock_button:hover {
+    background-color: alpha(gray, 0.7);
+}
+
 .default_style box {
     background-color: transparent;
 }
 
 .default_style separator {
     background-color: transparent;
+}
+
+.btn_style{
+    background-color: transparent;
+    color: white;
 }

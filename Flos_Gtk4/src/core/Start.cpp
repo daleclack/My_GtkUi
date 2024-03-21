@@ -50,11 +50,14 @@ void add_start(MainWin *win, GtkBox *box)
     btn_more = (GtkMenuButton *)gtk_builder_get_object(startbuilder, "btn_more");
     image_all = (GtkImage *)gtk_builder_get_object(startbuilder, "image_all");
     image_back = (GtkImage *)gtk_builder_get_object(startbuilder, "image_back");
-    if(main_win_get_dark_mode(win)){
+    if (main_win_get_dark_mode(win))
+    {
         gtk_menu_button_set_icon_name(btn_more, "arrow_right_dark");
         gtk_image_set_from_icon_name(image_all, "arrow_right_dark");
         gtk_image_set_from_icon_name(image_back, "arrow_left_dark");
-    }else{
+    }
+    else
+    {
         gtk_menu_button_set_icon_name(btn_more, "arrow_right");
         gtk_image_set_from_icon_name(image_all, "arrow_right");
         gtk_image_set_from_icon_name(image_back, "arrow_left");
@@ -103,12 +106,11 @@ void add_start(MainWin *win, GtkBox *box)
     ext_separator = (GtkWidget *)gtk_builder_get_object(startbuilder, "ext_separator");
     start_box = (GtkWidget *)gtk_builder_get_object(startbuilder, "start_box");
     search_entry = (GtkWidget *)gtk_builder_get_object(startbuilder, "search_entry");
+    gtk_widget_set_css_classes(start_menu, NULL);
+    gtk_widget_add_css_class(start_menu, "main_style");
     gtk_widget_add_css_class(prim_separator, "default_style");
     gtk_widget_add_css_class(ext_separator, "default_style");
-    gtk_widget_add_css_class(start_menu, "main_style");
-    gtk_widget_add_css_class(search_entry, "main_style");
     gtk_widget_add_css_class(start_box, "default_style");
-    // gtk_widget_add_css_class(menu_btn, "default_style");
     gtk_style_context_add_provider((prim_separator),
                                    main_win_get_style(win), G_MAXINT);
     gtk_style_context_add_provider((ext_separator),
