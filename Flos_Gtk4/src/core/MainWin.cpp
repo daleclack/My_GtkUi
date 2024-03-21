@@ -11,6 +11,7 @@ struct _MainWin
 {
     GtkApplicationWindow parent_instance;
     GtkWidget *overlay;
+    GtkWidget *menu_box;
     GtkWidget *background;
     GtkStyleProvider *provider;
     GtkWidget *main_grid;
@@ -133,6 +134,7 @@ static void main_win_init(MainWin *win)
     win->overlay = gtk_overlay_new();
     win->background = gtk_picture_new();
     gtk_widget_set_size_request(win->overlay, 1024, 576);
+    win->menu_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
     // Add Background
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/flos.png", NULL);
@@ -162,6 +164,21 @@ static void main_win_init(MainWin *win)
     gtk_popover_menu_bar_add_child(GTK_POPOVER_MENU_BAR(menubar), check_dark, "check_dark");
     // g_signal_connect(check_dark, "toggled", G_CALLBACK(check_dark_toggled), NULL);
 
+    // Add Label for time
+    GtkWidget *time_label = gtk_label_new("12:21 2022/1/9");
+    g_timeout_add(1000, label_timer, time_label);
+    gtk_widget_set_halign(time_label, GTK_ALIGN_END);
+    gtk_widget_set_valign(time_label, GTK_ALIGN_CENTER);
+    gtk_widget_set_margin_end(time_label, 15);
+
+    GtkWidget *space_label = gtk_label_new("");
+    gtk_widget_set_hexpand(space_label, TRUE);
+
+    // Add menu and time label
+    gtk_box_append(GTK_BOX(win->menu_box), menubar);
+    gtk_box_append(GTK_BOX(win->menu_box), space_label);
+    gtk_box_append(GTK_BOX(win->menu_box), time_label);
+
     // Add a grid
     win->main_grid = gtk_grid_new();
 
@@ -186,7 +203,7 @@ static void main_win_init(MainWin *win)
 
     // Add menubar and grid to the overlay
     GtkWidget *desktop_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_box_append(GTK_BOX(desktop_box), menubar);
+    gtk_box_append(GTK_BOX(desktop_box), win->menu_box);
     gtk_box_append(GTK_BOX(desktop_box), win->main_grid);
     gtk_widget_set_valign(desktop_box, GTK_ALIGN_START);
     gtk_widget_set_halign(desktop_box, GTK_ALIGN_FILL);
@@ -205,22 +222,16 @@ static void main_win_init(MainWin *win)
     gtk_popover_set_has_arrow(GTK_POPOVER(win->context_menu), FALSE);
     gtk_widget_set_parent(win->context_menu, win->overlay);
 
-    // Add Label for time
-    GtkWidget *time_label = gtk_label_new("12:21 2022/1/9");
-    g_timeout_add(1000, label_timer, time_label);
-
-    gtk_widget_set_halign(time_label, GTK_ALIGN_END);
-    gtk_widget_set_valign(time_label, GTK_ALIGN_START);
-
-    // Set Position of the label
-    gtk_widget_set_margin_bottom(time_label, 3);
-    gtk_widget_set_margin_start(time_label, 3);
-    gtk_widget_set_margin_end(time_label, 10);
-    gtk_widget_set_margin_top(time_label, 3);
-    gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), time_label);
+    // // Set Position of the label
+    // gtk_widget_set_margin_bottom(time_label, 3);
+    // gtk_widget_set_margin_start(time_label, 3);
+    // gtk_widget_set_margin_end(time_label, 10);
+    // gtk_widget_set_margin_top(time_label, 3);
+    // gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), time_label);
 
     // Apply Style for menubar and the button
     gtk_widget_add_css_class(GTK_WIDGET(menubar), "main_style");
+    gtk_widget_add_css_class(win->menu_box, "main_style");
     gtk_widget_add_css_class(home_button, "btn_style");
     gtk_widget_add_css_class(time_label, "label_style");
     // gtk_widget_add_css_class(GTK_WIDGET(home_button), "main_style");
@@ -235,6 +246,7 @@ static void main_win_init(MainWin *win)
     // }
     // gtk_widget_set_opacity(menubar, 0.7);
     gtk_style_context_add_provider((menubar), win->provider, G_MAXINT);
+    gtk_style_context_add_provider((win->menu_box), win->provider, G_MAXINT);
     gtk_style_context_add_provider((home_button), win->provider, G_MAXINT);
     gtk_style_context_add_provider((time_label), win->provider, G_MAXINT);
 

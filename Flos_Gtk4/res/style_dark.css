@@ -12,7 +12,7 @@
 }
 
 .main_style menubar {
-    background-color: alpha(gray, 0.7);
+    background-color: transparent;
     color: white;
 }
 
