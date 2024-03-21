@@ -15,7 +15,7 @@ timer_value(1000)
     //Initalize Timer
     mytimer=Glib::signal_timeout().connect(sigc::mem_fun(*this,&TopPanel::on_timeout),timer_value);
     time_btn.set_relief(Gtk::RELIEF_NONE);
-    time_btn.set_label("18:13:00 2021/11/17");
+    time_btn.set_label("18:13:00 2021/6/14");
     time_btn.set_popover(time_popover);
     time_popover.add(calender);
     calender.set_size_request(300,250);
