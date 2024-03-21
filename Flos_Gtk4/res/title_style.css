@@ -16,12 +16,14 @@
 
 .ctrl_btn {
 	min-height: 8px;
-	min-width: 13px;
+	min-width: 14px;
 	margin: 0px;
 	font-weight: 900;
 	border-radius: 100%;
 	padding-top: 0px;
 	padding-bottom: 0px;
+	padding-left: 4px;
+	padding-right: 4px;
 }
 
 .ctrl_btn:hover{
