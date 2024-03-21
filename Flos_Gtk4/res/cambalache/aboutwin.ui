@@ -46,7 +46,7 @@
                 <child>
                   <object class="GtkLabel">
                     <property name="halign">start</property>
-                    <property name="label">4.4 The Flying Wing</property>
+                    <property name="label">4.5 The Flying Wing</property>
                   </object>
                 </child>
                 <child>
