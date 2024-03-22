@@ -54,6 +54,7 @@ set(RESOURCE_LIST
     style.css
     reset.css
     dock_style.css
+    title_style.css
     folder.svg
     folder-images.svg
     image_file.svg

@@ -1,0 +1,32 @@
+/* A slim headerbar style for widgets */
+.mytitlebar {
+	min-height: 10px;
+	margin: 0px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+.mytitlebar label{
+	margin: 0px;
+}
+
+.mytitlebar box{
+	margin: 0px;
+}
+
+.ctrl_btn {
+	min-height: 8px;
+	min-width: 14px;
+	margin: 0px;
+	font-weight: 900;
+	border-radius: 100%;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+.ctrl_btn:hover{
+	color:black;
+	background-color: alpha(gray, 0.3);
+}
