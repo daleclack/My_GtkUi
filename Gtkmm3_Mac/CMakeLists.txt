@@ -24,7 +24,7 @@ include_directories (${GTKMM3_INCLUDE_DIRS})
 link_directories (${GTKMM3_LIBRARY_DIRS})
 
 set(SOURCES src/core/main.cc src/core/MyWin.cc src/core/MyStack.cc src/cfgfile/cfgfile.cc
-    src/ui/MyFinder.cc src/ui/MyPrefs.cc src/ui/MyDock.cc
+    src/ui/MyFinder.cc src/ui/MyPrefs.cc src/ui/MyDock.cc src/ui/MyTitleBar.cc
     src/draw_app/drawing.cc src/file_app/FileWindow.cc src/game_app/Game.cc 
     src/game24_app/Game24.cc src/game24_app/Game24Win.cc
     src/image_app/ImageApp.cc src/image_app/MyImage.cc 
