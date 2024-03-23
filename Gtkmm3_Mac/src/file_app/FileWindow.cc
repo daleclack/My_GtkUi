@@ -11,7 +11,8 @@ show_hidden("Show hidden files")
     //Initalize Window
     set_default_size(650,400);
     set_icon_name("file-app");
-    set_title("File Manager");
+    title_bar.set_ctrl_win(this);
+    title_bar.set_title("File Manager");
 
     //Load Pixbufs
     auto pixbuf1 = Gdk::Pixbuf::create_from_resource("/org/gtk/daleclack/gnome-fs-regular.svg"); 

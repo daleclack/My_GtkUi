@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "MyTitleBar.hh"
 
 enum class ViewMode{
     MODE_ICON,
@@ -30,6 +31,9 @@ private:
     Gtk::IconView m_iconview;
     Glib::RefPtr<Gtk::TreeSelection> m_selection;
     Glib::RefPtr<Gtk::ListStore> m_liststore;
+
+    // Title Bar
+    MyTitleBar title_bar;
 
     //File Proprties
     Glib::RefPtr<Gdk::Pixbuf> file_pixbuf;

@@ -236,6 +236,25 @@ void MyDock::mydock_init(Gtk::Window *window, Gtk::Image *background1)
     prefs_win.set_background(background1);
     prefs_win.set_transient_for(*window);
     parent_win = window;
+    // Hide windows defaultly
+    prefs_win.set_visible(false);
+    prefs_win.set_transient_for(*window);
+    draw_app.set_visible(false);
+    draw_app.set_transient_for(*window);
+    file_app.set_visible(false);
+    file_app.set_transient_for(*window);
+    image_win.set_visible(false);
+    image_win.set_transient_for(*window);
+    editor_win.set_visible(false);
+    editor_win.set_transient_for(*window);
+    mine_win.set_visible(false);
+    mine_win.set_transient_for(*window);
+    game_win->set_visible(false);
+    game_win->set_transient_for(*window);
+    game24_win->set_visible(false);
+    game24_win->set_transient_for(*window);
+    calc_win->set_visible(false);
+    calc_win->set_transient_for(*window);
 }
 
 /*
@@ -544,41 +563,60 @@ void MyDock::btnrun_clicked()
     btnlaunch_clicked();
 }
 
+// void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
+// {
+//     // Get the GdkWindow object to get the state of a window
+//     auto gdk_win = window.get_window();
+//     if (gdk_win)
+//     {
+//         /*
+//         The State of GdkWindow (GdkSurface for Gtk4)
+//         Gdk::WINDOW_STATE_WITHDRAWN: The window is not shown
+//         Gdk::WINDOW_STATE_ICONIFIED: The window is minimized
+//         the default mode for first launch
+//         */
+//         auto state = gdk_win->get_state();
+//         switch (state)
+//         {
+//         case Gdk::WINDOW_STATE_WITHDRAWN:
+//             window.present();
+//             break;
+//         case Gdk::WINDOW_STATE_ICONIFIED:
+//             window.set_transient_for(*parent_win);
+//             window.deiconify();
+//             break;
+//         default:
+//             if (on_dock)
+//             {
+//                 window.unset_transient_for();
+//                 window.iconify();
+//                 break;
+//             }
+//         }
+//     }
+//     else
+//     {
+//         window.set_transient_for(*parent_win);
+//         window.present();
+//     }
+// }
+
 void MyDock::window_ctrl(Gtk::Window &window, bool on_dock)
 {
-    // Get the GdkWindow object to get the state of a window
-    auto gdk_win = window.get_window();
-    if (gdk_win)
+    // Use the visible status for window control
+    auto window_visible = window.get_visible();
+    if (!window_visible)
     {
-        /*
-        The State of GdkWindow (GdkSurface for Gtk4)
-        Gdk::WINDOW_STATE_WITHDRAWN: The window is not shown
-        Gdk::WINDOW_STATE_ICONIFIED: The window is minimized
-        the default mode for first launch
-        */
-        auto state = gdk_win->get_state();
-        switch (state)
-        {
-        case Gdk::WINDOW_STATE_WITHDRAWN:
-            window.present();
-            break;
-        case Gdk::WINDOW_STATE_ICONIFIED:
-            window.set_transient_for(*parent_win);
-            window.deiconify();
-            break;
-        default:
-            if (on_dock)
-            {
-                window.unset_transient_for();
-                window.iconify();
-                break;
-            }
-        }
+        window.set_visible();
+        window.present();
     }
     else
     {
-        window.set_transient_for(*parent_win);
-        window.present();
+        // The window only hide when click on dock
+        if (on_dock)
+        {
+            window.set_visible(false);
+        }
     }
 }
 
