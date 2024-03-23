@@ -34,6 +34,8 @@ MyTitleBar::MyTitleBar()
     auto style3 = btn_mini.get_style_context();
     style2->add_class("ctrl_btn");
     style3->add_provider(provider, G_MAXUINT);
+
+    header.show_all();
 }
 
 void MyTitleBar::ctrl_window_close()

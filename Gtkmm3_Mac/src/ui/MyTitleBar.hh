@@ -8,8 +8,8 @@ public:
     MyTitleBar();
     void set_ctrl_win(Gtk::Window *window);
     void set_title(const Glib::ustring &title);
-    Gtk::HeaderBar header;
 private:
+    Gtk::HeaderBar header;
     Glib::RefPtr<Gtk::CssProvider> provider;
     Gtk::Button btn_close, btn_mini;
     Gtk::Label title_label;
