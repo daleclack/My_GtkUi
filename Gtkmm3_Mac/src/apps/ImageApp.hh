@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include "MyImage.hh"
+#include "MyTitleBar.hh"
 
 class ImageApp : public Gtk::ApplicationWindow
 {
@@ -9,6 +10,9 @@ public:
     ImageApp();
     
 private:
+    // Title Widget
+    MyTitleBar title_bar;
+
     // Child widgets
     Gtk::ScrolledWindow sw;
     MyImage image_area;

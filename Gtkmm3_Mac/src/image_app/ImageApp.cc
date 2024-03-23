@@ -8,7 +8,8 @@ ImageApp::ImageApp()
     // Add Widgets
     set_default_size(800, 450);
     set_icon_name("image_app");
-    set_title("Image Viewer");
+    title_bar.set_ctrl_win(this);
+    title_bar.set_title("Image Viewer");
 
     // Scrolled Window
     sw.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
