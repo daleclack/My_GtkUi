@@ -27,6 +27,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     ref_builder->get_widget("btngame24", btngame24);
     ref_builder->get_widget("btncalc", btncalc);
     ref_builder->get_widget("btnmine", btnmine);
+    ref_builder->get_widget("btntrash", btntrash);
     ref_builder->get_widget("separator_start", separator_start);
     ref_builder->get_widget("separator_2", separator_2);
     ref_builder->get_widget("separator_3", separator_3);
@@ -136,6 +137,14 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
     {
         apply_style(*childrens1[i]);
     }
+
+    // Apply style for icons box
+    auto childrens2 = icons_box->get_children();
+    for(int i = 0; i < childrens2.size(); i++)
+    {
+        apply_style(*childrens2[i]);
+    }
+    apply_style(*btntrash);
     // apps_grid->foreach(sigc::mem_fun(*this,&MyDock::apply_style));
 
     // Set dock position
