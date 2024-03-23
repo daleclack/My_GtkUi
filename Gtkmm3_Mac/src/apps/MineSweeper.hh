@@ -3,7 +3,6 @@
 #include <gtkmm.h>
 #include "InputBox.hh"
 #include "ScoresWin.hh"
-#include "MyTitleBar.hh"
 
 class MineCell : public Gtk::Button
 {

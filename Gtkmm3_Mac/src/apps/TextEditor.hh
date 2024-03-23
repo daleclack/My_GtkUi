@@ -1,7 +1,6 @@
 #pragma once
 
 #include <gtkmm.h>
-#include "MyTitleBar.hh"
 
 class TextEditor : public Gtk::ApplicationWindow
 {
