@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "MyTitleBar.hh"
 
 class CalcApp : public Gtk::Window
 {
@@ -11,6 +12,7 @@ public:
 private:
     // Main GtkBuilder
     Glib::RefPtr<Gtk::Builder> ref_builder;
+    MyTitleBar title_bar;
 
     // Calculator Class
     int pos;

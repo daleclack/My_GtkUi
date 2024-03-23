@@ -15,7 +15,8 @@ Drawing::Drawing()
 {
     // Ininalize window
     set_icon_name("org.gtk.daleclack");
-    set_title("Drawing");
+    title_bar.set_ctrl_win(this);
+    title_bar.set_title("Drawing");
     set_default_size(640, 480);
 
     // Set the buttons grouped and set normal draw mode
