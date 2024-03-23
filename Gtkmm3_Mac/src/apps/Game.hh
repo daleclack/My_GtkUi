@@ -9,8 +9,9 @@ public:
 private:
     //The main builder
     Glib::RefPtr<Gtk::Builder> game_builder;
+    
     //Child Widgets
-    Gtk::Window *game_window;
+    // Gtk::Window *game_window;
     Gtk::Button *win_close,*win_mini;
     Gtk::Button *game_btn[4],*btngo,*btnexit;
     Gtk::Label *game_label;
