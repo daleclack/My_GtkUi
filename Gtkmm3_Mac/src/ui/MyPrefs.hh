@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include "../json_nlohmann/json.hpp"
+#include "MyTitleBar.hh"
 
 using json = nlohmann::json;
 
@@ -53,6 +54,9 @@ protected:
     bool has_selection;
 
 private:
+    // Custom Title Bar
+    MyTitleBar title_bar;
+
     // Background widget and properties
     int width, height;              // Window size
     bool panel_mode;                // dock or panel mode

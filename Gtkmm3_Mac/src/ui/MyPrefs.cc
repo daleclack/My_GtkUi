@@ -16,7 +16,8 @@ MyPrefs::MyPrefs()
     /*Step 1: Initalize widget that without Gtk::Builder*/
 
     // Initalize Window
-    set_title("Window Preferences");
+    title_bar.set_ctrl_win(this);
+    title_bar.set_title("Window Preferences");
     set_default_size(800, 450);
 
     // Load config file

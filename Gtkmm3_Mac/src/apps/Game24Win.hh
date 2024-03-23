@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include "Game24.hh"
+#include "MyTitleBar.hh"
 
 class Game24Win : public Gtk::Window
 {
@@ -14,6 +15,7 @@ private:
     Glib::RefPtr<Gtk::Builder> ref_builder;
 
     // 24-Game Class
+    MyTitleBar title_bar;
     Game24 main_game;
     int pos;
     bool focused, winned;
