@@ -82,15 +82,15 @@ void add_start(MainWin *win, GtkBox *box)
     GtkWidget *btnfile1, *btnfile2;
     btnfile1 = (GtkWidget *)gtk_builder_get_object(startbuilder, "btnfile1");
     btnfile2 = (GtkWidget *)gtk_builder_get_object(startbuilder, "btnfile2");
-    g_signal_connect(btnfile1, "clicked", G_CALLBACK(btnfile_clicked), win);
-    g_signal_connect(btnfile2, "clicked", G_CALLBACK(btnfile_clicked), win);
+    g_signal_connect(btnfile1, "clicked", G_CALLBACK(padfile_clicked), win);
+    g_signal_connect(btnfile2, "clicked", G_CALLBACK(padfile_clicked), win);
 
     // Buttons for control panel
     GtkWidget *user_button, *btn_computer;
     user_button = (GtkWidget *)gtk_builder_get_object(startbuilder, "user_button");
     btn_computer = (GtkWidget *)gtk_builder_get_object(startbuilder, "btn_computer");
     g_signal_connect(user_button, "clicked", G_CALLBACK(btnhome_clicked), win);
-    g_signal_connect(btn_computer, "clicked", G_CALLBACK(btnfile_clicked), win);
+    g_signal_connect(btn_computer, "clicked", G_CALLBACK(padfile_clicked), win);
 
     // When the button clicked, popdown the menu
     GtkWidget *start_menu = (GtkWidget *)gtk_builder_get_object(startbuilder, "main_menu");

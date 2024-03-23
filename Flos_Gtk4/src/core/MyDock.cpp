@@ -43,7 +43,7 @@ static gboolean file_window_closed(GtkWindow *self, GtkButton *dock_file)
 //     }
 // }
 
-static void file_window_ctrl(FileWindow *window, GtkWindow *parent)
+static void file_window_ctrl(FileWindow *window, GtkWindow *parent, gboolean on_dock)
 {
     gboolean visible = gtk_widget_get_visible(GTK_WIDGET(window));
     // The unminimize if changed to hide
@@ -54,7 +54,35 @@ static void file_window_ctrl(FileWindow *window, GtkWindow *parent)
     }
     else
     {
-        gtk_widget_set_visible(GTK_WIDGET(window), FALSE);
+        // Window control only available for icons on dock
+        if (on_dock){
+            gtk_widget_set_visible(GTK_WIDGET(window), FALSE);
+        }
+    }
+}
+
+void padfile_clicked(GtkButton *button, GtkWindow *parent)
+{
+    // If the file app is not running, create a window
+    GtkWidget *child = gtk_button_get_child(GTK_BUTTON(btnfile));
+    const char *icon_name = gtk_image_get_icon_name(GTK_IMAGE(child));
+
+    if (!file_app_running)
+    {
+        // Create the window
+        main_window = file_window_new(parent);
+        gtk_image_set_from_icon_name(GTK_IMAGE(child), "file-manager_running");
+
+        // Link Signals
+        g_signal_connect(main_window, "close-request", G_CALLBACK(file_window_closed), btnfile);
+
+        // Show the window
+        file_app_running = TRUE;
+        gtk_window_present(GTK_WINDOW(main_window));
+    }
+    else
+    {
+        file_window_ctrl(main_window, parent, FALSE);
     }
 }
 
@@ -79,13 +107,13 @@ void btnfile_clicked(GtkButton *button, GtkWindow *parent)
     }
     else
     {
-        file_window_ctrl(main_window, parent);
+        file_window_ctrl(main_window, parent, TRUE);
     }
 }
 
 void btnhome_clicked(GtkButton *button, GtkWindow *parent)
 {
-    btnfile_clicked(button, parent);
+    padfile_clicked(button, parent);
     home_clicked(NULL, main_window);
 }
 
