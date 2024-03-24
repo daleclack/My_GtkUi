@@ -13,7 +13,7 @@ MineSweeper::MineSweeper()
     // header.set_show_close_button();
     // header.set_decoration_layout("close,minimize,maximize:menu");
     header.pack_end(menu_btn);
-    set_icon_name("mine_app");
+    set_icon_name("mines_app");
 
     // Initalize Menu
     menu_builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/mine_menu.xml");
