@@ -10,6 +10,8 @@ game_index{0,1,2,3}
 {
     //Ininalize Window
     set_icon_name("game");
+    title_bar.set_ctrl_win(this);
+    title_bar.set_title("Guess Game");
     // game_builder->get_widget("window",game_window);
     game_builder->get_widget("btn_exit",btnexit);
     game_builder->get_widget("btn_go",btngo);

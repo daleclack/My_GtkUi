@@ -8,12 +8,12 @@ MineSweeper::MineSweeper()
       cell(nullptr)
 {
     // Initalize Window
+    header.set_ctrl_win(this);
     header.set_title("MineSweeper");
-    set_titlebar(header);
-    header.set_show_close_button();
-    header.set_decoration_layout("close,minimize,maximize:menu");
+    // header.set_show_close_button();
+    // header.set_decoration_layout("close,minimize,maximize:menu");
     header.pack_end(menu_btn);
-    set_icon_name("org.gtk.daleclack");
+    set_icon_name("mine_app");
 
     // Initalize Menu
     menu_builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/mine_menu.xml");

@@ -6,8 +6,10 @@ class MyTitleBar
 {
 public:
     MyTitleBar();
-    void set_ctrl_win(Gtk::Window *window);
-    void set_title(const Glib::ustring &title);
+    void set_ctrl_win(Gtk::Window *window); // the Controlled window
+    void set_title(const Glib::ustring &title); // The title
+    void pack_start(Gtk::Widget &widget);   // Same to the GtkHeaderBar funcs
+    void pack_end(Gtk::Widget &widget);
 private:
     Gtk::HeaderBar header;
     Glib::RefPtr<Gtk::CssProvider> provider;

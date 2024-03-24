@@ -32,7 +32,7 @@ MyTitleBar::MyTitleBar()
     style2->add_provider(provider, G_MAXUINT);
 
     auto style3 = btn_mini.get_style_context();
-    style2->add_class("ctrl_btn");
+    style3->add_class("ctrl_btn");
     style3->add_provider(provider, G_MAXUINT);
 
     header.show_all();
@@ -57,4 +57,14 @@ void MyTitleBar::set_ctrl_win(Gtk::Window *window)
 {
     window->set_titlebar(header);
     ctrl_win = window;
+}
+
+void MyTitleBar::pack_end(Gtk::Widget &widget)
+{
+    header.pack_end(widget);
+}
+
+void MyTitleBar::pack_start(Gtk::Widget &widget)
+{
+    header.pack_start(widget);
 }

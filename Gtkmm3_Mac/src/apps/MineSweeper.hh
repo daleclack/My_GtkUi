@@ -3,6 +3,7 @@
 #include <gtkmm.h>
 #include "InputBox.hh"
 #include "ScoresWin.hh"
+#include "MyTitleBar.hh"
 
 class MineCell : public Gtk::Button
 {
@@ -27,7 +28,7 @@ public:
 
 private:
     // HeaderBar
-    Gtk::HeaderBar header;
+    MyTitleBar header;
     Gtk::MenuButton menu_btn;
     Gtk::Popover popover1;
 

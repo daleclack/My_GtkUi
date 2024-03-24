@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "MyTitleBar.hh"
 
 class TextEditor : public Gtk::ApplicationWindow
 {
@@ -9,7 +10,7 @@ public:
 
 private:
     // Header widgets
-    Gtk::HeaderBar header;
+    MyTitleBar header;
     Gtk::MenuButton menubtn;
     Gtk::Popover popover;
     Gtk::ToggleButton search_button;

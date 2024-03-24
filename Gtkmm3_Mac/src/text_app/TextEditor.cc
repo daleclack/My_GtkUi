@@ -29,14 +29,15 @@ TextEditor::TextEditor()
     set_icon_name("my_textedit");
 
     // Initalize HeaderBar
-    header.set_decoration_layout("close,minimize,maximize:menu");
-    header.set_show_close_button();
+    // header.set_decoration_layout("close,minimize,maximize:menu");
+    // header.set_show_close_button();
+    header.set_ctrl_win(this);
     menubtn.set_image_from_icon_name("open-menu");
     search_button.set_image_from_icon_name("find");
     header.pack_end(menubtn);
     header.pack_end(search_button);
     header.set_title("Simple Text Editor");
-    set_titlebar(header);
+    //set_titlebar(header);
 
     // Add a menu
     menu_builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/text_menu.xml");
