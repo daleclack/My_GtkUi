@@ -265,6 +265,7 @@ void MyDock::mydock_init(Gtk::Window *window, Gtk::Image *background1)
     calc_win->set_visible(false);
     calc_win->set_transient_for(*window);
 
+    // The Dock size defaultly will be 2/3 of height or width
     int dock_size = prefs_win.get_dock_size();
     if (dock_pos == DockPos::POS_BOTTOM)
     {
