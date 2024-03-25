@@ -590,6 +590,19 @@ DockPos MyPrefs::get_dock_pos()
     return dock_pos;
 }
 
+int MyPrefs::get_dock_size()
+{
+    // Calculate default dock size by config
+    if (dock_pos == DockPos::POS_BOTTOM)
+    {
+        return width * 2 / 3;
+    }
+    else
+    {
+        return height * 2 / 3;
+    }
+}
+
 void MyPrefs::load_winsize_config()
 {
     // Read the config

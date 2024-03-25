@@ -149,7 +149,7 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
 
     // Set dock position
     // The dock can be positioned at the left, right and the bottom of the window
-    auto dock_pos = prefs_win.get_dock_pos();
+    dock_pos = prefs_win.get_dock_pos();
     switch (dock_pos)
     {
     case DockPos::POS_LEFT:
@@ -264,6 +264,16 @@ void MyDock::mydock_init(Gtk::Window *window, Gtk::Image *background1)
     game24_win->set_transient_for(*window);
     calc_win->set_visible(false);
     calc_win->set_transient_for(*window);
+
+    int dock_size = prefs_win.get_dock_size();
+    if (dock_pos == DockPos::POS_BOTTOM)
+    {
+        icons_sw->set_size_request(dock_size - 96, -1);
+    }
+    else
+    {
+        icons_sw->set_size_request(-1, dock_size - 96);
+    }
 }
 
 /*

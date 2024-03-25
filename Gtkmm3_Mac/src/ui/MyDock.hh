@@ -33,6 +33,9 @@ private:
     // Finder
     MyFinder finder;
 
+    // Dock Position Config
+    DockPos dock_pos;
+
     // LaunchPad
     bool launchpad_shown;
     Gtk::Stack *launchpad_stack;
