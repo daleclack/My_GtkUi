@@ -1,11 +1,13 @@
 #include "CalcApp.h"
 #include "calc.h"
+#include "MyTitleBar.h"
 #include <string>
 #include <iostream>
 
 struct _CalcApp
 {
     GtkWindow parent_instance;
+    MyTitleBar *title_bar;
     GtkWidget *entry_ans; // Child widgets
     GtkWidget *btnanswer, *btnback, *btnclear;
     GtkWidget *btn0, *btn1, *btn2, *btn3, *btn4,
@@ -103,8 +105,10 @@ static void calc_app_init(CalcApp *self)
 {
     gtk_widget_init_template(GTK_WIDGET(self));
     // Initalize window
+    self->title_bar = my_titlebar_new();
     gtk_window_set_title(GTK_WINDOW(self), "Calculator");
     gtk_window_set_icon_name(GTK_WINDOW(self), "calcapp");
+    my_titlebar_set_window(self->title_bar, GTK_WIDGET(self));
     
     // Link Signals
     g_signal_connect(self->btnanswer, "clicked", G_CALLBACK(btnanswer_clicked), self);

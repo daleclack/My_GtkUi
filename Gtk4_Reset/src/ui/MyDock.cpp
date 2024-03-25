@@ -96,41 +96,57 @@ static void pressed(GtkGesture *gesture, int n_press,
 }
 
 // Window control func, X11/Windows Only!
+// static void window_ctrl(GtkWindow *window, GtkWindow *parent)
+// {
+//     // Get GdkSurface for window state
+//     GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(window));
+//     if (surface)
+//     {
+//         // The state will available when the window open
+//         ushort state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+//         static ushort state1 = state;
+//         g_print("%d\n", state);
+//         state -= state1;
+//         switch (state)
+//         {
+//         // Minimized
+//         case GDK_TOPLEVEL_STATE_MINIMIZED:
+//             g_print("Try to unminimize");
+//             gtk_window_set_transient_for(window, parent);
+//             gtk_window_unminimize(window);
+// #ifdef WAYLAND_FIX
+//                 // Fix for non-x11 environments
+//                 gtk_window_present(window);
+// #endif
+//             break;
+//         default:
+//             // The controlled window is on dock
+//             gtk_window_set_transient_for(window, NULL);
+//             gtk_window_minimize(window);
+//             break;
+//         }
+//     }
+//     else
+//     {
+//         // Create a window
+//         gtk_window_set_transient_for(window, parent);
+//         gtk_window_present(window);
+//     }
+// }
+
 static void window_ctrl(GtkWindow *window, GtkWindow *parent)
 {
-    // Get GdkSurface for window state
-    GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(window));
-    if (surface)
+    gboolean visible = gtk_widget_get_visible(GTK_WIDGET(window));
+    // The unminimize if changed to hide
+    if (!visible)
     {
-        // The state will available when the window open
-        ushort state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
-        static ushort state1 = state;
-        g_print("%d\n", state);
-        state -= state1;
-        switch (state)
-        {
-        // Minimized
-        case GDK_TOPLEVEL_STATE_MINIMIZED:
-            g_print("Try to unminimize");
-            gtk_window_set_transient_for(window, parent);
-            gtk_window_unminimize(window);
-#ifdef WAYLAND_FIX
-                // Fix for non-x11 environments
-                gtk_window_present(window);
-#endif
-            break;
-        default:
-            // The controlled window is on dock
-            gtk_window_set_transient_for(window, NULL);
-            gtk_window_minimize(window);
-            break;
-        }
+        gtk_widget_set_visible(GTK_WIDGET(window), TRUE);
+        gtk_window_present(window);
     }
     else
     {
-        // Create a window
-        gtk_window_set_transient_for(window, parent);
-        gtk_window_present(window);
+        // Window control only available for icons on dock
+        gtk_widget_set_visible(GTK_WIDGET(window), FALSE);
     }
 }
 

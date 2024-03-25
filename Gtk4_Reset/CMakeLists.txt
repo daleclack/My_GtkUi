@@ -55,6 +55,7 @@ set(RESOURCE_LIST
     style.css
     style_dark.css
     mine_app.css
+    title_style.css
     folder.svg
     folder-images.svg
     image_file.svg
