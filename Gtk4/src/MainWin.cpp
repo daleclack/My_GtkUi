@@ -136,14 +136,14 @@ static void about_activated(GSimpleAction * action, GVariant * parmeter, gpointe
         NULL
     };
     char *version;
-    version=g_strdup_printf("4.3\nRunning Against GTK %d.%d.%d",
+    version=g_strdup_printf("6.0\nRunning Against GTK %d.%d.%d",
                             gtk_get_major_version(),
                             gtk_get_minor_version(),
                             gtk_get_micro_version());
     GtkWidget *dialog;
     dialog=gtk_about_dialog_new();
     gtk_show_about_dialog(win,
-    "program-name","My_GtkUI",
+    "program-name","My GtkUI Classic",
     "version",version,
     "copyright", "© 2019—2021 The Xe Project",
     "comments", "A program that simulates desktop (Gtk4 Version)",
