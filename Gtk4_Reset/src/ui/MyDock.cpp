@@ -687,6 +687,10 @@ static void my_dock_get_widgets(MyDock *self)
     self->padset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padset"));
     self->padvlc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc"));
     self->padvlc_win32 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc_win32"));
+
+    // Hide ScrollBar for icons scrolled window
+    GtkWidget *scrollbar = gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(self->icons_sw));
+    gtk_widget_set_visible(scrollbar, FALSE);
 }
 
 static void my_dock_init(MyDock *self)
