@@ -23,6 +23,7 @@ Makefile
 
 #backup files 
 *.*~
+*.mp3
 
 #Gresource prebuild file
 */src/resources.cpp
