@@ -128,6 +128,8 @@ set(RESOURCE_LIST
     icons/scalable/status/rectangle-dark.svg
     icons/scalable/status/calcapp.svg
     icons/scalable/status/calcapp_running.svg
+    icons/scalable/status/header_close.svg
+    icons/scalable/status/header_minimize.svg
     icons/scalable/status/mines_app.svg
     icons/scalable/status/mines_app_running.svg
     icons/scalable/status/media-app.svg
