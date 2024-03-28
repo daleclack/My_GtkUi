@@ -108,7 +108,7 @@ static void calc_app_init(CalcApp *self)
     self->title_bar = my_titlebar_new();
     gtk_window_set_title(GTK_WINDOW(self), "Calculator");
     gtk_window_set_icon_name(GTK_WINDOW(self), "calcapp");
-    my_titlebar_set_window(self->title_bar, GTK_WIDGET(self));
+    my_titlebar_set_window(self->title_bar, self);
     
     // Link Signals
     g_signal_connect(self->btnanswer, "clicked", G_CALLBACK(btnanswer_clicked), self);

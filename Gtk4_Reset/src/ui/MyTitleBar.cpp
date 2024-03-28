@@ -20,7 +20,7 @@ static void ctrl_win_close(MyTitleBar *self)
     gtk_window_close(GTK_WINDOW(self->ctrl_window));
 }
 
-void my_titlebar_set_window(MyTitleBar *self, GtkWidget *window)
+void _my_titlebar_set_window(MyTitleBar *self, GtkWidget *window)
 {
     gtk_window_set_titlebar(GTK_WINDOW(window), self->header);
     self->ctrl_window = window;

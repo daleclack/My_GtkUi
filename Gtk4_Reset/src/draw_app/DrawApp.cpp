@@ -1,6 +1,7 @@
 #include "DrawApp.h"
 #include "MyFinder.h"
 #include "MyLimit.h"
+#include "MyTitleBar.h"
 
 typedef enum
 {
@@ -20,6 +21,9 @@ typedef enum
 struct _DrawApp
 {
     GtkWindow parent_instance;
+
+    // Custom Title Bar
+    MyTitleBar *title_bar;
 
     // Child widgets
     GtkWidget *draw_area;
@@ -289,6 +293,8 @@ static void draw_app_init(DrawApp *self)
     // Initalize window
     gtk_window_set_title(GTK_WINDOW(self), "Drawing App");
     gtk_window_set_icon_name(GTK_WINDOW(self), "drawing_app");
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
     // gtk_window_set_default_size(GTK_WINDOW(self), 640, 480);
 
     // Create widgets
