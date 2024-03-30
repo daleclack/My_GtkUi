@@ -341,14 +341,14 @@ static void text_editor_init(TextEditor *self)
 
     // Add Search Button
     self->btnsearch = gtk_toggle_button_new();
-    gtk_button_set_icon_name(GTK_BUTTON(self->btnsearch), "find");
+    gtk_button_set_icon_name(GTK_BUTTON(self->btnsearch), "edit-find");
     my_titlebar_pack_end(self->header, self->btnsearch);
 
     // Add a search bar
     self->search_bar = gtk_search_bar_new();
     self->search_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-    self->btn_up = gtk_button_new_from_icon_name("up");
-    self->btn_down = gtk_button_new_from_icon_name("down");
+    self->btn_up = gtk_button_new_from_icon_name("go-up");
+    self->btn_down = gtk_button_new_from_icon_name("go-down");
     self->search_entry = gtk_search_entry_new();
     gtk_box_append(GTK_BOX(self->search_box), self->search_entry);
     gtk_box_append(GTK_BOX(self->search_box), self->btn_up);
