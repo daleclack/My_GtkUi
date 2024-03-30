@@ -7,6 +7,7 @@
 #include <vector>
 #include <fstream>
 #include "../json_nlohmann/json.hpp"
+#include "MyTitleBar.h"
 
 using json = nlohmann::json;
 typedef std::vector<std::string> str_vec;
@@ -14,6 +15,7 @@ typedef std::vector<std::string> str_vec;
 struct _MyPrefs
 {
     GtkWindow parent_instance;
+    MyTitleBar *title_bar;
     GtkBuilder *prefs_builder;
     GtkWidget *background, *back_page;
     GtkWidget *stack_box, *combo_box;
@@ -746,6 +748,8 @@ static void my_prefs_init(MyPrefs *self)
     my_prefs_load_config(self);
 
     // Initalize window
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
     gtk_window_set_default_size(GTK_WINDOW(self), 800, 450);
     gtk_window_set_icon_name(GTK_WINDOW(self), "My_GtkUI");
     gtk_window_set_title(GTK_WINDOW(self), "Preferences");
