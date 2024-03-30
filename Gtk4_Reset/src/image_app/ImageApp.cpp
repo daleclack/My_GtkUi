@@ -1,10 +1,12 @@
 #include "ImageApp.h"
 #include "MyImage.h"
+#include "MyTitleBar.h"
 
 struct _ImageApp
 {
     GtkApplicationWindow parent_instance;
     // Child widgets
+    MyTitleBar *title_bar;
     GtkWidget *main_box, *btn_box;
     GtkWidget *image_sw;
     GtkWidget *image_scale, *btnopen;
@@ -150,6 +152,8 @@ static void btnopen_clicked(GtkButton *btn, ImageApp *self)
 static void image_app_init(ImageApp *self)
 {
     // Initalize window
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
     gtk_window_set_title(GTK_WINDOW(self), "Image Viewer");
     gtk_window_set_default_size(GTK_WINDOW(self), 800, 450);
     gtk_window_set_icon_name(GTK_WINDOW(self), "image_app");
