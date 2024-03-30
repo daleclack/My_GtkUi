@@ -28,6 +28,8 @@ void _my_titlebar_set_window(MyTitleBar *self, GtkWidget *window)
 
 void _my_titlebar_pack_end(MyTitleBar *self, GtkWidget *widget)
 {
+    gtk_widget_set_css_classes(widget, NULL);
+    gtk_widget_add_css_class(widget, "ctrl_btn");
     gtk_header_bar_pack_end(GTK_HEADER_BAR(self->header), widget);
 }
 

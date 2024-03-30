@@ -3,6 +3,7 @@
 #include "InputBox.h"
 #include <cstdlib>
 #include <string>
+#include "MyTitleBar.h"
 
 // The status of the minesweeper game
 typedef enum
@@ -18,7 +19,8 @@ struct _MineSweeper
     GtkApplicationWindow parent_instance;
 
     // Header widgets
-    GtkWidget *header, *menu_btn;
+    MyTitleBar *title_bar;
+    GtkWidget *menu_btn;
     GtkBuilder *menu_builder;
 
     // Child widgets
@@ -326,8 +328,8 @@ static void mine_sweeper_init(MineSweeper *self)
     // Initalize window
     gtk_window_set_title(GTK_WINDOW(self), "MineSweeper");
     gtk_window_set_icon_name(GTK_WINDOW(self), "mine_app");
-    self->header = gtk_header_bar_new();
-    gtk_window_set_titlebar(GTK_WINDOW(self), self->header);
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
 
     // Add action for menu
     GActionEntry entries[] =
@@ -342,7 +344,8 @@ static void mine_sweeper_init(MineSweeper *self)
     // Create Menu and button
     self->menu_btn = gtk_menu_button_new();
     gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(self->menu_btn), "open-menu");
-    gtk_header_bar_pack_end(GTK_HEADER_BAR(self->header), self->menu_btn);
+    my_titlebar_pack_end(self->title_bar, self->menu_btn);
+    // gtk_header_bar_pack_end(GTK_HEADER_BAR(self->header), self->menu_btn);
 
     // Create Menu
     self->menu_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/mine_menu.xml");
