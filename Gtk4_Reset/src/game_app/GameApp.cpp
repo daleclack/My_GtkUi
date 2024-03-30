@@ -1,10 +1,12 @@
 #include "GameApp.h"
 #include <cstdlib>
 #include <ctime>
+#include "MyTitleBar.h"
 
 struct _GameApp
 {
     GtkWindow parent_instance;
+    MyTitleBar *title_bar;
     GtkWidget *label;
     GtkWidget *btn_1, *btn_2, *btn_3, *btn_4;
     GtkWidget *btn_go, *btn_exit;
@@ -81,6 +83,8 @@ static void game_app_init(GameApp *self)
 {
     // Initalize template
     gtk_widget_init_template(GTK_WIDGET(self));
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
 
     // Link Signals
     g_signal_connect(self->btn_1, "clicked", G_CALLBACK(btns_clicked), self);
