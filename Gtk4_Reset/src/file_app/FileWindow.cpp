@@ -1,6 +1,7 @@
 #include "FileWindow.h"
 #include "FileColumnView.h"
 #include "FileGridView.h"
+#include "MyTitleBar.h"
 
 enum SyncMode
 {
@@ -17,6 +18,7 @@ enum ViewMode
 struct _FileWindow
 {
     GtkApplicationWindow parent_instance;
+    MyTitleBar *title_bar;
     GListModel *model_column, *model_grid;
     GtkWidget *column_view, *grid_view;
     GtkWidget *main_box, *btn_box;
@@ -278,6 +280,8 @@ static void file_window_init(FileWindow *self)
 {
     GtkColumnViewColumn *column;
     // Initalize window
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
     gtk_window_set_title(GTK_WINDOW(self), "My Finder");
     gtk_window_set_icon_name(GTK_WINDOW(self), "file-manager1");
     gtk_window_set_default_size(GTK_WINDOW(self), 640, 400);
