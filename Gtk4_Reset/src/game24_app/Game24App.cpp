@@ -1,12 +1,14 @@
 #include "Game24.h"
 #include "Game24App.h"
 #include <cstdlib>
+#include "MyTitleBar.h"
 
 static Game24 main_game;
 
 struct _Game24App
 {
     GtkWindow parent_instance;
+    MyTitleBar *title_bar;
     GtkWidget *label_numbers; // Child widgets
     GtkWidget *entry_ans;
     GtkWidget *btnstart, *btnnext, *btnclear,
@@ -107,6 +109,8 @@ static void game24_app_init(Game24App *self)
     gtk_widget_init_template(GTK_WIDGET(self));
     gtk_window_set_title(GTK_WINDOW(self), "24 Game");
     gtk_window_set_icon_name(GTK_WINDOW(self), "24game");
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
 
     // Default value to start game
     self->winned = TRUE;
