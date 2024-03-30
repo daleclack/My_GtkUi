@@ -3,18 +3,20 @@
 #include "../json_nlohmann/json.hpp"
 #include <cstring>
 #include <fstream>
+#include "MyTitleBar.h"
 
 using json = nlohmann::json;
 
 struct _TextEditor
 {
     GtkApplicationWindow parent_instance;
-    GtkWidget *header;
+    MyTitleBar *header;
     GtkWidget *main_box;
     GtkWidget *text_view, *scrolled_win;
     GtkTextBuffer *text_buffer;
     GtkWidget *menu_btn, *popover;
     GtkBuilder *menu_builder, *expander_builder;
+
     // Input keyboard
     GtkWidget *expander;
     GtkWidget *btns[26];
@@ -301,9 +303,9 @@ static void text_editor_init(TextEditor *self)
     json_file.close();
 
     // Use headerbar for title and more info
-    self->header = gtk_header_bar_new();
+    self->header = my_titlebar_new();
     gtk_window_set_title(GTK_WINDOW(self), "Text editor");
-    gtk_window_set_titlebar(GTK_WINDOW(self), self->header);
+    my_titlebar_set_window(self->header, self);
     gtk_window_set_default_size(GTK_WINDOW(self), width, height);
 
     // Add Actions for menu
@@ -323,8 +325,7 @@ static void text_editor_init(TextEditor *self)
     // Add menu button
     self->menu_btn = gtk_menu_button_new();
     gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(self->menu_btn), "open-menu");
-    gtk_header_bar_pack_end(GTK_HEADER_BAR(self->header), self->menu_btn);
-    gtk_header_bar_set_show_title_buttons(GTK_HEADER_BAR(self->header), TRUE);
+    my_titlebar_pack_end(self->header, self->menu_btn);
 
     // Add a menu
     self->menu_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/text_menu.xml");
@@ -341,7 +342,7 @@ static void text_editor_init(TextEditor *self)
     // Add Search Button
     self->btnsearch = gtk_toggle_button_new();
     gtk_button_set_icon_name(GTK_BUTTON(self->btnsearch), "find");
-    gtk_header_bar_pack_end(GTK_HEADER_BAR(self->header), self->btnsearch);
+    my_titlebar_pack_end(self->header, self->btnsearch);
 
     // Add a search bar
     self->search_bar = gtk_search_bar_new();

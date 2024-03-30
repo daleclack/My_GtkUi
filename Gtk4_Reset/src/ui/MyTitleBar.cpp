@@ -26,6 +26,11 @@ void _my_titlebar_set_window(MyTitleBar *self, GtkWidget *window)
     self->ctrl_window = window;
 }
 
+void _my_titlebar_pack_end(MyTitleBar *self, GtkWidget *widget)
+{
+    gtk_header_bar_pack_end(GTK_HEADER_BAR(self->header), widget);
+}
+
 static void my_titlebar_init(MyTitleBar *self)
 {
     // Create widgets
