@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <cstring>
+#include "MyTitleBar.h"
 
 using json = nlohmann::json;
 typedef std::vector<std::string> string_vector;
@@ -12,6 +13,7 @@ typedef std::vector<std::string> string_vector;
 struct _MyMediaPlayer
 {
     GtkApplicationWindow parent_instance;
+    MyTitleBar *title_bar;
     GtkWidget *video, *label_lyrics;
     GtkWidget *ctrl_box;
     GtkWidget *btn_priv, *btn_play, *btn_next,
@@ -641,6 +643,8 @@ static gboolean my_media_player_check_dark_theme(MyMediaPlayer *player)
 static void my_media_player_init(MyMediaPlayer *self)
 {
     // Initalize window
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
     gtk_window_set_icon_name(GTK_WINDOW(self), "media-app");
     gtk_window_set_title(GTK_WINDOW(self), "Media Player");
     gtk_window_set_default_size(GTK_WINDOW(self), 480, 270);
