@@ -169,7 +169,7 @@ static void about_activated(GSimpleAction *action, GVariant *parmeter, gpointer 
     gtk_show_about_dialog(win,
                           "program-name", "My GtkUI Classic",
                           "version", version,
-                          "copyright", "© 2019—2021 The Xe Project",
+                          "copyright", "© 2019—2024 The Xe Project",
                           "comments", "A program that simulates desktop (Gtk4 Version)",
                           "authors", authors,
                           "license-type", GTK_LICENSE_GPL_3_0,
