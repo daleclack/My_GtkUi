@@ -6,6 +6,7 @@ struct _DrawingApp{
     cairo_surface_t * cairo_surface = NULL;
     GtkWidget * draw_area;
     GtkWidget * color_button;
+    GtkColorDialog *color_dialog;
     double x,y;
 };
 
@@ -56,10 +57,11 @@ static void draw_brush(DrawingApp * draw_app,double x,double y){
     //Draw on the surface
     cr=cairo_create(draw_app->cairo_surface);
     //Draw and fill in color
-    GdkRGBA color_set;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(draw_app->color_button),&color_set);
-    cairo_set_source_rgba(cr,color_set.red,color_set.green,
-                          color_set.blue,color_set.alpha);
+    const GdkRGBA *color_set;
+    // gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(draw_app->color_button),&color_set);
+    color_set = gtk_color_dialog_button_get_rgba(GTK_COLOR_DIALOG_BUTTON(draw_app->color_button));
+    cairo_set_source_rgba(cr,color_set->red,color_set->green,
+                          color_set->blue,color_set->alpha);
     cairo_arc(cr,x,y,3,0,2*G_PI);
 
     cairo_fill(cr);
@@ -139,7 +141,10 @@ static void drawing_app_init(DrawingApp * self){
 
     //Default Color
     GdkRGBA color_set = {0,0,0,1};
-    self->color_button = gtk_color_button_new_with_rgba(&color_set);
+    self->color_dialog = gtk_color_dialog_new();
+    self->color_button = gtk_color_dialog_button_new(self->color_dialog);
+    gtk_color_dialog_button_set_rgba(GTK_COLOR_DIALOG_BUTTON(self->color_button), &color_set);
+    // self->color_button = gtk_color_button_new_with_rgba(&color_set);
     
     gtk_box_append(GTK_BOX(btnbox),self->color_button);
     gtk_box_append(GTK_BOX(btnbox),btn_clear);

@@ -14,6 +14,7 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 include_directories(.)
 include_directories(..)
+include_directories(src/apps)
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTK4 REQUIRED gtk4)
@@ -75,7 +76,8 @@ compile_gresources(RESOURCE_FILE
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 set(SOURCES src/main.cpp src/MainWin.cpp src/MainStack.cpp src/LeftPanel.cpp src/GameWin.cpp 
-            src/drawing.cpp src/TextEditor.cpp src/FileWindow.cpp src/winconf.cpp src/MediaPlayer.cpp)
+            src/drawing_app/drawing.cpp src/TextEditor.cpp src/FileWindow.cpp 
+            src/winconf.cpp src/MediaPlayer.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
