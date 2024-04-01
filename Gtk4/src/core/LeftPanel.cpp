@@ -14,6 +14,8 @@ struct _LeftPanel
     GtkWindow *parent_win;
     GtkWidget *popover1;
     GtkWidget *btnstart;
+    // Scrolled Window for icons
+    GtkWidget *icons_sw;
     // Button for linux applications
     GtkWidget *btnaud, *btngedit, *btnvlc;
     // Button for win32 applications
@@ -264,6 +266,10 @@ static void left_panel_init(LeftPanel *panel)
     // Set Image for start button
 
     // gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
+    
+    // Hide the scrollbar for scrolled window
+    GtkWidget *scroll = gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(panel->icons_sw));
+    gtk_widget_set_visible(scroll, FALSE);
 
     // All Apps are not in running mode
     panel->file_running = FALSE;
@@ -344,6 +350,7 @@ static void left_panel_class_init(LeftPanelClass *klass)
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass), LeftPanel, drawing_image);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass), LeftPanel, panel_media);
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass), LeftPanel, media_image);
+    gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass), LeftPanel, icons_sw);
 }
 
 LeftPanel *left_panel_new()
