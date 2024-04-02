@@ -202,6 +202,12 @@ GtkWidget *main_win_get_background(MainWin *win)
     return win->background;
 }
 
+int main_win_get_height(MainWin *win)
+{
+    // Get the Height of Main Win
+    return win->height;
+}
+
 static void main_win_init(MainWin *win)
 {
     // For Custom Window Size

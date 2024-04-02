@@ -72,6 +72,16 @@ static void btnvlc_win32(GtkWidget *widget, gpointer data)
 void left_panel_set_parent(LeftPanel *self, GtkWindow *parent_win1)
 {
     self->parent_win = parent_win1;
+    // Fix the height < 400
+    int height = main_win_get_height(MAIN_WIN(parent_win1));
+    if (height < 400)
+    {
+        gtk_widget_set_size_request(self->popover1, 320, height - 40);
+    }
+    else
+    {
+        gtk_widget_set_size_request(self->popover1, 320, 400);
+    }
 }
 
 // Window Control Function
