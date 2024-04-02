@@ -175,7 +175,7 @@ static void about_activated(GSimpleAction *action, GVariant *parmeter, gpointer 
                           "license-type", GTK_LICENSE_GPL_3_0,
                           "logo-icon-name", "My_GtkUI",
                           "title", "About My GtkUI (Gtk4 Version)",
-                          NULL);
+                          NULL, nullptr);
     g_free(version);
 }
 

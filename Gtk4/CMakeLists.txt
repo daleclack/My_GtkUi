@@ -60,6 +60,7 @@ set(RESOURCE_LIST
     icons/scalable/status/log_out.svg
     icons/scalable/status/system.svg
     title_style.css
+    style.css
     dialog-error.png
     gnome-fs-directory.png
     gnome-fs-regular.png

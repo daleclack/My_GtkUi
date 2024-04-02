@@ -3,24 +3,6 @@
         {
             "name": "Linux",
             "includePath": [
-                //For linux amd64 and linux on arm64,some include path may different
-                //Commet and uncomment these lines to compile on a specificed archtiecture
-                //Arm64 linux libs
-                /*
-                "/usr/lib/aarch64-linux-gnu/dbus-1.0/include/**",
-                "/usr/lib/aarch64-linux-gnu/glib-2.0/include",
-                */
-                //amd64 linux libs(For ubuntu)
-                /*
-                "/usr/lib/x86_64-linux-gnu/dbus-1.0/include",
-                "/usr/lib/x86_64-linux-gnu/glib-2.0/include",
-                */
-                //For debian and ubuntu,kali
-                /*
-                "/usr/include/gtk-3.0/gtk/**",
-                "/usr/include/uuid/**",
-                */
-                //For manjaro(Arch linux)
                 "/usr/lib/dbus-1.0/include/**",
                 "/usr/lib/glib-2.0/include/**",
                 "/usr/include/lzo/**",
@@ -59,7 +41,6 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/**",
-                //I assume the msys2 installed in D:/msys64
                 "D:/msys64/mingw64/include/**",
                 "D:/msys64/mingw64/include/glib-2.0/**",
                 "D:/msys64/mingw64/lib/glib-2.0/include/**",
@@ -79,7 +60,8 @@
             "compilerPath": "D:/msys64/MinGW64/bin/gcc.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-gcc-x64"
+            "intelliSenseMode": "windows-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
         },
         {
             "name": "Mac",
