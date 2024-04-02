@@ -60,7 +60,7 @@ GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
     GtkWidget *popover = gtk_popover_menu_new_from_model(model);
     gtk_widget_set_halign(popover, GTK_ALIGN_END);
     gtk_popover_set_has_arrow(GTK_POPOVER(popover), FALSE);
-    gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(menubtn), "system-shutdown");
+    gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(menubtn), "shut_down");
     gtk_menu_button_set_popover(GTK_MENU_BUTTON(menubtn), popover);
 
     // Box for LeftPanel

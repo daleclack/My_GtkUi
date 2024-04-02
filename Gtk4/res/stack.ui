@@ -98,7 +98,7 @@
                             <property name="hexpand">0</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="icon-name">system-help</property>
+                            <property name="icon-name">gtkui_help</property>
                             <property name="has-frame">0</property>
                           </object>
                         </child>
@@ -108,7 +108,7 @@
                             <property name="hexpand">0</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="icon-name">ac-adapter-symbolic</property>
+                            <property name="icon-name">my_ac_adapter</property>
                             <property name="has-frame">0</property>
                           </object>
                         </child>
@@ -117,7 +117,7 @@
                             <property name="visible">1</property>
                             <property name="focusable">1</property>
                             <property name="receives-default">1</property>
-                            <property name="icon-name">audio-volume-high-symbolic</property>
+                            <property name="icon-name">my_audio</property>
                             <property name="has-frame">0</property>
                           </object>
                         </child>
