@@ -218,7 +218,7 @@ static void main_win_init(MainWin *win)
 
     // Initailze Window
     gtk_window_set_icon_name(GTK_WINDOW(win), "My_GtkUI");
-    gtk_window_set_title(GTK_WINDOW(win), "My GtkUI (Gtk4 Version)");
+    gtk_window_set_title(GTK_WINDOW(win), "My GtkUI Classic");
 
     // Add Actions
     static GActionEntry entries[] = {
