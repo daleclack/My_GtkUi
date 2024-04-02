@@ -55,8 +55,11 @@ set(RESOURCE_LIST
     icons/48x48/actions/multimedia-player1.png
     icons/48x48/actions/multimedia-player1_running.png
     icons/scalable/status/graphics.svg
+    icons/scalable/status/header_close.svg
+    icons/scalable/status/header_minimize.svg
     icons/scalable/status/log_out.svg
     icons/scalable/status/system.svg
+    title_style.css
     dialog-error.png
     gnome-fs-directory.png
     gnome-fs-regular.png
@@ -79,8 +82,8 @@ add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MainStack.cpp 
             src/core/LeftPanel.cpp src/GameWin.cpp src/core/winconf.cpp
-            src/drawing_app/drawing.cpp src/TextEditor.cpp src/FileWindow.cpp 
-            src/MediaPlayer.cpp)
+            src/core/MyTitleBar.cpp src/drawing_app/drawing.cpp src/TextEditor.cpp 
+            src/FileWindow.cpp src/MediaPlayer.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)

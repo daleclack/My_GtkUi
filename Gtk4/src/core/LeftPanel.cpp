@@ -76,22 +76,37 @@ void left_panel_set_parent(LeftPanel *self, GtkWindow *parent_win1)
 
 // Window Control Function
 
+// static void window_ctrl(LeftPanel *self, GtkWindow *ctrled_win)
+// {
+//     GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(ctrled_win));
+//     if (surface)
+//     {
+//         GdkToplevelState state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
+//         switch (state)
+//         {
+//         case GDK_TOPLEVEL_STATE_MINIMIZED:
+//             gtk_window_set_transient_for(ctrled_win, self->parent_win);
+//             gtk_window_unminimize(ctrled_win);
+//             break;
+//         default:
+//             gtk_window_set_transient_for(ctrled_win, NULL);
+//             gtk_window_minimize(ctrled_win);
+//         }
+//     }
+// }
+
 static void window_ctrl(LeftPanel *self, GtkWindow *ctrled_win)
 {
-    GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(ctrled_win));
-    if (surface)
+    GtkWidget *widget = GTK_WIDGET(ctrled_win);
+    gboolean visible = gtk_widget_get_visible(widget);
+    // Control window by visible
+    if (!visible)
     {
-        GdkToplevelState state = gdk_toplevel_get_state(GDK_TOPLEVEL(surface));
-        switch (state)
-        {
-        case GDK_TOPLEVEL_STATE_MINIMIZED:
-            gtk_window_set_transient_for(ctrled_win, self->parent_win);
-            gtk_window_unminimize(ctrled_win);
-            break;
-        default:
-            gtk_window_set_transient_for(ctrled_win, NULL);
-            gtk_window_minimize(ctrled_win);
-        }
+        gtk_widget_set_visible(widget, TRUE);
+    }
+    else
+    {
+        gtk_widget_set_visible(widget, FALSE);
     }
 }
 
@@ -266,7 +281,7 @@ static void left_panel_init(LeftPanel *panel)
     // Set Image for start button
 
     // gtk_menu_button_set_label(GTK_MENU_BUTTON(panel->btnstart),"Start");
-    
+
     // Hide the scrollbar for scrolled window
     GtkWidget *scroll = gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(panel->icons_sw));
     gtk_widget_set_visible(scroll, FALSE);
