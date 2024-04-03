@@ -218,8 +218,8 @@ int main_win_get_width(MainWin *win)
 static void main_win_init(MainWin *win)
 {
     // For Custom Window Size
-    win->width = 800;
-    win->height = 450;
+    win->width = 640;
+    win->height = 360;
     get_config(&(win->width), &(win->height));
     // g_print("%d %d",win->width,win->height);
 
