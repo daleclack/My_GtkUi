@@ -208,6 +208,13 @@ int main_win_get_height(MainWin *win)
     return win->height;
 }
 
+
+int main_win_get_width(MainWin *win)
+{
+    // Get the width of Main Win
+    return win->width;
+}
+
 static void main_win_init(MainWin *win)
 {
     // For Custom Window Size

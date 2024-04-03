@@ -87,7 +87,7 @@ add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MainStack.cpp 
             src/core/LeftPanel.cpp src/GameWin.cpp src/core/winconf.cpp
-            src/core/MyTitleBar.cpp src/drawing_app/drawing.cpp src/TextEditor.cpp 
+            src/core/MyTitleBar.cpp src/drawing_app/drawing.cpp src/text_app/TextEditor.cpp 
             src/FileWindow.cpp src/MediaPlayer.cpp)
 
 # Step 4:Add the resource to compile list and compile

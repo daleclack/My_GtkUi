@@ -11,3 +11,5 @@ GtkWidget * main_win_get_background(MainWin * win);
 void btnabout_clicked(GtkWidget * widget,gpointer data);
 
 int main_win_get_height(MainWin *win);
+
+int main_win_get_width(MainWin *win);

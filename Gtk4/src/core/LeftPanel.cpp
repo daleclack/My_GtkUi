@@ -34,6 +34,8 @@ struct _LeftPanel
     MediaPlayer *media_player;
     // Status
     gboolean game_running, file_running, editor_running, drawapp_running, media_running;
+    // Settings for some windows
+    int win_width, win_height;
 };
 
 G_DEFINE_TYPE(LeftPanel, left_panel, GTK_TYPE_BOX)
@@ -74,13 +76,18 @@ void left_panel_set_parent(LeftPanel *self, GtkWindow *parent_win1)
     self->parent_win = parent_win1;
     // Fix the height < 400
     int height = main_win_get_height(MAIN_WIN(parent_win1));
-    if (height < 400)
+    int width = main_win_get_width(MAIN_WIN(parent_win1));
+    if (height < 400 || width < 800)
     {
         gtk_widget_set_size_request(self->popover1, 320, height - 40);
+        self->win_height = height - 60;
+        self->win_width = width - 100;
     }
     else
     {
         gtk_widget_set_size_request(self->popover1, 320, 400);
+        self->win_height = 800;
+        self->win_width = 450;
     }
 }
 
@@ -234,7 +241,8 @@ static void btneditor_clicked(GtkWidget *widget, LeftPanel *parent_panel)
     if (!parent_panel->editor_running)
     {
         // Create a window
-        parent_panel->editor_win = text_editor_new(parent_panel->parent_win);
+        parent_panel->editor_win = text_editor_new(parent_panel->parent_win,
+                                                   parent_panel->win_width, parent_panel->win_height);
         // Connect to the close signal for window
         g_signal_connect(parent_panel->editor_win, "close-request", G_CALLBACK(text_editor_closed), parent_panel);
 
