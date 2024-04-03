@@ -77,7 +77,7 @@ void left_panel_set_parent(LeftPanel *self, GtkWindow *parent_win1)
     // Fix the height < 400
     int height = main_win_get_height(MAIN_WIN(parent_win1));
     int width = main_win_get_width(MAIN_WIN(parent_win1));
-    if (height < 400 || width < 800)
+    if (height <= 470 || width <= 820)
     {
         gtk_widget_set_size_request(self->popover1, 320, height - 40);
         self->win_height = height - 60;
@@ -86,8 +86,8 @@ void left_panel_set_parent(LeftPanel *self, GtkWindow *parent_win1)
     else
     {
         gtk_widget_set_size_request(self->popover1, 320, 400);
-        self->win_height = 800;
-        self->win_width = 450;
+        self->win_height = 450;
+        self->win_width = 800;
     }
 }
 

@@ -74,9 +74,9 @@ static void about_activated(GSimpleAction *action,
                           "copyright", "© 2019—2024 The Xe Project",
                           "comments", "A Simple Media Player",
                           "authors", authors,
-                          "logo-icon-name", "media-player1",
+                          "logo-icon-name", "multimedia-player1",
                           "title", "About Gtk4 Media",
-                          NULL);
+                          NULL, nullptr);
 }
 
 // static void dialog_response(GtkWidget *widget, int response, MediaPlayer *player)
