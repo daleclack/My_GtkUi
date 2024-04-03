@@ -11,12 +11,12 @@ enable_testing()
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 
+set(header_dirs src src/apps src/core src/file_app)
+
 include(CPack)
 include_directories(.)
 include_directories(..)
-include_directories(src)
-include_directories(src/apps)
-include_directories(src/core)
+include_directories(${header_dirs})
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTK4 REQUIRED gtk4)
@@ -41,6 +41,8 @@ set(RESOURCE_LIST
     icons/16x16/actions/multimedia-player1.png
     icons/24x24/actions/view-grid-symbolic.png
     icons/24x24/actions/view-list-symbolic.png
+    icons/48x48/actions/file_icon.png 
+    icons/48x48/actions/folder_icon.png 
     icons/48x48/actions/game.png
     icons/48x48/actions/game_running.png
     icons/48x48/actions/My_GtkUI.png
@@ -66,8 +68,6 @@ set(RESOURCE_LIST
     title_style.css
     style.css
     dialog-error.png
-    gnome-fs-directory.png
-    gnome-fs-regular.png
     STRIPBLANKS appmenu.xml
     STRIPBLANKS media_menu.xml
     STRIPBLANKS stack.ui
@@ -87,8 +87,10 @@ add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MainStack.cpp 
             src/core/LeftPanel.cpp src/GameWin.cpp src/core/winconf.cpp
-            src/core/MyTitleBar.cpp src/drawing_app/drawing.cpp src/text_app/TextEditor.cpp 
-            src/FileWindow.cpp src/MediaPlayer.cpp)
+            src/core/MyTitleBar.cpp src/drawing_app/drawing.cpp 
+            src/text_app/TextEditor.cpp src/file_app/FileWindow.cpp 
+            src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp
+            src/MediaPlayer.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)

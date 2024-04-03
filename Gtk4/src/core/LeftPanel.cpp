@@ -176,7 +176,8 @@ static void btnfile_clicked(GtkWidget *widget, LeftPanel *parent_panel)
     if (!(parent_panel->file_running))
     {
         // Create a window
-        parent_panel->file_win = file_window_new(parent_panel->parent_win);
+        parent_panel->file_win = file_window_new(parent_panel->parent_win,
+                                                 parent_panel->win_width, parent_panel->win_height);
 
         // Connect to the close signal for window
         g_signal_connect(parent_panel->file_win, "close-request", G_CALLBACK(file_window_closed), parent_panel);
