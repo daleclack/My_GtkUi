@@ -86,11 +86,11 @@ compile_gresources(RESOURCE_FILE
 add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 
 set(SOURCES src/core/main.cpp src/core/MainWin.cpp src/core/MainStack.cpp 
-            src/core/LeftPanel.cpp src/GameWin.cpp src/core/winconf.cpp
+            src/core/LeftPanel.cpp src/core/winconf.cpp
             src/core/MyTitleBar.cpp src/drawing_app/drawing.cpp 
             src/text_app/TextEditor.cpp src/file_app/FileWindow.cpp 
             src/file_app/FileColumnView.cpp src/file_app/FileGridView.cpp
-            src/MediaPlayer.cpp)
+            src/media_app/MediaPlayer.cpp src/game_app/GameWin.cpp)
 
 # Step 4:Add the resource to compile list and compile
 if(WIN32)
