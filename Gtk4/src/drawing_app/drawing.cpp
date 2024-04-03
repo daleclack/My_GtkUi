@@ -131,7 +131,7 @@ static void drawing_app_init(DrawingApp *self)
     self->title_bar = my_titlebar_new();
     my_titlebar_set_window(self->title_bar, self);
     gtk_window_set_title(GTK_WINDOW(self), "Drawing Test");
-    gtk_window_set_default_size(GTK_WINDOW(self), 640, 360);
+    // gtk_window_set_default_size(GTK_WINDOW(self), 640, 360);
     gtk_window_set_icon_name(GTK_WINDOW(self), "drawing_app");
 
     GtkWidget *hbox, *frame, *btnbox;
@@ -197,7 +197,10 @@ static void drawing_app_class_init(DrawingAppClass *klass)
 {
 }
 
-DrawingApp *drawing_app_new(GtkWindow *parent_win)
+DrawingApp *drawing_app_new(GtkWindow *parent_win, int width, int height)
 {
-    return (DrawingApp *)g_object_new(drawing_app_get_type(), "transient-for", parent_win, NULL);
+    DrawingApp *draw_app = (DrawingApp *)g_object_new(drawing_app_get_type(),
+                                                      "transient-for", parent_win, NULL);
+    gtk_window_set_default_size(GTK_WINDOW(draw_app), width, height);
+    return draw_app;
 }

@@ -209,7 +209,8 @@ static void btndraw_clicked(GtkWidget *widget, LeftPanel *parent_panel)
     if (!parent_panel->drawapp_running)
     {
         // Create a window
-        parent_panel->draw_win = drawing_app_new(parent_panel->parent_win);
+        parent_panel->draw_win = drawing_app_new(parent_panel->parent_win,
+                                                 parent_panel->win_width, parent_panel->win_height);
         // Connect to the close signal for window
         g_signal_connect(parent_panel->draw_win, "close-request", G_CALLBACK(draw_app_closed), parent_panel);
 
