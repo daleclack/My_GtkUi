@@ -3,46 +3,46 @@
 
 static void setup_grid_item(GtkListItemFactory *factory, GtkListItem *item)
 {
-    GtkWidget *under_box, *info_box;
+    GtkWidget *under_box;
     GtkWidget *image;
-    GtkWidget *label_filename, *label_filetype, *label_filesize;
+    GtkWidget *label_filename;
     // Create box for file icon and file info
-    under_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-    info_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    under_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    // info_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     image = gtk_image_new();
     label_filename = gtk_label_new(" ");
-    label_filetype = gtk_label_new(" ");
-    label_filesize = gtk_label_new(" ");
+    // label_filetype = gtk_label_new(" ");
+    // label_filesize = gtk_label_new(" ");
 
     // Make labels support ellipsize
     gtk_label_set_ellipsize(GTK_LABEL(label_filename), PANGO_ELLIPSIZE_END);
-    gtk_label_set_ellipsize(GTK_LABEL(label_filetype), PANGO_ELLIPSIZE_END);
-    gtk_label_set_ellipsize(GTK_LABEL(label_filesize), PANGO_ELLIPSIZE_END);
-    gtk_label_set_width_chars(GTK_LABEL(label_filename), 20);
+    // gtk_label_set_ellipsize(GTK_LABEL(label_filetype), PANGO_ELLIPSIZE_END);
+    // gtk_label_set_ellipsize(GTK_LABEL(label_filesize), PANGO_ELLIPSIZE_END);
+    gtk_label_set_width_chars(GTK_LABEL(label_filename), 10);
 
     // Pack widgets
     gtk_image_set_pixel_size(GTK_IMAGE(image), 48);
     gtk_box_append(GTK_BOX(under_box), image);
-    gtk_box_append(GTK_BOX(info_box), label_filename);
-    gtk_box_append(GTK_BOX(info_box), label_filetype);
-    gtk_box_append(GTK_BOX(info_box), label_filesize);
-    gtk_box_append(GTK_BOX(under_box), info_box);
+    gtk_box_append(GTK_BOX(under_box), label_filename);
+    // gtk_box_append(GTK_BOX(info_box), label_filetype);
+    // gtk_box_append(GTK_BOX(info_box), label_filesize);
+    // gtk_box_append(GTK_BOX(under_box), info_box);
 
     gtk_list_item_set_child(item, under_box);
 }
 
 static void bind_grid_item(GtkListItemFactory *factory, GtkListItem *item)
 {
-    GtkWidget *under_box, *info_box;
+    GtkWidget *under_box;
     GtkWidget *image;
-    GtkWidget *label_filename, *label_filetype, *label_filesize;
+    GtkWidget *label_filename;
     // Get Widgets
     under_box = gtk_list_item_get_child(item);
     image = gtk_widget_get_first_child(under_box);
-    info_box = gtk_widget_get_next_sibling(image);
-    label_filename = gtk_widget_get_first_child(info_box);
-    label_filetype = gtk_widget_get_next_sibling(label_filename);
-    label_filesize = gtk_widget_get_next_sibling(label_filetype);
+    label_filename = gtk_widget_get_next_sibling(image);
+    // label_filename = gtk_widget_get_first_child(info_box);
+    // label_filetype = gtk_widget_get_next_sibling(label_filename);
+    // label_filesize = gtk_widget_get_next_sibling(label_filetype);
 
     // Get GFileInfo
     GFileInfo *info = G_FILE_INFO(gtk_list_item_get_item(item));
@@ -60,8 +60,8 @@ static void bind_grid_item(GtkListItemFactory *factory, GtkListItem *item)
 
     // File name, content type and size
     gtk_label_set_label(GTK_LABEL(label_filename), g_file_info_get_display_name(info));
-    gtk_label_set_label(GTK_LABEL(label_filetype), g_file_info_get_content_type(info));
-    gtk_label_set_label(GTK_LABEL(label_filesize), g_format_size(g_file_info_get_size(info)));
+    // gtk_label_set_label(GTK_LABEL(label_filetype), g_file_info_get_content_type(info));
+    // gtk_label_set_label(GTK_LABEL(label_filesize), g_format_size(g_file_info_get_size(info)));
 }
 
 static void gridview_activate(GtkGridView *view, guint position, FileWindow *win)
