@@ -1,8 +1,10 @@
 #include "MediaPlayer.h"
+#include "MyTitleBar.h"
 
 struct _MediaPlayer
 {
     GtkApplicationWindow parent;
+    MyTitleBar *header;
     GtkWidget *video;
     GtkWidget *menubtn;
 };
@@ -129,17 +131,19 @@ static void open_activated(GSimpleAction *action,
     // dialog = gtk_file_chooser_dialog_new("Open Media File", parent, action1,
     //                                      "OK", GTK_RESPONSE_OK, "Cancel", GTK_RESPONSE_CANCEL, NULL);
     // Set filters
-    GListStore *filters;
+    GListStore *filter_store;
     GtkFileFilter *filter;
 
     // Add file types for filter
-    filter = gtk_file_filter_new();
-    gtk_file_filter_add_pattern(filter, "*.mp3");
-    gtk_file_filter_add_pattern(filter, "*.wav");
-    gtk_file_filter_add_pattern(filter, "*.flac");
-    gtk_file_filter_add_pattern(filter, "*.aac");
-    gtk_file_filter_add_pattern(filter, "*.m4a");
-    g_list_store_append(filters, filter);
+    // filter_store = g_list_store_new(GTK_TYPE_FILE_FILTER);
+    // filter = gtk_file_filter_new();
+    // gtk_file_filter_add_pattern(filter, "*.mp3");
+    // gtk_file_filter_add_pattern(filter, "*.wav");
+    // gtk_file_filter_add_pattern(filter, "*.flac");
+    // gtk_file_filter_add_pattern(filter, "*.aac");
+    // gtk_file_filter_add_pattern(filter, "*.m4a");
+    // g_list_store_append(filter_store, filter);
+    // gtk_file_dialog_set_filters(dialog, G_LIST_MODEL(filter_store));
 
     gtk_file_dialog_open(dialog, parent, NULL, dialog_response, parent);
     // gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
@@ -155,9 +159,9 @@ static void quit_activated(GSimpleAction *action, GVariant *parmeter, gpointer d
 static void media_player_init(MediaPlayer *self)
 {
     // Initalize Window
-    GtkWidget *header = gtk_header_bar_new();
+    self->header = my_titlebar_new();
     gtk_window_set_title(GTK_WINDOW(self), "Video Player");
-    gtk_window_set_titlebar(GTK_WINDOW(self), header);
+    my_titlebar_set_window(self->header, self);
 
     // Ininalize Action
     GActionEntry entries[] = {
@@ -176,11 +180,14 @@ static void media_player_init(MediaPlayer *self)
     GtkWidget *popover = gtk_popover_menu_new_from_model(model);
     gtk_widget_set_halign(popover, GTK_ALIGN_END);
     gtk_menu_button_set_popover(GTK_MENU_BUTTON(self->menubtn), popover);
-    gtk_header_bar_pack_end(GTK_HEADER_BAR(header), self->menubtn);
+    my_titlebar_pack_end(self->header, self->menubtn);
+    // gtk_header_bar_pack_end(GTK_HEADER_BAR(header), self->menubtn);
 
     // Create video
     self->video = gtk_video_new();
-    gtk_widget_set_size_request(self->video, 712, 400);
+    gtk_widget_set_hexpand(self->video, TRUE);
+    gtk_widget_set_vexpand(self->video, TRUE);
+    // gtk_widget_set_size_request(self->video, 712, 400);
     gtk_window_set_child(GTK_WINDOW(self), self->video);
 
     g_object_unref(menu_builder);
@@ -188,7 +195,11 @@ static void media_player_init(MediaPlayer *self)
 
 static void media_player_class_init(MediaPlayerClass *klass) {}
 
-MediaPlayer *media_player_new(GtkWindow *parent_win)
+MediaPlayer *media_player_new(GtkWindow *parent_win, int width, int height)
 {
-    return (MediaPlayer *)g_object_new(media_player_get_type(), "transient-for", parent_win, NULL);
+    // Create a window with a default size
+    MediaPlayer *player = (MediaPlayer *)g_object_new(media_player_get_type(),
+                                                      "transient-for", parent_win, NULL);
+    gtk_window_set_default_size(GTK_WINDOW(player), width, height);
+    return player;
 }

@@ -276,7 +276,8 @@ static void btnmedia_clicked(GtkWidget *widget, LeftPanel *parent_panel)
     if (!parent_panel->media_running)
     {
         // Create a window
-        parent_panel->media_player = media_player_new(parent_panel->parent_win);
+        parent_panel->media_player = media_player_new(parent_panel->parent_win,
+                                                      parent_panel->win_width, parent_panel->win_height);
         // Connect to the close signal for window
         g_signal_connect(parent_panel->media_player, "close-request", G_CALLBACK(media_player_closed), parent_panel);
 
