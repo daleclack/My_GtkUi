@@ -327,7 +327,7 @@
                         <child>
                         <object class="GtkImage">
                           <property name="pixel-size">16</property>
-                          <property name="icon-name">gedit</property>
+                          <property name="icon-name">myeditor</property>
                         </object>
                         </child>
                         <child>
@@ -417,7 +417,7 @@
                 <child>
                   <object class="GtkImage" id="editor_image">
                     <property name="pixel-size">48</property>
-                    <property name="icon-name">gedit</property>
+                    <property name="icon-name">myeditor</property>
                   </object>
                 </child>
               </object>

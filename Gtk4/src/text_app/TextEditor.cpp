@@ -1,8 +1,10 @@
 #include "TextEditor.h"
+#include "MyTitleBar.h"
 
 struct _TextEditor
 {
     GtkWindow parent_instance;
+    MyTitleBar *title_bar;
     GtkWidget *infobar, *info_btn;
     GtkWidget *textview;
     GtkTextBuffer *textbuffer;
@@ -217,6 +219,8 @@ static void btnpaste_clicked(GtkWidget *widget, TextEditor *editor)
 static void text_editor_init(TextEditor *self)
 {
     GtkWidget *hbox, *textbox;
+    self->title_bar = my_titlebar_new();
+    my_titlebar_set_window(self->title_bar, self);
     gtk_window_set_title((GtkWindow *)self, "Simple Text Editor");
     gtk_window_set_icon_name((GtkWindow *)self, "org.gtk.daleclack");
     // gtk_window_set_default_size((GtkWindow *)self, 800, 450);

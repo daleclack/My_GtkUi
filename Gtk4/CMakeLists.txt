@@ -26,7 +26,7 @@ link_directories (${GTK4_LIBRARY_DIRS})
 #Compile Resource
 set(RESOURCE_LIST
     icons/16x16/actions/audacious.png
-    icons/16x16/actions/gedit.png
+    icons/16x16/actions/myeditor.png
     icons/16x16/actions/graphics.png
     icons/16x16/actions/log_out.png
     icons/16x16/actions/mygtkui_about.png
@@ -46,8 +46,8 @@ set(RESOURCE_LIST
     icons/48x48/actions/My_GtkUI.png
     icons/48x48/actions/user_home.png
     icons/48x48/actions/my_user.png
-    icons/48x48/actions/gedit.png
-    icons/48x48/actions/gedit_running.png
+    icons/48x48/actions/myeditor.png
+    icons/48x48/actions/myeditor_running.png
     icons/48x48/actions/drawing_app.png
     icons/48x48/actions/drawing_app_running.png
     icons/48x48/actions/file-app.png

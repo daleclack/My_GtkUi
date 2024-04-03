@@ -232,7 +232,7 @@ static void btndraw_clicked(GtkWidget *widget, LeftPanel *parent_panel)
 static gboolean text_editor_closed(GtkWindow *window, LeftPanel *parent_panel)
 {
     parent_panel->editor_running = FALSE;
-    gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->editor_image), "gedit");
+    gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->editor_image), "myeditor");
     gtk_window_destroy(window);
     return TRUE;
 }
@@ -248,7 +248,7 @@ static void btneditor_clicked(GtkWidget *widget, LeftPanel *parent_panel)
         g_signal_connect(parent_panel->editor_win, "close-request", G_CALLBACK(text_editor_closed), parent_panel);
 
         // Change Panel Status
-        gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->editor_image), "gedit_running");
+        gtk_image_set_from_icon_name(GTK_IMAGE(parent_panel->editor_image), "myeditor_running");
         parent_panel->editor_running = TRUE;
 
         // Show Window
