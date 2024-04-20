@@ -49,6 +49,9 @@ private:
     bool prefs_win_closed(GdkEventAny *event);
     void padset_clicked();
 
+    // Hooked function for icon set
+    
+
     // Drawing Window
     Drawing draw_app;
     bool draw_win_closed(GdkEventAny *event);

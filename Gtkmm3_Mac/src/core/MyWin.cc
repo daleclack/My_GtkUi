@@ -87,7 +87,7 @@ void MyWin::about_activated()
 
     // Version information
     char *version;
-    version = g_strdup_printf("5.10\nRunning Against: Gtkmm %d.%d.%d",
+    version = g_strdup_printf("5.11\nRunning Against: Gtkmm %d.%d.%d",
                               GTKMM_MAJOR_VERSION,
                               GTKMM_MINOR_VERSION,
                               GTKMM_MICRO_VERSION);
