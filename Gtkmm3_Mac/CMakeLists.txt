@@ -91,21 +91,31 @@ set(RESOURCE_LIST
     icons/scalable/status/maybe.svg
     icons/scalable/status/mine.svg
     icons/scalable/status/24game.svg
+    icons/scalable/status/24game_bottom.svg
+    icons/scalable/status/24game_right.svg
     icons/scalable/status/24game_running.svg
     icons/scalable/status/audacious_whitesur.svg
     icons/scalable/status/my_prefs.svg
     icons/scalable/status/my_prefs_running.svg
     icons/scalable/status/drawing_app.svg
+    icons/scalable/status/drawing_app_bottom.svg
+    icons/scalable/status/drawing_app_right.svg
     icons/scalable/status/drawing_app_running.svg
     icons/scalable/status/finder-find.svg
     icons/scalable/status/finder-find-dark.svg
     icons/scalable/status/file-app.svg
+    icons/scalable/status/file-app_bottom.svg
+    icons/scalable/status/file-app_right.svg
     icons/scalable/status/file-app_running.svg
     icons/scalable/status/display_prefs.svg
     icons/scalable/status/myrunner.svg
     icons/scalable/status/image_app.svg
+    icons/scalable/status/image_app_bottom.svg
+    icons/scalable/status/image_app_right.svg
     icons/scalable/status/image_app_running.svg
     icons/scalable/status/my_textedit.svg
+    icons/scalable/status/my_textedit_bottom.svg
+    icons/scalable/status/my_textedit_right.svg
     icons/scalable/status/my_textedit_running.svg
     icons/scalable/status/vlc_whitesur.svg
     icons/scalable/status/my_trash.svg
@@ -114,8 +124,12 @@ set(RESOURCE_LIST
     icons/scalable/status/line.svg
     icons/scalable/status/rectangle.svg
     icons/scalable/status/calcapp.svg
+    icons/scalable/status/calcapp_bottom.svg
+    icons/scalable/status/calcapp_right.svg
     icons/scalable/status/calcapp_running.svg
     icons/scalable/status/mines_app.svg
+    icons/scalable/status/mines_app_bottom.svg
+    icons/scalable/status/mines_app_right.svg
     icons/scalable/status/mines_app_running.svg)
 
 compile_gresources(RESOURCE_FILE
