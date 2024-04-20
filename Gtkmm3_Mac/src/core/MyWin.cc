@@ -1,5 +1,5 @@
 #include "MyWin.hh"
-#include "winpe.xpm"
+// #include "winpe.xpm"
 
 MyWin::MyWin()
     : menubox(Gtk::ORIENTATION_HORIZONTAL, 0),
