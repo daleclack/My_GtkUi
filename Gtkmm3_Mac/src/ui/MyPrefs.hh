@@ -114,7 +114,7 @@ private:
 
     // Update the background
     void update_images_view(std::string &folder_path);
-    void set_background_internal(const char *const *data);
+    void set_background_internal(const char *data);
     void set_background_file();
 
     // Resoulution page

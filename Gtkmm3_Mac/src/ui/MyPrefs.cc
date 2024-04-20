@@ -1,9 +1,12 @@
 #include "MyPrefs.hh"
-#include "winpe.xpm"
-#include "img7.xpm"
+// #include "winpe.xpm"
+// #include "img7.xpm"
 #include "image_types.hh"
 #include <iostream>
 #include <fstream>
+
+#define winpe "/org/gtk/daleclack/winpe.png"
+#define img7 "/org/gtk/daleclack/img7.png"
 
 MyPrefs::MyPrefs()
     : main_box(Gtk::ORIENTATION_VERTICAL, 10),
@@ -398,10 +401,11 @@ void MyPrefs::images_view_changed()
     }
 }
 
-void MyPrefs::set_background_internal(const char *const *data)
+void MyPrefs::set_background_internal(const char *data)
 {
     // Set a internal background
-    auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(data);
+    // auto pixbuf = Gdk::Pixbuf::create_from_xpm_data(data);
+    auto pixbuf = Gdk::Pixbuf::create_from_resource(data);
     auto sized = pixbuf->scale_simple(width, height, Gdk::INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(background1->gobj(), sized->gobj());
     pixbuf.reset();
