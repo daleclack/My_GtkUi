@@ -133,14 +133,14 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
 
     // Add Style for grid
     auto childrens1 = apps_grid->get_children();
-    for(int i = 0; i < childrens1.size(); i++)
+    for (int i = 0; i < childrens1.size(); i++)
     {
         apply_style(*childrens1[i]);
     }
 
     // Apply style for icons box
     auto childrens2 = icons_box->get_children();
-    for(int i = 0; i < childrens2.size(); i++)
+    for (int i = 0; i < childrens2.size(); i++)
     {
         apply_style(*childrens2[i]);
     }
@@ -216,6 +216,28 @@ MyDock::MyDock(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Gl
 //             break;
 //     }
 // }
+
+// Set icon for dock
+void MyDock::set_dock_icon(Gtk::Button &dock_btn, const Glib::ustring &icon_name)
+{
+    Glib::ustring icon_name1 = icon_name;
+    // Set icons for icon pos
+    switch (dock_pos)
+    {
+    case DockPos::POS_LEFT:
+        icon_name1 += "_running";
+        dock_btn.set_image_from_icon_name(icon_name1, Gtk::ICON_SIZE_DIALOG);
+        break;
+    case DockPos::POS_BOTTOM:
+        icon_name1 += "_bottom";
+        dock_btn.set_image_from_icon_name(icon_name1, Gtk::ICON_SIZE_DIALOG);
+        break;
+    case DockPos::POS_RIGHT:
+        icon_name1 += "_right";
+        dock_btn.set_image_from_icon_name(icon_name1, Gtk::ICON_SIZE_DIALOG);
+        break;
+    }
+}
 
 // Set the style of dock widget
 void MyDock::apply_style(Gtk::Widget &widget)
@@ -336,7 +358,8 @@ bool MyDock::prefs_win_closed(GdkEventAny *event)
 void MyDock::btnset_clicked()
 {
     // Show settings window (preferences)
-    btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
+    // btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnset, "my_prefs");
     finder.set_title("Preferences"); // Replace title for finder
     window_ctrl(prefs_win);
 }
@@ -344,7 +367,8 @@ void MyDock::btnset_clicked()
 void MyDock::padset_clicked()
 {
     // Function for button on launchpad
-    btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
+    // btnset->set_image_from_icon_name("my_prefs_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnset, "my_prefs");
     finder.set_title("Preferences"); // Replace title for finder
     window_ctrl(prefs_win, false);
     btnlaunch_clicked();
@@ -369,14 +393,16 @@ void MyDock::draw_win_hide()
 
 void MyDock::btndraw_clicked()
 {
-    btndraw->set_image_from_icon_name("drawing_app_running", Gtk::ICON_SIZE_DIALOG);
+    // btndraw->set_image_from_icon_name("drawing_app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btndraw, "drawing_app");
     finder.set_title("Draw App"); // Replace title for finder
     window_ctrl(draw_app);
 }
 
 void MyDock::paddraw_clicked()
 {
-    btndraw->set_image_from_icon_name("drawing_app_running", Gtk::ICON_SIZE_DIALOG);
+    // btndraw->set_image_from_icon_name("drawing_app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btndraw, "drawing_app");
     finder.set_title("Draw App"); // Replace title for finder
     window_ctrl(draw_app, false);
     btnlaunch_clicked();
@@ -393,13 +419,15 @@ bool MyDock::file_win_closed(GdkEventAny *event)
 
 void MyDock::btnfile_clicked()
 {
-    btnfiles->set_image_from_icon_name("file-app_running", Gtk::ICON_SIZE_DIALOG);
+    // btnfiles->set_image_from_icon_name("file-app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnfiles, "file-app");
     window_ctrl(file_app);
 }
 
 void MyDock::padfile_clicked()
 {
-    btnfiles->set_image_from_icon_name("file-app_running", Gtk::ICON_SIZE_DIALOG);
+    // btnfiles->set_image_from_icon_name("file-app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnfiles, "file-app");
     window_ctrl(file_app, false);
     btnlaunch_clicked();
 }
@@ -423,14 +451,16 @@ void MyDock::game_win_hide()
 
 void MyDock::btngame_clicked()
 {
-    btngame->set_image_from_icon_name("game_running", Gtk::ICON_SIZE_DIALOG);
+    // btngame->set_image_from_icon_name("game_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btngame, "game");
     finder.set_title("Guess Game"); // Replace title for finder
     window_ctrl(*game_win);
 }
 
 void MyDock::padgame_clicked()
 {
-    btngame->set_image_from_icon_name("game_running", Gtk::ICON_SIZE_DIALOG);
+    // btngame->set_image_from_icon_name("game_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btngame, "game");
     finder.set_title("Guess Game"); // Replace title for finder
     window_ctrl(*game_win, false);
     btnlaunch_clicked();
@@ -448,14 +478,16 @@ bool MyDock::game24_win_closed(GdkEventAny *event)
 
 void MyDock::btngame24_clicked()
 {
-    btngame24->set_image_from_icon_name("24game_running", Gtk::ICON_SIZE_DIALOG);
+    // btngame24->set_image_from_icon_name("24game_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btngame24, "24game");
     finder.set_title("24 Game"); // Replace title for finder
     window_ctrl(*game24_win);
 }
 
 void MyDock::padgame24_clicked()
 {
-    btngame24->set_image_from_icon_name("24game_running", Gtk::ICON_SIZE_DIALOG);
+    // btngame24->set_image_from_icon_name("24game_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btngame24, "24game");
     finder.set_title("24 Game"); // Replace title for finder
     window_ctrl(*game24_win, false);
     btnlaunch_clicked();
@@ -480,14 +512,16 @@ bool MyDock::calc_win_closed(GdkEventAny *event)
 
 void MyDock::btncalc_clicked()
 {
-    btncalc->set_image_from_icon_name("calcapp_running", Gtk::ICON_SIZE_DIALOG);
+    // btncalc->set_image_from_icon_name("calcapp_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btncalc, "calcapp");
     finder.set_title("Calculator"); // Replace title for finder
     window_ctrl(*calc_win);
 }
 
 void MyDock::padcalc_clicked()
 {
-    btncalc->set_image_from_icon_name("calcapp_running", Gtk::ICON_SIZE_DIALOG);
+    // btncalc->set_image_from_icon_name("calcapp_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btncalc, "calcapp");
     finder.set_title("Calculator"); // Replace title for finder
     window_ctrl(*calc_win);
     btnlaunch_clicked();
@@ -512,14 +546,16 @@ bool MyDock::image_win_closed(GdkEventAny *event)
 
 void MyDock::btnimage_clicked()
 {
-    btnimage->set_image_from_icon_name("image_app_running", Gtk::ICON_SIZE_DIALOG);
+    // btnimage->set_image_from_icon_name("image_app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnimage, "image_app");
     finder.set_title("Image Viewer"); // Replace title for finder
     window_ctrl(image_win);
 }
 
 void MyDock::padimage_clicked()
 {
-    btnimage->set_image_from_icon_name("image_app_running", Gtk::ICON_SIZE_DIALOG);
+    // btnimage->set_image_from_icon_name("image_app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnimage, "image_app");
     finder.set_title("Image Viewer"); // Replace title for finder
     window_ctrl(image_win, false);
     btnlaunch_clicked();
@@ -537,14 +573,16 @@ bool MyDock::editor_win_closed(GdkEventAny *event)
 
 void MyDock::btnedit_clicked()
 {
-    btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
+    // btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnedit, "my_textedit");
     finder.set_title("Text Editor"); // Replace title for finder
     window_ctrl(editor_win);
 }
 
 void MyDock::padedit_clicked()
 {
-    btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
+    // btnedit->set_image_from_icon_name("my_textedit_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnedit, "my_textedit");
     finder.set_title("Text Editor"); // Replace title for finder
     window_ctrl(editor_win, false);
     btnlaunch_clicked();
@@ -562,14 +600,16 @@ bool MyDock::mine_win_closed(GdkEventAny *event)
 
 void MyDock::btnmine_clicked()
 {
-    btnmine->set_image_from_icon_name("mines_app_running", Gtk::ICON_SIZE_DIALOG);
+    // btnmine->set_image_from_icon_name("mines_app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnmine, "mines_app");
     finder.set_title("MineSweeper"); // Replace title for finder
     window_ctrl(mine_win);
 }
 
 void MyDock::padmine_clicked()
 {
-    btnmine->set_image_from_icon_name("mines_app_running", Gtk::ICON_SIZE_DIALOG);
+    // btnmine->set_image_from_icon_name("mines_app_running", Gtk::ICON_SIZE_DIALOG);
+    set_dock_icon(*btnmine, "mines_app");
     finder.set_title("MineSweeoer"); // Replace title for finder
     window_ctrl(mine_win, false);
     btnlaunch_clicked();

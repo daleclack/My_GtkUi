@@ -50,7 +50,7 @@ private:
     void padset_clicked();
 
     // Hooked function for icon set
-    
+    void set_dock_icon(Gtk::Button &dock_btn, const Glib::ustring &icon_name);
 
     // Drawing Window
     Drawing draw_app;
