@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.5.0)
-project(My_GtkUI VERSION 7.4.0)
+project(My_GtkUI VERSION 7.5.0)
 
 #Add GCR_CMake
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
@@ -77,6 +77,8 @@ set(RESOURCE_LIST
     icons/16x16/actions/prefs_folder.svg
     icons/48x48/actions/dialog-error.png
     icons/48x48/actions/game.png
+    icons/48x48/actions/game_bottom.png
+    icons/48x48/actions/game_right.png
     icons/48x48/actions/game_running.png
     icons/48x48/actions/btnabout.png
     icons/48x48/actions/My_GtkUI.png
@@ -94,15 +96,23 @@ set(RESOURCE_LIST
     icons/scalable/status/maybe.svg
     icons/scalable/status/mine.svg
     icons/scalable/status/24game.svg
+    icons/scalable/status/24game_bottom.svg
+    icons/scalable/status/24game_right.svg
     icons/scalable/status/24game_running.svg
     icons/scalable/status/audacious_whitesur.svg
     icons/scalable/status/my_prefs.svg
+    icons/scalable/status/my_prefs_bottom.svg
+    icons/scalable/status/my_prefs_right.svg
     icons/scalable/status/my_prefs_running.svg
     icons/scalable/status/drawing_app.svg
+    icons/scalable/status/drawing_app_bottom.svg
+    icons/scalable/status/drawing_app_right.svg
     icons/scalable/status/drawing_app_running.svg
     icons/scalable/status/finder-find.svg
     icons/scalable/status/finder-find-dark.svg
     icons/scalable/status/file-app.svg
+    icons/scalable/status/file-app_bottom.svg
+    icons/scalable/status/file-app_right.svg
     icons/scalable/status/file-app_running.svg
     icons/scalable/status/filewin-delete.svg
     icons/scalable/status/filewin-go-home.svg
@@ -113,8 +123,12 @@ set(RESOURCE_LIST
     icons/scalable/status/display_prefs.svg
     icons/scalable/status/myrunner.svg
     icons/scalable/status/image_app.svg
+    icons/scalable/status/image_app_bottom.svg
+    icons/scalable/status/image_app_right.svg
     icons/scalable/status/image_app_running.svg
     icons/scalable/status/my_textedit.svg
+    icons/scalable/status/my_textedit_bottom.svg
+    icons/scalable/status/my_textedit_right.svg
     icons/scalable/status/my_textedit_running.svg
     icons/scalable/status/vlc_whitesur.svg
     icons/scalable/status/my_trash.svg
@@ -131,6 +145,8 @@ set(RESOURCE_LIST
     icons/scalable/status/header_close.svg
     icons/scalable/status/header_minimize.svg
     icons/scalable/status/mines_app.svg
+    icons/scalable/status/mines_app_bottom.svg
+    icons/scalable/status/mines_app_right.svg
     icons/scalable/status/mines_app_running.svg
     icons/scalable/status/media-app.svg
     icons/scalable/status/media-app-running.svg
