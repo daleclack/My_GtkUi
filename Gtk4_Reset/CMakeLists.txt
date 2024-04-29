@@ -141,6 +141,8 @@ set(RESOURCE_LIST
     icons/scalable/status/rectangle.svg
     icons/scalable/status/rectangle-dark.svg
     icons/scalable/status/calcapp.svg
+    icons/scalable/status/calcapp_bottom.svg
+    icons/scalable/status/calcapp_right.svg
     icons/scalable/status/calcapp_running.svg
     icons/scalable/status/header_close.svg
     icons/scalable/status/header_minimize.svg

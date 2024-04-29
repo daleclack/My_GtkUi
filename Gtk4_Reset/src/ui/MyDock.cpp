@@ -150,6 +150,29 @@ static void window_ctrl(GtkWindow *window, GtkWindow *parent)
     }
 }
 
+// Set icon for multi dock position
+static void my_dock_set_icon_name(MyDock *dock, GtkImage *image, const char *icon_name1)
+{
+    char icon_name[NAME_MAX];
+    // Set icon with dock position setting
+    DockPos dock_pos = my_prefs_get_dock_pos(dock->prefs_win);
+    switch(dock_pos)
+    {
+    case DockPos::Pos_Left:
+        snprintf(icon_name, NAME_MAX - 1, "%s_running", icon_name1);
+        gtk_image_set_from_icon_name(image, icon_name);
+        break;
+    case DockPos::Pos_Bottom:
+        snprintf(icon_name, NAME_MAX - 1, "%s_bottom", icon_name1);
+        gtk_image_set_from_icon_name(image, icon_name);
+        break;
+    case DockPos::Pos_Right:
+        snprintf(icon_name, NAME_MAX - 1, "%s_right", icon_name1);
+        gtk_image_set_from_icon_name(image, icon_name);
+        break;
+    }
+}
+
 // Prefs funcs
 static void padset_clicked(GtkWidget *widget, MyDock *dock)
 {
@@ -167,7 +190,8 @@ static void padset_clicked(GtkWidget *widget, MyDock *dock)
     }
     my_prefs_first_load(dock->prefs_win);
     my_prefs_start_scan(dock->prefs_win);
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
+    // gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_set), "my_prefs");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -186,7 +210,8 @@ static void btnset_clicked(GtkWidget *widget, MyDock *dock)
     }
     my_prefs_first_load(dock->prefs_win);
     my_prefs_start_scan(dock->prefs_win);
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_set), "my_prefs");
+    // gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_set), "my_prefs_running");
 }
 
 static gboolean prefs_win_closed(GtkWidget *window, MyDock *dock)
@@ -213,7 +238,7 @@ static void padfiles_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->file_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->file_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_file), "file-app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_file), "file-app");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -230,7 +255,7 @@ static void btnfiles_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->file_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->file_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_file), "file-app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_file), "file-app");
 }
 
 static gboolean file_window_closed(GtkWidget *window, MyDock *dock)
@@ -256,7 +281,7 @@ static void padgame_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->game_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->game_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game), "game_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_game), "game");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -273,7 +298,7 @@ static void btngame_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->game_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->game_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game), "game_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_game), "game");
 }
 
 static gboolean game_win_closed(GtkWidget *game_win, MyDock *dock)
@@ -299,7 +324,7 @@ static void padcalc_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->calc_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->calc_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_calc), "calcapp_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_calc), "calcapp");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -316,7 +341,7 @@ static void btncalc_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->calc_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->calc_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_calc), "calcapp_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_calc), "calcapp");
 }
 
 static gboolean calc_win_closed(GtkWidget *calc_win, MyDock *dock)
@@ -351,7 +376,7 @@ static void padgame24_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->game24_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->game24_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game24), "24game_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_game24), "24game");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -368,7 +393,7 @@ static void btngame24_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->game24_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->game24_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_game24), "24game_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_game24), "24game");
 }
 
 static gboolean game24_win_closed(GtkWidget *game24_win, MyDock *dock)
@@ -394,7 +419,7 @@ static void paddraw_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->draw_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->draw_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_draw), "drawing_app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_draw), "drawing_app");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -411,7 +436,7 @@ static void btndraw_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->draw_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->draw_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_draw), "drawing_app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_draw), "drawing_app");
 }
 
 static gboolean draw_win_closed(GtkWidget *draw_win, MyDock *dock)
@@ -437,7 +462,7 @@ static void padedit_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->edit_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->edit_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_edit), "my_textedit_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_edit), "my_textedit");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -454,7 +479,7 @@ static void btnedit_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->edit_win), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->edit_win));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_edit), "my_textedit_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_edit), "my_textedit");
 }
 
 static gboolean edit_win_closed(GtkWidget *win, MyDock *dock)
@@ -481,7 +506,7 @@ static void padimage_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->image_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->image_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_viewer), "image_app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_viewer), "image_app");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -498,7 +523,7 @@ static void btnimage_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->image_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->image_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_viewer), "image_app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_viewer), "image_app");
 }
 
 static gboolean image_win_closed(GtkWidget *win, MyDock *dock)
@@ -524,7 +549,7 @@ static void padmine_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->mine_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->mine_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_mine), "mines_app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_mine), "mines_app");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -541,7 +566,7 @@ static void btnmine_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->mine_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->mine_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_mine), "mines_app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_mine), "mines_app");
 }
 
 static gboolean mine_win_closed(GtkWidget *win, MyDock *dock)
@@ -567,7 +592,7 @@ static void padmedia_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->media_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->media_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_media), "media-app");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -584,7 +609,7 @@ static void btnmedia_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->media_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->media_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app_running");
+    my_dock_set_icon_name(dock, GTK_IMAGE(dock->image_media), "media-app");
 }
 
 static gboolean media_win_closed(GtkWidget *win, MyDock *dock)
