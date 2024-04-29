@@ -149,7 +149,9 @@ set(RESOURCE_LIST
     icons/scalable/status/mines_app_right.svg
     icons/scalable/status/mines_app_running.svg
     icons/scalable/status/media-app.svg
-    icons/scalable/status/media-app-running.svg
+    icons/scalable/status/media-app_bottom.svg
+    icons/scalable/status/media-app_right.svg
+    icons/scalable/status/media-app_running.svg
     icons/scalable/status/media-eject-dark.svg
     icons/scalable/status/media-eject.svg
     icons/scalable/status/media-mount-dark.svg

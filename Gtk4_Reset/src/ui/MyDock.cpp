@@ -567,7 +567,7 @@ static void padmedia_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->media_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->media_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app-running");
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app_running");
     btnlaunch_clicked(NULL, dock);
 }
 
@@ -584,7 +584,7 @@ static void btnmedia_clicked(GtkWidget *widget, MyDock *dock)
         gtk_window_set_transient_for(GTK_WINDOW(dock->media_app), dock->parent_win);
         gtk_window_present(GTK_WINDOW(dock->media_app));
     }
-    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app-running");
+    gtk_image_set_from_icon_name(GTK_IMAGE(dock->image_media), "media-app_running");
 }
 
 static gboolean media_win_closed(GtkWidget *win, MyDock *dock)
