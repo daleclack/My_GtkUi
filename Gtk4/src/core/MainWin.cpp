@@ -5,10 +5,15 @@
 // #include "img7.xpm"
 #include "image_types.h"
 
+#define winpe "/org/gtk/daleclack/winpe.png"
+#define img7 "/org/gtk/daleclack/img7.png"
+#define final_approach "/org/gtk/daleclack/final_approach.png"
+
 enum class BackMode
 {
     DEFAULT_1,
     DEFAULT_2,
+    DEFAULT_3,
     CUSTOM
 };
 
@@ -103,38 +108,41 @@ static void winsize_activated(GSimpleAction *action, GVariant *parmeter, gpointe
     gtk_window_present(GTK_WINDOW(dialog));
 }
 
-static void default_background1(GSimpleAction *action, GVariant *parmeter, gpointer data)
+static void set_default_background(gpointer data,
+                                   const char *background_name,
+                                   BackMode back_mode1)
 {
     // Set the background by pixbuf
     MainWin *win = MAIN_WIN(data);
     GdkPixbuf *pixbuf, *sized;
     // pixbuf = gdk_pixbuf_new_from_xpm_data(winpe);
-    pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/winpe.png", NULL);
+    pixbuf = gdk_pixbuf_new_from_resource(background_name, NULL);
     sized = gdk_pixbuf_scale_simple(pixbuf, win->width, win->height, GDK_INTERP_BILINEAR);
     GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
     gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
 
     // Change Mode and free memory
-    win->back_mode = BackMode::DEFAULT_1;
+    win->back_mode = back_mode1;
     g_object_unref(pixbuf);
     g_object_unref(sized);
 }
 
+static void default_background1(GSimpleAction *action, GVariant *parmeter, gpointer data)
+{
+    // Set default background 1
+    set_default_background(data, winpe, BackMode::DEFAULT_1);
+}
+
 static void default_background2(GSimpleAction *action, GVariant *parmeter, gpointer data)
 {
-    // Set the background by pixbuf
-    MainWin *win = MAIN_WIN(data);
-    GdkPixbuf *pixbuf, *sized;
-    // pixbuf = gdk_pixbuf_new_from_xpm_data(img7);
-    pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/img7.png", NULL);
-    sized = gdk_pixbuf_scale_simple(pixbuf, win->width, win->height, GDK_INTERP_BILINEAR);
-    GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
-    gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
+    // Set default background 2
+    set_default_background(data, img7, BackMode::DEFAULT_2);
+}
 
-    // Change Mode and free memory
-    win->back_mode = BackMode::DEFAULT_2;
-    g_object_unref(pixbuf);
-    g_object_unref(sized);
+static void default_background3(GSimpleAction *action, GVariant *parmeter, gpointer data)
+{
+    // Set default background 3
+    set_default_background(data, final_approach, BackMode::DEFAULT_3);
 }
 
 static void refresh_activated(GSimpleAction *action, GVariant *parmeter, gpointer data)
@@ -148,6 +156,8 @@ static void refresh_activated(GSimpleAction *action, GVariant *parmeter, gpointe
         break;
     case BackMode::DEFAULT_2:
         default_background2(action, parmeter, data);
+        break;
+    case BackMode::DEFAULT_3:
         break;
     case BackMode::CUSTOM:
         break;
@@ -209,7 +219,6 @@ int main_win_get_height(MainWin *win)
     // Get the Height of Main Win
     return win->height;
 }
-
 
 int main_win_get_width(MainWin *win)
 {

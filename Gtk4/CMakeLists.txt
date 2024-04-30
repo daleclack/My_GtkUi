@@ -70,6 +70,7 @@ set(RESOURCE_LIST
     dialog-error.png
     img7.png
     winpe.png
+    final_approach.png
     STRIPBLANKS appmenu.xml
     STRIPBLANKS media_menu.xml
     STRIPBLANKS stack.ui
