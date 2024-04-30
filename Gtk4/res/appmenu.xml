@@ -21,6 +21,11 @@
                     <attribute name='icon'>graphics</attribute>
                     <attribute name='action'>win.default2</attribute>
                 </item>
+                                <item>
+                    <attribute name='label'>Default background3</attribute>
+                    <attribute name='icon'>graphics</attribute>
+                    <attribute name='action'>win.default3</attribute>
+                </item>
             </submenu>
             <item>
                 <attribute name='label'>About</attribute>

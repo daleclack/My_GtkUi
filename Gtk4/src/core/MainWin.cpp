@@ -158,6 +158,7 @@ static void refresh_activated(GSimpleAction *action, GVariant *parmeter, gpointe
         default_background2(action, parmeter, data);
         break;
     case BackMode::DEFAULT_3:
+        default_background3(action, parmeter, data);
         break;
     case BackMode::CUSTOM:
         break;
@@ -243,6 +244,7 @@ static void main_win_init(MainWin *win)
         {"back", background_dialog, NULL, NULL, NULL},
         {"default1", default_background1, NULL, NULL, NULL},
         {"default2", default_background2, NULL, NULL, NULL},
+        {"default3", default_background3, NULL, NULL, NULL},
         {"refresh", refresh_activated, NULL, NULL, NULL},
         {"about", about_activated, NULL, NULL, NULL},
         {"logout", logout_activated, NULL, NULL, NULL},
