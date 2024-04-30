@@ -162,7 +162,7 @@ static void about_activated(GSimpleAction *action, GVariant *parmeter, gpointer 
         "GCR_CMake on github https://github.com/Makman2/GCR_CMake",
         NULL};
     char *version;
-    version = g_strdup_printf("6.3\nRunning Against GTK %d.%d.%d",
+    version = g_strdup_printf("6.4\nRunning Against GTK %d.%d.%d",
                               gtk_get_major_version(),
                               gtk_get_minor_version(),
                               gtk_get_micro_version());
