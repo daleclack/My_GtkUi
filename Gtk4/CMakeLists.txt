@@ -68,6 +68,8 @@ set(RESOURCE_LIST
     title_style.css
     style.css
     dialog-error.png
+    img7.png
+    winpe.png
     STRIPBLANKS appmenu.xml
     STRIPBLANKS media_menu.xml
     STRIPBLANKS stack.ui

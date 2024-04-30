@@ -1,8 +1,8 @@
 #include "MainWin.h"
 #include "MainStack.h"
 #include "winconf.h"
-#include "winpe.xpm"
-#include "img7.xpm"
+// #include "winpe.xpm"
+// #include "img7.xpm"
 #include "image_types.h"
 
 enum class BackMode
@@ -108,7 +108,8 @@ static void default_background1(GSimpleAction *action, GVariant *parmeter, gpoin
     // Set the background by pixbuf
     MainWin *win = MAIN_WIN(data);
     GdkPixbuf *pixbuf, *sized;
-    pixbuf = gdk_pixbuf_new_from_xpm_data(winpe);
+    // pixbuf = gdk_pixbuf_new_from_xpm_data(winpe);
+    pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/winpe.png", NULL);
     sized = gdk_pixbuf_scale_simple(pixbuf, win->width, win->height, GDK_INTERP_BILINEAR);
     GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
     gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
@@ -124,7 +125,8 @@ static void default_background2(GSimpleAction *action, GVariant *parmeter, gpoin
     // Set the background by pixbuf
     MainWin *win = MAIN_WIN(data);
     GdkPixbuf *pixbuf, *sized;
-    pixbuf = gdk_pixbuf_new_from_xpm_data(img7);
+    // pixbuf = gdk_pixbuf_new_from_xpm_data(img7);
+    pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/img7.png", NULL);
     sized = gdk_pixbuf_scale_simple(pixbuf, win->width, win->height, GDK_INTERP_BILINEAR);
     GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
     gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
