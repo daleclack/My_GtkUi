@@ -38,22 +38,22 @@ GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
 
     // User Label
     GtkWidget *label_user = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_user");
-    gtk_widget_add_css_class(label_user, "label_black");
+    gtk_widget_add_css_class(label_user, "label_white");
 
     // Login Button
     GtkWidget *btnlogin = (GtkWidget *)gtk_builder_get_object(stack_builder, "btnlogin");
     g_signal_connect(btnlogin, "clicked", G_CALLBACK(stack_login), main_stack);
     GtkWidget *btn_label = gtk_button_get_child(GTK_BUTTON(btnlogin));
-    gtk_widget_add_css_class(btn_label, "label_black");
+    gtk_widget_add_css_class(btn_label, "label_white");
 
     // Label for app
     GtkWidget *label_app = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_app");
-    gtk_widget_add_css_class(label_app, "label_black");
+    gtk_widget_add_css_class(label_app, "label_def");
 
     // Time Label
     GtkWidget *label_time = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_time");
     g_timeout_add(100, change_time, label_time);
-    gtk_widget_add_css_class(label_time, "label_black");
+    gtk_widget_add_css_class(label_time, "label_def");
 
     // Menu Button
     GtkWidget *menubtn = (GtkWidget *)gtk_builder_get_object(stack_builder, "menu_button");

@@ -31,6 +31,40 @@ struct _MainWin
 
 G_DEFINE_TYPE(MainWin, main_win, GTK_TYPE_APPLICATION_WINDOW)
 
+static int get_gray_color(GdkPixbuf *pixbuf)
+{
+    // Get the rate of gray by the color for image from (0,0) to (19,19)
+    if (!pixbuf)
+    {
+        return 0;
+    }
+    // Get Pixels of pixbuf object
+    guchar *pixels = gdk_pixbuf_get_pixels(pixbuf);
+    int rowstride = gdk_pixbuf_get_rowstride(pixbuf);
+    int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
+
+    int red = 0, green = 0, blue = 0;
+
+    // Calculate the color of image of 20x20 pixels
+    for (int i = 0; i < 20; i++)
+    {
+        for (int j = 0; j < 20; j++)
+        {
+            guchar *p = pixels + j * rowstride + i * n_channels;
+            red += p[0];
+            green += p[1];
+            blue += p[2];
+        }
+    }
+    red /= 400;
+    green /= 400;
+    blue /= 400;
+
+    // Calculate the gray number from the pixels
+    int gray = (red * 299 + green * 587 + blue * 114 + 500) / 1000;
+    return gray;
+}
+
 static void file_dialog_response(GObject *dialog, GAsyncResult *result, gpointer data)
 {
     GFile *file;
