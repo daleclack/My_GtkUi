@@ -24,7 +24,7 @@ struct _MainWin
     GtkWidget *overlay;
     GtkGesture *gesture;
     GtkWidget *popover;
-    GtkWidget *stack;
+    MainStack *stack;
     int width, height;
     BackMode back_mode;
 };
@@ -128,7 +128,7 @@ static void background_dialog(GSimpleAction *action, GVariant *parmeter, gpointe
 static void logout_activated(GSimpleAction *action, GVariant *parmeter, gpointer data)
 {
     MainWin *win = MAIN_WIN(data);
-    gtk_stack_set_visible_child_name(GTK_STACK(win->stack), "login_page");
+    gtk_stack_set_visible_child_name(GTK_STACK(main_stack_get_stack(win->stack)), "login_page");
 }
 
 static void quit_activated(GSimpleAction *action, GVariant *parmeter, gpointer data)
@@ -152,6 +152,12 @@ static void set_default_background(gpointer data,
     // pixbuf = gdk_pixbuf_new_from_xpm_data(winpe);
     pixbuf = gdk_pixbuf_new_from_resource(background_name, NULL);
     sized = gdk_pixbuf_scale_simple(pixbuf, win->width, win->height, GDK_INTERP_BILINEAR);
+
+    // Update Color for stack
+    int gray = get_gray_color(sized);
+    main_stack_set_color_theme(win->stack, gray);
+
+    // Set Background
     GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
     gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
 
@@ -291,7 +297,6 @@ static void main_win_init(MainWin *win)
     win->background = gtk_picture_new();
     gtk_widget_set_size_request(win->background, win->width, win->height);
     gtk_overlay_set_child(GTK_OVERLAY(win->overlay), win->background);
-    default_background1(NULL, NULL, win);
 
     // Add Menu
     GtkBuilder *menu_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/appmenu.xml");
@@ -307,13 +312,14 @@ static void main_win_init(MainWin *win)
     gtk_widget_add_controller(win->overlay, GTK_EVENT_CONTROLLER(win->gesture));
 
     // Add Main Page
-    win->stack = create_main_stack(win, model);
-    gtk_widget_set_halign(GTK_WIDGET(win->stack), GTK_ALIGN_FILL);
-    gtk_widget_set_valign(GTK_WIDGET(win->stack), GTK_ALIGN_FILL);
-    gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), GTK_WIDGET(win->stack));
+    win->stack = main_stack_new(win, model);
+    gtk_overlay_add_overlay(GTK_OVERLAY(win->overlay), main_stack_get_stack(win->stack));
 
     gtk_window_set_child(GTK_WINDOW(win), win->overlay);
     g_object_unref(menu_builder);
+
+    // Set default background after initalization
+    default_background1(NULL, NULL, win);
 }
 
 static void main_win_class_init(MainWinClass *klass) {}

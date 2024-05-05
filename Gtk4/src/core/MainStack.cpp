@@ -66,12 +66,12 @@ static void main_stack_init(MainStack *self)
 
     // Label for app
     self->label_app = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_app");
-    gtk_widget_add_css_class(self->label_app, "label_def");
+    // gtk_widget_add_css_class(self->label_app, "label_def");
 
     // Time Label
     self->label_time = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_time");
     g_timeout_add(100, change_time, self->label_time);
-    gtk_widget_add_css_class(self->label_time, "label_def");
+    // gtk_widget_add_css_class(self->label_time, "label_def");
 
     // Menu Button
     GtkWidget *menubtn = (GtkWidget *)gtk_builder_get_object(stack_builder, "menu_button");
@@ -88,12 +88,6 @@ static void main_stack_init(MainStack *self)
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(btn_label),
                                                GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->label_app),
-                                               GTK_STYLE_PROVIDER(self->provider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->label_time),
-                                               GTK_STYLE_PROVIDER(self->provider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     // Box for LeftPanel
     self->left_box = (GtkWidget *)gtk_builder_get_object(stack_builder, "leftbox");
@@ -104,16 +98,10 @@ static void main_stack_class_init(MainStackClass *self)
     G_OBJECT_CLASS(self)->dispose = main_stack_dispose;
 }
 
-MainStack *main_stack_new()
+MainStack *main_stack_new(MainWin *win, GMenuModel *model)
 {
-    return Main_Stack(g_object_new(main_stack_get_type(), NULL));
-}
+    MainStack *stack = Main_Stack(g_object_new(main_stack_get_type(), NULL));
 
-GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
-{
-    // Create Main Stack
-    MainStack *stack = main_stack_new();
-    
     // Initalize Menu
     gtk_popover_menu_set_menu_model(GTK_POPOVER_MENU(stack->popover), model);
 
@@ -122,5 +110,39 @@ GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
     left_panel_set_parent(panel, GTK_WINDOW(win));
     gtk_box_append(GTK_BOX(stack->left_box), GTK_WIDGET(panel));
 
+    // Set stack properties
+    gtk_widget_set_halign(stack->main_stack, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(stack->main_stack, GTK_ALIGN_FILL);
+
+    return stack;
+}
+
+GtkWidget *main_stack_get_stack(MainStack *stack)
+{
     return stack->main_stack;
+}
+
+void main_stack_set_color_theme(MainStack *stack, int gray)
+{
+    // Clear css classes
+    gtk_widget_set_css_classes(stack->label_app, NULL);
+    gtk_widget_set_css_classes(stack->label_time, NULL);
+
+    if (gray < 128)
+    {
+        gtk_widget_add_css_class(stack->label_app, "label_white");
+        gtk_widget_add_css_class(stack->label_time, "label_white");
+    }
+    else
+    {
+        gtk_widget_add_css_class(stack->label_app, "label_black");
+        gtk_widget_add_css_class(stack->label_time, "label_black");
+    }
+
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(stack->label_app),
+                                               GTK_STYLE_PROVIDER(stack->provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(stack->label_time),
+                                               GTK_STYLE_PROVIDER(stack->provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
