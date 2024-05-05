@@ -46,9 +46,9 @@ static int get_gray_color(GdkPixbuf *pixbuf)
     int red = 0, green = 0, blue = 0;
 
     // Calculate the color of image of 20x20 pixels
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 10; i++)
     {
-        for (int j = 0; j < 20; j++)
+        for (int j = 0; j < 10; j++)
         {
             guchar *p = pixels + j * rowstride + i * n_channels;
             red += p[0];
@@ -56,9 +56,9 @@ static int get_gray_color(GdkPixbuf *pixbuf)
             blue += p[2];
         }
     }
-    red /= 400;
-    green /= 400;
-    blue /= 400;
+    red /= 100;
+    green /= 100;
+    blue /= 100;
 
     // Calculate the gray number from the pixels
     int gray = (red * 299 + green * 587 + blue * 114 + 500) / 1000;
