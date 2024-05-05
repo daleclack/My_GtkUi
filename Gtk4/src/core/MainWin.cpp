@@ -80,12 +80,22 @@ static void file_dialog_response(GObject *dialog, GAsyncResult *result, gpointer
         GdkPixbuf *pixbuf, *sized;
         pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
         sized = gdk_pixbuf_scale_simple(pixbuf, win->width, win->height, GDK_INTERP_BILINEAR);
-        GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
-        gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
-        // gtk_picture_set_pixbuf(GTK_PICTURE(win->background), sized); // Warning#2
 
-        // Change Mode and free memory
-        win->back_mode = BackMode::CUSTOM;
+        if (sized)
+        {
+            // Update Color for stack
+            int gray = get_gray_color(sized);
+            main_stack_set_color_theme(win->stack, gray);
+
+            // Set Background
+            GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
+            gtk_picture_set_paintable(GTK_PICTURE(win->background), GDK_PAINTABLE(texture));
+            // gtk_picture_set_pixbuf(GTK_PICTURE(win->background), sized); // Warning#2
+
+            // Change Mode and free memory
+            win->back_mode = BackMode::CUSTOM;
+        }
+
         g_object_unref(pixbuf);
         g_object_unref(sized);
         g_object_unref(file);
