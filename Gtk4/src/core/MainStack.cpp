@@ -9,6 +9,8 @@ struct _MainStack
     GtkWidget *main_stack;
     GtkWidget *left_box;
     GtkWidget *popover;
+    GtkWidget *label_app;
+    GtkWidget *label_time;
 };
 
 G_DEFINE_TYPE(MainStack, main_stack, G_TYPE_OBJECT)
@@ -63,13 +65,13 @@ static void main_stack_init(MainStack *self)
     gtk_widget_add_css_class(btn_label, "label_white");
 
     // Label for app
-    GtkWidget *label_app = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_app");
-    gtk_widget_add_css_class(label_app, "label_def");
+    self->label_app = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_app");
+    gtk_widget_add_css_class(self->label_app, "label_def");
 
     // Time Label
-    GtkWidget *label_time = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_time");
-    g_timeout_add(100, change_time, label_time);
-    gtk_widget_add_css_class(label_time, "label_def");
+    self->label_time = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_time");
+    g_timeout_add(100, change_time, self->label_time);
+    gtk_widget_add_css_class(self->label_time, "label_def");
 
     // Menu Button
     GtkWidget *menubtn = (GtkWidget *)gtk_builder_get_object(stack_builder, "menu_button");
@@ -86,16 +88,10 @@ static void main_stack_init(MainStack *self)
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(btn_label),
                                                GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_app),
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->label_app),
                                                GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_time),
-                                               GTK_STYLE_PROVIDER(self->provider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_app),
-                                               GTK_STYLE_PROVIDER(self->provider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_time),
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->label_time),
                                                GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
