@@ -1,6 +1,18 @@
 #include "MainStack.h"
 #include "LeftPanel.h"
 
+struct _MainStack
+{
+    GObject parent_instance;
+    GtkBuilder *stack_builder;
+    GtkCssProvider *provider;
+    GtkWidget *main_stack;
+    GtkWidget *left_box;
+    GtkWidget *popover;
+};
+
+G_DEFINE_TYPE(MainStack, main_stack, G_TYPE_OBJECT)
+
 static gboolean change_time(gpointer data)
 {
     // Get local time
@@ -22,19 +34,23 @@ static void stack_login(GtkWidget *widget, GtkStack *stack)
     gtk_stack_set_visible_child_name(stack, "main_page");
 }
 
-GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
+static void main_stack_dispose(GObject *object)
+{
+    g_object_unref(Main_Stack(object)->stack_builder);
+    G_OBJECT_CLASS(main_stack_parent_class)->dispose(object);
+}
+
+static void main_stack_init(MainStack *self)
 {
     GtkBuilder *stack_builder;
     stack_builder = gtk_builder_new_from_resource("/org/gtk/daleclack/stack.ui");
 
     // Load Style
-    GtkCssProvider *provider;
-    provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(provider, "/org/gtk/daleclack/style.css");
+    self->provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_resource(self->provider, "/org/gtk/daleclack/style.css");
 
     // Get Main Widget
-    GtkWidget *main_stack;
-    main_stack = (GtkWidget *)gtk_builder_get_object(stack_builder, "stack");
+    self->main_stack = (GtkWidget *)gtk_builder_get_object(stack_builder, "stack");
 
     // User Label
     GtkWidget *label_user = (GtkWidget *)gtk_builder_get_object(stack_builder, "label_user");
@@ -42,7 +58,7 @@ GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
 
     // Login Button
     GtkWidget *btnlogin = (GtkWidget *)gtk_builder_get_object(stack_builder, "btnlogin");
-    g_signal_connect(btnlogin, "clicked", G_CALLBACK(stack_login), main_stack);
+    g_signal_connect(btnlogin, "clicked", G_CALLBACK(stack_login), self->main_stack);
     GtkWidget *btn_label = gtk_button_get_child(GTK_BUTTON(btnlogin));
     gtk_widget_add_css_class(btn_label, "label_white");
 
@@ -57,31 +73,58 @@ GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
 
     // Menu Button
     GtkWidget *menubtn = (GtkWidget *)gtk_builder_get_object(stack_builder, "menu_button");
-    GtkWidget *popover = gtk_popover_menu_new_from_model(model);
-    gtk_widget_set_halign(popover, GTK_ALIGN_END);
-    gtk_popover_set_has_arrow(GTK_POPOVER(popover), FALSE);
+    self->popover = gtk_popover_menu_new_from_model(NULL);
+    gtk_widget_set_halign(self->popover, GTK_ALIGN_END);
+    gtk_popover_set_has_arrow(GTK_POPOVER(self->popover), FALSE);
     gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(menubtn), "shut_down");
-    gtk_menu_button_set_popover(GTK_MENU_BUTTON(menubtn), popover);
-
-    // Box for LeftPanel
-    GtkWidget *left_box = (GtkWidget *)gtk_builder_get_object(stack_builder, "leftbox");
-    LeftPanel *panel = left_panel_new();
-    left_panel_set_parent(panel, GTK_WINDOW(win));
-    gtk_box_append(GTK_BOX(left_box), GTK_WIDGET(panel));
+    gtk_menu_button_set_popover(GTK_MENU_BUTTON(menubtn), self->popover);
 
     // Add Styles
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_user),
-                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(btn_label),
-                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_app),
-                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_time),
-                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER(self->provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_app),
+                                               GTK_STYLE_PROVIDER(self->provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_time),
+                                               GTK_STYLE_PROVIDER(self->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    return main_stack;
+    // Box for LeftPanel
+    self->left_box = (GtkWidget *)gtk_builder_get_object(stack_builder, "leftbox");
+}
+
+static void main_stack_class_init(MainStackClass *self)
+{
+    G_OBJECT_CLASS(self)->dispose = main_stack_dispose;
+}
+
+MainStack *main_stack_new()
+{
+    return Main_Stack(g_object_new(main_stack_get_type(), NULL));
+}
+
+GtkWidget *create_main_stack(MainWin *win, GMenuModel *model)
+{
+    // Create Main Stack
+    MainStack *stack = main_stack_new();
+    
+    // Initalize Menu
+    gtk_popover_menu_set_menu_model(GTK_POPOVER_MENU(stack->popover), model);
+
+    // Add Left Panel
+    LeftPanel *panel = left_panel_new();
+    left_panel_set_parent(panel, GTK_WINDOW(win));
+    gtk_box_append(GTK_BOX(stack->left_box), GTK_WIDGET(panel));
+
+    return stack->main_stack;
 }
