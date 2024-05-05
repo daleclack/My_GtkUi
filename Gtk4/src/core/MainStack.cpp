@@ -11,6 +11,10 @@ struct _MainStack
     GtkWidget *popover;
     GtkWidget *label_app;
     GtkWidget *label_time;
+    GtkWidget *help_button;
+    GtkWidget *ac_button;
+    GtkWidget *volumn_button;
+    GtkWidget *menubtn;
 };
 
 G_DEFINE_TYPE(MainStack, main_stack, G_TYPE_OBJECT)
@@ -73,13 +77,18 @@ static void main_stack_init(MainStack *self)
     g_timeout_add(100, change_time, self->label_time);
     // gtk_widget_add_css_class(self->label_time, "label_def");
 
+    // Get Other buttons
+    self->ac_button = (GtkWidget *)gtk_builder_get_object(stack_builder, "ac_button");
+    self->help_button = (GtkWidget *)gtk_builder_get_object(stack_builder, "help_button");
+    self->volumn_button = (GtkWidget *)gtk_builder_get_object(stack_builder, "volume_button");
+
     // Menu Button
-    GtkWidget *menubtn = (GtkWidget *)gtk_builder_get_object(stack_builder, "menu_button");
+    self->menubtn = (GtkWidget *)gtk_builder_get_object(stack_builder, "menu_button");
     self->popover = gtk_popover_menu_new_from_model(NULL);
     gtk_widget_set_halign(self->popover, GTK_ALIGN_END);
     gtk_popover_set_has_arrow(GTK_POPOVER(self->popover), FALSE);
-    gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(menubtn), "shut_down");
-    gtk_menu_button_set_popover(GTK_MENU_BUTTON(menubtn), self->popover);
+    gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(self->menubtn), "shut_down");
+    gtk_menu_button_set_popover(GTK_MENU_BUTTON(self->menubtn), self->popover);
 
     // Add Styles
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(label_user),
@@ -132,11 +141,19 @@ void main_stack_set_color_theme(MainStack *stack, int gray)
     {
         gtk_widget_add_css_class(stack->label_app, "label_white");
         gtk_widget_add_css_class(stack->label_time, "label_white");
+        gtk_button_set_icon_name(GTK_BUTTON(stack->ac_button), "my_ac_adapter_dark");
+        gtk_button_set_icon_name(GTK_BUTTON(stack->help_button), "gtkui_help_dark");
+        gtk_button_set_icon_name(GTK_BUTTON(stack->volumn_button), "my_audio_dark");
+        gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(stack->menubtn), "shut_down_dark");
     }
     else
     {
         gtk_widget_add_css_class(stack->label_app, "label_black");
         gtk_widget_add_css_class(stack->label_time, "label_black");
+        gtk_button_set_icon_name(GTK_BUTTON(stack->ac_button), "my_ac_adapter");
+        gtk_button_set_icon_name(GTK_BUTTON(stack->help_button), "gtkui_help");
+        gtk_button_set_icon_name(GTK_BUTTON(stack->volumn_button), "my_audio");
+        gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(stack->menubtn), "shut_down");
     }
 
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(stack->label_app),

@@ -58,12 +58,16 @@ set(RESOURCE_LIST
     icons/48x48/actions/multimedia-player1_running.png
     icons/scalable/status/graphics.svg
     icons/scalable/status/gtkui_help.svg
+    icons/scalable/status/gtkui_help_dark.svg
     icons/scalable/status/header_close.svg
     icons/scalable/status/header_minimize.svg
     icons/scalable/status/log_out.svg
     icons/scalable/status/my_ac_adapter.svg
+    icons/scalable/status/my_ac_adapter_dark.svg
     icons/scalable/status/my_audio.svg
+    icons/scalable/status/my_audio_dark.svg
     icons/scalable/status/system.svg
+    icons/scalable/status/shut_down_dark.svg
     icons/scalable/status/shut_down.svg
     title_style.css
     style.css
