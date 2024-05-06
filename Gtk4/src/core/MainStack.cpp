@@ -15,6 +15,7 @@ struct _MainStack
     GtkWidget *ac_button;
     GtkWidget *volumn_button;
     GtkWidget *menubtn;
+    GtkWidget *home_label;
 };
 
 G_DEFINE_TYPE(MainStack, main_stack, G_TYPE_OBJECT)
@@ -77,6 +78,9 @@ static void main_stack_init(MainStack *self)
     g_timeout_add(100, change_time, self->label_time);
     // gtk_widget_add_css_class(self->label_time, "label_def");
 
+    // Label for home button
+    self->home_label = (GtkWidget *)gtk_builder_get_object(stack_builder, "home_label");
+
     // Get Other buttons
     self->ac_button = (GtkWidget *)gtk_builder_get_object(stack_builder, "ac_button");
     self->help_button = (GtkWidget *)gtk_builder_get_object(stack_builder, "help_button");
@@ -136,11 +140,13 @@ void main_stack_set_color_theme(MainStack *stack, int gray)
     // Clear css classes
     gtk_widget_set_css_classes(stack->label_app, NULL);
     gtk_widget_set_css_classes(stack->label_time, NULL);
+    gtk_widget_set_css_classes(stack->home_label, NULL);
 
     if (gray < 128)
     {
         gtk_widget_add_css_class(stack->label_app, "label_white");
         gtk_widget_add_css_class(stack->label_time, "label_white");
+        gtk_widget_add_css_class(stack->home_label, "label_white");
         gtk_button_set_icon_name(GTK_BUTTON(stack->ac_button), "my_ac_adapter_dark");
         gtk_button_set_icon_name(GTK_BUTTON(stack->help_button), "gtkui_help_dark");
         gtk_button_set_icon_name(GTK_BUTTON(stack->volumn_button), "my_audio_dark");
@@ -150,6 +156,7 @@ void main_stack_set_color_theme(MainStack *stack, int gray)
     {
         gtk_widget_add_css_class(stack->label_app, "label_black");
         gtk_widget_add_css_class(stack->label_time, "label_black");
+        gtk_widget_add_css_class(stack->home_label, "label_black");
         gtk_button_set_icon_name(GTK_BUTTON(stack->ac_button), "my_ac_adapter");
         gtk_button_set_icon_name(GTK_BUTTON(stack->help_button), "gtkui_help");
         gtk_button_set_icon_name(GTK_BUTTON(stack->volumn_button), "my_audio");
@@ -160,6 +167,9 @@ void main_stack_set_color_theme(MainStack *stack, int gray)
                                                GTK_STYLE_PROVIDER(stack->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(stack->label_time),
+                                               GTK_STYLE_PROVIDER(stack->provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_style_context_add_provider_for_display(gtk_widget_get_display(stack->home_label),
                                                GTK_STYLE_PROVIDER(stack->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
