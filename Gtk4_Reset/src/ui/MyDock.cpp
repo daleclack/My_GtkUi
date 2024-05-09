@@ -893,7 +893,7 @@ static void my_dock_init(MyDock *self)
     gtk_grid_set_row_spacing(GTK_GRID(self->apps_grid), 20);
 
     // Add Addon apps view
-    self->apps_view = app_view_new();
+    self->apps_view = app_view_new(TRUE);
     gtk_box_append(GTK_BOX(self->addon_box), self->apps_view);
     gtk_widget_set_halign(self->addon_box, GTK_ALIGN_CENTER);
     gtk_widget_set_halign(self->apps_view, GTK_ALIGN_CENTER);

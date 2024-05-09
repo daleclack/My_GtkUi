@@ -23,7 +23,7 @@ static GListModel *create_app_model()
     return G_LIST_MODEL(store);
 }
 
-static void app_view_setup(GtkListItemFactory *factory, GtkListItem *item)
+static void app_ext_view_setup(GtkListItemFactory *factory, GtkListItem *item)
 {
     GtkWidget *app_box, *image, *label;
 
@@ -42,7 +42,7 @@ static void app_view_setup(GtkListItemFactory *factory, GtkListItem *item)
     gtk_list_item_set_child(item, app_box);
 }
 
-static void app_view_bind(GtkListItemFactory *factory, GtkListItem *item)
+static void app_ext_view_bind(GtkListItemFactory *factory, GtkListItem *item)
 {
     GtkWidget *image;
     GtkWidget *label;
@@ -55,10 +55,12 @@ static void app_view_bind(GtkListItemFactory *factory, GtkListItem *item)
 
     // Initalize widgets
     GIcon *icon = g_app_info_get_icon(app_info);
-    if(!icon)
+    if (!icon)
     {
         gtk_image_set_from_icon_name(GTK_IMAGE(image), "application-x-executable");
-    }else{
+    }
+    else
+    {
         gtk_image_set_from_gicon(GTK_IMAGE(image), g_app_info_get_icon(app_info));
     }
     gtk_label_set_label(GTK_LABEL(label), g_app_info_get_display_name(app_info));
@@ -99,7 +101,7 @@ static void app_view_activate(GtkGridView *list, guint position, gpointer data)
     g_object_unref(app_info);
 }
 
-GtkWidget *app_view_new()
+GtkWidget *app_view_new(gboolean external)
 {
     GtkWidget *list, *sw;
     GListModel *model;
@@ -110,17 +112,22 @@ GtkWidget *app_view_new()
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
-    // Create list item factory
-    factory = gtk_signal_list_item_factory_new();
-    g_signal_connect(factory, "setup", G_CALLBACK(app_view_setup), NULL);
-    g_signal_connect(factory, "bind", G_CALLBACK(app_view_bind), NULL);
+    // Create view for external applications
+    if (external)
+    {
+        // Create list item factory
+        factory = gtk_signal_list_item_factory_new();
+        g_signal_connect(factory, "setup", G_CALLBACK(app_ext_view_setup), NULL);
+        g_signal_connect(factory, "bind", G_CALLBACK(app_ext_view_bind), NULL);
 
-    // Create model and view
-    model = create_app_model();
-    list = gtk_grid_view_new(GTK_SELECTION_MODEL(
-                             gtk_single_selection_new(model)),
-                             factory);
-    g_signal_connect(list, "activate", G_CALLBACK(app_view_activate), NULL);
+        // Create model and view
+        model = create_app_model();
+        list = gtk_grid_view_new(GTK_SELECTION_MODEL(
+                                     gtk_single_selection_new(model)),
+                                 factory);
+        g_signal_connect(list, "activate", G_CALLBACK(app_view_activate), NULL);
+    }
+
     gtk_grid_view_set_min_columns(GTK_GRID_VIEW(list), 8);
 
     // Add Child

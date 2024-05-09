@@ -2,4 +2,4 @@
 
 #include <gtk/gtk.h>
 
-GtkWidget *app_view_new();
+GtkWidget *app_view_new(gboolean external);
