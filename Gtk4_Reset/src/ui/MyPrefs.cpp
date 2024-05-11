@@ -368,7 +368,7 @@ static void update_external_image(MyPrefs *prefs, const char *file_name)
     else
     {
         // if file load failed, load default image
-        update_resource_image(prefs, "/org/gtk/daleclack/winpe.png");
+        update_resource_image(prefs, "/org/gtk/daleclack/shizuku.png");
         // update_internal_image(prefs, winpe);
     }
 }
@@ -402,7 +402,7 @@ static void my_prefs_load_config(MyPrefs *self)
         self->current_folder_index = 0;
         self->current_image_index = 0;
         self->dock_pos = DockPos::Pos_Left;
-        strncpy(self->image_file_name, ":1", PATH_MAX);
+        strncpy(self->image_file_name, ":4", PATH_MAX);
     }
     json_file.close();
 }
