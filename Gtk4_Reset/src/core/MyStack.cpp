@@ -2,7 +2,7 @@
 #include "MyStack.h"
 #include "MyDock.h"
 #include "MyPrefs.h"
-#include "winpe.xpm"
+// #include "winpe.xpm"
 
 static GtkWidget *dock;
 
@@ -103,7 +103,7 @@ void create_main_stack(GtkWindow *win)
     GtkWidget *btnlogin = GTK_WIDGET(gtk_builder_get_object(builder, "btnlogin"));
 
     // Add background for login page
-    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_xpm_data(winpe);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/org/gtk/daleclack/winpe.png", NULL);
     GdkPixbuf *sized = gdk_pixbuf_scale_simple(pixbuf, 1024, 576, GDK_INTERP_BILINEAR);
     GdkTexture *texture = gdk_texture_new_for_pixbuf(sized);
     GtkWidget *login_pic = gtk_picture_new_for_paintable(GDK_PAINTABLE(texture));

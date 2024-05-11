@@ -1,7 +1,7 @@
 #include "MyPrefs.h"
 #include "MyItem.h"
-#include "winpe.xpm"
-#include "img7.xpm"
+// #include "winpe.xpm"
+// #include "img7.xpm"
 #include "image_types.h"
 #include <string>
 #include <vector>
@@ -210,9 +210,9 @@ static void images_list_default(GListStore *store1)
     g_list_store_append(store1,
                         my_item_new("final_approach.png", ":1", TRUE));
     g_list_store_append(store1,
-                        my_item_new("img7.xpm", ":2", TRUE));
+                        my_item_new("img7.png", ":2", TRUE));
     g_list_store_append(store1,
-                        my_item_new("winpe.xpm", ":3", TRUE));
+                        my_item_new("winpe.png", ":3", TRUE));
     g_list_store_append(store1,
                         my_item_new("shizuku.png", ":4", TRUE));
 }
@@ -368,7 +368,8 @@ static void update_external_image(MyPrefs *prefs, const char *file_name)
     else
     {
         // if file load failed, load default image
-        update_internal_image(prefs, winpe);
+        update_resource_image(prefs, "/org/gtk/daleclack/winpe.png");
+        // update_internal_image(prefs, winpe);
     }
 }
 
@@ -539,10 +540,10 @@ static void load_image(const char *file_name, int image_item_index,
             update_resource_image(prefs, "/org/gtk/daleclack/final_approach.png");
             break;
         case '2':
-            update_internal_image(prefs, img7);
+            update_resource_image(prefs, "/org/gtk/daleclack/img7.png");
             break;
         case '3':
-            update_internal_image(prefs, winpe);
+            update_resource_image(prefs, "/org/gtk/daleclack/winpe.png");
             break;
         case '4':
             update_resource_image(prefs, "/org/gtk/daleclack/shizuku.png");

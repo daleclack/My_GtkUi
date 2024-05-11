@@ -53,6 +53,8 @@ set(RESOURCE_LIST
     STRIPBLANKS mine_menu.xml
     shizuku.png
     final_approach.png
+    img7.png
+    winpe.png
     style.css
     style_dark.css
     mine_app.css
