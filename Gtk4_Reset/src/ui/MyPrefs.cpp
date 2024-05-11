@@ -213,6 +213,8 @@ static void images_list_default(GListStore *store1)
                         my_item_new("img7.xpm", ":2", TRUE));
     g_list_store_append(store1,
                         my_item_new("winpe.xpm", ":3", TRUE));
+    g_list_store_append(store1,
+                        my_item_new("shizuku.png", ":4", TRUE));
 }
 
 static void update_images_list(MyPrefs *prefs1)
@@ -541,6 +543,9 @@ static void load_image(const char *file_name, int image_item_index,
             break;
         case '3':
             update_internal_image(prefs, winpe);
+            break;
+        case '4':
+            update_resource_image(prefs, "/org/gtk/daleclack/shizuku.png");
             break;
         }
         prefs->current_image_index = image_item_index;

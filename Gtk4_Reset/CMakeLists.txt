@@ -51,6 +51,7 @@ set(RESOURCE_LIST
     STRIPBLANKS win_input.ui
     STRIPBLANKS scoreswin.ui
     STRIPBLANKS mine_menu.xml
+    shizuku.png
     final_approach.png
     style.css
     style_dark.css
