@@ -292,7 +292,6 @@ static void pics_view_init(MyPrefs *self)
 
     // Create selection model for view
     self->image_select = gtk_single_selection_new(G_LIST_MODEL(self->images_list));
-    gtk_single_selection_set_selected(self->image_select, 0);
 
     // Create column view
     self->images_view = gtk_column_view_new(GTK_SELECTION_MODEL(self->image_select));
@@ -318,6 +317,9 @@ static void pics_view_init(MyPrefs *self)
                                                           self->factory_pics_string);
     gtk_column_view_append_column(GTK_COLUMN_VIEW(self->images_view),
                                   self->pics_string_column);
+
+    // Default selection
+    gtk_single_selection_set_selected(self->image_select, 3);
 }
 
 static void update_resource_image(MyPrefs *prefs, const char *resource_id)
