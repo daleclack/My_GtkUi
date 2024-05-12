@@ -318,8 +318,6 @@ static void pics_view_init(MyPrefs *self)
     gtk_column_view_append_column(GTK_COLUMN_VIEW(self->images_view),
                                   self->pics_string_column);
 
-    // Default selection
-    gtk_single_selection_set_selected(self->image_select, 3);
 }
 
 static void update_resource_image(MyPrefs *prefs, const char *resource_id)
@@ -402,11 +400,14 @@ static void my_prefs_load_config(MyPrefs *self)
         self->width = 1024;
         self->height = 576;
         self->current_folder_index = 0;
-        self->current_image_index = 0;
+        self->current_image_index = 3;
         self->dock_pos = DockPos::Pos_Left;
         strncpy(self->image_file_name, ":4", PATH_MAX);
     }
     json_file.close();
+
+    // Update default selection
+
 }
 
 // Save configs
