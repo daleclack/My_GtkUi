@@ -732,6 +732,18 @@ static void btnapply_clicked(GtkWidget *widget, MyPrefs *self)
             self->width = 1366;
             self->height = 768;
             break;
+        case 5:
+            self->width = 1600;
+            self->height = 900;
+            break;
+        case 6:
+            self->width = 1920;
+            self->height = 1080;
+            break;
+        case 7:
+            self->width = 2560;
+            self->height = 1440;
+            break;
         }
     }
     else
@@ -751,6 +763,9 @@ static void my_prefs_init(MyPrefs *self)
         "1024x576",
         "1280x720",
         "1366x768",
+        "1600x900",
+        "1920x1080",
+        "2560x1440",
         NULL};
 
     // Load config
