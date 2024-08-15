@@ -18,14 +18,16 @@ struct _MyPrefs
     MyTitleBar *title_bar;
     GtkBuilder *prefs_builder;
     GtkWidget *background, *back_page;
-    GtkWidget *stack_box, *combo_box;
+    GtkWidget *stack_box, *combo_box, *dpi_box;
 
     // Widget for window size config
-    GtkWidget *label_size;
-    GtkWidget *sizes_drop;
+    GtkWidget *label_size, *label_dpi;
+    GtkWidget *sizes_drop, *dpi_drop;
     GtkWidget *radio_default, *radio_custom;
     GtkWidget *spin_width, *spin_height;
     GtkWidget *btnGet, *btnapply;
+    float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
+    int dpi_set = 0;
 
     // Widget for dock position and mode
     GtkWidget *mode_check;
@@ -317,7 +319,6 @@ static void pics_view_init(MyPrefs *self)
                                                           self->factory_pics_string);
     gtk_column_view_append_column(GTK_COLUMN_VIEW(self->images_view),
                                   self->pics_string_column);
-
 }
 
 static void update_resource_image(MyPrefs *prefs, const char *resource_id)
@@ -384,15 +385,28 @@ static void my_prefs_load_config(MyPrefs *self)
         std::string back_filename;
         // Load data from json
         json data = json::parse(json_file);
-        self->width = data["width"];
-        self->height = data["height"];
-        self->current_folder_index = data["folder_index"];
-        self->current_image_index = data["image_index"];
-        self->dock_pos = data["position"];
-        back_filename = data["background"];
-        str_vec tmp_vec = data["background_folders"];
-        strncpy(self->image_file_name, back_filename.c_str(), PATH_MAX);
-        self->back_vec = tmp_vec;
+
+        // Check whether json config contains vaild
+        if (data.contains("width") 
+        && data.contains("height") 
+        && data.contains("folder_index") 
+        && data.contains("image_index") 
+        && data.contains("position") 
+        && data.contains("background")
+        && data.contains("background_folders")
+        && data.contains("dpi_set"))
+        {
+            self->width = data["width"];
+            self->height = data["height"];
+            self->current_folder_index = data["folder_index"];
+            self->current_image_index = data["image_index"];
+            self->dock_pos = data["position"];
+            back_filename = data["background"];
+            str_vec tmp_vec = data["background_folders"];
+            strncpy(self->image_file_name, back_filename.c_str(), PATH_MAX);
+            self->back_vec = tmp_vec;
+            self->dpi_set = data["dpi_set"];
+        }
     }
     else
     {
@@ -403,11 +417,11 @@ static void my_prefs_load_config(MyPrefs *self)
         self->current_image_index = 3;
         self->dock_pos = DockPos::Pos_Left;
         strncpy(self->image_file_name, ":4", PATH_MAX);
+        self->dpi_set = 1;
     }
     json_file.close();
 
     // Update default selection
-
 }
 
 // Save configs
@@ -464,6 +478,7 @@ static void my_prefs_save_config(MyPrefs *self)
             {
                 "background_folders": [],
                 "background":"",
+                "dpi_set": 1.0,
                 "folder_index": 0,
                 "height": 576,
                 "image_index": 0,
@@ -475,6 +490,7 @@ static void my_prefs_save_config(MyPrefs *self)
         // g_print("%s", self->image_file_name);
         data["folder_index"] = folder_index;
         data["background"] = std::string(self->image_file_name);
+        data["dpi_set"] = self->dpi_set;
         data["height"] = self->height;
         data["image_index"] = image_index;
         data["panel_mode"] = self->panel_mode;
@@ -771,6 +787,32 @@ static void btnapply_clicked(GtkWidget *widget, MyPrefs *self)
         self->width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_width));
         self->height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
     }
+
+    // Get dpi config
+    self->dpi_set = gtk_drop_down_get_selected(GTK_DROP_DOWN(self->dpi_drop));
+    // switch (dpi_index){
+    //     case 0:
+    //         self->curr_dpi_value = 1.0;
+    //         break;
+    //     case 1:
+    //         self->curr_dpi_value = 1.25;
+    //         break;
+    //     case 2:
+    //         self->curr_dpi_value = 1.5;
+    //         break;
+    //     case 3:
+    //         self->curr_dpi_value = 1.75;
+    //         break;
+    //     case 4:
+    //         self->curr_dpi_value = 2.0;
+    //         break;
+    //     case 5:
+    //         self->curr_dpi_value = 2.25;
+    //         break;
+    //     case 6:
+    //         self->curr_dpi_value = 2.5;
+    //         break;
+    // }
     my_prefs_save_config(self);
 }
 
@@ -793,6 +835,16 @@ static void my_prefs_init(MyPrefs *self)
         "2560x1440",
         NULL};
 
+    const char *dpi_settings[] = {
+        "100%",
+        "125%",
+        "150%",
+        "175%",
+        "200%",
+        "225%",
+        "250%",
+        NULL};
+
     // Load config
     my_prefs_load_config(self);
 
@@ -810,6 +862,7 @@ static void my_prefs_init(MyPrefs *self)
     self->stack_box = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "stack_box"));
     self->back_page = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "back_page"));
     self->combo_box = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "combo_box"));
+    self->dpi_box = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "dpi_box"));
     self->mode_check = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "mode_check"));
     self->label_size = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "label_size"));
     self->radio_custom = GTK_WIDGET(gtk_builder_get_object(self->prefs_builder, "radio_custom"));
@@ -877,6 +930,13 @@ static void my_prefs_init(MyPrefs *self)
     char *size = g_strdup_printf("Current Config: %d x %d", self->width, self->height);
     gtk_label_set_label(GTK_LABEL(self->label_size), size);
     g_free(size);
+
+    // Add a dropdown for DPI Config
+    self->label_dpi = gtk_label_new("DPI:\t\t");
+    self->dpi_drop = gtk_drop_down_new_from_strings(dpi_settings);
+    gtk_drop_down_set_selected(GTK_DROP_DOWN(self->dpi_drop), self->dpi_set);
+    gtk_box_append(GTK_BOX(self->dpi_box), self->label_dpi);
+    gtk_box_append(GTK_BOX(self->dpi_box), self->dpi_drop);
 
     // Set default mode for check button
     gtk_check_button_set_active(GTK_CHECK_BUTTON(self->mode_check), TRUE);

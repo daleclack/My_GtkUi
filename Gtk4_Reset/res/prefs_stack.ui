@@ -149,7 +149,14 @@
                           </object>
                         </child>
                         <child>
-                          <placeholder/>
+                          <object class="GtkBox" id="dpi_box">
+                            <property name="orientation">horizontal</property>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">4</property>
+                              <property name="column-span">3</property>
+                            </layout>
+                          </object>
                         </child>
                         <child>
                           <placeholder/>
