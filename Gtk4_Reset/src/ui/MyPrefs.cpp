@@ -733,14 +733,34 @@ static void btnapply_clicked(GtkWidget *widget, MyPrefs *self)
             self->height = 768;
             break;
         case 5:
+            self->width = 1440;
+            self->height = 810;
+            break;
+        case 6:
             self->width = 1600;
             self->height = 900;
             break;
-        case 6:
+        case 7:
+            self->width = 1680;
+            self->height = 945;
+            break;
+        case 8:
+            self->width = 1792;
+            self->height = 1008;
+            break;
+        case 9:
+            self->width = 1896;
+            self->height = 1044;
+            break;
+        case 10:
             self->width = 1920;
             self->height = 1080;
             break;
-        case 7:
+        case 11:
+            self->width = 2048;
+            self->height = 1152;
+            break;
+        case 12:
             self->width = 2560;
             self->height = 1440;
             break;
@@ -763,8 +783,13 @@ static void my_prefs_init(MyPrefs *self)
         "1024x576",
         "1280x720",
         "1366x768",
+        "1440x810",
         "1600x900",
+        "1680x945",
+        "1792x1008",
+        "1896x1044",
         "1920x1080",
+        "2048x1152",
         "2560x1440",
         NULL};
 
