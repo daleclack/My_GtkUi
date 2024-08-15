@@ -14,6 +14,11 @@
 #include <thread>
 #include <cstdlib>
 
+// Fix NAME_MAX macro for Microsoft Windows
+#ifdef _WIN32
+#define NAME_MAX _MAX_PATH
+#endif
+
 typedef unsigned short ushort;
 
 enum PadPage
