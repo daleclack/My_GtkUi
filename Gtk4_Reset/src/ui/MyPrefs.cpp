@@ -26,8 +26,6 @@ struct _MyPrefs
     GtkWidget *radio_default, *radio_custom;
     GtkWidget *spin_width, *spin_height;
     GtkWidget *btnGet, *btnapply;
-    float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
-    int dpi_set = 0;
 
     // Widget for dock position and mode
     GtkWidget *mode_check;
@@ -67,6 +65,13 @@ struct _MyPrefs
     DockPos dock_pos;                              // Dock Position
     str_vec back_vec;                              // Vector of backgrounds
     gboolean scan_ctrl;                            // Control the scan func
+    int dpi_set = 0;                               // Current DPI Settings
+    int res_set = 0;                               // Current Resolution Settings
+
+    // Constant value for standard dpi and resuolution settings
+    float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
+    int width_values[13] = {640, 800, 1024, 1280, 1366, 1440, 1600, 1680, 1792, 1896, 1920, 2048, 2560};
+    int height_values[13] = {360, 450, 576, 720,  768,  810,  900,  945,  1008, 1044, 1080, 1152, 1440};
 };
 
 G_DEFINE_TYPE(MyPrefs, my_prefs, GTK_TYPE_WINDOW)
@@ -387,14 +392,7 @@ static void my_prefs_load_config(MyPrefs *self)
         json data = json::parse(json_file);
 
         // Check whether json config contains vaild
-        if (data.contains("width") 
-        && data.contains("height") 
-        && data.contains("folder_index") 
-        && data.contains("image_index") 
-        && data.contains("position") 
-        && data.contains("background")
-        && data.contains("background_folders")
-        && data.contains("dpi_set"))
+        if (data.contains("width") && data.contains("height") && data.contains("folder_index") && data.contains("image_index") && data.contains("position") && data.contains("background") && data.contains("background_folders") && data.contains("dpi_set"))
         {
             self->width = data["width"];
             self->height = data["height"];
