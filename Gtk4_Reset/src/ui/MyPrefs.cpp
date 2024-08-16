@@ -12,6 +12,11 @@
 using json = nlohmann::json;
 typedef std::vector<std::string> str_vec;
 
+// Constant value for standard dpi and resuolution settings
+static const float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
+static const int width_values[13] = {640, 800, 1024, 1280, 1366, 1440, 1600, 1680, 1792, 1896, 1920, 2048, 2560};
+static const int height_values[13] = {360, 450, 576, 720, 768, 810, 900, 945, 1008, 1044, 1080, 1152, 1440};
+
 struct _MyPrefs
 {
     GtkWindow parent_instance;
@@ -67,11 +72,6 @@ struct _MyPrefs
     gboolean scan_ctrl;                            // Control the scan func
     int dpi_set = 0;                               // Current DPI Settings
     int res_set = 0;                               // Current Resolution Settings
-
-    // Constant value for standard dpi and resuolution settings
-    float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
-    int width_values[13] = {640, 800, 1024, 1280, 1366, 1440, 1600, 1680, 1792, 1896, 1920, 2048, 2560};
-    int height_values[13] = {360, 450, 576, 720,  768,  810,  900,  945,  1008, 1044, 1080, 1152, 1440};
 };
 
 G_DEFINE_TYPE(MyPrefs, my_prefs, GTK_TYPE_WINDOW)
@@ -404,6 +404,7 @@ static void my_prefs_load_config(MyPrefs *self)
             strncpy(self->image_file_name, back_filename.c_str(), PATH_MAX);
             self->back_vec = tmp_vec;
             self->dpi_set = data["dpi_set"];
+            self->res_set = data["res_set"];
         }
     }
     else
@@ -416,6 +417,7 @@ static void my_prefs_load_config(MyPrefs *self)
         self->dock_pos = DockPos::Pos_Left;
         strncpy(self->image_file_name, ":4", PATH_MAX);
         self->dpi_set = 1;
+        self->res_set = 1;
     }
     json_file.close();
 
@@ -482,7 +484,8 @@ static void my_prefs_save_config(MyPrefs *self)
                 "image_index": 0,
                 "panel_mode": 1,
                 "position": 0,
-                "width": 1024
+                "width": 1024,
+                "res_set": -1
             }
         )");
         // g_print("%s", self->image_file_name);
@@ -495,6 +498,7 @@ static void my_prefs_save_config(MyPrefs *self)
         data["position"] = self->curr_dock_pos;
         data["width"] = self->width;
         data["background_folders"] = self->back_vec;
+        data["res_set"] = self->res_set;
         outfile << data;
     }
     outfile.close();
@@ -724,66 +728,71 @@ static void btnapply_clicked(GtkWidget *widget, MyPrefs *self)
     {
         // Get default sizes
         guint index = gtk_drop_down_get_selected(GTK_DROP_DOWN(self->sizes_drop));
-        switch (index)
-        {
-        case 0:
-            self->width = 640;
-            self->height = 360;
-            break;
-        case 1:
-            self->width = 800;
-            self->height = 450;
-            break;
-        case 2:
-            self->width = 1024;
-            self->height = 576;
-            break;
-        case 3:
-            self->width = 1280;
-            self->height = 720;
-            break;
-        case 4:
-            self->width = 1366;
-            self->height = 768;
-            break;
-        case 5:
-            self->width = 1440;
-            self->height = 810;
-            break;
-        case 6:
-            self->width = 1600;
-            self->height = 900;
-            break;
-        case 7:
-            self->width = 1680;
-            self->height = 945;
-            break;
-        case 8:
-            self->width = 1792;
-            self->height = 1008;
-            break;
-        case 9:
-            self->width = 1896;
-            self->height = 1044;
-            break;
-        case 10:
-            self->width = 1920;
-            self->height = 1080;
-            break;
-        case 11:
-            self->width = 2048;
-            self->height = 1152;
-            break;
-        case 12:
-            self->width = 2560;
-            self->height = 1440;
-            break;
-        }
+        self->width = width_values[index];
+        self->height = height_values[index];
+        self->res_set = index;
+        // g_print("%d %d\n", self->width, self->height);
+        // switch (index)
+        // {
+        // case 0:
+        //     self->width = 640;
+        //     self->height = 360;
+        //     break;
+        // case 1:
+        //     self->width = 800;
+        //     self->height = 450;
+        //     break;
+        // case 2:
+        //     self->width = 1024;
+        //     self->height = 576;
+        //     break;
+        // case 3:
+        //     self->width = 1280;
+        //     self->height = 720;
+        //     break;
+        // case 4:
+        //     self->width = 1366;
+        //     self->height = 768;
+        //     break;
+        // case 5:
+        //     self->width = 1440;
+        //     self->height = 810;
+        //     break;
+        // case 6:
+        //     self->width = 1600;
+        //     self->height = 900;
+        //     break;
+        // case 7:
+        //     self->width = 1680;
+        //     self->height = 945;
+        //     break;
+        // case 8:
+        //     self->width = 1792;
+        //     self->height = 1008;
+        //     break;
+        // case 9:
+        //     self->width = 1896;
+        //     self->height = 1044;
+        //     break;
+        // case 10:
+        //     self->width = 1920;
+        //     self->height = 1080;
+        //     break;
+        // case 11:
+        //     self->width = 2048;
+        //     self->height = 1152;
+        //     break;
+        // case 12:
+        //     self->width = 2560;
+        //     self->height = 1440;
+        //     break;
+        // }
     }
     else
     {
         self->width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_width));
         self->height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->spin_height));
+        self->res_set = -1;
     }
 
     // Get dpi config
@@ -922,7 +931,7 @@ static void my_prefs_init(MyPrefs *self)
 
     // Add a dropdown for default sizes config
     self->sizes_drop = gtk_drop_down_new_from_strings(strings);
-    gtk_drop_down_set_selected(GTK_DROP_DOWN(self->sizes_drop), 2);
+    gtk_drop_down_set_selected(GTK_DROP_DOWN(self->sizes_drop), self->res_set);
     gtk_box_append(GTK_BOX(self->combo_box), self->sizes_drop);
 
     char *size = g_strdup_printf("Current Config: %d x %d", self->width, self->height);
@@ -978,6 +987,15 @@ static void my_prefs_init(MyPrefs *self)
     g_signal_connect(self->btn_remove, "clicked", G_CALLBACK(btnremove_clicked), self);
     g_signal_connect(self->btnapply, "clicked", G_CALLBACK(btnapply_clicked), self);
     g_signal_connect(self->btnapply1, "clicked", G_CALLBACK(btnapply_clicked), self);
+
+    // Enable check area for different modes
+    if (self->res_set >= 0){
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_default), TRUE);
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_custom), FALSE);
+    }else{
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_default), FALSE);
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_custom), TRUE);
+    }
 }
 
 static void my_prefs_class_init(MyPrefsClass *klass)

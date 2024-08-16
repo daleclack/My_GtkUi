@@ -95,6 +95,7 @@
         "referenced": "cpp",
         "state": "cpp",
         "stateset": "cpp",
-        "observer_ptr": "cpp"
+        "observer_ptr": "cpp",
+        "xlocale": "cpp"
     }
 }
