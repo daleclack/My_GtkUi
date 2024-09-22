@@ -86,6 +86,7 @@ static void about_activated(GSimpleAction *action,
 
 void create_main_stack(GtkWindow *win)
 {
+    // Current enabled actions
     static GActionEntry entries[] = {
         {"logout", logout_activated, NULL, NULL, NULL},
         {"quit", quit_activated, NULL, NULL, NULL},
@@ -98,6 +99,8 @@ void create_main_stack(GtkWindow *win)
     // Get Widgets
     GtkWidget *stack = GTK_WIDGET(gtk_builder_get_object(builder, "main_stack"));
     GtkWidget *login_page = GTK_WIDGET(gtk_builder_get_object(builder, "login_page"));
+    GtkWidget *user_image = GTK_WIDGET(gtk_builder_get_object(builder, "user_image"));
+    GtkWidget *user_label = GTK_WIDGET(gtk_builder_get_object(builder, "user_label"));
     GtkWidget *login_overlay = GTK_WIDGET(gtk_builder_get_object(builder, "login_overlay"));
     GtkWidget *main_page = GTK_WIDGET(gtk_builder_get_object(builder, "main_page"));
     GtkWidget *btnlogin = GTK_WIDGET(gtk_builder_get_object(builder, "btnlogin"));
@@ -130,6 +133,13 @@ void create_main_stack(GtkWindow *win)
     // Add Preferences window
     MyPrefs *prefs = my_dock_get_prefs(MY_DOCK(dock));
     main_win_set_prefs(MAIN_WIN(win), prefs);
+
+    // Get DPI setting
+    double dpi = my_prefs_get_dpi(prefs);
+    gtk_widget_set_size_request(btnlogin, 60 * dpi, 25 * dpi);
+    gtk_widget_set_size_request(user_label, 60 * dpi, 25 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(user_image), 40 * dpi);
+    // g_print("%f", dpi);
 
     gtk_window_set_child(win, stack);
 }

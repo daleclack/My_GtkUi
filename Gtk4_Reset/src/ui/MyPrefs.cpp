@@ -989,10 +989,13 @@ static void my_prefs_init(MyPrefs *self)
     g_signal_connect(self->btnapply1, "clicked", G_CALLBACK(btnapply_clicked), self);
 
     // Enable check area for different modes
-    if (self->res_set >= 0){
+    if (self->res_set >= 0)
+    {
         gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_default), TRUE);
         gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_custom), FALSE);
-    }else{
+    }
+    else
+    {
         gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_default), FALSE);
         gtk_check_button_set_active(GTK_CHECK_BUTTON(self->radio_custom), TRUE);
     }
@@ -1040,6 +1043,11 @@ void my_prefs_set_background(MyPrefs *prefs_win, GtkWidget *back)
     }
     load_image(prefs_win->image_file_name, prefs_win->current_image_index,
                is_internal, prefs_win);
+}
+
+double my_prefs_get_dpi(MyPrefs *self)
+{
+    return dpi_values[self->dpi_set];
 }
 
 MyPrefs *my_prefs_new()
