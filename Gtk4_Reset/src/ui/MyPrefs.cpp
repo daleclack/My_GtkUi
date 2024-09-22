@@ -1045,7 +1045,7 @@ void my_prefs_set_background(MyPrefs *prefs_win, GtkWidget *back)
                is_internal, prefs_win);
 }
 
-double my_prefs_get_dpi(MyPrefs *self)
+double my_prefs_get_dpi_value(MyPrefs *self)
 {
     return dpi_values[self->dpi_set];
 }

@@ -41,7 +41,8 @@ struct _MyDock
     GtkWidget *btnfiles, *btndraw, *btncalc, *btnedit, *btnimage, // Dock buttons
         *btnset, *btngame, *btngame24, *btnmine, *btnmedia;
     GtkWidget *image_file, *image_draw, *image_calc, *image_game, // Image widget for dock buttons
-        *image_edit, *image_viewer, *image_game24, *image_mine, *image_set, *image_media;
+        *image_edit, *image_viewer, *image_game24, *image_mine, *image_set, 
+        *image_launch, *image_media, *image_trash;
     GtkWidget *padabout, *padaud, *paddraw, *padfile, *padgedit, // Launchpad icons
         *padgame, *padimage, *padnote, *padedit, *padvlc, *padvlc_win32,
         *padrun, *padset, *padgame24, *padcalc, *padmine, *padmedia;
@@ -661,6 +662,22 @@ static void padvlc_win32(GtkWidget *widget, MyDock *dock)
     btnlaunch_clicked(NULL, dock);
 }
 
+static void my_dock_apply_dpi(MyDock *self, double dpi)
+{
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_launch), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_file), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_calc), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_draw), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_edit), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_game24), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_game), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_viewer), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_mine), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_set), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_media), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->image_trash), 40 * dpi);
+}
+
 static void my_dock_get_widgets(MyDock *self)
 {
     // Get widgets
@@ -673,6 +690,7 @@ static void my_dock_get_widgets(MyDock *self)
     self->icons_sw = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "icons_sw"));
     self->icons_box = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "icons_box"));
     self->btnlaunch = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnlaunch"));
+    self->image_launch = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_launch"));
     self->btnfiles = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnfiles"));
     self->image_file = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_file"));
     self->btncalc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btncalc"));
@@ -693,6 +711,7 @@ static void my_dock_get_widgets(MyDock *self)
     self->image_set = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_set"));
     self->btnmedia = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "btnmedia"));
     self->image_media = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_media"));
+    self->image_trash = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "image_trash"));
     self->launchpad_stack = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_stack"));
     self->default_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "default_page"));
     self->launchpad_page = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "launchpad_page"));
@@ -955,6 +974,10 @@ static void my_dock_init(MyDock *self)
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->context_menu),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // Apply DPI Setting for the dock
+    double dpi_value = my_prefs_get_dpi_value(self->prefs_win);
+    my_dock_apply_dpi(self, dpi_value);
 }
 
 static void my_dock_class_init(MyDockClass *klass)

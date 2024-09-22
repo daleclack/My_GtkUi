@@ -17,7 +17,7 @@
         <property name="focusable">1</property>
         <property name="receives-default">1</property>
         <property name="child">
-          <object class="GtkImage" id="image1">
+          <object class="GtkImage" id="image_launch">
             <property name="pixel-size">48</property>
             <property name="icon-name">My_GtkUI</property>
           </object>
@@ -205,7 +205,7 @@
         <property name="focusable">1</property>
         <property name="receives-default">1</property>
         <property name="child">
-          <object class="GtkImage" id="image21">
+          <object class="GtkImage" id="image_trash">
             <property name="pixel-size">48</property>
             <property name="icon-name">my_trash</property>
           </object>

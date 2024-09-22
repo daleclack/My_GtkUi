@@ -21,6 +21,6 @@ DockPos my_prefs_get_dock_pos(MyPrefs *self);
 
 void my_prefs_set_background(MyPrefs *prefs_win, GtkWidget *back);
 
-double my_prefs_get_dpi(MyPrefs *self);
+double my_prefs_get_dpi_value(MyPrefs *self);
 
 MyPrefs *my_prefs_new();

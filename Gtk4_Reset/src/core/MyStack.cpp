@@ -135,7 +135,7 @@ void create_main_stack(GtkWindow *win)
     main_win_set_prefs(MAIN_WIN(win), prefs);
 
     // Get DPI setting
-    double dpi = my_prefs_get_dpi(prefs);
+    double dpi = my_prefs_get_dpi_value(prefs);
     gtk_widget_set_size_request(btnlogin, 60 * dpi, 25 * dpi);
     gtk_widget_set_size_request(user_label, 60 * dpi, 25 * dpi);
     gtk_image_set_pixel_size(GTK_IMAGE(user_image), 40 * dpi);
