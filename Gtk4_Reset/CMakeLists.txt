@@ -206,7 +206,7 @@ if(WIN32)
 	set_property(SOURCE icon.rc APPEND PROPERTY
         OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
-	add_executable(My_GtkUI ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
+	add_executable(My_GtkUI WIN32 ${app_WINRC} ${SOURCES} ${RESOURCE_FILE})
 else()
 	add_executable(My_GtkUI ${SOURCES} ${RESOURCE_FILE})
 
