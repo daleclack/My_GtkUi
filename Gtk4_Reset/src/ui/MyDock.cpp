@@ -41,11 +41,15 @@ struct _MyDock
     GtkWidget *btnfiles, *btndraw, *btncalc, *btnedit, *btnimage, // Dock buttons
         *btnset, *btngame, *btngame24, *btnmine, *btnmedia;
     GtkWidget *image_file, *image_draw, *image_calc, *image_game, // Image widget for dock buttons
-        *image_edit, *image_viewer, *image_game24, *image_mine, *image_set, 
+        *image_edit, *image_viewer, *image_game24, *image_mine, *image_set,
         *image_launch, *image_media, *image_trash;
     GtkWidget *padabout, *padaud, *paddraw, *padfile, *padgedit, // Launchpad icons
         *padgame, *padimage, *padnote, *padedit, *padvlc, *padvlc_win32,
         *padrun, *padset, *padgame24, *padcalc, *padmine, *padmedia;
+    GtkWidget *padabout_image, *padaud_image, *paddraw_image, *padfile_image, // Launchpad icon images
+        *padgedit_image, *padgame_image, *padimage_image, *padnote_image, 
+        *padedit_image, *padvlc_image, *padvlc_win32_image, *padrun_image, 
+        *padset_image, *padgame24_image, *padcalc_image, *padmine_image, *padmedia_image;
     PadPage current_page;
     GtkBuilder *menu_builder;
     GMenuModel *menu_model;
@@ -162,7 +166,7 @@ static void my_dock_set_icon_name(MyDock *dock, GtkImage *image, const char *ico
     char icon_name[NAME_MAX];
     // Set icon with dock position setting
     DockPos dock_pos = my_prefs_get_dock_pos(dock->prefs_win);
-    switch(dock_pos)
+    switch (dock_pos)
     {
     case DockPos::Pos_Left:
         snprintf(icon_name, NAME_MAX - 1, "%s_running", icon_name1);
@@ -676,6 +680,23 @@ static void my_dock_apply_dpi(MyDock *self, double dpi)
     gtk_image_set_pixel_size(GTK_IMAGE(self->image_set), 40 * dpi);
     gtk_image_set_pixel_size(GTK_IMAGE(self->image_media), 40 * dpi);
     gtk_image_set_pixel_size(GTK_IMAGE(self->image_trash), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padabout_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padaud_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padcalc_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->paddraw_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padedit_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padfile_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padgame24_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padgame_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padgedit_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padimage_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padmedia_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padmine_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padnote_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padrun_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padset_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padvlc_image), 40 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(self->padvlc_win32_image), 40 * dpi);
 }
 
 static void my_dock_get_widgets(MyDock *self)
@@ -736,6 +757,23 @@ static void my_dock_get_widgets(MyDock *self)
     self->padset = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padset"));
     self->padvlc = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc"));
     self->padvlc_win32 = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc_win32"));
+    self->padaud_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padaud_image"));
+    self->padabout_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padabout_image"));
+    self->padcalc_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padcalc_image"));
+    self->paddraw_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "paddraw_image"));
+    self->padedit_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padedit_image"));
+    self->padfile_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padfile_image"));
+    self->padgame24_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padgame24_image"));
+    self->padgame_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padgame_image"));
+    self->padgedit_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padgedit_image"));
+    self->padimage_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padimage_image"));
+    self->padmine_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padmine_image"));
+    self->padmedia_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padmedia_image"));
+    self->padnote_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padnote_image"));
+    self->padrun_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padrun_image"));
+    self->padset_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padset_image"));
+    self->padvlc_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc_image"));
+    self->padvlc_win32_image = GTK_WIDGET(gtk_builder_get_object(self->dock_builder, "padvlc_win32_image"));
 
     // Hide ScrollBar for icons scrolled window
     GtkWidget *scrollbar = gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(self->icons_sw));
@@ -906,6 +944,11 @@ static void my_dock_init(MyDock *self)
     // Add Style for finder
     my_finder_add_style(MY_FINDER(self->finder), provider);
 
+    // Apply DPI Setting for the dock and the finder
+    double dpi_value = my_prefs_get_dpi_value(self->prefs_win);
+    my_dock_apply_dpi(self, dpi_value);
+    my_finder_apply_dpi(MY_FINDER(self->finder), dpi_value);
+
     // Add Apps grid
     // To make the default view layout same as the addon apps view
     self->appgrid_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -917,7 +960,7 @@ static void my_dock_init(MyDock *self)
     gtk_grid_set_row_spacing(GTK_GRID(self->apps_grid), 20);
 
     // Add Addon apps view
-    self->apps_view = app_view_new(TRUE);
+    self->apps_view = app_view_new(TRUE, dpi_value);
     gtk_box_append(GTK_BOX(self->addon_box), self->apps_view);
     gtk_widget_set_halign(self->addon_box, GTK_ALIGN_CENTER);
     gtk_widget_set_halign(self->apps_view, GTK_ALIGN_CENTER);
@@ -974,11 +1017,6 @@ static void my_dock_init(MyDock *self)
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(self->context_menu),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-    // Apply DPI Setting for the dock and the finder
-    double dpi_value = my_prefs_get_dpi_value(self->prefs_win);
-    my_dock_apply_dpi(self, dpi_value);
-    my_finder_apply_dpi(MY_FINDER(self->finder), dpi_value);
 }
 
 static void my_dock_class_init(MyDockClass *klass)

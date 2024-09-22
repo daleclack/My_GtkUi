@@ -245,7 +245,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image8">
+              <object class="GtkImage" id="padabout_image">
                 <property name="hexpand">0</property>
                 <property name="vexpand">0</property>
                 <property name="pixel-size">48</property>
@@ -278,7 +278,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image10">
+              <object class="GtkImage" id="padaud_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">audacious_whitesur</property>
               </object>
@@ -306,7 +306,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image9">
+              <object class="GtkImage" id="paddraw_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">drawing_app</property>
               </object>
@@ -334,7 +334,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image11">
+              <object class="GtkImage" id="padfile_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">file-app</property>
               </object>
@@ -362,7 +362,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image12">
+              <object class="GtkImage" id="padgedit_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">my_textedit</property>
               </object>
@@ -390,7 +390,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image13">
+              <object class="GtkImage" id="padgame_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">game</property>
               </object>
@@ -418,7 +418,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image14">
+              <object class="GtkImage" id="padimage_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">image_app</property>
               </object>
@@ -446,7 +446,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image15">
+              <object class="GtkImage" id="padnote_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">my_textedit</property>
               </object>
@@ -474,7 +474,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image16">
+              <object class="GtkImage" id="padedit_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">my_textedit</property>
               </object>
@@ -502,7 +502,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image17">
+              <object class="GtkImage" id="padvlc_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">vlc_whitesur</property>
               </object>
@@ -530,7 +530,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image18">
+              <object class="GtkImage" id="padvlc_win32_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">vlc_whitesur</property>
               </object>
@@ -558,7 +558,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image19">
+              <object class="GtkImage" id="padrun_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">myrunner</property>
               </object>
@@ -586,7 +586,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image20">
+              <object class="GtkImage" id="padset_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">my_prefs</property>
               </object>
@@ -614,7 +614,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image22">
+              <object class="GtkImage" id="padgame24_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">24game</property>
               </object>
@@ -642,7 +642,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image24">
+              <object class="GtkImage" id="padcalc_image">
                 <property name="pixel-size">48</property>
                 <property name="icon-name">calcapp</property>
               </object>
@@ -670,7 +670,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image27">
+              <object class="GtkImage" id="padmine_image">
                 <property name="icon-name">mines_app</property>
                 <property name="pixel-size">48</property>
               </object>
@@ -698,7 +698,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkImage" id="image28">
+              <object class="GtkImage" id="padmedia_image">
                 <property name="icon-name">media-app</property>
                 <property name="pixel-size">48</property>
               </object>

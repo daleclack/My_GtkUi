@@ -1,5 +1,7 @@
 #include "AppView.h"
 
+static double dpi_value;
+
 // Create a model for application
 static GListModel *create_app_model()
 {
@@ -31,7 +33,7 @@ static void app_ext_view_setup(GtkListItemFactory *factory, GtkListItem *item)
     app_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     image = gtk_image_new();
     label = gtk_label_new("          ");
-    gtk_image_set_pixel_size(GTK_IMAGE(image), 40);
+    gtk_image_set_pixel_size(GTK_IMAGE(image), 36 * dpi_value);
     gtk_widget_set_size_request(label, 76, 12);
     gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
 
@@ -101,11 +103,13 @@ static void app_view_activate(GtkGridView *list, guint position, gpointer data)
     g_object_unref(app_info);
 }
 
-GtkWidget *app_view_new(gboolean external)
+GtkWidget *app_view_new(gboolean external, double dpi)
 {
     GtkWidget *list, *sw;
     GListModel *model;
     GtkListItemFactory *factory;
+
+    dpi_value = dpi;
 
     // Create widgets
     sw = gtk_scrolled_window_new();
