@@ -6,6 +6,8 @@
 struct _MyFinder
 {
     GtkBox parent_instance;
+    GtkWidget *icon_image, *icon_find, *icon_menu, *icon_battery,
+        *icon_network, *icon_screen, *icon_audio;
     GtkWidget *btn_icon, *btntitle, *btnfile, *btnedit,
         *btnshow, *btngoto, *btnwin, *btnhelp;
     GtkWidget *label_title, *labelfile, *labeledit, *labelshow,
@@ -67,27 +69,42 @@ static void my_finder_init(MyFinder *self)
     self->labelwin = gtk_label_new("Windows");
     self->labelhelp = gtk_label_new("Help");
     self->time_label = gtk_label_new("2023/6/9 22:29:00");
+    self->find_button = gtk_button_new();
+    self->screen_button = gtk_button_new();
+    self->battery_button = gtk_button_new();
+    self->audio_button = gtk_button_new();
+    self->network_button = gtk_button_new();
+    self->menu_button = gtk_button_new();
     self->separator = gtk_label_new("   ");
     if (get_dark_mode(self))
     {
-        self->find_button = gtk_button_new_from_icon_name("finder-find-dark");
-        self->screen_button = gtk_button_new_from_icon_name("finder-computer-dark");
-        self->battery_button = gtk_button_new_from_icon_name("finder-battery-dark");
-        self->audio_button = gtk_button_new_from_icon_name("finder_audio-dark");
-        self->network_button = gtk_button_new_from_icon_name("finder-wifi-dark");
+        self->icon_find = gtk_image_new_from_icon_name("finder-find-dark");;
+        self->icon_screen = gtk_image_new_from_icon_name("finder-computer-dark");
+        self->icon_battery = gtk_image_new_from_icon_name("finder-battery-dark");
+        self->icon_audio = gtk_image_new_from_icon_name("finder_audio-dark");
+        self->icon_network = gtk_image_new_from_icon_name("finder-wifi-dark");
     }
     else
     {
-        self->find_button = gtk_button_new_from_icon_name("finder-find");
-        self->screen_button = gtk_button_new_from_icon_name("finder-computer");
-        self->battery_button = gtk_button_new_from_icon_name("finder-battery");
-        self->audio_button = gtk_button_new_from_icon_name("finder_audio");
-        self->network_button = gtk_button_new_from_icon_name("finder-wifi");
+        self->icon_find = gtk_image_new_from_icon_name("finder-find");
+        self->icon_screen = gtk_image_new_from_icon_name("finder-computer");
+        self->icon_battery = gtk_image_new_from_icon_name("finder-battery");
+        self->icon_audio = gtk_image_new_from_icon_name("finder_audio");
+        self->icon_network = gtk_image_new_from_icon_name("finder-wifi");
     }
-    self->menu_button = gtk_button_new_from_icon_name("open-menu");
+    self->icon_menu = gtk_image_new_from_icon_name("open-menu");
+    self->icon_image = gtk_image_new_from_icon_name("My_GtkUI");
+    gtk_widget_set_valign(self->icon_image, GTK_ALIGN_CENTER);
     gtk_widget_set_hexpand(self->separator, TRUE);
     gtk_widget_set_halign(self->separator, GTK_ALIGN_FILL);
-    gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(self->btn_icon), "My_GtkUI");
+    gtk_menu_button_set_child(GTK_MENU_BUTTON(self->btn_icon), self->icon_image);
+    gtk_button_set_child(GTK_BUTTON(self->find_button), self->icon_find);
+    gtk_button_set_child(GTK_BUTTON(self->screen_button), self->icon_screen);
+    gtk_button_set_child(GTK_BUTTON(self->battery_button), self->icon_battery);
+    gtk_button_set_child(GTK_BUTTON(self->audio_button), self->icon_audio);
+    gtk_button_set_child(GTK_BUTTON(self->network_button), self->icon_network);
+    gtk_button_set_child(GTK_BUTTON(self->menu_button), self->icon_menu);
+    // gtk_menu_button_set_icon_name(GTK_MENU_BUTTON(self->btn_icon), "My_GtkUI");
     gtk_button_set_has_frame(GTK_BUTTON(self->find_button), FALSE);
     gtk_button_set_has_frame(GTK_BUTTON(self->screen_button), FALSE);
     gtk_button_set_has_frame(GTK_BUTTON(self->battery_button), FALSE);
@@ -158,6 +175,24 @@ void my_finder_add_style(MyFinder *finder, GtkCssProvider *provider)
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(finder)),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
+void my_finder_apply_dpi(MyFinder *finder, double dpi)
+{
+    gtk_widget_set_size_request(finder->btnedit, 40 * dpi, 25 * dpi);
+    gtk_widget_set_size_request(finder->btnfile, 40 * dpi, 25 * dpi);
+    gtk_widget_set_size_request(finder->btngoto, 40 * dpi, 25 * dpi);
+    gtk_widget_set_size_request(finder->btnhelp, 40 * dpi, 25 * dpi);
+    gtk_widget_set_size_request(finder->btnshow, 40 * dpi, 25 * dpi);
+    gtk_widget_set_size_request(finder->btnwin, 40 * dpi, 25 * dpi);
+    gtk_widget_set_size_request(finder->btntitle, 40 * dpi, 25 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(finder->icon_image), 20 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(finder->icon_find), 16 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(finder->icon_screen), 16 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(finder->icon_battery), 16 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(finder->icon_audio), 16 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(finder->icon_network), 16 * dpi);
+    gtk_image_set_pixel_size(GTK_IMAGE(finder->icon_menu), 16 * dpi);
 }
 
 static void my_finder_class_init(MyFinderClass *klass)

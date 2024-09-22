@@ -975,9 +975,10 @@ static void my_dock_init(MyDock *self)
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    // Apply DPI Setting for the dock
+    // Apply DPI Setting for the dock and the finder
     double dpi_value = my_prefs_get_dpi_value(self->prefs_win);
     my_dock_apply_dpi(self, dpi_value);
+    my_finder_apply_dpi(MY_FINDER(self->finder), dpi_value);
 }
 
 static void my_dock_class_init(MyDockClass *klass)
