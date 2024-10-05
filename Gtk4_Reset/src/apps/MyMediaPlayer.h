@@ -34,4 +34,4 @@ void my_media_player_load_random_audio(MyMediaPlayer *player);
 
 void my_media_player_reload_audio(MyMediaPlayer *player);
 
-MyMediaPlayer *my_media_player_new();
+MyMediaPlayer *my_media_player_new(double dpi_value);

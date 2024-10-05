@@ -837,55 +837,55 @@ static void my_dock_init(MyDock *self)
         The DPI Scale value will be applied with the creation of the windows
     */
     // Create File Browser Window
-    self->file_win = file_window_new(self->parent_win);
+    self->file_win = file_window_new(self->parent_win, dpi_value);
     g_signal_connect(self->btnfiles, "clicked", G_CALLBACK(btnfiles_clicked), self);
     g_signal_connect(self->padfile, "clicked", G_CALLBACK(padfiles_clicked), self);
     g_signal_connect(self->file_win, "close-request", G_CALLBACK(file_window_closed), self);
 
     // Create Game App Window
-    self->game_win = game_app_new();
+    self->game_win = game_app_new(dpi_value);
     g_signal_connect(self->btngame, "clicked", G_CALLBACK(btngame_clicked), self);
     g_signal_connect(self->padgame, "clicked", G_CALLBACK(padgame_clicked), self);
     g_signal_connect(self->game_win, "close-request", G_CALLBACK(game_win_closed), self);
 
     // Create Calculator App Window
-    self->calc_win = calc_app_new();
+    self->calc_win = calc_app_new(dpi_value);
     g_signal_connect(self->btncalc, "clicked", G_CALLBACK(btncalc_clicked), self);
     g_signal_connect(self->padcalc, "clicked", G_CALLBACK(padcalc_clicked), self);
     g_signal_connect(self->calc_win, "close-request", G_CALLBACK(calc_win_closed), self);
 
     // Create 24 Game App Window
-    self->game24_win = game24_app_new();
+    self->game24_win = game24_app_new(dpi_value);
     g_signal_connect(self->btngame24, "clicked", G_CALLBACK(btngame24_clicked), self);
     g_signal_connect(self->padgame24, "clicked", G_CALLBACK(padgame24_clicked), self);
     g_signal_connect(self->game24_win, "close-request", G_CALLBACK(game24_win_closed), self);
 
     // Create Drawing App Window
-    self->draw_win = draw_app_new();
+    self->draw_win = draw_app_new(dpi_value);
     g_signal_connect(self->btndraw, "clicked", G_CALLBACK(btndraw_clicked), self);
     g_signal_connect(self->paddraw, "clicked", G_CALLBACK(paddraw_clicked), self);
     g_signal_connect(self->draw_win, "close-request", G_CALLBACK(draw_win_closed), self);
 
     // Create Text Editor Window
-    self->edit_win = text_editor_new();
+    self->edit_win = text_editor_new(dpi_value);
     g_signal_connect(self->btnedit, "clicked", G_CALLBACK(btnedit_clicked), self);
     g_signal_connect(self->padedit, "clicked", G_CALLBACK(padedit_clicked), self);
     g_signal_connect(self->edit_win, "close-request", G_CALLBACK(edit_win_closed), self);
 
     // Image Viewer window
-    self->image_app = image_app_new();
+    self->image_app = image_app_new(dpi_value);
     g_signal_connect(self->btnimage, "clicked", G_CALLBACK(btnimage_clicked), self);
     g_signal_connect(self->padimage, "clicked", G_CALLBACK(padimage_clicked), self);
     g_signal_connect(self->image_app, "close-request", G_CALLBACK(image_win_closed), self);
 
     // Mine Sweeper Window
-    self->mine_app = mine_sweeper_new();
+    self->mine_app = mine_sweeper_new(dpi_value);
     g_signal_connect(self->btnmine, "clicked", G_CALLBACK(btnmine_clicked), self);
     g_signal_connect(self->padmine, "clicked", G_CALLBACK(padmine_clicked), self);
     g_signal_connect(self->mine_app, "close-request", G_CALLBACK(mine_win_closed), self);
 
     // Media Player Window
-    self->media_app = my_media_player_new();
+    self->media_app = my_media_player_new(dpi_value);
     g_signal_connect(self->btnmedia, "clicked", G_CALLBACK(btnmedia_clicked), self);
     g_signal_connect(self->padmedia, "clicked", G_CALLBACK(padmedia_clicked), self);
     g_signal_connect(self->media_app, "close-request", G_CALLBACK(media_win_closed), self);

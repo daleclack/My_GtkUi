@@ -401,9 +401,11 @@ static void text_editor_class_init(TextEditorClass *klass)
 {
 }
 
-TextEditor *text_editor_new()
+TextEditor *text_editor_new(double dpi_value)
 {
-    return TEXT_EDITOR(g_object_new(text_editor_get_type(), NULL));
+    TextEditor *editor = TEXT_EDITOR(g_object_new(text_editor_get_type(), NULL));
+    my_titlebar_set_dpi_scale(editor->header, dpi_value);
+    return editor;
 }
 
 void text_editor_save_config(TextEditor *self)

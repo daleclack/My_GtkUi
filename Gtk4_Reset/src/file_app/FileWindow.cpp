@@ -366,7 +366,12 @@ static void file_window_class_init(FileWindowClass *klass)
     G_OBJECT_CLASS(klass)->dispose = file_window_dispose;
 }
 
-FileWindow *file_window_new(GtkWindow *win)
+FileWindow *file_window_new(GtkWindow *win, double dpi_value)
 {
-    return FILE_WINDOW(g_object_new(file_window_get_type(), "transient-for", win, NULL));
+    // Create window
+    FileWindow *window = FILE_WINDOW(g_object_new(file_window_get_type(), "transient-for", win, NULL));
+
+    // Set DPI Scale for titlebar and window
+    my_titlebar_set_dpi_scale(window->title_bar, dpi_value);
+    return window;
 }

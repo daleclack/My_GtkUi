@@ -760,8 +760,10 @@ static void my_media_player_class_init(MyMediaPlayerClass *klass)
     GTK_WINDOW_CLASS(klass)->close_request = my_media_player_close_request;
 }
 
-MyMediaPlayer *my_media_player_new()
+MyMediaPlayer *my_media_player_new(double dpi_value)
 {
     // Create a window for media player
-    return MYMEDIA_PLAYER(g_object_new(my_media_player_get_type(), NULL));
+    MyMediaPlayer *player = MYMEDIA_PLAYER(g_object_new(my_media_player_get_type(), NULL));
+    my_titlebar_set_dpi_scale(player->title_bar, dpi_value);
+    return player;
 }

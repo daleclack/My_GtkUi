@@ -36,8 +36,8 @@ void my_titlebar_set_dpi_scale(MyTitleBar *title_bar, double dpi_scale)
     gtk_widget_set_margin_top(title_bar->btn_mini, 2 * dpi_scale);
 
     // Image size of the buttons
-    gtk_image_set_pixel_size(GTK_IMAGE(title_bar->img_close), 12 * dpi_scale);
-    gtk_image_set_pixel_size(GTK_IMAGE(title_bar->img_mini), 12 * dpi_scale);
+    gtk_image_set_pixel_size(GTK_IMAGE(title_bar->img_close), 14 * dpi_scale);
+    gtk_image_set_pixel_size(GTK_IMAGE(title_bar->img_mini), 14 * dpi_scale);
 }
 
 void _my_titlebar_set_window(MyTitleBar *self, GtkWidget *window)

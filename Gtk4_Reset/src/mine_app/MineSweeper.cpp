@@ -398,7 +398,9 @@ static void mine_sweeper_class_init(MineSweeperClass *klass)
 {
 }
 
-MineSweeper *mine_sweeper_new()
+MineSweeper *mine_sweeper_new(double dpi_value)
 {
-    return MINE_SWEEPER(g_object_new(mine_sweeper_get_type(), NULL));
+    MineSweeper * app = MINE_SWEEPER(g_object_new(mine_sweeper_get_type(), NULL));
+    my_titlebar_set_dpi_scale(app->title_bar, dpi_value);
+    return app;
 }

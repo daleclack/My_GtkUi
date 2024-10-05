@@ -171,7 +171,9 @@ static void calc_app_class_init(CalcAppClass *klass)
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass), CalcApp, btnpow);
 }
 
-CalcApp *calc_app_new()
+CalcApp *calc_app_new(double dpi_value)
 {
-    return CALC_APP(g_object_new(calc_app_get_type(), NULL));
+    CalcApp *app = CALC_APP(g_object_new(calc_app_get_type(), NULL));
+    my_titlebar_set_dpi_scale(app->title_bar, dpi_value);
+    return app;
 }

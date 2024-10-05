@@ -225,7 +225,9 @@ static void image_app_class_init(ImageAppClass *klass)
 {
 }
 
-ImageApp *image_app_new()
+ImageApp *image_app_new(double dpi_value)
 {
-    return IMAGE_APP(g_object_new(image_app_get_type(), NULL));
+    ImageApp *app = IMAGE_APP(g_object_new(image_app_get_type(), NULL));
+    my_titlebar_set_dpi_scale(app->title_bar, dpi_value);
+    return app;
 }

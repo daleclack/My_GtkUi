@@ -114,7 +114,9 @@ static void game_app_class_init(GameAppClass *klass)
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass), GameApp, btn_exit);
 }
 
-GameApp *game_app_new()
+GameApp *game_app_new(double dpi_value)
 {
-    return GAME_APP(g_object_new(game_app_get_type(), NULL));
+    GameApp *app = GAME_APP(g_object_new(game_app_get_type(), NULL));
+    my_titlebar_set_dpi_scale(app->title_bar, dpi_value);
+    return app;
 }

@@ -4,7 +4,7 @@
 
 G_DECLARE_FINAL_TYPE(FileWindow, file_window, FILE, WINDOW, GtkApplicationWindow)
 
-FileWindow *file_window_new(GtkWindow *win);
+FileWindow *file_window_new(GtkWindow *win, double dpi_value);
 
 void home_clicked(GtkWidget *widget, FileWindow *win);
 

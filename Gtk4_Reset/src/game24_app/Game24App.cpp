@@ -170,8 +170,10 @@ static void game24_app_class_init(Game24AppClass *klass)
     gtk_widget_class_bind_template_child(GTK_WIDGET_CLASS(klass), Game24App, btnright);
 }
 
-Game24App *game24_app_new()
+Game24App *game24_app_new(double dpi_value)
 {
     // Create main window
-    return GAME24_APP(g_object_new(game24_app_get_type(), NULL));
+    Game24App * app = GAME24_APP(g_object_new(game24_app_get_type(), NULL));
+    my_titlebar_set_dpi_scale(app->title_bar, dpi_value);
+    return app;
 }
