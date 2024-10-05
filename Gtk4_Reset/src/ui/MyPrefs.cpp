@@ -858,6 +858,7 @@ static void my_prefs_init(MyPrefs *self)
     // Initalize window
     self->title_bar = my_titlebar_new();
     my_titlebar_set_window(self->title_bar, self);
+    my_titlebar_set_dpi_scale(self->title_bar, dpi_values[self->dpi_set]);
     gtk_window_set_default_size(GTK_WINDOW(self), 800, 450);
     gtk_window_set_icon_name(GTK_WINDOW(self), "My_GtkUI");
     gtk_window_set_title(GTK_WINDOW(self), "Preferences");

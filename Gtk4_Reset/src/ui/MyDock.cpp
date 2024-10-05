@@ -47,8 +47,8 @@ struct _MyDock
         *padgame, *padimage, *padnote, *padedit, *padvlc, *padvlc_win32,
         *padrun, *padset, *padgame24, *padcalc, *padmine, *padmedia;
     GtkWidget *padabout_image, *padaud_image, *paddraw_image, *padfile_image, // Launchpad icon images
-        *padgedit_image, *padgame_image, *padimage_image, *padnote_image, 
-        *padedit_image, *padvlc_image, *padvlc_win32_image, *padrun_image, 
+        *padgedit_image, *padgame_image, *padimage_image, *padnote_image,
+        *padedit_image, *padvlc_image, *padvlc_win32_image, *padrun_image,
         *padset_image, *padgame24_image, *padcalc_image, *padmine_image, *padmedia_image;
     PadPage current_page;
     GtkBuilder *menu_builder;
@@ -823,6 +823,19 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->padset, "clicked", G_CALLBACK(padset_clicked), self);
     g_signal_connect(self->prefs_win, "close-request", G_CALLBACK(prefs_win_closed), self);
 
+    // Add finder
+    self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    gtk_box_append(GTK_BOX(self->finder_box), self->finder);
+
+    // Apply DPI Setting for the dock and the finder after create the prefs window
+    double dpi_value = my_prefs_get_dpi_value(self->prefs_win);
+    my_dock_apply_dpi(self, dpi_value);
+    my_finder_apply_dpi(MY_FINDER(self->finder), dpi_value);
+
+    /*
+        Create Other windows
+        The DPI Scale value will be applied with the creation of the windows
+    */
     // Create File Browser Window
     self->file_win = file_window_new(self->parent_win);
     g_signal_connect(self->btnfiles, "clicked", G_CALLBACK(btnfiles_clicked), self);
@@ -887,13 +900,10 @@ static void my_dock_init(MyDock *self)
     g_signal_connect(self->padvlc_win32, "clicked", G_CALLBACK(padvlc_win32), self);
     g_signal_connect(self->padnote, "clicked", G_CALLBACK(padnote_clicked), self);
 
-    // Add finder
-    self->finder = my_finder_new(GTK_ORIENTATION_HORIZONTAL, 5);
-    gtk_box_append(GTK_BOX(self->finder_box), self->finder);
-
-    // Pack widgets for dock
-
-    // Dock position and mode
+    /*
+        Pack widgets for dock
+        The dock position and the expand setting should be applied here
+    */
     DockPos dock_pos = my_prefs_get_dock_pos(self->prefs_win);
     switch (dock_pos)
     {
@@ -943,11 +953,6 @@ static void my_dock_init(MyDock *self)
     }
     // Add Style for finder
     my_finder_add_style(MY_FINDER(self->finder), provider);
-
-    // Apply DPI Setting for the dock and the finder
-    double dpi_value = my_prefs_get_dpi_value(self->prefs_win);
-    my_dock_apply_dpi(self, dpi_value);
-    my_finder_apply_dpi(MY_FINDER(self->finder), dpi_value);
 
     // Add Apps grid
     // To make the default view layout same as the addon apps view
