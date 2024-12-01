@@ -215,13 +215,17 @@ static void images_list_default(GListStore *store1)
 
     // Append default items
     g_list_store_append(store1,
-                        my_item_new("final_approach.png", ":1", TRUE));
+                        my_item_new("c182rg_1.png", ":1", TRUE));
     g_list_store_append(store1,
-                        my_item_new("img7.png", ":2", TRUE));
+                        my_item_new("c182rg_2.png", ":2", TRUE));
     g_list_store_append(store1,
-                        my_item_new("winpe.png", ":3", TRUE));
+                        my_item_new("final_approach.png", ":3", TRUE));
     g_list_store_append(store1,
-                        my_item_new("shizuku.png", ":4", TRUE));
+                        my_item_new("img7.png", ":4", TRUE));
+    g_list_store_append(store1,
+                        my_item_new("winpe.png", ":5", TRUE));
+    g_list_store_append(store1,
+                        my_item_new("shizuku.png", ":6", TRUE));
 }
 
 static void update_images_list(MyPrefs *prefs1)
@@ -413,9 +417,9 @@ static void my_prefs_load_config(MyPrefs *self)
         self->width = 1024;
         self->height = 576;
         self->current_folder_index = 0;
-        self->current_image_index = 3;
+        self->current_image_index = 0;
         self->dock_pos = DockPos::Pos_Left;
-        strncpy(self->image_file_name, ":4", PATH_MAX);
+        strncpy(self->image_file_name, ":1", PATH_MAX);
         self->dpi_set = 1;
         self->res_set = 1;
     }
@@ -558,15 +562,21 @@ static void load_image(const char *file_name, int image_item_index,
         switch (file_name[1])
         {
         case '1':
-            update_resource_image(prefs, "/org/gtk/daleclack/final_approach.png");
+            update_resource_image(prefs, "/org/gtk/daleclack/c182rg_1.png");
             break;
         case '2':
-            update_resource_image(prefs, "/org/gtk/daleclack/img7.png");
+            update_resource_image(prefs, "/org/gtk/daleclack/c182rg_2.png");
             break;
         case '3':
-            update_resource_image(prefs, "/org/gtk/daleclack/winpe.png");
+            update_resource_image(prefs, "/org/gtk/daleclack/final_approach.png");
             break;
         case '4':
+            update_resource_image(prefs, "/org/gtk/daleclack/img7.png");
+            break;
+        case '5':
+            update_resource_image(prefs, "/org/gtk/daleclack/winpe.png");
+            break;
+        case '6':
             update_resource_image(prefs, "/org/gtk/daleclack/shizuku.png");
             break;
         }

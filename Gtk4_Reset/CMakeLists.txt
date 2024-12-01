@@ -1,5 +1,5 @@
 set(CMAKE_CXX_STANDARD 17)
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.10.0)
 project(My_GtkUI VERSION 7.8.0)
 
 #Add GCR_CMake
@@ -51,6 +51,8 @@ set(RESOURCE_LIST
     STRIPBLANKS win_input.ui
     STRIPBLANKS scoreswin.ui
     STRIPBLANKS mine_menu.xml
+    c182rg_1.png
+    c182rg_2.png
     shizuku.png
     final_approach.png
     img7.png
@@ -214,6 +216,7 @@ endif(WIN32)
 
 #Add command to generate .gitignore
 add_custom_command(TARGET ${PROJECT_NAME} 
+                   PRE_BUILD
                    COMMAND echo \"*\" > ${CMAKE_BINARY_DIR}/.gitignore
                    COMMAND echo \"**/*\" > ${CMAKE_BINARY_DIR}/.hgignore)
 
