@@ -38,6 +38,7 @@ set(RESOURCE_LIST
     STRIPBLANKS cambalache/mainwin.ui
     STRIPBLANKS cambalache/mypanel.ui
     STRIPBLANKS cambalache/overlaywin.ui
+    STRIPBLANKS mainmenu.xml
     c182rg_1.png
     c182rg_2.png
     final_approach.png

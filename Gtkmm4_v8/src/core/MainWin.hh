@@ -20,6 +20,14 @@ private:
     // Builder for the window
     Glib::RefPtr<Gtk::Builder> ref_builder;
 
+    // The context menu
+    Gtk::PopoverMenu context_menu;
+    Glib::RefPtr<Gtk::Builder> menu_builder;
+
+    // Gesture for context menu
+    Glib::RefPtr<Gtk::GestureClick> gesture_click;
+    void gesture_pressed(int n_press, double x, double y);
+
     // Other widgets
     MyStack main_stack;
 };

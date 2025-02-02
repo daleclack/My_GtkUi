@@ -21,6 +21,27 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     stack->set_halign(Gtk::Align::FILL);
     stack->set_valign(Gtk::Align::FILL);
     main_overlay->add_overlay(*stack);
+
+    // Initalize the context menu
+    menu_builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/mainmenu.xml");
+    auto menu = menu_builder->get_object<Gio::MenuModel>("model");
+    context_menu.set_menu_model(menu);
+    context_menu.set_parent(*main_overlay);
+    context_menu.set_has_arrow(false);
+    context_menu.present();
+
+    // Add gesture for the right click
+    gesture_click = Gtk::GestureClick::create();
+    main_overlay->add_controller(gesture_click);
+    gesture_click->set_button(GDK_BUTTON_SECONDARY);
+    gesture_click->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_pressed));
+}
+
+void MainWin::gesture_pressed(int n_press, double x, double y)
+{
+    // Show the context menu at the position of the right click.
+    context_menu.set_pointing_to(Gdk::Rectangle(x, y, 1, 1));
+    context_menu.popup();
 }
 
 MainWin *MainWin::create()

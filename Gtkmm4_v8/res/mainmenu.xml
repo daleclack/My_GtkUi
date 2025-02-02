@@ -24,7 +24,7 @@
                 <attribute name="label">Automater</attribute>
             </item>
             <submenu>
-                <attribute name="label">Automater method</attribute>
+                <attribute name="label">Sort method</attribute>
                 <item>
                     <attribute name="label">Name</attribute>
                 </item>
@@ -41,7 +41,7 @@
                     <attribute name="label">Kind</attribute>
                 </item>
                 <item>
-                    <attribute name="label">Label</attribute>
+                    <attribute name="label">Name</attribute>
                 </item>
             </submenu>
             <item>
