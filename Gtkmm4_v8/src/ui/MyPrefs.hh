@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "MyHeader.hh"
 // #include "MainWin.hh"    // can't include this because of circular dependency
 
 class MyPrefs : public Gtk::Window
@@ -18,5 +19,8 @@ private:
     // Child widgets
     Gtk::StackSwitcher *back_switcher;
     Gtk::Stack *back_stack;
+
+    // Header bar
+    MyHeader header;
     // MainWin *main_win;
 };

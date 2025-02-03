@@ -6,6 +6,10 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     Gtk::Window(cobject),
     ref_builder(refGlade)
 {
+    // Set window titlebar
+    header.set_ctrl_window(this);
+    header.set_title_bar(*this);
+
     // Get widgets from builder
     back_stack = ref_builder->get_widget<Gtk::Stack>("back_stack");
     back_switcher = ref_builder->get_widget<Gtk::StackSwitcher>("back_switcher");
