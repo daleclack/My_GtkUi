@@ -30,4 +30,9 @@ private:
 
     // Other widgets
     MyStack main_stack;
+
+    // Signal Handlers
+    void about_activate();
+    void logout_activate();
+    void shutdown_activate();
 };

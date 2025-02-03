@@ -35,6 +35,11 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     main_overlay->add_controller(gesture_click);
     gesture_click->set_button(GDK_BUTTON_SECONDARY);
     gesture_click->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_pressed));
+
+    // Add actions
+    add_action("about", sigc::mem_fun(*this, &MainWin::about_activate));
+    add_action("logout", sigc::mem_fun(*this, &MainWin::logout_activate));
+    add_action("shutdown", sigc::mem_fun(*this, &MainWin::shutdown_activate));
 }
 
 void MainWin::gesture_pressed(int n_press, double x, double y)
@@ -55,4 +60,58 @@ MainWin *MainWin::create()
     // Get the MainWin object from the builder and return it.
     main_win = Gtk::Builder::get_widget_derived<MainWin>(builder, "mainwin");
     return main_win;
+}
+
+void MainWin::about_activate()
+{
+    // Authors information
+    const char *authors[] = {
+        "Dale Clack",
+        "GCR_CMake on github https://github.com/Makman2/GCR_CMake",
+        NULL};
+
+    // Version information
+    char *version;
+    version = g_strdup_printf("8.0 Alpha\nRunning Against: Gtkmm %d.%d.%d",
+                              GTKMM_MAJOR_VERSION,
+                              GTKMM_MINOR_VERSION,
+                              GTKMM_MICRO_VERSION);
+
+    // Get Year information
+    time_t t;
+    t = time(NULL);
+    struct tm *local;
+    local = localtime(&t);
+
+    // Copyright
+    char *copyright;
+    copyright = g_strdup_printf("© 2019—%04d The Xe Project", local->tm_year + 1900);
+
+    // Show the about dialog
+    gtk_show_about_dialog(GTK_WINDOW(gobj()),
+                          "program-name", "My GtkUI Techinal Alpha",
+                          "version", version,
+                          "copyright", copyright,
+                          "comments", "A program that simulates desktop, inspired by lomiri desktop",
+                          "authors", authors,
+                          "license-type", GTK_LICENSE_GPL_3_0,
+                          "logo-icon-name", "My_GtkUI",
+                          "title", "About My GtkUI Mac Version",
+                          NULL, nullptr);
+
+    // Free Memory
+    g_free(version);
+    g_free(copyright);
+}
+
+void MainWin::logout_activate()
+{
+    // Change the page to the logout page.
+    main_stack.m_stack->set_visible_child("login_page");
+}
+
+void MainWin::shutdown_activate()
+{
+    // Destroy the main window to quit the application.
+    destroy();
 }

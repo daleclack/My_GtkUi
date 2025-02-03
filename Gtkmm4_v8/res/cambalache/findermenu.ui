@@ -44,8 +44,41 @@
                       <object class="GtkBox">
                         <property name="orientation">vertical</property>
                         <child>
+                          <object class="GtkButton" id="menu_about">
+                            <property name="action-name">win.about</property>
+                            <property name="label">About</property>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkButton">
-                            <property name="label">Test1</property>
+                            <property name="label">My GtkUI Help</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="label">Report a bug</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="menu_set">
+                            <property name="label">System Settings</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="menu_logout">
+                            <property name="action-name">win.logout</property>
+                            <property name="label">Log Out</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="label">Suspend</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="menu_shut">
+                            <property name="action-name">win.shutdown</property>
+                            <property name="label">Shutdown</property>
                           </object>
                         </child>
                       </object>

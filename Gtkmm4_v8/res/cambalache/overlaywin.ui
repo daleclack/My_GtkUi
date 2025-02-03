@@ -11,6 +11,7 @@
         <property name="child">
           <object class="GtkOverlay" id="login_page"/>
         </property>
+        <property name="name">login_page</property>
       </object>
     </child>
     <child>
@@ -60,6 +61,7 @@
             </child>
           </object>
         </property>
+        <property name="name">main_page</property>
       </object>
     </child>
   </object>
