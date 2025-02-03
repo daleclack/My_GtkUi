@@ -16,6 +16,7 @@ private:
     Gtk::Button *btnstart;
     Gtk::Stack *apps_stack;
     Gtk::Box *apps_box;
+    Gtk::ScrolledWindow *apps_sw;
 
     // The App Menu
     AppMenu app_menu;

@@ -22,7 +22,133 @@
           </object>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="sw_apps">
+          <object class="GtkScrolledWindow" id="apps_sw">
+            <property name="child">
+              <object class="GtkViewport">
+                <property name="child">
+                  <object class="GtkBox" id="icons_box">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkButton" id="btnfiles">
+                        <property name="child">
+                          <object class="GtkImage" id="image3">
+                            <property name="icon-name">file-app</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btndraw">
+                        <property name="child">
+                          <object class="GtkImage" id="image2">
+                            <property name="icon-name">drawing_app</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btncalc">
+                        <property name="child">
+                          <object class="GtkImage" id="image25">
+                            <property name="icon-name">calcapp</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btngame">
+                        <property name="child">
+                          <object class="GtkImage" id="image4">
+                            <property name="icon-name">game</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btnedit">
+                        <property name="child">
+                          <object class="GtkImage" id="image5">
+                            <property name="icon-name">my_textedit</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btnimage">
+                        <property name="child">
+                          <object class="GtkImage" id="image6">
+                            <property name="icon-name">image_app</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btnset">
+                        <property name="child">
+                          <object class="GtkImage" id="image7">
+                            <property name="icon-name">my_prefs</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btngame24">
+                        <property name="child">
+                          <object class="GtkImage" id="image23">
+                            <property name="icon-name">24game</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btnmine">
+                        <property name="child">
+                          <object class="GtkImage" id="image26">
+                            <property name="icon-name">mines_app</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </property>
             <property name="hscrollbar-policy">never</property>
             <property name="vexpand">True</property>
             <property name="vexpand-set">True</property>

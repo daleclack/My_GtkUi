@@ -8,9 +8,14 @@ MyPanel::MyPanel()
     btnstart = builder->get_widget<Gtk::Button>("btnstart");
     apps_stack = builder->get_widget<Gtk::Stack>("apps_stack");
     apps_box = builder->get_widget<Gtk::Box>("apps_box");
+    apps_sw = builder->get_widget<Gtk::ScrolledWindow>("apps_sw");
 
     // Connect signal handlers
     btnstart->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnstart_clicked));
+
+    // Hide the scrollbar of scrolled window
+    auto scrollbar = apps_sw->get_vscrollbar();
+    scrollbar->set_visible(false);
 
     // Add apps view
     apps_box->append(app_menu);
