@@ -36,8 +36,12 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     gesture_click->set_button(GDK_BUTTON_SECONDARY);
     gesture_click->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_pressed));
 
+    // Create Preferences window
+    prefs_window = MyPrefs::create(*this);
+
     // Add actions
     add_action("about", sigc::mem_fun(*this, &MainWin::about_activate));
+    add_action("back", sigc::mem_fun(*this, &MainWin::back_activate));
     add_action("logout", sigc::mem_fun(*this, &MainWin::logout_activate));
     add_action("shutdown", sigc::mem_fun(*this, &MainWin::shutdown_activate));
 }
@@ -114,4 +118,9 @@ void MainWin::shutdown_activate()
 {
     // Destroy the main window to quit the application.
     destroy();
+}
+
+void MainWin::back_activate()
+{
+    prefs_window->present();
 }

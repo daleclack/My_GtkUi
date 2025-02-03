@@ -62,6 +62,7 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="menu_set">
+                            <property name="action-name">win.back</property>
                             <property name="label">System Settings</property>
                           </object>
                         </child>

@@ -29,11 +29,12 @@ link_directories (${GTKMM4_LIBRARY_DIRS})
 
 #Source files
 set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc 
-    src/ui/MyPanel.cc src/ui/MyFinder.cc src/ui/AppMenu.cc)
+    src/core/MyPrefs.cc src/ui/MyPanel.cc src/ui/MyFinder.cc src/ui/AppMenu.cc)
 
 #Compile Resource
 
 set(RESOURCE_LIST
+    STRIPBLANKS cambalache/background.ui
     STRIPBLANKS cambalache/findermenu.ui
     STRIPBLANKS cambalache/mainwin.ui
     STRIPBLANKS cambalache/mypanel.ui

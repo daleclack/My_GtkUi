@@ -31,7 +31,7 @@
                     <child>
                       <object class="GtkButton" id="btnfiles">
                         <property name="child">
-                          <object class="GtkImage" id="image3">
+                          <object class="GtkImage" id="imagefiles">
                             <property name="icon-name">file-app</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -44,7 +44,7 @@
                     <child>
                       <object class="GtkButton" id="btndraw">
                         <property name="child">
-                          <object class="GtkImage" id="image2">
+                          <object class="GtkImage" id="imagedraw">
                             <property name="icon-name">drawing_app</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -57,7 +57,7 @@
                     <child>
                       <object class="GtkButton" id="btncalc">
                         <property name="child">
-                          <object class="GtkImage" id="image25">
+                          <object class="GtkImage" id="imagecalc">
                             <property name="icon-name">calcapp</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -70,7 +70,7 @@
                     <child>
                       <object class="GtkButton" id="btngame">
                         <property name="child">
-                          <object class="GtkImage" id="image4">
+                          <object class="GtkImage" id="imagegame">
                             <property name="icon-name">game</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -83,7 +83,7 @@
                     <child>
                       <object class="GtkButton" id="btnedit">
                         <property name="child">
-                          <object class="GtkImage" id="image5">
+                          <object class="GtkImage" id="imageedit">
                             <property name="icon-name">my_textedit</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -94,9 +94,9 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btnimage">
+                      <object class="GtkButton" id="btnviewer">
                         <property name="child">
-                          <object class="GtkImage" id="image6">
+                          <object class="GtkImage" id="imageviewer">
                             <property name="icon-name">image_app</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -109,7 +109,7 @@
                     <child>
                       <object class="GtkButton" id="btnset">
                         <property name="child">
-                          <object class="GtkImage" id="image7">
+                          <object class="GtkImage" id="imageset">
                             <property name="icon-name">my_prefs</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -122,7 +122,7 @@
                     <child>
                       <object class="GtkButton" id="btngame24">
                         <property name="child">
-                          <object class="GtkImage" id="image23">
+                          <object class="GtkImage" id="imagegame24">
                             <property name="icon-name">24game</property>
                             <property name="pixel-size">48</property>
                           </object>
@@ -135,7 +135,7 @@
                     <child>
                       <object class="GtkButton" id="btnmine">
                         <property name="child">
-                          <object class="GtkImage" id="image26">
+                          <object class="GtkImage" id="imagemine">
                             <property name="icon-name">mines_app</property>
                             <property name="pixel-size">48</property>
                           </object>
