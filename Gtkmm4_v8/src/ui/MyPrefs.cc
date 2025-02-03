@@ -7,6 +7,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     ref_builder(refGlade)
 {
     // Set window titlebar
+    set_title("Preferences");
     header.set_ctrl_window(this);
     header.set_title_bar(*this);
 
@@ -32,6 +33,5 @@ MyPrefs *MyPrefs::create(Gtk::Window &parent)
 
     // Make the window transient for main window
     prefs_win->set_transient_for(parent);
-    // prefs_win->main_win = win; // Save main window to control
     return prefs_win;
 }

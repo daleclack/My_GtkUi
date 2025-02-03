@@ -22,5 +22,4 @@ private:
 
     // Header bar
     MyHeader header;
-    // MainWin *main_win;
 };

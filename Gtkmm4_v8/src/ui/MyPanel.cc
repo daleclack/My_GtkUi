@@ -1,4 +1,10 @@
 #include "MyPanel.hh"
+#include <iostream>
+
+void padbtn_clicked(guint id)
+{
+    std::cout << "Clicked button with id: " << id << std::endl;
+}
 
 MyPanel::MyPanel()
 {
@@ -10,8 +16,40 @@ MyPanel::MyPanel()
     apps_box = builder->get_widget<Gtk::Box>("apps_box");
     apps_sw = builder->get_widget<Gtk::ScrolledWindow>("apps_sw");
 
+    // Get widgets for task manager
+    btnfiles = builder->get_widget<Gtk::Button>("btnfiles");
+    imagefiles = builder->get_widget<Gtk::Image>("imagefiles");
+    btndraw = builder->get_widget<Gtk::Button>("btndraw");
+    imagedraw = builder->get_widget<Gtk::Image>("imagedraw");
+    btncalc = builder->get_widget<Gtk::Button>("btncalc");
+    imagecalc = builder->get_widget<Gtk::Image>("imagecalc");
+    btngame = builder->get_widget<Gtk::Button>("btngame");
+    imagegame = builder->get_widget<Gtk::Image>("imagegame");
+    btnedit = builder->get_widget<Gtk::Button>("btnedit");
+    imageedit = builder->get_widget<Gtk::Image>("imageedit");
+    btnviewer = builder->get_widget<Gtk::Button>("btnviewer");
+    imageviewer = builder->get_widget<Gtk::Image>("imageviewer");
+    btnset = builder->get_widget<Gtk::Button>("btnset");
+    imageset = builder->get_widget<Gtk::Image>("imageset");
+    btngame24 = builder->get_widget<Gtk::Button>("btngame24");
+    imagegame24 = builder->get_widget<Gtk::Image>("imagegame24");
+    btnmine = builder->get_widget<Gtk::Button>("btnmine");
+    imagemine = builder->get_widget<Gtk::Image>("imagemine");
+
     // Connect signal handlers
     btnstart->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnstart_clicked));
+    btnfiles->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnfiles_clicked));
+    btndraw->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btndraw_clicked));
+    btncalc->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btncalc_clicked));
+    btngame->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame_clicked));
+    btnedit->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnedit_clicked));
+    btnviewer->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnviewer_clicked));
+    btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnset_clicked));
+    btngame24->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame24_clicked));
+    btnmine->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnmine_clicked));
+
+    // Bind callback for the Apps Menu
+    app_menu.set_callback(padbtn_clicked);
 
     // Hide the scrollbar of scrolled window
     auto scrollbar = apps_sw->get_vscrollbar();
@@ -33,4 +71,39 @@ void MyPanel::btnstart_clicked()
     {
         apps_stack->set_visible_child("page1");
     }
+}
+
+void MyPanel::btnfiles_clicked()
+{
+}
+
+void MyPanel::btndraw_clicked()
+{
+}
+
+void MyPanel::btncalc_clicked()
+{
+}
+void MyPanel::btngame_clicked()
+{
+}
+
+void MyPanel::btnedit_clicked()
+{
+}
+
+void MyPanel::btnviewer_clicked()
+{
+}
+
+void MyPanel::btnset_clicked()
+{
+}
+
+void MyPanel::btngame24_clicked()
+{
+}
+
+void MyPanel::btnmine_clicked()
+{
 }

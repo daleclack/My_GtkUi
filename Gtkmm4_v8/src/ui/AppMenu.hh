@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+typedef void (*pfun)(guint id);
 
 // List item for inner app
 class AppItemIn : public Glib::Object
@@ -107,6 +108,7 @@ class AppMenu : public Gtk::Box
 {
 public:
     AppMenu();
+    void set_callback(pfun callback);
 
 private:
     // Child widgets
@@ -134,4 +136,7 @@ private:
     void ext_setup(const Glib::RefPtr<Gtk::ListItem> &item);
     void ext_bind(const Glib::RefPtr<Gtk::ListItem> &item);
     void button_clicked(AppButton *btn);
+
+    // Callback function for internal apps
+    pfun internal_callback;
 };

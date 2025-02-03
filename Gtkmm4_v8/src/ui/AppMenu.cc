@@ -1,5 +1,4 @@
 #include "AppMenu.hh"
-#include <iostream>
 
 AppMenu::AppMenu()
 {
@@ -127,9 +126,16 @@ void AppMenu::button_clicked(AppButton *btn)
 {
     if (btn->is_internal())
     {
-        std::cout << "Internal App: " << btn->get_app_id() << std::endl;
+        // std::cout << "Internal App: " << btn->get_app_id() << std::endl;
+        internal_callback(btn->get_app_id());
     }else{
         auto app_info = btn->get_app_info();
         app_info->launch(NULL);
     }
+}
+
+// Set Callback function
+void AppMenu::set_callback(pfun callback)
+{
+    internal_callback = callback;
 }
