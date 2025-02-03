@@ -38,4 +38,6 @@ private:
     void btnset_clicked();
     void btngame24_clicked();
     void btnmine_clicked();
+
+    static void padbtn_clicked(guint id);
 };

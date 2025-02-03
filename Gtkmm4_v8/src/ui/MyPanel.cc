@@ -1,10 +1,10 @@
 #include "MyPanel.hh"
 #include <iostream>
 
-void padbtn_clicked(guint id)
-{
-    std::cout << "Clicked button with id: " << id << std::endl;
-}
+// void padbtn_clicked(guint id)
+// {
+//     std::cout << "Clicked button with id: " << id << std::endl;
+// }
 
 MyPanel::MyPanel()
 {
@@ -106,4 +106,9 @@ void MyPanel::btngame24_clicked()
 
 void MyPanel::btnmine_clicked()
 {
+}
+
+void MyPanel::padbtn_clicked(guint id)
+{
+    std::cout << "Clicked button with id: " << id << std::endl;
 }
