@@ -49,6 +49,7 @@ MyFinder::MyFinder()
 
     // Add timer and other signals
     timer = Glib::signal_timeout().connect(sigc::mem_fun(*this, &MyFinder::timeout_func), 500);
+    btn_time.signal_clicked().connect(sigc::mem_fun(*this, &MyFinder::btntime_clicked));
     btn_menu.signal_clicked().connect(sigc::mem_fun(*this, &MyFinder::btnmenu_clicked));
 }
 
@@ -62,6 +63,20 @@ void MyFinder::btnmenu_clicked()
     }else{
         menu_stack->set_visible_child("page1");
     }
+    inner_stack->set_visible_child("menu_page");
+}
+
+void MyFinder::btntime_clicked()
+{
+    // Change the visiblity of the menu
+    auto page_name = menu_stack->get_visible_child_name();
+    if (page_name == "page1")
+    {
+        menu_stack->set_visible_child("page2");
+    }else{
+        menu_stack->set_visible_child("page1");
+    }
+    inner_stack->set_visible_child("time_page");
 }
 
 bool MyFinder::timeout_func()

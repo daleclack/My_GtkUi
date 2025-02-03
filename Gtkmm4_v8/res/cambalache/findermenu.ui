@@ -35,6 +35,7 @@
                         </child>
                       </object>
                     </property>
+                    <property name="name">time_page</property>
                     <property name="title">Date and Time</property>
                   </object>
                 </child>
@@ -83,6 +84,7 @@
                         </child>
                       </object>
                     </property>
+                    <property name="name">menu_page</property>
                     <property name="title">System</property>
                   </object>
                 </child>

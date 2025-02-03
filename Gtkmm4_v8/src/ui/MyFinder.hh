@@ -29,4 +29,5 @@ private:
     // Signal handlers
     bool timeout_func();
     void btnmenu_clicked();
+    void btntime_clicked();
 };
