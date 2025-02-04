@@ -1,5 +1,8 @@
 #include "MyPrefs.hh"
 #include "MainWin.hh"
+#include "../tomlplusplus/toml.hpp"
+
+#define INTERNAL_IMAGE_COUNT 6
 
 MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade)
     : Glib::ObjectBase("MyPrefs"),
@@ -60,9 +63,15 @@ void MyPrefs::images_view_bind(const Glib::RefPtr<Gtk::ListItem> &item)
     // Get the image path
     auto path = images_store->get_string(position);
     auto image_btn = dynamic_cast<PrefsBtn *>(item->get_child());
-    image_btn->set_image(path);
+    if (position < INTERNAL_IMAGE_COUNT)
+    {
+        image_btn->set_image_from_resource(path);
+    }else{
+        image_btn->set_image_from_file(path);
+    }
     image_btn->signal_clicked().connect(sigc::bind(
         sigc::mem_fun(*this, &MyPrefs::image_btn_clicked), image_btn));
+    image_btn->set_image_id(position);
 }
 
 void MyPrefs::set_background_widget(Gtk::Picture *picture)
@@ -75,6 +84,9 @@ void MyPrefs::image_btn_clicked(PrefsBtn *btn)
     // Get image from the button
     auto paintable = btn->get_paintable();
     background_widget->set_paintable(paintable);
+
+    // Update selection of image
+    images_selection->set_selected(btn->get_image_id());
 }
 
 MyPrefs *MyPrefs::create(Gtk::Window &parent)

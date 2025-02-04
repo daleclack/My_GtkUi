@@ -7,17 +7,24 @@
 class PrefsBtn : public Gtk::Button
 {
 public:
-    PrefsBtn(){
+    PrefsBtn()
+    {
         set_has_frame(false);
+        set_child(btn_img);
+        btn_img.set_pixel_size(160);
     }
 
     // Set image from file path or resource path
-    void set_image(Glib::ustring &path)
+    void set_image_from_resource(Glib::ustring &path)
     {
         // Gtk::Image btn_img;
         btn_img.set_from_resource(path);
-        set_child(btn_img);
-        btn_img.set_pixel_size(70);
+    }
+
+    void set_image_from_file(Glib::ustring &path)
+    {
+        // Use gobj() to get the underlying GtkWidget pointer
+        gtk_image_set_from_file(btn_img.gobj(), path.c_str());
     }
 
     Glib::RefPtr<Gdk::Paintable> get_paintable()
@@ -25,8 +32,13 @@ public:
         return btn_img.get_paintable();
     }
 
+    // Set and get image id
+    void set_image_id(guint id) { image_id = id; }
+    guint get_image_id() { return image_id; }
+
 private:
     Gtk::Image btn_img;
+    guint image_id;
 };
 
 class MyPrefs : public Gtk::Window
