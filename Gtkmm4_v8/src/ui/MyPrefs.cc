@@ -1,6 +1,8 @@
 #include "MyPrefs.hh"
 #include "MainWin.hh"
 #include "../tomlplusplus/toml.hpp"
+#include "image_types.hh"
+#include <iostream>
 
 #define INTERNAL_IMAGE_COUNT 6
 
@@ -47,6 +49,11 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     back_frame->set_child(images_scroll);
 
     back_switcher->set_stack(*back_stack);
+
+    // Connect signals
+    btn_add->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnadd_clicked));
+    btn_remove->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
+    btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
 }
 
 void MyPrefs::images_view_setup(const Glib::RefPtr<Gtk::ListItem> &item)
@@ -66,7 +73,9 @@ void MyPrefs::images_view_bind(const Glib::RefPtr<Gtk::ListItem> &item)
     if (position < INTERNAL_IMAGE_COUNT)
     {
         image_btn->set_image_from_resource(path);
-    }else{
+    }
+    else
+    {
         image_btn->set_image_from_file(path);
     }
     image_btn->signal_clicked().connect(sigc::bind(
@@ -87,6 +96,73 @@ void MyPrefs::image_btn_clicked(PrefsBtn *btn)
 
     // Update selection of image
     images_selection->set_selected(btn->get_image_id());
+}
+
+void MyPrefs::btnadd_clicked()
+{
+    // Open a file chooser to open image
+    auto dialog = Gtk::FileDialog::create();
+
+    // Add filter
+    auto filters = Gio::ListStore<Gtk::FileFilter>::create();
+    auto filter_image = Gtk::FileFilter::create();
+    for (auto &ext : supported_globs)
+    {
+        filter_image->add_pattern(ext);
+    }
+    filter_image->set_name("Image Files");
+    filters->append(filter_image);
+
+    // Add filter for all files
+    auto filter_all = Gtk::FileFilter::create();
+    filter_all->add_pattern("*");
+    filter_all->set_name("All Files");
+    filters->append(filter_all);
+    dialog->set_filters(filters);
+
+    dialog->open(sigc::bind(
+        sigc::mem_fun(*this, &MyPrefs::file_dialog_finish), dialog));
+}
+
+void MyPrefs::file_dialog_finish(const Glib::RefPtr<Gio::AsyncResult> &result,
+                                 const Glib::RefPtr<Gtk::FileDialog> &file_dialog)
+{
+    // Get the file path
+    try
+    {
+        auto file = file_dialog->open_finish(result);
+        auto path = file->get_path();
+        images_store->append(path);
+    }
+    // If no file is selected, catch the exception and output information
+    catch (const Gtk::DialogError &ex)
+    {
+        std::cout << "No file selected." << "\n";
+    }
+    // Other exceptions
+    catch (const Glib::Error &err)
+    {
+        std::cout << "Unexpected exception. " << err.what() << std::endl;
+    }
+}
+
+// Remove selected image expect internal images
+void MyPrefs::btnremove_clicked()
+{
+    auto selected = images_selection->get_selected();
+    if (selected < INTERNAL_IMAGE_COUNT)
+        return;
+
+    images_store->remove(selected);
+}
+
+// Remove all user images
+void MyPrefs::btnremoveall_clicked()
+{
+    for (auto i = INTERNAL_IMAGE_COUNT - 1; i < images_store->get_n_items(); ++i)
+    {
+        images_store->remove(i);
+    }
 }
 
 MyPrefs *MyPrefs::create(Gtk::Window &parent)

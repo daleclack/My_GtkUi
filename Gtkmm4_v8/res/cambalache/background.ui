@@ -86,8 +86,65 @@
             <child>
               <object class="GtkStackPage">
                 <property name="child">
-                  <object class="GtkLabel">
-                    <property name="label">Page2</property>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label">Launcher Config</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="halign">start</property>
+                            <property name="hexpand">True</property>
+                            <property name="label">Enable workspaces</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSwitch"/>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="halign">start</property>
+                            <property name="hexpand">True</property>
+                            <property name="label">Always show launcher</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSwitch">
+                            <property name="active">True</property>
+                            <property name="state">True</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label">Icon Size:</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="scale_size">
+                        <property name="adjustment">
+                          <object class="GtkAdjustment">
+                            <property name="lower">20.0</property>
+                            <property name="page-increment">1.0</property>
+                            <property name="upper">120.0</property>
+                            <property name="value">48.0</property>
+                          </object>
+                        </property>
+                        <property name="digits">0</property>
+                        <property name="draw-value">True</property>
+                      </object>
+                    </child>
                   </object>
                 </property>
                 <property name="title">Launcher</property>
@@ -96,9 +153,7 @@
             <child>
               <object class="GtkStackPage">
                 <property name="child">
-                  <object class="GtkLabel">
-                    <property name="label">Page3</property>
-                  </object>
+                  <object class="GtkBox"/>
                 </property>
                 <property name="title">Display</property>
               </object>

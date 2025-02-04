@@ -97,6 +97,16 @@
         "stateset": "cpp",
         "observer_ptr": "cpp",
         "xlocale": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "format": "cpp",
+        "print": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__locale": "cpp",
+        "__node_handle": "cpp",
+        "__verbose_abort": "cpp",
+        "execution": "cpp",
+        "ios": "cpp",
+        "locale": "cpp"
     }
 }
