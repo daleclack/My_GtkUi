@@ -14,7 +14,7 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     main_background->set_keep_aspect_ratio(false);
     main_background->set_hexpand(true);
     main_background->set_vexpand(true);
-    main_background->set_resource("/org/gtk/daleclack/shizuku.png");
+    // main_background->set_resource("/org/gtk/daleclack/shizuku.png");
 
     // Add stack to the window
     Gtk::Stack *stack = main_stack.m_stack;

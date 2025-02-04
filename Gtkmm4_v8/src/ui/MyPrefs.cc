@@ -59,13 +59,14 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
 void MyPrefs::config_load()
 {
     // Load toml file
+    int selected = 0;
     std::fstream infile;
     infile.open("config.toml", std::ios_base::in);
     if (infile.is_open())
     {
         auto toml = toml::parse(infile);
         auto wallpapers = toml["main_config"]["file_paths"].as_array();
-        auto selected = toml["main_config"]["selected_image"].value_or(0);
+        selected = toml["main_config"]["selected_image"].value_or(0);
 
         // Load all custom images paths
         for (int i = 0; i < wallpapers->size(); ++i)
@@ -83,7 +84,15 @@ void MyPrefs::config_load()
         images_selection->set_selected(0);
     }
 
-    // Get selected button and update image
+    //Update image
+    if (selected < INTERNAL_IMAGE_COUNT)
+    {
+        auto res_name = images_store->get_string(selected);
+        background_widget->set_resource(res_name);
+    }else{
+        auto path = images_store->get_string(selected);
+        background_widget->set_filename(path);
+    }
 
     infile.close();
 }
