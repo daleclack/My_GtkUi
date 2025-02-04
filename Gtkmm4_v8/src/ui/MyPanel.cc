@@ -6,6 +6,8 @@
 //     std::cout << "Clicked button with id: " << id << std::endl;
 // }
 
+MyPanel *MyPanel::instance = nullptr;
+
 MyPanel::MyPanel()
 {
     // Get the panel widget
@@ -50,6 +52,7 @@ MyPanel::MyPanel()
 
     // Bind callback for the Apps Menu
     app_menu.set_callback(padbtn_clicked);
+    MyPanel::instance = this;
 
     // Hide the scrollbar of scrolled window
     auto scrollbar = apps_sw->get_vscrollbar();
@@ -111,4 +114,6 @@ void MyPanel::btnmine_clicked()
 void MyPanel::padbtn_clicked(guint id)
 {
     std::cout << "Clicked button with id: " << id << std::endl;
+    if (instance != nullptr)
+        std::cout << "Instance is not null" << std::endl;
 }

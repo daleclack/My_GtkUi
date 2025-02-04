@@ -39,5 +39,7 @@ private:
     void btngame24_clicked();
     void btnmine_clicked();
 
+    // Static members
+    static MyPanel *instance;
     static void padbtn_clicked(guint id);
 };

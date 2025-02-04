@@ -93,8 +93,15 @@ void AppMenu::inner_bind(const Glib::RefPtr<Gtk::ListItem> &item)
     auto item1 = inner_list->get_item(position);
     auto button = dynamic_cast<AppButton *>(item->get_child());
     button->set_name_icon(item1->get_name(), item1->get_icon());
-    button->signal_clicked().connect(sigc::bind(
-        sigc::mem_fun(*this, &AppMenu::button_clicked), button));
+    if (position == 1)
+    {
+        button->set_action_name("win.about");
+    }
+    else
+    {
+        button->signal_clicked().connect(sigc::bind(
+            sigc::mem_fun(*this, &AppMenu::button_clicked), button));
+    }
     button->set_app_id(position);
 }
 
@@ -128,7 +135,9 @@ void AppMenu::button_clicked(AppButton *btn)
     {
         // std::cout << "Internal App: " << btn->get_app_id() << std::endl;
         internal_callback(btn->get_app_id());
-    }else{
+    }
+    else
+    {
         auto app_info = btn->get_app_info();
         app_info->launch(NULL);
     }
