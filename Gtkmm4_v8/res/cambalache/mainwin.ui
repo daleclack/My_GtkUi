@@ -6,7 +6,7 @@
   <object class="GtkApplicationWindow" id="mainwin">
     <property name="default-height">576</property>
     <property name="default-width">1024</property>
-    <property name="title">My GtkUI Technical Alpha</property>
+    <property name="title">My GtkUI Technical Beta </property>
     <child>
       <object class="GtkOverlay" id="main_overlay">
         <child>

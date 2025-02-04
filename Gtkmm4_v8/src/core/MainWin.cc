@@ -75,7 +75,7 @@ void MainWin::about_activate()
 
     // Version information
     char *version;
-    version = g_strdup_printf("8.0 Alpha\nRunning Against: Gtkmm %d.%d.%d",
+    version = g_strdup_printf("8.0 Beta\nRunning Against: Gtkmm %d.%d.%d",
                               GTKMM_MAJOR_VERSION,
                               GTKMM_MINOR_VERSION,
                               GTKMM_MICRO_VERSION);
@@ -92,7 +92,7 @@ void MainWin::about_activate()
 
     // Show the about dialog
     gtk_show_about_dialog(GTK_WINDOW(gobj()),
-                          "program-name", "My GtkUI Techinal Alpha",
+                          "program-name", "My GtkUI Techinal Beta",
                           "version", version,
                           "copyright", copyright,
                           "comments", "A program that simulates desktop, inspired by lomiri desktop",
