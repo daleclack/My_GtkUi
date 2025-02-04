@@ -14,6 +14,7 @@ public:
     void create_prefs_win(Gtk::Window &parent);
     MyPrefs *get_prefs_win();
     void show_prefs_win();
+    void set_main_background(Gtk::Picture *background);
 
 private:
     // Object builder

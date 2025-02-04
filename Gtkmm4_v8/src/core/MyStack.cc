@@ -57,6 +57,7 @@ void MyStack::create_prefs_win(Gtk::Window &parent)
     // Create Preferences window
     prefs_window = MyPrefs::create(parent);
     panel1.set_prefs_win(prefs_window);
+    // prefs_window->set_background_widget()
 }
 
 MyPrefs *MyStack::get_prefs_win()
@@ -71,4 +72,10 @@ void MyStack::show_prefs_win()
     prefs_window->present();
     Gtk::Image *prefs_image = panel1.get_prefs_image();
     prefs_image->set_from_icon_name("my_prefs_running");
+}
+
+// Bind the main background widget
+void MyStack::set_main_background(Gtk::Picture *background)
+{
+    prefs_window->set_background_widget(background);
 }

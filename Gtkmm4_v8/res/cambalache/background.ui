@@ -20,18 +20,74 @@
             <child>
               <object class="GtkStackPage">
                 <property name="child">
-                  <object class="GtkLabel">
-                    <property name="label">Empty Page</property>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label">Theme Settings:</property>
+                        <child>
+                          <object class="GtkBox"/>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="halign">start</property>
+                            <property name="hexpand">True</property>
+                            <property name="label">Enable Dark Theme:</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSwitch" id="switch_dark"/>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFrame" id="back_frame">
+                        <property name="hexpand">True</property>
+                        <property name="label-widget">
+                          <object class="GtkLabel">
+                            <property name="hexpand">True</property>
+                            <property name="justify">center</property>
+                            <property name="label">Background Images:</property>
+                          </object>
+                        </property>
+                        <property name="vexpand">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkButton" id="btn_add">
+                            <property name="label">Add a Image</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btn_remove">
+                            <property name="label">Remove a Image</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btn_removeall">
+                            <property name="label">Remove all images</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </property>
-                <property name="title">Background</property>
+                <property name="title">Appearance</property>
               </object>
             </child>
             <child>
               <object class="GtkStackPage">
                 <property name="child">
                   <object class="GtkLabel">
-                    <property name="label">Empty Page</property>
+                    <property name="label">Page2</property>
                   </object>
                 </property>
                 <property name="title">Launcher</property>
@@ -41,7 +97,7 @@
               <object class="GtkStackPage">
                 <property name="child">
                   <object class="GtkLabel">
-                    <property name="label">Empty Page</property>
+                    <property name="label">Page3</property>
                   </object>
                 </property>
                 <property name="title">Display</property>
