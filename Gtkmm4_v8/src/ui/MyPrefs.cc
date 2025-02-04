@@ -56,6 +56,70 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
 }
 
+void MyPrefs::config_load()
+{
+    // Load toml file
+    std::fstream infile;
+    infile.open("config.toml", std::ios_base::in);
+    if (infile.is_open())
+    {
+        auto toml = toml::parse(infile);
+        auto wallpapers = toml["main_config"]["file_paths"].as_array();
+        auto selected = toml["main_config"]["selected_image"].value_or(0);
+
+        // Load all custom images paths
+        for (int i = 0; i < wallpapers->size(); ++i)
+        {
+            auto string = wallpapers->at(i).as_string()->get();
+            images_store->append(string);
+        }
+
+        // Load current selected image
+        images_selection->set_selected(selected);
+    }
+    else
+    {
+        // Default selection
+        images_selection->set_selected(0);
+    }
+
+    // Get selected button and update image
+
+    infile.close();
+}
+
+void MyPrefs::config_save()
+{
+    // Create toml object
+    static constexpr std::string_view source = R"()";
+    auto toml = toml::parse(source);
+
+    // Get all custom images paths
+    toml::array file_paths;
+    for (int i = INTERNAL_IMAGE_COUNT; i < images_store->get_n_items(); ++i)
+    {
+        file_paths.push_back(std::string(images_store->get_string(i)));
+    }
+
+    // Get current selected image
+    auto selected = images_selection->get_selected();
+
+    // Add a toml table for main configuration
+    toml::table main_cfg;
+    main_cfg.insert_or_assign("file_paths", file_paths);
+    main_cfg.insert_or_assign("selected_image", selected);
+    toml.insert_or_assign("main_config", main_cfg);
+
+    // Save the data to file
+    std::fstream outfile;
+    outfile.open("config.toml", std::ios_base::out);
+    if (outfile.is_open())
+    {
+        outfile << toml;
+    }
+    outfile.close();
+}
+
 void MyPrefs::images_view_setup(const Glib::RefPtr<Gtk::ListItem> &item)
 {
     auto image_btn = Gtk::make_managed<PrefsBtn>();
@@ -86,6 +150,9 @@ void MyPrefs::images_view_bind(const Glib::RefPtr<Gtk::ListItem> &item)
 void MyPrefs::set_background_widget(Gtk::Picture *picture)
 {
     background_widget = picture;
+
+    // Load config
+    config_load();
 }
 
 void MyPrefs::image_btn_clicked(PrefsBtn *btn)
@@ -96,6 +163,9 @@ void MyPrefs::image_btn_clicked(PrefsBtn *btn)
 
     // Update selection of image
     images_selection->set_selected(btn->get_image_id());
+
+    // Update config
+    config_save();
 }
 
 void MyPrefs::btnadd_clicked()
@@ -133,6 +203,7 @@ void MyPrefs::file_dialog_finish(const Glib::RefPtr<Gio::AsyncResult> &result,
         auto file = file_dialog->open_finish(result);
         auto path = file->get_path();
         images_store->append(path);
+        config_save();
     }
     // If no file is selected, catch the exception and output information
     catch (const Gtk::DialogError &ex)

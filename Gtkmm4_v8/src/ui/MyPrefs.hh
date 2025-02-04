@@ -85,4 +85,8 @@ private:
     void btnremoveall_clicked();
     void file_dialog_finish(const Glib::RefPtr<Gio::AsyncResult> &result,
                             const Glib::RefPtr<Gtk::FileDialog> &file_dialog);
+
+    // Config control
+    void config_load();
+    void config_save();
 };
