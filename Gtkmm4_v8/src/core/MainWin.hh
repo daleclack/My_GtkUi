@@ -2,7 +2,7 @@
 
 #include <gtkmm.h>
 #include "MyStack.hh"
-#include "MyPrefs.hh"
+// #include "MyPrefs.hh"
 
 class MainWin : public Gtk::ApplicationWindow
 {
@@ -28,9 +28,6 @@ private:
     // Gesture for context menu
     Glib::RefPtr<Gtk::GestureClick> gesture_click;
     void gesture_pressed(int n_press, double x, double y);
-
-    // Preferences Windows
-    MyPrefs *prefs_window;
 
     // Other widgets
     MyStack main_stack;

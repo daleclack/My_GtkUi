@@ -62,6 +62,29 @@ MyPanel::MyPanel()
     apps_box->append(app_menu);
 }
 
+void MyPanel::set_prefs_win(MyPrefs *prefs)
+{
+    prefs_window = prefs;
+    prefs_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::setwin_closed), true);
+}
+
+Gtk::Image *MyPanel::get_prefs_image()
+{
+    // Get image widget for preferences button
+    return imageset;
+}
+
+void MyPanel::window_ctrl(Gtk::Window &window)
+{
+    // Show or hide the window based on its current state
+    if (window.is_visible())
+    {
+        window.set_visible(false);
+    }else{
+        window.present();
+    }
+}
+
 void MyPanel::btnstart_clicked()
 {
     // Change the visible page in the stack
@@ -101,6 +124,18 @@ void MyPanel::btnviewer_clicked()
 
 void MyPanel::btnset_clicked()
 {
+    // Show the preferences window
+    // prefs_window->present();
+    window_ctrl(*prefs_window);
+    imageset->set_from_icon_name("my_prefs_running");
+    // prefs_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::setwin_closed));
+}
+
+bool MyPanel::setwin_closed()
+{
+    prefs_window->set_visible(false);
+    imageset->set_from_icon_name("my_prefs");
+    return true;
 }
 
 void MyPanel::btngame24_clicked()

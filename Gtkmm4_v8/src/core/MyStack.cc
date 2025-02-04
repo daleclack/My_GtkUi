@@ -2,8 +2,8 @@
 
 MyStack::MyStack()
     : login_box(Gtk::Orientation::VERTICAL, 5),
-    login_label("dale"),
-    login_button("Login")
+      login_label("dale"),
+      login_button("Login")
 {
     // Add the builder
     m_builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/cambalache/overlaywin.ui");
@@ -50,4 +50,25 @@ MyStack::MyStack()
 void MyStack::login_button_clicked()
 {
     m_stack->set_visible_child(*main_page);
+}
+
+void MyStack::create_prefs_win(Gtk::Window &parent)
+{
+    // Create Preferences window
+    prefs_window = MyPrefs::create(parent);
+    panel1.set_prefs_win(prefs_window);
+}
+
+MyPrefs *MyStack::get_prefs_win()
+{
+    // Get the preferences window
+    return prefs_window;
+}
+
+void MyStack::show_prefs_win()
+{
+    // Show the preferences window
+    prefs_window->present();
+    Gtk::Image *prefs_image = panel1.get_prefs_image();
+    prefs_image->set_from_icon_name("my_prefs_running");
 }

@@ -93,12 +93,15 @@ void AppMenu::inner_bind(const Glib::RefPtr<Gtk::ListItem> &item)
     auto item1 = inner_list->get_item(position);
     auto button = dynamic_cast<AppButton *>(item->get_child());
     button->set_name_icon(item1->get_name(), item1->get_icon());
-    if (position == 1)
+    switch (position)
     {
+    case 1:
         button->set_action_name("win.about");
-    }
-    else
-    {
+        break;
+    case 7:
+        button->set_action_name("win.back");
+        break;
+    default:
         button->signal_clicked().connect(sigc::bind(
             sigc::mem_fun(*this, &AppMenu::button_clicked), button));
     }

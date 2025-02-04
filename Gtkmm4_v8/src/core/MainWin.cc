@@ -30,14 +30,13 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     context_menu.set_has_arrow(false);
     context_menu.present();
 
+    main_stack.create_prefs_win(*this);
+
     // Add gesture for the right click
     gesture_click = Gtk::GestureClick::create();
     main_overlay->add_controller(gesture_click);
     gesture_click->set_button(GDK_BUTTON_SECONDARY);
     gesture_click->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_pressed));
-
-    // Create Preferences window
-    prefs_window = MyPrefs::create(*this);
 
     // Add actions
     add_action("about", sigc::mem_fun(*this, &MainWin::about_activate));
@@ -122,5 +121,5 @@ void MainWin::shutdown_activate()
 
 void MainWin::back_activate()
 {
-    prefs_window->present();
+    main_stack.show_prefs_win();
 }

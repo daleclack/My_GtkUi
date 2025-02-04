@@ -18,12 +18,12 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     back_switcher->set_stack(*back_stack);
 }
 
-bool MyPrefs::on_close_request()
-{
-    // Hide window when closing the window
-    set_visible(false);
-    return true;
-}
+// bool MyPrefs::on_close_request()
+// {
+//     // Hide window when closing the window
+//     set_visible(false);
+//     return true;
+// }
 
 MyPrefs *MyPrefs::create(Gtk::Window &parent)
 {

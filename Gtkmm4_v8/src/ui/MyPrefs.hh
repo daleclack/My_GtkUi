@@ -11,7 +11,7 @@ public:
     static MyPrefs *create(Gtk::Window &parent);
 
 protected:
-    bool on_close_request();
+    // bool on_close_request();
 
 private:
     Glib::RefPtr<Gtk::Builder> ref_builder;

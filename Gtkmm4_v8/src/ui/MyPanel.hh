@@ -2,12 +2,15 @@
 
 #include <gtkmm.h>
 #include "AppMenu.hh"
+#include "MyPrefs.hh"
 
 class MyPanel
 {
 public:
     Gtk::Box *panel_box;
     MyPanel();
+    Gtk::Image *get_prefs_image();
+    void set_prefs_win(MyPrefs *prefs);
 
 private:
     Glib::RefPtr<Gtk::Builder> builder;
@@ -27,7 +30,11 @@ private:
     // The App Menu
     AppMenu app_menu;
 
+    // Preferences window
+    MyPrefs *prefs_window;
+
     // Signal handlers
+    void window_ctrl(Gtk::Window &window);
     void btnstart_clicked();
     void btnfiles_clicked();
     void btndraw_clicked();
@@ -36,6 +43,7 @@ private:
     void btnedit_clicked();
     void btnviewer_clicked();
     void btnset_clicked();
+    bool setwin_closed();
     void btngame24_clicked();
     void btnmine_clicked();
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <gtkmm.h>
-typedef void (*pfun)(guint id);
+#include "config.hh"
 
 // List item for inner app
 class AppItemIn : public Glib::Object

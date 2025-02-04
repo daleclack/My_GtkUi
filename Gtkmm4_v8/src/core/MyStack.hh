@@ -3,12 +3,17 @@
 #include <gtkmm.h>
 #include "MyPanel.hh"
 #include "MyFinder.hh"
+#include "MyPrefs.hh"
+#include "config.hh"
 
 class MyStack
 {
 public:
     Gtk::Stack *m_stack;
     MyStack();
+    void create_prefs_win(Gtk::Window &parent);
+    MyPrefs *get_prefs_win();
+    void show_prefs_win();
 
 private:
     // Object builder
@@ -29,6 +34,9 @@ private:
 
     // The Main Menu
     MyFinder finder1;
+
+    // Preferences Windows
+    MyPrefs *prefs_window;
 
     // Signal handlers
     void login_button_clicked();
