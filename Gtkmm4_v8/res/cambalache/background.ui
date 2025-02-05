@@ -153,7 +153,131 @@
             <child>
               <object class="GtkStackPage">
                 <property name="child">
-                  <object class="GtkBox"/>
+                  <object class="GtkBox" id="winsize_page">
+                    <property name="halign">center</property>
+                    <property name="hexpand">1</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">5</property>
+                    <property name="valign">center</property>
+                    <property name="vexpand">1</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="spacing">5</property>
+                        <property name="valign">center</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">display_prefs</property>
+                            <property name="pixel-size">128</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkGrid">
+                            <property name="column-spacing">5</property>
+                            <property name="row-spacing">5</property>
+                            <child>
+                              <object class="GtkBox" id="combo_box">
+                                <layout>
+                                  <property name="column">1</property>
+                                  <property name="column-span">3</property>
+                                  <property name="row">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="radio_default">
+                                <property name="active">1</property>
+                                <property name="focusable">1</property>
+                                <property name="group">radio_custom</property>
+                                <property name="label" translatable="yes">Use default window size</property>
+                                <layout>
+                                  <property name="column">1</property>
+                                  <property name="column-span">3</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="radio_custom">
+                                <property name="focusable">1</property>
+                                <property name="label" translatable="yes">User defined window size</property>
+                                <layout>
+                                  <property name="column">1</property>
+                                  <property name="column-span">3</property>
+                                  <property name="row">2</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="spin_width">
+                                <property name="focusable">1</property>
+                                <property name="sensitive">0</property>
+                                <property name="value">1024</property>
+                                <layout>
+                                  <property name="column">1</property>
+                                  <property name="row">3</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="spin_height">
+                                <property name="focusable">1</property>
+                                <property name="sensitive">0</property>
+                                <property name="value">576</property>
+                                <layout>
+                                  <property name="column">3</property>
+                                  <property name="row">3</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">x</property>
+                                <layout>
+                                  <property name="column">2</property>
+                                  <property name="row">3</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="hexpand">1</property>
+                        <property name="vexpand">1</property>
+                        <child>
+                          <object class="GtkLabel" id="label_size">
+                            <property name="label" translatable="yes">Current Config: </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label_space">
+                            <property name="hexpand">True</property>
+                            <property name="hexpand-set">True</property>
+                            <property name="label" translatable="yes">  </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btnGet">
+                            <property name="focusable">1</property>
+                            <property name="label" translatable="yes">Get Current</property>
+                            <property name="receives-default">1</property>
+                            <property name="sensitive">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btnapply">
+                            <property name="focusable">1</property>
+                            <property name="halign">end</property>
+                            <property name="label" translatable="yes">Apply</property>
+                            <property name="receives-default">1</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
                 </property>
                 <property name="title">Display</property>
               </object>

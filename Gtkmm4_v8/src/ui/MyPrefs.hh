@@ -78,13 +78,30 @@ private:
     // Background image widget
     Gtk::Picture *background_widget;
 
-    // Signal handlers
+    // Signal handlers for background preferences
     void image_btn_clicked(PrefsBtn *btn);
     void btnadd_clicked();
     void btnremove_clicked();
     void btnremoveall_clicked();
     void file_dialog_finish(const Glib::RefPtr<Gio::AsyncResult> &result,
                             const Glib::RefPtr<Gtk::FileDialog> &file_dialog);
+
+    // Child widgets for launcher settings
+    Gtk::Scale *scale_size;
+    void scale_size_changed();
+
+    // Constant value for standard dpi and resuolution settings
+    const float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
+    const int width_values[13] = {640, 800, 1024, 1280, 1366, 1440, 1600, 1680, 1792, 1896, 1920, 2048, 2560};
+    const int height_values[13] = {360, 450, 576, 720, 768, 810, 900, 945, 1008, 1044, 1080, 1152, 1440};
+
+    // Child widgets for window size settings
+    Gtk::DropDown dropdown_size;
+    Glib::RefPtr<Gtk::StringList> size_store;
+    Gtk::Box *combo_box;
+    Gtk::CheckButton *radio_default, *radio_custom;
+    Gtk::SpinButton *spin_width, *spin_height;
+    Gtk::Button *btnGet, *btnapply;
 
     // Config control
     void config_load();

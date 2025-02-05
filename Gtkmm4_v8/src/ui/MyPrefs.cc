@@ -24,6 +24,14 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_add = ref_builder->get_widget<Gtk::Button>("btn_add");
     btn_remove = ref_builder->get_widget<Gtk::Button>("btn_remove");
     btn_removeall = ref_builder->get_widget<Gtk::Button>("btn_removeall");
+    scale_size = ref_builder->get_widget<Gtk::Scale>("scale_size");
+    combo_box = ref_builder->get_widget<Gtk::Box>("combo_box");
+    radio_default = ref_builder->get_widget<Gtk::CheckButton>("radio_default");
+    radio_custom = ref_builder->get_widget<Gtk::CheckButton>("radio_custom");
+    spin_width = ref_builder->get_widget<Gtk::SpinButton>("spin_width");
+    spin_height = ref_builder->get_widget<Gtk::SpinButton>("spin_height");
+    btnapply = ref_builder->get_widget<Gtk::Button>("btnapply");
+    btnGet = ref_builder->get_widget<Gtk::Button>("btnGet");
 
     // Add default images list
     images_store = Gtk::StringList::create();
@@ -50,10 +58,27 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
 
     back_switcher->set_stack(*back_stack);
 
+    // Create size config widget
+    size_store = Gtk::StringList::create();
+    char buf[20];
+    for (int i = 0; i < 13; i++)
+    {
+        snprintf(buf, sizeof(buf) - 1, "%dx%d", width_values[i], height_values[i]);
+        size_store->append(std::string(buf));
+    }
+    dropdown_size.set_model(size_store);
+    combo_box->append(dropdown_size);
+
+    // Bind properties
+    Glib::Binding::bind_property(radio_default->property_active(), combo_box->property_sensitive());
+    Glib::Binding::bind_property(radio_custom->property_active(), spin_width->property_sensitive());
+    Glib::Binding::bind_property(radio_custom->property_active(), spin_height->property_sensitive());
+
     // Connect signals
     btn_add->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnadd_clicked));
     btn_remove->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
     btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
+    scale_size->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_size_changed));
 }
 
 void MyPrefs::config_load()
@@ -67,6 +92,7 @@ void MyPrefs::config_load()
         auto toml = toml::parse(infile);
         auto wallpapers = toml["main_config"]["file_paths"].as_array();
         selected = toml["main_config"]["selected_image"].value_or(0);
+        auto icon_size = toml["main_config"]["icon_size"].as_integer()->get();
 
         // Load all custom images paths
         for (int i = 0; i < wallpapers->size(); ++i)
@@ -77,11 +103,15 @@ void MyPrefs::config_load()
 
         // Load current selected image
         images_selection->set_selected(selected);
+
+        // Load icon size
+        scale_size->set_value((double)icon_size);
     }
     else
     {
         // Default selection
         images_selection->set_selected(0);
+        scale_size->set_value(48);
     }
 
     //Update image
@@ -111,12 +141,16 @@ void MyPrefs::config_save()
     }
 
     // Get current selected image
-    auto selected = images_selection->get_selected();
+    guint selected = images_selection->get_selected();
+
+    // Get icon size config
+    int icon_size = (int)(scale_size->get_value());
 
     // Add a toml table for main configuration
     toml::table main_cfg;
     main_cfg.insert_or_assign("file_paths", file_paths);
     main_cfg.insert_or_assign("selected_image", selected);
+    main_cfg.insert_or_assign("icon_size", icon_size);
     toml.insert_or_assign("main_config", main_cfg);
 
     // Save the data to file
@@ -243,6 +277,12 @@ void MyPrefs::btnremoveall_clicked()
     {
         images_store->remove(i);
     }
+}
+
+void MyPrefs::scale_size_changed()
+{
+    // Update config when icon size changed
+    config_save();
 }
 
 MyPrefs *MyPrefs::create(Gtk::Window &parent)
