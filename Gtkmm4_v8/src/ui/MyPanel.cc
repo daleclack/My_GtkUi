@@ -91,6 +91,12 @@ Gtk::Image *MyPanel::get_prefs_image()
     return imageset;
 }
 
+void MyPanel::hide_launchpad()
+{
+    // Hide the launchpad by change page
+    apps_stack->set_visible_child("page1");
+}
+
 void MyPanel::window_ctrl(Gtk::Window &window)
 {
     // Show or hide the window based on its current state

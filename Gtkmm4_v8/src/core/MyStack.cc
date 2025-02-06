@@ -68,6 +68,9 @@ MyPrefs *MyStack::get_prefs_win()
 
 void MyStack::show_prefs_win()
 {
+    // Hide the launchpad in panel
+    panel1.hide_launchpad();
+
     // Show the preferences window
     prefs_window->present();
     Gtk::Image *prefs_image = panel1.get_prefs_image();

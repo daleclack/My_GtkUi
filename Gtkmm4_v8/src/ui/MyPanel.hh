@@ -12,6 +12,7 @@ public:
     Gtk::Image *get_prefs_image();
     void set_prefs_win(MyPrefs *prefs);
     void set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider);
+    void hide_launchpad();
 
 private:
     Glib::RefPtr<Gtk::Builder> builder;
