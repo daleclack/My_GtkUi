@@ -19,6 +19,10 @@
     background-color: rgba(56, 60, 74, 0.5);
 }
 
+.dock_style calendar.view{
+    background-color: transparent;
+}
+
 .dock_style gridview
 {
     background-color: transparent;

@@ -5,12 +5,12 @@
   <requires lib="gtk" version="4.12"/>
   <object class="GtkStack" id="menu_stack">
     <property name="transition-type">crossfade</property>
+    <property name="vexpand">True</property>
+    <property name="vexpand-set">True</property>
     <child>
       <object class="GtkStackPage">
         <property name="child">
-          <object class="GtkBox">
-            <property name="orientation">vertical</property>
-          </object>
+          <object class="GtkGrid"/>
         </property>
         <property name="name">page1</property>
       </object>
@@ -18,8 +18,10 @@
     <child>
       <object class="GtkStackPage">
         <property name="child">
-          <object class="GtkBox">
+          <object class="GtkBox" id="inner_box">
             <property name="orientation">vertical</property>
+            <property name="vexpand">True</property>
+            <property name="vexpand-set">True</property>
             <child>
               <object class="GtkStackSwitcher" id="inner_switcher"/>
             </child>
@@ -30,6 +32,8 @@
                   <object class="GtkStackPage">
                     <property name="child">
                       <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="vexpand">True</property>
                         <child>
                           <object class="GtkCalendar"/>
                         </child>
@@ -44,42 +48,50 @@
                     <property name="child">
                       <object class="GtkBox">
                         <property name="orientation">vertical</property>
+                        <property name="vexpand">True</property>
                         <child>
                           <object class="GtkButton" id="menu_about">
                             <property name="action-name">win.about</property>
+                            <property name="has-frame">False</property>
                             <property name="label">About</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
+                            <property name="has-frame">False</property>
                             <property name="label">My GtkUI Help</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
+                            <property name="has-frame">False</property>
                             <property name="label">Report a bug</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton" id="menu_set">
                             <property name="action-name">win.back</property>
+                            <property name="has-frame">False</property>
                             <property name="label">System Settings</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton" id="menu_logout">
                             <property name="action-name">win.logout</property>
+                            <property name="has-frame">False</property>
                             <property name="label">Log Out</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton">
+                            <property name="has-frame">False</property>
                             <property name="label">Suspend</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkButton" id="menu_shut">
                             <property name="action-name">win.shutdown</property>
+                            <property name="has-frame">False</property>
                             <property name="label">Shutdown</property>
                           </object>
                         </child>

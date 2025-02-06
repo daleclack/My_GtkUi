@@ -11,6 +11,7 @@ MyFinder::MyFinder()
     menu_stack = builder->get_widget<Gtk::Stack>("menu_stack");
     inner_stack = builder->get_widget<Gtk::Stack>("inner_stack");
     inner_switcher = builder->get_widget<Gtk::StackSwitcher>("inner_switcher");
+    inner_box = builder->get_widget<Gtk::Box>("inner_box");
 
     // Set the stack switcher to control the inner_stack
     inner_switcher->set_stack(*inner_stack); // Note the use of inner_stack, not menu_stack in this line
@@ -83,7 +84,7 @@ void MyFinder::btntime_clicked()
     inner_stack->set_visible_child("time_page");
 }
 
-void MyFinder::update_icons(bool dark_mode)
+void MyFinder::update_icons(const Glib::RefPtr<Gtk::CssProvider> &provider, bool dark_mode)
 {
     if (dark_mode)
     {
@@ -102,6 +103,12 @@ void MyFinder::update_icons(bool dark_mode)
         btn_wifi.set_icon_name("finder-wifi");
     }
     btn_menu.set_icon_name("open-menu");
+
+    // Apply the CSS Style
+    std::vector<Glib::ustring> menu_classes = {"dock_style"};
+    inner_box->set_css_classes(menu_classes);
+    Gtk::StyleProvider::add_provider_for_display(inner_box->get_display(),
+                                                 provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 bool MyFinder::timeout_func()

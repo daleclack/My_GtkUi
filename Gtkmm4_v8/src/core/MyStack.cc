@@ -80,9 +80,6 @@ void MyStack::set_main_background(Gtk::Picture *background)
     // Set the main background widget for the preferences window
     prefs_window->set_background_widget(background);
 
-    // Update configs
-    finder1.update_icons(prefs_window->get_dark_mode());
-
     // Update theme for the finder
     std::vector<Glib::ustring> finder_classes = {"finder_style"};
     topmenu_area->set_css_classes(finder_classes);
@@ -109,4 +106,7 @@ void MyStack::set_main_background(Gtk::Picture *background)
 
     // Apply default style
     panel1.set_internal_style(provider);
+
+    // Update finder configs
+    finder1.update_icons(provider, prefs_window->get_dark_mode());
 }

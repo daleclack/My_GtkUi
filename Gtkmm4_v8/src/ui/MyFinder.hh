@@ -11,7 +11,7 @@ public:
     // The Top menu
     Gtk::Box menu_box;
     MyFinder();
-    void update_icons(bool dark_mode = false);
+    void update_icons(const Glib::RefPtr<Gtk::CssProvider> &provider, bool dark_mode = false);
 
 private:
     Glib::RefPtr<Gtk::Builder> builder;
@@ -24,6 +24,7 @@ private:
     // Child widgets for left menu
     Gtk::StackSwitcher *inner_switcher;
     Gtk::Stack *inner_stack;
+    Gtk::Box *inner_box;
 
     sigc::connection timer;
 

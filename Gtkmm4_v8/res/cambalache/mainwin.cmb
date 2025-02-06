@@ -4,6 +4,6 @@
   <ui filename="mainwin.ui" sha256="813832002dab23018c81a6a56d341ab8a21f3d0b2b8cc4c64c1e9ab50ea794b2"/>
   <ui filename="overlaywin.ui" sha256="f53140b513170cb5eb949dac23ec6f0555e992e86de8936676aefef35851f7b6"/>
   <ui filename="mypanel.ui" sha256="cc1f0e5a4ea87c733db13f7fbd8950191f18fb074a80329560d52ace2eb39f00"/>
-  <ui filename="findermenu.ui" sha256="d474544f3ae5eddf048eb25dd24c6097fe9826c8e45f4eaa1e6dae5fceaf3161"/>
+  <ui filename="findermenu.ui" sha256="ff745c993698bb22008e36ff6ce3cc0f4026fe70a92eca8bc5fe668d4371c015"/>
   <ui filename="background.ui" sha256="ed3ccf149a900108732470c938fe4edd6d5fc6f6bbc2ac87ce06553e95e0155f"/>
 </cambalache-project>
