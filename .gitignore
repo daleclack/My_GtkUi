@@ -68,3 +68,7 @@ FiveRow
 *.out
 *.app
 
+# clang cache
+.cache/*
+*.idx
+
