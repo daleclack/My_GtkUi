@@ -86,6 +86,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
     scale_size->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_size_changed));
     btnapply->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::config_save));
+    switch_dark->signal_state_set().connect(sigc::mem_fun(*this, &MyPrefs::switch_state_changed), false);
 }
 
 void MyPrefs::config_load()
@@ -97,10 +98,13 @@ void MyPrefs::config_load()
     if (infile.is_open())
     {
         auto toml = toml::parse(infile);
+
+        // Get config values
         auto wallpapers = toml["main_config"]["file_paths"].as_array();
         selected = toml["main_config"]["selected_image"].value_or(0);
         auto icon_size = toml["main_config"]["icon_size"].as_integer()->get();
         auto size_selected = toml["main_config"]["size_selected"].as_integer()->get();
+        bool dark_mode = toml["main_config"]["dark_mode"].as_boolean()->get();
         if (size_selected < 0)
         {
             radio_custom->set_active();
@@ -114,6 +118,9 @@ void MyPrefs::config_load()
             width = width_values[size_selected];
             height = height_values[size_selected];
         }
+
+        // Load dark mode config
+        switch_dark->set_active(dark_mode);
 
         // Load all custom images paths
         for (int i = 0; i < wallpapers->size(); ++i)
@@ -135,6 +142,7 @@ void MyPrefs::config_load()
         scale_size->set_value(48);
         radio_default->set_active();
         dropdown_size.set_selected(3);
+        switch_dark->set_active(false);
     }
 
     // Update image
@@ -157,6 +165,9 @@ void MyPrefs::config_save()
     // Create toml object
     static constexpr std::string_view source = R"()";
     auto toml = toml::parse(source);
+
+    // // Get dark mode config
+    // bool dark_mode = switch_dark->get_active();
 
     // Get all custom images paths
     toml::array file_paths;
@@ -194,6 +205,7 @@ void MyPrefs::config_save()
     main_cfg.insert_or_assign("size_selected", size_selected);
     main_cfg.insert_or_assign("width", width);
     main_cfg.insert_or_assign("height", height);
+    main_cfg.insert_or_assign("dark_mode", dark_mode);
     toml.insert_or_assign("main_config", main_cfg);
 
     // Save the data to file
@@ -204,6 +216,16 @@ void MyPrefs::config_save()
         outfile << toml;
     }
     outfile.close();
+}
+
+bool MyPrefs::switch_state_changed(bool state)
+{
+    // Update dark mode config
+    // std::cout << "Dark mode: " << (state ? "ON" : "OFF") << std::endl;
+    dark_mode = state;
+    config_save();
+    switch_dark->set_state(dark_mode);
+    return true;
 }
 
 void MyPrefs::images_view_setup(const Glib::RefPtr<Gtk::ListItem> &item)

@@ -65,6 +65,7 @@ private:
     Gtk::Switch *switch_dark;
     Gtk::Frame *back_frame;
     Gtk::Button *btn_add, *btn_remove, *btn_removeall;
+    bool dark_mode = false;
 
     // Store and widget for background images
     Gtk::GridView images_view;
@@ -79,6 +80,7 @@ private:
     Gtk::Picture *background_widget;
 
     // Signal handlers for background preferences
+    bool switch_state_changed(bool state);
     void image_btn_clicked(PrefsBtn *btn);
     void btnadd_clicked();
     void btnremove_clicked();
