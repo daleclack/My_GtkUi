@@ -14,9 +14,8 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 include_directories(.)
 include_directories(..)
-include_directories(src/core)
-include_directories(src/ui)
-
+include_directories(src/core src/ui src/apps src/mine_app
+    src/media_app)
 #Find PkgConfig to use gtkmm
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM4 REQUIRED gtkmm-4.0)
@@ -30,7 +29,9 @@ link_directories (${GTKMM4_LIBRARY_DIRS})
 #Source files
 set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc 
     src/core/MyHeader.cc src/ui/MyPrefs.cc src/ui/MyPanel.cc 
-    src/ui/MyFinder.cc src/ui/AppMenu.cc)
+    src/ui/MyFinder.cc src/ui/AppMenu.cc src/mine_app/InputBox.cc
+    src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc
+    src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc)
 
 #Compile Resource
 
@@ -41,6 +42,9 @@ set(RESOURCE_LIST
     STRIPBLANKS cambalache/mypanel.ui
     STRIPBLANKS cambalache/overlaywin.ui
     STRIPBLANKS mainmenu.xml
+    STRIPBLANKS mine_menu.xml
+    STRIPBLANKS scoreswin.ui
+    STRIPBLANKS win_input.ui
     title_style.css
     style.css
     style_dark.css

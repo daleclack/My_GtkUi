@@ -3,6 +3,8 @@
 #include <gtkmm.h>
 #include "AppMenu.hh"
 #include "MyPrefs.hh"
+#include "MineSweeper.hh"
+#include "MyMediaPlayer.hh"
 
 class MyPanel
 {
@@ -35,6 +37,12 @@ private:
     // Preferences window
     MyPrefs *prefs_window;
 
+    // MineSweeper
+    MineSweeper mine_window;
+
+    // Media Player
+    MyMediaPlayer media_window;
+
     // Signal handlers
     void window_ctrl(Gtk::Window &window);
     void btnstart_clicked();
@@ -48,6 +56,7 @@ private:
     bool setwin_closed();
     void btngame24_clicked();
     void btnmine_clicked();
+    bool minewin_closed();
 
     // Static members
     static MyPanel *instance;

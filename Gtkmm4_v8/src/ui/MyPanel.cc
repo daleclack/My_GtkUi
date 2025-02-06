@@ -51,6 +51,7 @@ MyPanel::MyPanel()
     btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnset_clicked));
     btngame24->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame24_clicked));
     btnmine->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnmine_clicked));
+    mine_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::minewin_closed), true);
 
     // Bind callback for the Apps Menu
     app_menu.set_callback(padbtn_clicked);
@@ -169,6 +170,15 @@ void MyPanel::btngame24_clicked()
 
 void MyPanel::btnmine_clicked()
 {
+    window_ctrl(mine_window);
+    imagemine->set_from_icon_name("mines_app_running");
+}
+
+bool MyPanel::minewin_closed()
+{
+    mine_window.set_visible(false);
+    imagemine->set_from_icon_name("mines_app");
+    return true;
 }
 
 void MyPanel::padbtn_clicked(guint id)
@@ -197,8 +207,12 @@ void MyPanel::padbtn_clicked(guint id)
     case 9: // Text Editor
         break;
     case 10: // Media Player
+        instance->media_window.present();
+        instance->imagemedia->set_from_icon_name("media_app_running");
         break;
     case 11: // MineSweeper
+        instance->mine_window.present();
+        instance->imagemine->set_from_icon_name("mines_app_running");
         break;
     default:
         break;
