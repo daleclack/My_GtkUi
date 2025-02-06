@@ -70,6 +70,21 @@ void MyPanel::set_prefs_win(MyPrefs *prefs)
     prefs_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::setwin_closed), true);
 }
 
+void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)
+{
+    // Set css classes for widgets
+    std::vector<Glib::ustring> default_classes = {"default_style"};
+    auto child = apps_sw->get_child();
+    child->set_css_classes(default_classes);
+    apps_box->set_css_classes(default_classes);
+
+    // Apply the CSS provider to the widget
+    Gtk::StyleProvider::add_provider_for_display(child->get_display(),
+                                                 provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    Gtk::StyleProvider::add_provider_for_display(apps_box->get_display(),
+                                                 provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
 Gtk::Image *MyPanel::get_prefs_image()
 {
     // Get image widget for preferences button
@@ -82,7 +97,9 @@ void MyPanel::window_ctrl(Gtk::Window &window)
     if (window.is_visible())
     {
         window.set_visible(false);
-    }else{
+    }
+    else
+    {
         window.present();
     }
 }

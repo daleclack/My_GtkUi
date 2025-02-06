@@ -11,6 +11,7 @@ public:
     MyPanel();
     Gtk::Image *get_prefs_image();
     void set_prefs_win(MyPrefs *prefs);
+    void set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider);
 
 private:
     Glib::RefPtr<Gtk::Builder> builder;

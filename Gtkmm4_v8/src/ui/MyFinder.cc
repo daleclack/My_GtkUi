@@ -2,7 +2,7 @@
 #include <ctime>
 
 MyFinder::MyFinder()
-:title_label("My GtkUI")
+    : title_label("My GtkUI")
 {
     // Create the GtkBuilder object
     builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/cambalache/findermenu.ui");
@@ -20,17 +20,17 @@ MyFinder::MyFinder()
 
     // Update button icons
     btn_audio.set_has_frame(false);
-    btn_audio.set_icon_name("finder_audio");
+    // btn_audio.set_icon_name("finder_audio");
     btn_battery.set_has_frame(false);
-    btn_battery.set_icon_name("finder-battery");
+    // btn_battery.set_icon_name("finder-battery");
     btn_computer.set_has_frame(false);
-    btn_computer.set_icon_name("finder-computer");
+    // btn_computer.set_icon_name("finder-computer");
     btn_search.set_has_frame(false);
-    btn_search.set_icon_name("finder-find");
+    // btn_search.set_icon_name("finder-find");
     btn_wifi.set_has_frame(false);
-    btn_wifi.set_icon_name("finder-wifi");
+    // btn_wifi.set_icon_name("finder-wifi");
     btn_menu.set_has_frame(false);
-    btn_menu.set_icon_name("open-menu");
+    // btn_menu.set_icon_name("open-menu");
     btn_time.set_has_frame(false);
     btn_time.set_label("2025/2/1 19:42:00");
     space_label.set_hexpand(true);
@@ -60,7 +60,9 @@ void MyFinder::btnmenu_clicked()
     if (page_name == "page1")
     {
         menu_stack->set_visible_child("page2");
-    }else{
+    }
+    else
+    {
         menu_stack->set_visible_child("page1");
     }
     inner_stack->set_visible_child("menu_page");
@@ -73,16 +75,39 @@ void MyFinder::btntime_clicked()
     if (page_name == "page1")
     {
         menu_stack->set_visible_child("page2");
-    }else{
+    }
+    else
+    {
         menu_stack->set_visible_child("page1");
     }
     inner_stack->set_visible_child("time_page");
 }
 
+void MyFinder::update_icons(bool dark_mode)
+{
+    if (dark_mode)
+    {
+        btn_audio.set_icon_name("finder_audio-dark");
+        btn_battery.set_icon_name("finder-battery-dark");
+        btn_computer.set_icon_name("finder-computer-dark");
+        btn_search.set_icon_name("finder-find-dark");
+        btn_wifi.set_icon_name("finder-wifi-dark");
+    }
+    else
+    {
+        btn_audio.set_icon_name("finder_audio");
+        btn_battery.set_icon_name("finder-battery");
+        btn_computer.set_icon_name("finder-computer");
+        btn_search.set_icon_name("finder-find");
+        btn_wifi.set_icon_name("finder-wifi");
+    }
+    btn_menu.set_icon_name("open-menu");
+}
+
 bool MyFinder::timeout_func()
 {
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm *timeinfo;
     char buffer[80];
 
     // Get current time

@@ -77,5 +77,36 @@ void MyStack::show_prefs_win()
 // Bind the main background widget
 void MyStack::set_main_background(Gtk::Picture *background)
 {
+    // Set the main background widget for the preferences window
     prefs_window->set_background_widget(background);
+
+    // Update configs
+    finder1.update_icons(prefs_window->get_dark_mode());
+
+    // Update theme for the finder
+    std::vector<Glib::ustring> finder_classes = {"finder_style"};
+    topmenu_area->set_css_classes(finder_classes);
+    std::vector<Glib::ustring> dock_classes = {"dock_style"};
+    panel1.panel_box->set_css_classes(dock_classes);
+    std::vector<Glib::ustring> default_classes = {"default_style"};
+
+    // Load the CSS provider
+    auto provider = Gtk::CssProvider::create();
+    if (prefs_window->get_dark_mode())
+    {
+        provider->load_from_resource("/org/gtk/daleclack/style_dark.css");
+    }
+    else
+    {
+        provider->load_from_resource("/org/gtk/daleclack/style.css");
+    }
+
+    // Apply the style
+    Gtk::StyleProvider::add_provider_for_display(topmenu_area->get_display(),
+                                                 provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    Gtk::StyleProvider::add_provider_for_display(panel1.panel_box->get_display(),
+                                                 provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // Apply default style
+    panel1.set_internal_style(provider);
 }

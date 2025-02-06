@@ -42,6 +42,8 @@ set(RESOURCE_LIST
     STRIPBLANKS cambalache/overlaywin.ui
     STRIPBLANKS mainmenu.xml
     title_style.css
+    style.css
+    style_dark.css
     c182rg_1.png
     c182rg_2.png
     final_approach.png

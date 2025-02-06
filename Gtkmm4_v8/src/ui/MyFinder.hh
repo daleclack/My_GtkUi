@@ -11,6 +11,7 @@ public:
     // The Top menu
     Gtk::Box menu_box;
     MyFinder();
+    void update_icons(bool dark_mode = false);
 
 private:
     Glib::RefPtr<Gtk::Builder> builder;

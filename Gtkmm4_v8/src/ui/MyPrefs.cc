@@ -221,7 +221,6 @@ void MyPrefs::config_save()
 bool MyPrefs::switch_state_changed(bool state)
 {
     // Update dark mode config
-    // std::cout << "Dark mode: " << (state ? "ON" : "OFF") << std::endl;
     dark_mode = state;
     config_save();
     switch_dark->set_state(dark_mode);

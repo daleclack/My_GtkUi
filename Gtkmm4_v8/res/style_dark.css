@@ -11,12 +11,17 @@
     background-color: rgba(56, 60, 74, 0.5);
 }
 
-.dock_style grid {
+/* .dock_style grid {
     background-color: rgba(56, 60, 74, 0.5);
-}
+} */
 
 .dock_style box {
     background-color: rgba(56, 60, 74, 0.5);
+}
+
+.dock_style gridview
+{
+    background-color: transparent;
 }
 
 .dock_style button.toggle {

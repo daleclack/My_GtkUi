@@ -47,6 +47,7 @@ public:
     MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade);
     static MyPrefs *create(Gtk::Window &parent);
     void set_background_widget(Gtk::Picture *picture);
+    bool get_dark_mode() { return dark_mode; }
 
 protected:
     // bool on_close_request();

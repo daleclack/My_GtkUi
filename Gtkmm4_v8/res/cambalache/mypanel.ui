@@ -191,7 +191,7 @@
         <child>
           <object class="GtkStackPage">
             <property name="child">
-              <object class="GtkBox"/>
+              <object class="GtkGrid"/>
             </property>
             <property name="name">page1</property>
           </object>
