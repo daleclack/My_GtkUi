@@ -16,8 +16,9 @@ AppMenu::AppMenu()
     inner_list->append(AppItemIn::create("Image Viewer", "image_app", 6));
     inner_list->append(AppItemIn::create("Preferences", "my_prefs", 7));
     inner_list->append(AppItemIn::create("Run App", "myrunner", 8));
-    inner_list->append(AppItemIn::create("Media Player", "media-app", 9));
-    inner_list->append(AppItemIn::create("MineSweeper", "mines_app", 10));
+    inner_list->append(AppItemIn::create("Text Editor", "my_textedit", 9));
+    inner_list->append(AppItemIn::create("Media Player", "media-app", 10));
+    inner_list->append(AppItemIn::create("MineSweeper", "mines_app", 11));
 
     // Initialize the inner grid view
     inner_selection = Gtk::NoSelection::create(inner_list);

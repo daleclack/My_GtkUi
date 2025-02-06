@@ -167,7 +167,37 @@ void MyPanel::btnmine_clicked()
 
 void MyPanel::padbtn_clicked(guint id)
 {
-    std::cout << "Clicked button with id: " << id << std::endl;
-    if (instance != nullptr)
-        std::cout << "Instance is not null" << std::endl;
+    // Hide the app menu when a button is clicked
+    instance->apps_stack->set_visible_child("page1");
+
+    // Launch the application based on the button ID
+    switch (id)
+    {
+    case 0: // 24 Game
+
+        break;
+    case 2: // Calculator
+        break;
+    case 3: // Drawing
+        break;
+    case 4: // My Finder
+        break;
+    case 5: // Guess Game
+        break;
+    case 6: // Image Viewer
+        break;
+    case 8: // App runner
+        break;
+    case 9: // Text Editor
+        break;
+    case 10: // Media Player
+        break;
+    case 11: // MineSweeper
+        break;
+    default:
+        break;
+    }
+    // std::cout << "Clicked button with id: " << id << std::endl;
+    // if (instance != nullptr)
+    //     std::cout << "Instance is not null" << std::endl;
 }
