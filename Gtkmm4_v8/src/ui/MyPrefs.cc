@@ -69,6 +69,12 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     dropdown_size.set_model(size_store);
     combo_box->append(dropdown_size);
 
+    // Add GtkAdjustments for spin buttons
+    adj_height = Gtk::Adjustment::create(576, 360, 9999);
+    adj_width = Gtk::Adjustment::create(1024, 640, 9999);
+    spin_width->set_adjustment(adj_width);
+    spin_height->set_adjustment(adj_height);
+
     // Bind properties
     Glib::Binding::bind_property(radio_default->property_active(), combo_box->property_sensitive());
     Glib::Binding::bind_property(radio_custom->property_active(), spin_width->property_sensitive());
@@ -79,6 +85,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_remove->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
     btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
     scale_size->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_size_changed));
+    btnapply->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::config_save));
 }
 
 void MyPrefs::config_load()
@@ -93,6 +100,20 @@ void MyPrefs::config_load()
         auto wallpapers = toml["main_config"]["file_paths"].as_array();
         selected = toml["main_config"]["selected_image"].value_or(0);
         auto icon_size = toml["main_config"]["icon_size"].as_integer()->get();
+        auto size_selected = toml["main_config"]["size_selected"].as_integer()->get();
+        if (size_selected < 0)
+        {
+            radio_custom->set_active();
+            width = toml["main_config"]["width"].as_integer()->get();
+            height = toml["main_config"]["height"].as_integer()->get();
+        }
+        else
+        {
+            radio_default->set_active();
+            dropdown_size.set_selected(size_selected);
+            width = width_values[size_selected];
+            height = height_values[size_selected];
+        }
 
         // Load all custom images paths
         for (int i = 0; i < wallpapers->size(); ++i)
@@ -112,14 +133,18 @@ void MyPrefs::config_load()
         // Default selection
         images_selection->set_selected(0);
         scale_size->set_value(48);
+        radio_default->set_active();
+        dropdown_size.set_selected(3);
     }
 
-    //Update image
+    // Update image
     if (selected < INTERNAL_IMAGE_COUNT)
     {
         auto res_name = images_store->get_string(selected);
         background_widget->set_resource(res_name);
-    }else{
+    }
+    else
+    {
         auto path = images_store->get_string(selected);
         background_widget->set_filename(path);
     }
@@ -146,11 +171,29 @@ void MyPrefs::config_save()
     // Get icon size config
     int icon_size = (int)(scale_size->get_value());
 
+    // Get size config
+    int size_selected = -1;
+    if (radio_default->get_active())
+    {
+        size_selected = dropdown_size.get_selected();
+        width = width_values[size_selected];
+        height = height_values[size_selected];
+    }
+    else
+    {
+        width = spin_width->get_value();
+        height = spin_height->get_value();
+        size_selected = -1;
+    }
+
     // Add a toml table for main configuration
     toml::table main_cfg;
     main_cfg.insert_or_assign("file_paths", file_paths);
     main_cfg.insert_or_assign("selected_image", selected);
     main_cfg.insert_or_assign("icon_size", icon_size);
+    main_cfg.insert_or_assign("size_selected", size_selected);
+    main_cfg.insert_or_assign("width", width);
+    main_cfg.insert_or_assign("height", height);
     toml.insert_or_assign("main_config", main_cfg);
 
     // Save the data to file
@@ -196,6 +239,9 @@ void MyPrefs::set_background_widget(Gtk::Picture *picture)
 
     // Load config
     config_load();
+
+    // Update window size
+    picture->set_size_request(width, height);
 }
 
 void MyPrefs::image_btn_clicked(PrefsBtn *btn)

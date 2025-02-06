@@ -145,6 +145,19 @@
                         <property name="receives-default">1</property>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkButton" id="btnmedia">
+                        <property name="child">
+                          <object class="GtkImage" id="imagemedia">
+                            <property name="icon-name">media-app</property>
+                            <property name="pixel-size">48</property>
+                          </object>
+                        </property>
+                        <property name="focusable">1</property>
+                        <property name="has-frame">0</property>
+                        <property name="receives-default">1</property>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>

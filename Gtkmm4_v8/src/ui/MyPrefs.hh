@@ -96,11 +96,13 @@ private:
     const int height_values[13] = {360, 450, 576, 720, 768, 810, 900, 945, 1008, 1044, 1080, 1152, 1440};
 
     // Child widgets for window size settings
+    int width = 1280, height = 720;
     Gtk::DropDown dropdown_size;
     Glib::RefPtr<Gtk::StringList> size_store;
     Gtk::Box *combo_box;
     Gtk::CheckButton *radio_default, *radio_custom;
     Gtk::SpinButton *spin_width, *spin_height;
+    Glib::RefPtr<Gtk::Adjustment> adj_width, adj_height;
     Gtk::Button *btnGet, *btnapply;
 
     // Config control

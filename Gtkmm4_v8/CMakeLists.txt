@@ -188,9 +188,9 @@ add_custom_target(resource ALL DEPENDS ${RESOURCE_FILE})
 #For win32 platform,use rc resource and .ico icon
 if(WIN32)
 	SET(CMAKE_RC_COMPILER windres)
-	set(app_WINRC ../icon.rc)
-	set_property(SOURCE ../icon.rc APPEND PROPERTY
-        OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/../icon.ico
+	set(app_WINRC icon.rc)
+	set_property(SOURCE icon.rc APPEND PROPERTY
+        OBJECT_DEPENDS ${PROJECT_SOURCE_DIR}/icon.ico
         )
 	add_executable(${PROJECT_NAME} ${app_WINRC} ${SOURCE_FILE} ${RESOURCE_FILE})
     add_custom_command(PRE_BUILD TARGET ${PROJECT_NAME} 

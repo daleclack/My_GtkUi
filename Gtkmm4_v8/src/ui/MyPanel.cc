@@ -37,6 +37,8 @@ MyPanel::MyPanel()
     imagegame24 = builder->get_widget<Gtk::Image>("imagegame24");
     btnmine = builder->get_widget<Gtk::Button>("btnmine");
     imagemine = builder->get_widget<Gtk::Image>("imagemine");
+    btnmedia = builder->get_widget<Gtk::Button>("btnmedia");
+    imagemedia = builder->get_widget<Gtk::Image>("imagemedia");
 
     // Connect signal handlers
     btnstart->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnstart_clicked));

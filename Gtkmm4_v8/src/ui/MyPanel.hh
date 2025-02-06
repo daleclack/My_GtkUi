@@ -23,9 +23,9 @@ private:
 
     // Button and images for the app task manager
     Gtk::Button *btnfiles, *btndraw, *btncalc, *btngame,
-        *btnedit, *btnviewer, *btnset, *btngame24, *btnmine;
+        *btnedit, *btnviewer, *btnset, *btngame24, *btnmine, *btnmedia;
     Gtk::Image *imagefiles, *imagedraw, *imagecalc, *imagegame,
-        *imageedit, *imageviewer, *imageset, *imagegame24, *imagemine;
+        *imageedit, *imageviewer, *imageset, *imagegame24, *imagemine, *imagemedia;
 
     // The App Menu
     AppMenu app_menu;
