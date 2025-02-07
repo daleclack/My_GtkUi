@@ -57,6 +57,7 @@ void MyStack::create_prefs_win(Gtk::Window &parent)
     // Create Preferences window
     prefs_window = MyPrefs::create(parent);
     panel1.set_prefs_win(prefs_window);
+    panel1.set_parent_window(parent);
     // prefs_window->set_background_widget()
 }
 

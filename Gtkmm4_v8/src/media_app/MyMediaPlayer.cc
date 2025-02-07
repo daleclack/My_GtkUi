@@ -13,6 +13,10 @@ MyMediaPlayer::MyMediaPlayer()
     set_icon_name("org.gtk.daleclack");
     set_default_size(300, 500);
 
+    // Add custom header bar
+    header.set_ctrl_window(this);
+    header.set_title_bar(*this);
+
     // Add video widget and label for lyrics
     video.set_autoplay();
     video.set_size_request(300, 150);

@@ -14,6 +14,7 @@ public:
     Gtk::Image *get_prefs_image();
     void set_prefs_win(MyPrefs *prefs);
     void set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider);
+    void set_parent_window(Gtk::Window &parent);
     void hide_launchpad();
 
 private:
@@ -57,6 +58,8 @@ private:
     void btngame24_clicked();
     void btnmine_clicked();
     bool minewin_closed();
+    void btnmedia_clicked();
+    bool mediawin_closed();
 
     // Static members
     static MyPanel *instance;

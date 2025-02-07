@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include "LyricsParser.hh"
+#include "MyHeader.hh"
 #include "../tomlplusplus/toml.hpp"
 
 // Play mode
@@ -42,6 +43,9 @@ public:
     virtual ~MyMediaPlayer();
 
 private:
+    // Title widget
+    MyHeader header;
+
     // Media Controls area
     Gtk::Video video;
     Gtk::Box main_box, ctrl_box;

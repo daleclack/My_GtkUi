@@ -52,6 +52,8 @@ MyPanel::MyPanel()
     btngame24->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame24_clicked));
     btnmine->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnmine_clicked));
     mine_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::minewin_closed), true);
+    btnmedia->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnmedia_clicked));
+    media_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::mediawin_closed), true);
 
     // Bind callback for the Apps Menu
     app_menu.set_callback(padbtn_clicked);
@@ -69,6 +71,13 @@ void MyPanel::set_prefs_win(MyPrefs *prefs)
 {
     prefs_window = prefs;
     prefs_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::setwin_closed), true);
+}
+
+void MyPanel::set_parent_window(Gtk::Window &parent)
+{
+    // Set the parent window for applications
+    mine_window.set_transient_for(parent);
+    media_window.set_transient_for(parent);
 }
 
 void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)
@@ -181,6 +190,20 @@ bool MyPanel::minewin_closed()
     return true;
 }
 
+void MyPanel::btnmedia_clicked()
+{
+    window_ctrl(media_window);
+    imagemedia->set_from_icon_name("media-app_running");
+}
+
+bool MyPanel::mediawin_closed()
+{
+    media_window.set_visible(false);
+    imagemedia->set_from_icon_name("media-app");
+    return true;
+}
+
+
 void MyPanel::padbtn_clicked(guint id)
 {
     // Hide the app menu when a button is clicked
@@ -208,7 +231,7 @@ void MyPanel::padbtn_clicked(guint id)
         break;
     case 10: // Media Player
         instance->media_window.present();
-        instance->imagemedia->set_from_icon_name("media_app_running");
+        instance->imagemedia->set_from_icon_name("media-app_running");
         break;
     case 11: // MineSweeper
         instance->mine_window.present();
