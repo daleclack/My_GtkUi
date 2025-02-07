@@ -28,6 +28,15 @@ MineSweeper::MineSweeper()
     add_action("show_mines", sigc::mem_fun(*this, &MineSweeper::show_mines));
     add_action("quit", sigc::mem_fun(*this, &MineSweeper::hide));
 
+    // Create mine cells
+    cell = new MineCell[49];
+    for (int i = 0; i < 7; ++i){
+        for (int j = 0; j < 7; ++j)
+        {
+            mine_grid.attach(cell[i * 7 + j], i, j);
+        }
+    }
+
     // Default setting
     reset_game();
     pause_game();
@@ -68,8 +77,8 @@ MineSweeper::MineSweeper()
     // Add style for the mine grid
     auto style_provider = Gtk::CssProvider::create();
     style_provider->load_from_resource("/org/gtk/daleclack/mine_app.css");
-    mine_grid.add_css_class("mine_app");
-    Gtk::StyleProvider::add_provider_for_display(mine_grid.get_display(),
+    main_box.add_css_class("mine_app");
+    Gtk::StyleProvider::add_provider_for_display(main_box.get_display(),
                                                  style_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     // Show everything
@@ -96,13 +105,12 @@ void MineSweeper::new_game()
 
 void MineSweeper::reset_game(int width, int height, int mines)
 {
-    // Clear the cells
-    if (cell != nullptr)
-    {
-        delete[] cell;
-    }
+    // // Clear the cells
+    // if (cell != nullptr)
+    // {
+    //     delete[] cell;
+    // }
 
-    cell = new MineCell[width * height];
     // Reset timer
     mytimer.disconnect();
     timer_count = 0;
@@ -150,7 +158,6 @@ void MineSweeper::reset_game(int width, int height, int mines)
             // cell[i * 7 + j].set_label("?");
             cell[i * width + j].signal_clicked().connect(sigc::bind(
                 sigc::mem_fun(*this, &MineSweeper::cell_clicked), &cell[i * width + j]));
-            mine_grid.attach(cell[i * width + j], j, i);
             cell[i * width + j].set_has_frame();
             cell[i * width + j].x = j;
             cell[i * width + j].y = i;
