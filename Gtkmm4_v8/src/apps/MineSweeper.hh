@@ -3,6 +3,7 @@
 #include <gtkmm.h>
 #include "InputBox.hh"
 #include "ScoresWin.hh"
+#include "MyHeader.hh"
 
 // The status of the minesweeper game
 enum class GameStatus
@@ -38,7 +39,8 @@ public:
 
 private:
     // HeaderBar
-    Gtk::HeaderBar header;
+    // Gtk::HeaderBar header;
+    MyHeader header;
     Gtk::MenuButton menu_btn;
     Gtk::PopoverMenu popover1;
 

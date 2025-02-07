@@ -72,6 +72,7 @@ void InputBox::read_scores(bool show_scores_win)
     if (show_scores_win)
     {
         scores_win1->update_and_show();
+        scores_win1->present();
     }
 }
 

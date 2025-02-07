@@ -36,6 +36,16 @@ MyHeader::MyHeader()
     set_dpi_scale(1.25);
 }
 
+void MyHeader::pack_end(Gtk::Widget &widget)
+{
+    header.pack_end(widget);
+}
+
+void MyHeader::pack_start(Gtk::Widget &widget)
+{
+    header.pack_start(widget);
+}
+
 void MyHeader::set_dpi_scale(double dpi_scale)
 {
     // Button size depends on DPI scale
@@ -49,16 +59,11 @@ void MyHeader::set_dpi_scale(double dpi_scale)
     img_minimize.set_pixel_size(14 * dpi_scale);
 }
 
-// Set title bar
-void MyHeader::set_title_bar(Gtk::Window &window)
-{
-    window.set_titlebar(header);
-}
-
 // Bind controlled window
 void MyHeader::set_ctrl_window(Gtk::Window *ctrl_window1)
 {
     ctrl_window = ctrl_window1;
+    ctrl_window->set_titlebar(header);
 }
 
 // Close controlled window

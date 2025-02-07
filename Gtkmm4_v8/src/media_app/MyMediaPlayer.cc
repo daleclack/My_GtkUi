@@ -15,7 +15,7 @@ MyMediaPlayer::MyMediaPlayer()
 
     // Add custom header bar
     header.set_ctrl_window(this);
-    header.set_title_bar(*this);
+    // header.set_title_bar(*this);
 
     // Add video widget and label for lyrics
     video.set_autoplay();

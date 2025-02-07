@@ -9,9 +9,11 @@ MineSweeper::MineSweeper()
 {
     // Initalize Window
     set_title("MineSweeper");
-    set_titlebar(header);
-    header.set_show_title_buttons();
-    header.set_decoration_layout("close,minimize,maximize:menu");
+    header.set_ctrl_window(this);
+    // header.set_title_bar(*this);
+    // set_titlebar(header);
+    // header.set_show_title_buttons();
+    // header.set_decoration_layout("close,minimize,maximize:menu");
     header.pack_end(menu_btn);
     set_icon_name("org.gtk.daleclack");
 

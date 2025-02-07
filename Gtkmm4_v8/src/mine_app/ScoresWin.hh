@@ -30,29 +30,31 @@ public:
     ScoresWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade);
     void update_and_show();
 
+protected:
+    bool on_close_request() override;
+
 private:
     Glib::RefPtr<Gtk::Builder> ref_builder;
 
     // Child widgets
     Gtk::Button *btnclose;
     Gtk::ColumnView *mine_view;
-    // Gtk::TreeView *tree_view;
 
-    // // TreeView data
-    // class ModelColumns : public Gtk::TreeModelColumnRecord
-    // {
-    // public:
-    //     ModelColumns()
-    //     {
-    //         add(player_name);
-    //         add(win_time);
-    //     }
-    //     Gtk::TreeModelColumn<std::string> player_name;
-    //     Gtk::TreeModelColumn<int> win_time;
-    // };
-    // ModelColumns column1;
+    // Store for win time and player name
+    Glib::RefPtr<Gio::ListStore<ScoresItem>> scores_store;
+    Glib::RefPtr<Gtk::NoSelection> no_selection;
 
-    // Glib::RefPtr<Gtk::ListStore> store;
+    // Column for Names
+    Glib::RefPtr<Gtk::SignalListItemFactory> name_factory;
+    Gtk::ColumnViewColumn *name_column;
+    void name_bind(const Glib::RefPtr<Gtk::ListItem> &item);
+    void name_setup(const Glib::RefPtr<Gtk::ListItem> &item);
+
+    // Column for Times
+    Glib::RefPtr<Gtk::SignalListItemFactory> time_factory;
+    Gtk::ColumnViewColumn *time_column;
+    void time_bind(const Glib::RefPtr<Gtk::ListItem> &item);
+    void time_setup(const Glib::RefPtr<Gtk::ListItem> &item);
 
     // Sort function
     // int sort_func(const Gtk::TreeModel::const_iterator &iter1, const Gtk::TreeModel::const_iterator &iter2);

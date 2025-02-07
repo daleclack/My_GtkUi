@@ -14,7 +14,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     // Set window titlebar
     set_title("Preferences");
     header.set_ctrl_window(this);
-    header.set_title_bar(*this);
+    // header.set_title_bar(*this);
 
     // Get widgets from builder
     back_stack = ref_builder->get_widget<Gtk::Stack>("back_stack");
