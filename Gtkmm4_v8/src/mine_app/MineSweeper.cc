@@ -53,15 +53,15 @@ MineSweeper::MineSweeper()
     main_box.append(btn_box);
 
     // Create a dialog
-    // input_dialog = InputBox::create();
+    input_dialog = InputBox::create();
 
     // Create Scores Window
-    // scores_win = ScoresWin::create();
+    scores_win = ScoresWin::create();
 
     // Bind windows
-    // input_dialog->set_transient_for(*this);
-    // scores_win->set_transient_for(*this);
-    // input_dialog->set_scores_window(scores_win);
+    input_dialog->set_transient_for(*this);
+    scores_win->set_transient_for(*this);
+    input_dialog->set_scores_window(scores_win);
 
     // Show everything
     set_child(main_box);

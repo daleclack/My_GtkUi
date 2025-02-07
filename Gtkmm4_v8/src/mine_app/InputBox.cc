@@ -1,38 +1,68 @@
 #include "InputBox.hh"
 
 InputBox::InputBox(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade)
-    : Gtk::Dialog(cobject),
+    : Gtk::Window(cobject),
       ref_builder(ref_Glade)
 {
     // Get Widgets
-    entry_name = ref_builder->get_widget<Gtk::Entry>("entry_name");
+    // entry_name = ref_builder->get_widget<Gtk::Entry>("entry_name");
+    input_box = ref_builder->get_widget<Gtk::Box>("input_box");
     check_scores = ref_builder->get_widget<Gtk::CheckButton>("check_scores");
-    entry_name->signal_activate().connect(sigc::mem_fun(*this, &InputBox::entry_activated));
+    btn_ok = ref_builder->get_widget<Gtk::Button>("btn_ok");
+    btn_cancel = ref_builder->get_widget<Gtk::Button>("btn_cancel");
+
+    input_box->prepend(entry_name);
+    entry_name.set_text("111");
+
+    // Connect signals
+    entry_name.signal_activate().connect(sigc::mem_fun(*this, &InputBox::entry_activated));
+    btn_ok->signal_clicked().connect(sigc::mem_fun(*this, &InputBox::btnok_clicked));
+    btn_cancel->signal_clicked().connect(sigc::mem_fun(*this, &InputBox::btncancel_clicked));
 }
 
-void InputBox::on_response(int response_id)
+bool InputBox::on_close_request()
 {
-    // Open a file to save json data
+    set_visible(false);
+    return true;
+}
+
+void InputBox::btnok_clicked()
+{
+    // Create toml object for data
+    static constexpr std::string_view source = R"(
+        names = []
+        times = []
+    )";
+
+    toml::table tbl = toml::parse(source);
+
+    // Append data to names and paths
+    std::string name = std::string(entry_name.get_text());
+    names->push_back(name);
+    times->push_back(game_time);
+    tbl.insert_or_assign("names", *names);
+    tbl.insert_or_assign("times", *times);
+
+    // Save toml data
     std::fstream outfile;
-    outfile.open("scores.json", std::ios_base::out);
+    outfile.open("scores.toml", std::ios_base::out);
     if (outfile.is_open())
     {
-        // Insert data to json
-        std::string name = std::string((entry_name->get_text()).c_str());
-        names.push_back(name);
-        times.push_back(game_time);
-        data["name"] = names;
-        data["time"] = times;
-
-        // Output data
-        outfile << data;
+        outfile << tbl;
     }
     outfile.close();
-    if (response_id == Gtk::ResponseType::OK)
-    {
-        read_scores(check_scores->get_active());
-    }
-    hide();
+
+    // If show scores checkbutton is checked, show scores window
+    read_scores(check_scores->get_active());
+
+    // Close the window
+    close();
+}
+
+void InputBox::btncancel_clicked()
+{
+    // Close the window
+    close();
 }
 
 void InputBox::read_scores(bool show_scores_win)
@@ -46,30 +76,17 @@ void InputBox::read_scores(bool show_scores_win)
 
 void InputBox::set_game_time(int time)
 {
-    // Try to open json file
-    std::fstream jsonfile;
-    jsonfile.open("scores.json", std::ios_base::in);
+    // Try to load scores from config file
+    std::fstream scores_file;
+    scores_file.open("scores.toml", std::ios_base::in);
 
-    // If json file opened, read the data
-    if (jsonfile.is_open())
+    // If toml file opened, read the data
+    if (scores_file.is_open())
     {
-        data = json::parse(jsonfile);
-        std::vector<std::string> names1 = data["name"];
-        std::vector<int> times1 = data["time"];
-        names = names1;
-        times = times1;
+        auto toml = toml::parse(scores_file);
+        names = toml.get_as<toml::array>("names");
+        times = toml.get_as<toml::array>("times");
     }
-    else
-    {
-        // Otherwist, create json data
-        data = json::parse(R"(
-            {
-                "name":[" "],
-                "time":[0]
-            }
-        )");
-    }
-    jsonfile.close();
 
     // Initalize time
     game_time = time;
@@ -78,7 +95,7 @@ void InputBox::set_game_time(int time)
 void InputBox::entry_activated()
 {
     // Default response
-    response(Gtk::ResponseType::OK);
+    btnok_clicked();
 }
 
 void InputBox::set_scores_window(ScoresWin *win1)
@@ -90,7 +107,7 @@ void InputBox::set_scores_window(ScoresWin *win1)
 InputBox *InputBox::create()
 {
     // Create a inputbox object
-    auto builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/win_input.ui");
+    auto builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/cambalache/win_input.ui");
 
     InputBox *dialog;
     dialog = Gtk::Builder::get_widget_derived<InputBox>(builder, "dialog");

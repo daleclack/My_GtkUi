@@ -43,8 +43,8 @@ set(RESOURCE_LIST
     STRIPBLANKS cambalache/overlaywin.ui
     STRIPBLANKS mainmenu.xml
     STRIPBLANKS mine_menu.xml
-    STRIPBLANKS scoreswin.ui
-    STRIPBLANKS win_input.ui
+    STRIPBLANKS cambalache/scoreswin.ui
+    STRIPBLANKS cambalache/win_input.ui
     title_style.css
     style.css
     style_dark.css

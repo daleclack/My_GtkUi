@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.95.0 -->
+<interface>
+  <!-- interface-name scoreswin.ui -->
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="scores_win">
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkListView">
+            <property name="height-request">400</property>
+            <property name="width-request">300</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkLabel">
+                <property name="hexpand">True</property>
+                <property name="hexpand-set">True</property>
+                <property name="label"> </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnclose">
+                <property name="halign">end</property>
+                <property name="label">Close</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label">      </property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
