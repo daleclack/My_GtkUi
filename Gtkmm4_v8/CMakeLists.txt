@@ -15,7 +15,7 @@ include(CPack)
 include_directories(.)
 include_directories(..)
 include_directories(src/core src/ui src/apps src/mine_app
-    src/media_app)
+    src/media_app src/file_app)
 #Find PkgConfig to use gtkmm
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM4 REQUIRED gtkmm-4.0)
@@ -31,7 +31,8 @@ set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc
     src/core/MyHeader.cc src/ui/MyPrefs.cc src/ui/MyPanel.cc 
     src/ui/MyFinder.cc src/ui/AppMenu.cc src/mine_app/InputBox.cc
     src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc
-    src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc)
+    src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc
+    src/file_app/FileWindow.cc)
 
 #Compile Resource
 
