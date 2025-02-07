@@ -35,6 +35,7 @@ private:
 
     // Child widgets
     Gtk::Button *btnclose;
+    Gtk::ColumnView *mine_view;
     // Gtk::TreeView *tree_view;
 
     // // TreeView data

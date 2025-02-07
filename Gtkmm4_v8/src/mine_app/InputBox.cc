@@ -1,4 +1,5 @@
 #include "InputBox.hh"
+#include <iostream>
 
 InputBox::InputBox(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade)
     : Gtk::Window(cobject),
@@ -38,10 +39,10 @@ void InputBox::btnok_clicked()
 
     // Append data to names and paths
     std::string name = std::string(entry_name.get_text());
-    names->push_back(name);
-    times->push_back(game_time);
-    tbl.insert_or_assign("names", *names);
-    tbl.insert_or_assign("times", *times);
+    names.push_back(name);
+    times.push_back(game_time);
+    tbl.insert_or_assign("names", names);
+    tbl.insert_or_assign("times", times);
 
     // Save toml data
     std::fstream outfile;
@@ -84,8 +85,8 @@ void InputBox::set_game_time(int time)
     if (scores_file.is_open())
     {
         auto toml = toml::parse(scores_file);
-        names = toml.get_as<toml::array>("names");
-        times = toml.get_as<toml::array>("times");
+        names = *(toml.get_as<toml::array>("names"));
+        times = *(toml.get_as<toml::array>("times"));
     }
 
     // Initalize time

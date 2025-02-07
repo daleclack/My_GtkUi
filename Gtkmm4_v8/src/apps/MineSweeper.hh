@@ -50,7 +50,7 @@ private:
 
     // The cell to place mines
     MineCell *cell;
-    GameStatus game_status; // Use enum class for the status of game
+    GameStatus game_status = GameStatus::Paused; // Use enum class for the status of game
     // bool winned, game_ended;     // The status of game(win/end)
     int mines_clear, mine_count; // Whether the mine is cleared
 

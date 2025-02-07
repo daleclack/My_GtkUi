@@ -20,7 +20,7 @@ class InputBox : public Gtk::Window{
         int game_time;
 
         // Data to write to json file
-        toml::array *names, *times;
+        toml::array names, times;
         // std::vector<std::string> names;
         // std::vector<int> times;
 

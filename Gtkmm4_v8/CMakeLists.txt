@@ -48,6 +48,7 @@ set(RESOURCE_LIST
     title_style.css
     style.css
     style_dark.css
+    mine_app.css
     c182rg_1.png
     c182rg_2.png
     final_approach.png

@@ -30,6 +30,7 @@ MineSweeper::MineSweeper()
 
     // Default setting
     reset_game();
+    pause_game();
 
     // Buttons
     btnstart.set_label("Start/Reset");
@@ -41,6 +42,7 @@ MineSweeper::MineSweeper()
     btn_box.append(btnshow);
     btn_box.append(btnexit);
     btnstart.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::new_game));
+    btnpause.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::pause_game));
     btnshow.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::show_mines));
     btnexit.signal_clicked().connect(sigc::mem_fun(*this, &MineSweeper::hide));
 
@@ -63,21 +65,31 @@ MineSweeper::MineSweeper()
     scores_win->set_transient_for(*this);
     input_dialog->set_scores_window(scores_win);
 
+    // Add style for the mine grid
+    auto style_provider = Gtk::CssProvider::create();
+    style_provider->load_from_resource("/org/gtk/daleclack/mine_app.css");
+    mine_grid.add_css_class("mine_app");
+    Gtk::StyleProvider::add_provider_for_display(mine_grid.get_display(),
+                                                 style_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
     // Show everything
     set_child(main_box);
-    //show_all_children();
+    // show_all_children();
 }
 
-MineSweeper::~MineSweeper(){
+MineSweeper::~MineSweeper()
+{
     // Delete all resources
     delete input_dialog;
     delete scores_win;
-    if(cell != nullptr){
+    if (cell != nullptr)
+    {
         delete[] cell;
     }
 }
 
-void MineSweeper::new_game(){
+void MineSweeper::new_game()
+{
     // New game = reset game
     reset_game();
 }
@@ -85,7 +97,8 @@ void MineSweeper::new_game(){
 void MineSweeper::reset_game(int width, int height, int mines)
 {
     // Clear the cells
-    if(cell != nullptr){
+    if (cell != nullptr)
+    {
         delete[] cell;
     }
 
@@ -125,9 +138,6 @@ void MineSweeper::reset_game(int width, int height, int mines)
             mine_count++;
         }
     }
-    // std::cout << mine_count << std::endl;
-    // game_ended = false;
-    // winned = true;
     game_status = GameStatus::Running;
     status_label.set_label(" ");
     calc_mines();
@@ -151,8 +161,19 @@ void MineSweeper::reset_game(int width, int height, int mines)
     mine_grid.show();
 }
 
-void MineSweeper::pause_game(){
-    
+// Pause or Resume Game
+void MineSweeper::pause_game()
+{
+    if (game_status == GameStatus::Running)
+    {
+        game_status = GameStatus::Paused;
+        mine_grid.set_sensitive(false);
+    }
+    else
+    {
+        game_status = GameStatus::Running;
+        mine_grid.set_sensitive();
+    }
 }
 
 void MineSweeper::calc_mines()
@@ -190,12 +211,14 @@ void MineSweeper::show_mines()
     }
 }
 
-void MineSweeper::show_scores(){
+void MineSweeper::show_scores()
+{
     // Show Scores Window
     input_dialog->read_scores();
 }
 
-void MineSweeper::game_lost(int explode_index){
+void MineSweeper::game_lost(int explode_index)
+{
     // When a cell with mine is clicked, show other mines
     for (int i = 0; i < 49; i++)
     {
@@ -208,11 +231,14 @@ void MineSweeper::game_lost(int explode_index){
 
 bool MineSweeper::timer_func()
 {
-    // Set timer
-    char tmp[50];
-    timer_count++;
-    sprintf(tmp, "Time:%d", timer_count);
-    status_label.set_label(tmp);
+    if (game_status == GameStatus::Running)
+    {
+        // Set timer
+        char tmp[50];
+        timer_count++;
+        sprintf(tmp, "Time:%d", timer_count);
+        status_label.set_label(tmp);
+    }
     return true;
 }
 
@@ -271,7 +297,7 @@ void MineSweeper::check_mines(int pos_x, int pos_y)
             // make the cell without mines cleared
             cell[pos_y * 7 + pos_x].set_has_frame(false);
             cell[pos_y * 7 + pos_x].cleared = true;
-            
+
             // Check the cells around a cell that has no mines
             if (cell[pos_y * 7 + pos_x].mines_around == 0)
             {
@@ -298,5 +324,7 @@ void MineSweeper::check_mines(int pos_x, int pos_y)
         // Save the time of game
         input_dialog->set_game_time(timer_count);
         input_dialog->show();
+
+        mine_grid.set_sensitive(false);
     }
 }

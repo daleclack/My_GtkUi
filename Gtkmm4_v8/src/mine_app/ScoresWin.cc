@@ -7,8 +7,7 @@ ScoresWin::ScoresWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &
 {
     // Get Widgets
     btnclose = ref_builder->get_widget<Gtk::Button>("btnclose");
-    // tree_view = ref_builder->get_widget<Gtk::TreeView>("scores_view");
-    // btnclose->signal_clicked().connect(sigc::mem_fun(*this, &ScoresWin::hide));
+    mine_view = ref_builder->get_widget<Gtk::ColumnView>("mine_view");
 
     // // Create the list store
     // store = Gtk::ListStore::create(column1);
