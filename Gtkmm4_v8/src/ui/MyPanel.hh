@@ -5,6 +5,7 @@
 #include "MyPrefs.hh"
 #include "MineSweeper.hh"
 #include "MyMediaPlayer.hh"
+#include "FileWindow.hh"
 
 class MyPanel
 {
@@ -38,6 +39,9 @@ private:
     // Preferences window
     MyPrefs *prefs_window;
 
+    // File Browser
+    FileWindow file_window;
+
     // MineSweeper
     MineSweeper mine_window;
 
@@ -48,6 +52,7 @@ private:
     void window_ctrl(Gtk::Window &window);
     void btnstart_clicked();
     void btnfiles_clicked();
+    bool filewin_closed();
     void btndraw_clicked();
     void btncalc_clicked();
     void btngame_clicked();

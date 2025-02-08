@@ -32,7 +32,7 @@ set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc
     src/ui/MyFinder.cc src/ui/AppMenu.cc src/mine_app/InputBox.cc
     src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc
     src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc
-    src/file_app/FileWindow.cc)
+    src/file_app/FileWindow.cc src/file_app/MsgDialog.cc src/file_app/NewDialog.cc)
 
 #Compile Resource
 
@@ -56,6 +56,7 @@ set(RESOURCE_LIST
     img7.png
     shizuku.png
     winpe.png
+    dialog-error.png
     icons/16x16/actions/finder_audio.svg
     icons/16x16/actions/finder-battery.svg
     icons/16x16/actions/finder-computer.svg

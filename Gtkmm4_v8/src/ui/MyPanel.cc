@@ -43,6 +43,7 @@ MyPanel::MyPanel()
     // Connect signal handlers
     btnstart->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnstart_clicked));
     btnfiles->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnfiles_clicked));
+    file_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::filewin_closed), true);
     btndraw->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btndraw_clicked));
     btncalc->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btncalc_clicked));
     btngame->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame_clicked));
@@ -78,6 +79,7 @@ void MyPanel::set_parent_window(Gtk::Window &parent)
     // Set the parent window for applications
     mine_window.set_transient_for(parent);
     media_window.set_transient_for(parent);
+    file_window.set_transient_for(parent);
 }
 
 void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)
@@ -136,7 +138,19 @@ void MyPanel::btnstart_clicked()
 
 void MyPanel::btnfiles_clicked()
 {
+    // Show or hide the file manager window
+    window_ctrl(file_window);
+    imagefiles->set_from_icon_name("file-app_running");
 }
+
+bool MyPanel::filewin_closed()
+{
+    // Hide the file manager window and reset its icon
+    file_window.set_visible(false);
+    imagefiles->set_from_icon_name("file-app");
+    return true;
+}
+
 
 void MyPanel::btndraw_clicked()
 {
@@ -220,6 +234,8 @@ void MyPanel::padbtn_clicked(guint id)
     case 3: // Drawing
         break;
     case 4: // My Finder
+        instance->file_window.present();
+        instance->imagefiles->set_from_icon_name("file-app_running");
         break;
     case 5: // Guess Game
         break;
