@@ -13,6 +13,9 @@ private:
     // The builder
     Glib::RefPtr<Gtk::Builder> ref_builder;
 
+    // Custom title bar
+    MyHeader header;
+
     // Child widgets
     Gtk::Button *btns[18];
     Gtk::Button *btnclear, *btnback,

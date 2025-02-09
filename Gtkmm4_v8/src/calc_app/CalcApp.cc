@@ -9,6 +9,7 @@ CalcApp::CalcApp(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
 {
     set_icon_name("calcapp");
     set_title("Calculator");
+    header.set_ctrl_window(this);
 
     // Get Widgets
     //ref_builder->get_widget("label_numbers", label_numbers);
