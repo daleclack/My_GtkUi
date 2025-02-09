@@ -88,6 +88,7 @@ void MyPanel::set_parent_window(Gtk::Window &parent)
     media_window.set_transient_for(parent);
     file_window.set_transient_for(parent);
     calc_window->set_transient_for(parent);
+    runner_window.set_transient_for(parent);
 }
 
 void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)
@@ -274,6 +275,7 @@ void MyPanel::padbtn_clicked(guint id)
     case 6: // Image Viewer
         break;
     case 8: // App runner
+        instance->runner_window.present();
         break;
     case 9: // Text Editor
         break;

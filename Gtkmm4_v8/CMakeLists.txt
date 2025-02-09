@@ -33,7 +33,7 @@ set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc
     src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc
     src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc
     src/file_app/FileWindow.cc src/file_app/MsgDialog.cc src/file_app/NewDialog.cc
-    src/calc_app/calc.cc src/calc_app/CalcApp.cc
+    src/calc_app/calc.cc src/calc_app/CalcApp.cc src/run_app/Runner.cc
     src/game24_app/Game24.cc src/game24_app/Game24Win.cc)
 
 #Compile Resource

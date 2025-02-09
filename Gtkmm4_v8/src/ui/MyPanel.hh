@@ -8,6 +8,7 @@
 #include "FileWindow.hh"
 #include "CalcApp.hh"
 #include "Game24Win.hh"
+#include "Runner.hh"
 
 class MyPanel
 {
@@ -55,6 +56,9 @@ private:
 
     // Media Player
     MyMediaPlayer media_window;
+
+    // Runner
+    Runner runner_window;
 
     // Signal handlers
     void window_ctrl(Gtk::Window &window);
