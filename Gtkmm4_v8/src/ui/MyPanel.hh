@@ -7,6 +7,7 @@
 #include "MyMediaPlayer.hh"
 #include "FileWindow.hh"
 #include "CalcApp.hh"
+#include "Game24Win.hh"
 
 class MyPanel
 {
@@ -46,6 +47,9 @@ private:
     // Calculator
     CalcApp *calc_window;
 
+    // 24 Game
+    Game24Win *game24_window;
+
     // MineSweeper
     MineSweeper mine_window;
 
@@ -66,6 +70,7 @@ private:
     void btnset_clicked();
     bool setwin_closed();
     void btngame24_clicked();
+    bool game24win_closed();
     void btnmine_clicked();
     bool minewin_closed();
     void btnmedia_clicked();

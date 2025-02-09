@@ -15,7 +15,7 @@ include(CPack)
 include_directories(.)
 include_directories(..)
 include_directories(src/core src/ui src/apps src/mine_app
-    src/media_app src/file_app src/calc_app)
+    src/media_app src/file_app src/calc_app src/game24_app)
 #Find PkgConfig to use gtkmm
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM4 REQUIRED gtkmm-4.0)
@@ -33,7 +33,8 @@ set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc
     src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc
     src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc
     src/file_app/FileWindow.cc src/file_app/MsgDialog.cc src/file_app/NewDialog.cc
-    src/calc_app/calc.cc src/calc_app/CalcApp.cc)
+    src/calc_app/calc.cc src/calc_app/CalcApp.cc
+    src/game24_app/Game24.cc src/game24_app/Game24Win.cc)
 
 #Compile Resource
 
@@ -45,9 +46,13 @@ set(RESOURCE_LIST
     STRIPBLANKS cambalache/overlaywin.ui
     STRIPBLANKS mainmenu.xml
     STRIPBLANKS mine_menu.xml
+    STRIPBLANKS image_appmenu.xml
     STRIPBLANKS cambalache/scoreswin.ui
     STRIPBLANKS cambalache/win_input.ui
     STRIPBLANKS calcapp.ui
+    STRIPBLANKS game24.ui
+    STRIPBLANKS game1.ui
+    STRIPBLANKS expander.ui
     title_style.css
     style.css
     style_dark.css

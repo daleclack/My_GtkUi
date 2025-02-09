@@ -47,6 +47,9 @@ MyPanel::MyPanel()
     // Create Calculator window
     calc_window = CalcApp::create();
 
+    // Create 24 Game window
+    game24_window = Game24Win::create();
+
     // Hide the scrollbar of scrolled window
     auto scrollbar = apps_sw->get_vscrollbar();
     scrollbar->set_visible(false);
@@ -194,7 +197,6 @@ void MyPanel::btnset_clicked()
     // prefs_window->present();
     window_ctrl(*prefs_window);
     imageset->set_from_icon_name("my_prefs_running");
-    // prefs_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::setwin_closed));
 }
 
 bool MyPanel::setwin_closed()
@@ -206,6 +208,16 @@ bool MyPanel::setwin_closed()
 
 void MyPanel::btngame24_clicked()
 {
+    window_ctrl(*game24_window);
+    imagegame24->set_from_icon_name("24game_running");
+}
+
+bool MyPanel::game24win_closed()
+{
+    // Hide the 24 Game window and reset its icon
+    game24_window->set_visible(false);
+    imagegame24->set_from_icon_name("24game");
+    return true;
 }
 
 void MyPanel::btnmine_clicked()
@@ -244,7 +256,8 @@ void MyPanel::padbtn_clicked(guint id)
     switch (id)
     {
     case 0: // 24 Game
-
+        instance->game24_window->present();
+        instance->imagegame24->set_from_icon_name("24game_running");
         break;
     case 2: // Calculator
         instance->calc_window->present();

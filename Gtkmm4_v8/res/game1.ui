@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <!-- <object class="GtkWindow" id="window"> -->
-  <template class="GameApp" parent="GtkWindow">
+  <object class="GtkWindow" id="window">
+  <!-- <template class="GameApp" parent="GtkWindow"> -->
     <property name="title" translatable="1">Guess Game</property>
     <property name="destroy-with-parent">1</property>
     <property name="child">
@@ -207,6 +207,6 @@
         </child>
       </object>
     </property>
-  </template>
-  <!-- </object> -->
+  <!-- </template> -->
+  </object>
 </interface>
