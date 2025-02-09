@@ -40,12 +40,27 @@ MyPanel::MyPanel()
     btnmedia = builder->get_widget<Gtk::Button>("btnmedia");
     imagemedia = builder->get_widget<Gtk::Image>("imagemedia");
 
+    // Bind callback for the Apps Menu
+    app_menu.set_callback(padbtn_clicked);
+    MyPanel::instance = this;
+
+    // Create Calculator window
+    calc_window = CalcApp::create();
+
+    // Hide the scrollbar of scrolled window
+    auto scrollbar = apps_sw->get_vscrollbar();
+    scrollbar->set_visible(false);
+
+    // Add apps view
+    apps_box->append(app_menu);
+
     // Connect signal handlers
     btnstart->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnstart_clicked));
     btnfiles->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnfiles_clicked));
     file_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::filewin_closed), true);
     btndraw->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btndraw_clicked));
     btncalc->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btncalc_clicked));
+    calc_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::calcwin_closed), true);
     btngame->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame_clicked));
     btnedit->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnedit_clicked));
     btnviewer->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnviewer_clicked));
@@ -55,17 +70,6 @@ MyPanel::MyPanel()
     mine_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::minewin_closed), true);
     btnmedia->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnmedia_clicked));
     media_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::mediawin_closed), true);
-
-    // Bind callback for the Apps Menu
-    app_menu.set_callback(padbtn_clicked);
-    MyPanel::instance = this;
-
-    // Hide the scrollbar of scrolled window
-    auto scrollbar = apps_sw->get_vscrollbar();
-    scrollbar->set_visible(false);
-
-    // Add apps view
-    apps_box->append(app_menu);
 }
 
 void MyPanel::set_prefs_win(MyPrefs *prefs)
@@ -80,6 +84,7 @@ void MyPanel::set_parent_window(Gtk::Window &parent)
     mine_window.set_transient_for(parent);
     media_window.set_transient_for(parent);
     file_window.set_transient_for(parent);
+    calc_window->set_transient_for(parent);
 }
 
 void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)
@@ -158,7 +163,19 @@ void MyPanel::btndraw_clicked()
 
 void MyPanel::btncalc_clicked()
 {
+    // Show or hide the calculator window
+    window_ctrl(*calc_window);
+    imagecalc->set_from_icon_name("calcapp_running");
 }
+
+bool MyPanel::calcwin_closed()
+{
+    // Hide the calculator window and reset its icon
+    calc_window->set_visible(false);
+    imagecalc->set_from_icon_name("calcapp");
+    return true;
+}
+
 void MyPanel::btngame_clicked()
 {
 }
@@ -230,6 +247,8 @@ void MyPanel::padbtn_clicked(guint id)
 
         break;
     case 2: // Calculator
+        instance->calc_window->present();
+        instance->imagecalc->set_from_icon_name("calcapp_running");
         break;
     case 3: // Drawing
         break;

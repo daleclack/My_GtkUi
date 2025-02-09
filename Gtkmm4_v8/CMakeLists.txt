@@ -15,7 +15,7 @@ include(CPack)
 include_directories(.)
 include_directories(..)
 include_directories(src/core src/ui src/apps src/mine_app
-    src/media_app src/file_app)
+    src/media_app src/file_app src/calc_app)
 #Find PkgConfig to use gtkmm
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM4 REQUIRED gtkmm-4.0)
@@ -32,7 +32,8 @@ set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc
     src/ui/MyFinder.cc src/ui/AppMenu.cc src/mine_app/InputBox.cc
     src/mine_app/MineSweeper.cc src/mine_app/ScoresWin.cc
     src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc
-    src/file_app/FileWindow.cc src/file_app/MsgDialog.cc src/file_app/NewDialog.cc)
+    src/file_app/FileWindow.cc src/file_app/MsgDialog.cc src/file_app/NewDialog.cc
+    src/calc_app/calc.cc src/calc_app/CalcApp.cc)
 
 #Compile Resource
 
@@ -46,6 +47,7 @@ set(RESOURCE_LIST
     STRIPBLANKS mine_menu.xml
     STRIPBLANKS cambalache/scoreswin.ui
     STRIPBLANKS cambalache/win_input.ui
+    STRIPBLANKS calcapp.ui
     title_style.css
     style.css
     style_dark.css

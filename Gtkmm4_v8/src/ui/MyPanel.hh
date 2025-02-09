@@ -6,6 +6,7 @@
 #include "MineSweeper.hh"
 #include "MyMediaPlayer.hh"
 #include "FileWindow.hh"
+#include "CalcApp.hh"
 
 class MyPanel
 {
@@ -42,6 +43,9 @@ private:
     // File Browser
     FileWindow file_window;
 
+    // Calculator
+    CalcApp *calc_window;
+
     // MineSweeper
     MineSweeper mine_window;
 
@@ -55,6 +59,7 @@ private:
     bool filewin_closed();
     void btndraw_clicked();
     void btncalc_clicked();
+    bool calcwin_closed();
     void btngame_clicked();
     void btnedit_clicked();
     void btnviewer_clicked();
