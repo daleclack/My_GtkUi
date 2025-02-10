@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include "Game24.hh"
+#include "MyHeader.hh"
 
 class Game24Win : public Gtk::Window
 {
@@ -10,6 +11,9 @@ public:
     Game24Win(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_Glade);
 
 private:
+    // Title bar
+    MyHeader header;
+    
     // Main GtkBuilder
     Glib::RefPtr<Gtk::Builder> ref_builder;
 

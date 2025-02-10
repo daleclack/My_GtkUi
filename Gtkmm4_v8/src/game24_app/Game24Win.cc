@@ -7,6 +7,7 @@ Game24Win::Game24Win(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &
 {
     set_icon_name("24game");
     set_title("24 Game");
+    header.set_ctrl_window(this);
 
     // Get Widgets
     label_numbers = ref_builder->get_widget<Gtk::Label>("label_numbers");
