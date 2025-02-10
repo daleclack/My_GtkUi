@@ -12,6 +12,7 @@
 #include "Runner.hh"
 #include "TextEditor.hh"
 #include "drawing.hh"
+#include "ImageApp.hh"
 
 class MyPanel
 {
@@ -63,6 +64,9 @@ private:
     // Drawing App
     Drawing draw_window;
 
+    // Image Viewer
+    ImageApp image_window;
+
     // MineSweeper
     MineSweeper mine_window;
 
@@ -86,6 +90,7 @@ private:
     void btnedit_clicked();
     bool editwin_closed();
     void btnviewer_clicked();
+    bool viewerwin_closed();
     void btnset_clicked();
     bool setwin_closed();
     void btngame24_clicked();

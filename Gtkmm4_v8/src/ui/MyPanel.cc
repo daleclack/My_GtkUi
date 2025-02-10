@@ -233,6 +233,17 @@ bool MyPanel::editwin_closed()
 
 void MyPanel::btnviewer_clicked()
 {
+    // Show or hide the text viewer window
+    window_ctrl(image_window);
+    imageviewer->set_from_icon_name("image_app_running");
+}
+
+bool MyPanel::viewerwin_closed()
+{
+    // Hide the text viewer window and reset its icon
+    image_window.set_visible(false);
+    imageviewer->set_from_icon_name("image_app");
+    return true;
 }
 
 void MyPanel::btnset_clicked()
@@ -320,6 +331,8 @@ void MyPanel::padbtn_clicked(guint id)
         instance->imagegame->set_from_icon_name("game_running");
         break;
     case 6: // Image Viewer
+        instance->image_window.present();
+        instance->imageviewer->set_from_icon_name("image_app_running");
         break;
     case 8: // App runner
         instance->runner_window.present();

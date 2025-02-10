@@ -21,7 +21,7 @@ private:
 
     // Gesture control
     Glib::RefPtr<Gtk::GestureDrag> gesture_drag;
-    Glib::RefPtr<Gtk::GestureMultiPress> gesture_click;
+    Glib::RefPtr<Gtk::GestureClick> gesture_click;
     void drag_begin(double x, double y);
     void drag_update(double x, double y);
     void drag_end(double x, double y);

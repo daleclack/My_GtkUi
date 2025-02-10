@@ -3,17 +3,18 @@
 MyImage::MyImage()
     : scale_radio(1.0)
 {
+    set_draw_func(sigc::mem_fun(*this, &MyImage::draw_func));
 }
 
 MyImage::~MyImage()
 {
 }
 
-bool MyImage::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
+void MyImage::draw_func(const Cairo::RefPtr<Cairo::Context> &cr, int width, int height)
 {
     if (!image)
     {
-        return false;
+        return;
     }
 
     // Set the default size for drawing area
@@ -25,7 +26,7 @@ bool MyImage::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
 
     cr->paint();
 
-    return true;
+    // return true;
 }
 
 void MyImage::scale_draw(double scale)
@@ -57,7 +58,7 @@ void MyImage::set_pixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf)
     if (!surface)
     {
         // Create a surface
-        surface = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32,
+        surface = Cairo::ImageSurface::create(Cairo::Surface::Format::ARGB32,
                                               image->get_width(), image->get_height());
     }
     else

@@ -12,12 +12,12 @@ ImageApp::ImageApp()
 
     // Scrolled Window
     sw.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
-    sw.add(image_area);
+    sw.set_child(image_area);
     main_box.append(sw);
 
     // Initalize Scale
     m_adjustment = Gtk::Adjustment::create(1.0, 0.1, 10.0, 0.1, 0.1);
-    scale.set_default_direction(Gtk::TEXT_DIR_LTR);
+    scale.set_default_direction(Gtk::TextDirection::LTR);
     scale.set_adjustment(m_adjustment);
     scale.signal_value_changed().connect(sigc::mem_fun(*this, &ImageApp::scale_changed));
 
@@ -29,36 +29,40 @@ ImageApp::ImageApp()
     btnopen.signal_clicked().connect(sigc::mem_fun(*this, &ImageApp::btnopen_clicked));
 
     // Add Drag Gesture
-    gesture_drag = Gtk::GestureDrag::create(image_area);
+    gesture_drag = Gtk::GestureDrag::create();
     gesture_drag->set_button(GDK_BUTTON_PRIMARY);
     gesture_drag->signal_drag_update().connect(sigc::mem_fun(*this, &ImageApp::drag_update));
     gesture_drag->signal_drag_end().connect(sigc::mem_fun(*this, &ImageApp::drag_end));
+    image_area.add_controller(gesture_drag);
 
-    gesture_click = Gtk::GestureMultiPress::create(image_area);
+    gesture_click = Gtk::GestureClick::create();
     gesture_click->set_button(GDK_BUTTON_SECONDARY);
     gesture_click->signal_pressed().connect(sigc::mem_fun(*this, &ImageApp::press));
+    image_area.add_controller(gesture_click);
 
     // Add Menu
     auto builder = Gtk::Builder::create_from_resource("/org/gtk/daleclack/image_appmenu.xml");
-    auto object = builder->get_object("model");
-    auto gmenu = Glib::RefPtr<Gio::MenuModel>::cast_dynamic(object);
-    popover.bind_model(gmenu);
-    popover.set_relative_to(image_area);
+    auto object = builder->get_object<Gio::MenuModel>("model");
+    popover.set_menu_model(object);
+    popover.set_parent(image_area);
+    // auto gmenu = Glib::RefPtr<Gio::MenuModel>::cast_dynamic(object);
+    // popover.bind_model(gmenu);
+    // popover.set_relative_to(image_area);
 
     // Add actions for menu
     add_action("zoom_in", sigc::mem_fun(*this, &ImageApp::image_zoom_in));
     add_action("zoom_out", sigc::mem_fun(*this, &ImageApp::image_zoom_out));
     add_action("zoom_reset", sigc::mem_fun(*this, &ImageApp::image_zoom_reset));
 
-    overlay.add(main_box);
-    add(overlay);
-    show_all_children();
+    overlay.set_child(main_box);
+    set_child(overlay);
+    // show_all_children();
 }
 
 void ImageApp::btnopen_clicked()
 {
     // Create a file open dialog
-    dialog = Gtk::FileChooserNative::create("Open a image File", *this, Gtk::FILE_CHOOSER_ACTION_OPEN,
+    dialog = Gtk::FileChooserNative::create("Open a image File", *this, Gtk::FileChooser::Action::OPEN,
                                             "OK", "Cancel");
 
     dialog->signal_response().connect(sigc::mem_fun(*this, &ImageApp::dialog_response));
@@ -68,10 +72,11 @@ void ImageApp::btnopen_clicked()
 
 void ImageApp::dialog_response(int response_id)
 {
-    if (response_id == Gtk::RESPONSE_ACCEPT)
+    if (response_id == Gtk::ResponseType::ACCEPT)
     {
         // Show the image in a drawing area
-        auto filename = dialog->get_filename();
+        auto file = dialog->get_file();
+        auto filename = file->get_path();
         auto pixbuf = Gdk::Pixbuf::create_from_file(filename);
         image_area.set_pixbuf(pixbuf);
         pixbuf.reset();
@@ -83,6 +88,7 @@ void ImageApp::dialog_response(int response_id)
         }
         hadjustment = sw.get_hadjustment();
         vadjustment = sw.get_vadjustment();
+        file.reset();
     }
 
     dialog.reset();
@@ -112,7 +118,7 @@ void ImageApp::drag_update(double x, double y)
 void ImageApp::drag_end(double x, double y)
 {
     // g_print("drag ended\n");
-    move(x, y);
+    move_to(x, y);
 }
 
 void ImageApp::move_to(double x, double y)

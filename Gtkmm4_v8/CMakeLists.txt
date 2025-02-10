@@ -16,7 +16,7 @@ include_directories(.)
 include_directories(..)
 include_directories(src/core src/ui src/apps src/mine_app
     src/media_app src/file_app src/calc_app src/game_app
-    src/game24_app)
+    src/game24_app src/image_app)
 #Find PkgConfig to use gtkmm
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (GTKMM4 REQUIRED gtkmm-4.0)
@@ -36,7 +36,8 @@ set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc
     src/file_app/FileWindow.cc src/file_app/MsgDialog.cc src/file_app/NewDialog.cc
     src/calc_app/calc.cc src/calc_app/CalcApp.cc src/run_app/Runner.cc
     src/game24_app/Game24.cc src/game24_app/Game24Win.cc src/game_app/Game.cc
-    src/text_app/TextEditor.cc src/draw_app/drawing.cc)
+    src/text_app/TextEditor.cc src/draw_app/drawing.cc
+    src/image_app/ImageApp.cc src/image_app/MyImage.cc)
 
 #Compile Resource
 

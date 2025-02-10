@@ -13,10 +13,11 @@ public:
     void scale_draw(double scale);
 
 protected:
-    bool on_draw(const Cairo::RefPtr<Cairo::Context> &cr) override;
+    // bool on_draw(const Cairo::RefPtr<Cairo::Context> &cr) override;
 
 private:
     double scale_radio;
     Cairo::RefPtr<Cairo::ImageSurface> surface;
     Glib::RefPtr<Gdk::Pixbuf> image;
+    void draw_func(const Cairo::RefPtr<Cairo::Context> &cr, int width, int height);
 };
