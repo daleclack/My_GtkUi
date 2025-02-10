@@ -108,6 +108,9 @@
         "execution": "cpp",
         "ios": "cpp",
         "locale": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "span": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp"
     }
 }

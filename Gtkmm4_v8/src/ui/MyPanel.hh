@@ -10,6 +10,8 @@
 #include "Game.hh"
 #include "Game24Win.hh"
 #include "Runner.hh"
+#include "TextEditor.hh"
+#include "drawing.hh"
 
 class MyPanel
 {
@@ -55,6 +57,12 @@ private:
     // 24 Game
     Game24Win *game24_window;
 
+    // Text Editor
+    TextEditor text_window;
+
+    // Drawing App
+    Drawing draw_window;
+
     // MineSweeper
     MineSweeper mine_window;
 
@@ -70,11 +78,13 @@ private:
     void btnfiles_clicked();
     bool filewin_closed();
     void btndraw_clicked();
+    bool drawwin_closed();
     void btncalc_clicked();
     bool calcwin_closed();
     void btngame_clicked();
     bool gamewin_closed();
     void btnedit_clicked();
+    bool editwin_closed();
     void btnviewer_clicked();
     void btnset_clicked();
     bool setwin_closed();

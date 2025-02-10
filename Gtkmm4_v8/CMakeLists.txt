@@ -35,7 +35,8 @@ set(SOURCE_FILE src/core/main.cc src/core/MainWin.cc src/core/MyStack.cc
     src/media_app/MyMediaPlayer.cc src/media_app/LyricsParser.cc
     src/file_app/FileWindow.cc src/file_app/MsgDialog.cc src/file_app/NewDialog.cc
     src/calc_app/calc.cc src/calc_app/CalcApp.cc src/run_app/Runner.cc
-    src/game24_app/Game24.cc src/game24_app/Game24Win.cc src/game_app/Game.cc)
+    src/game24_app/Game24.cc src/game24_app/Game24Win.cc src/game_app/Game.cc
+    src/text_app/TextEditor.cc src/draw_app/drawing.cc)
 
 #Compile Resource
 
@@ -48,6 +49,7 @@ set(RESOURCE_LIST
     STRIPBLANKS mainmenu.xml
     STRIPBLANKS mine_menu.xml
     STRIPBLANKS image_appmenu.xml
+    STRIPBLANKS text_menu.xml
     STRIPBLANKS cambalache/scoreswin.ui
     STRIPBLANKS cambalache/win_input.ui
     STRIPBLANKS calcapp.ui

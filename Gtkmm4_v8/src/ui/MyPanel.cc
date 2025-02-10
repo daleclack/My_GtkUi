@@ -73,6 +73,7 @@ MyPanel::MyPanel()
     btnviewer->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnviewer_clicked));
     btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnset_clicked));
     btngame24->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame24_clicked));
+    game24_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::game24win_closed), true);
     btnmine->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnmine_clicked));
     mine_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::minewin_closed), true);
     btnmedia->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnmedia_clicked));
@@ -169,7 +170,19 @@ bool MyPanel::filewin_closed()
 
 void MyPanel::btndraw_clicked()
 {
+    // Show or hide the drawing window
+    window_ctrl(draw_window);
+    imagedraw->set_from_icon_name("drawing_app_running");
 }
+
+bool MyPanel::drawwin_closed()
+{
+    // Hide the drawing window and reset its icon
+    draw_window.set_visible(false);
+    imagedraw->set_from_icon_name("drawing_app");
+    return true;
+}
+
 
 void MyPanel::btncalc_clicked()
 {
@@ -204,7 +217,19 @@ bool MyPanel::gamewin_closed()
 
 void MyPanel::btnedit_clicked()
 {
+    // Show or hide the text editor window
+    window_ctrl(text_window);
+    imageedit->set_from_icon_name("my_textedit_running");
 }
+
+bool MyPanel::editwin_closed()
+{
+    // Hide the text editor window and reset its icon
+    text_window.set_visible(false);
+    imageedit->set_from_icon_name("my_textedit");
+    return true;
+}
+
 
 void MyPanel::btnviewer_clicked()
 {
@@ -283,6 +308,8 @@ void MyPanel::padbtn_clicked(guint id)
         instance->imagecalc->set_from_icon_name("calcapp_running");
         break;
     case 3: // Drawing
+        instance->draw_window.present();
+        instance->imagedraw->set_from_icon_name("drawing_app_running");
         break;
     case 4: // My Finder
         instance->file_window.present();
@@ -298,6 +325,8 @@ void MyPanel::padbtn_clicked(guint id)
         instance->runner_window.present();
         break;
     case 9: // Text Editor
+        instance->text_window.present();
+        instance->imageedit->set_from_icon_name("my_textedit_running");
         break;
     case 10: // Media Player
         instance->media_window.present();
