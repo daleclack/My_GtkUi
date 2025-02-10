@@ -47,6 +47,9 @@ MyPanel::MyPanel()
     // Create Calculator window
     calc_window = CalcApp::create();
 
+    // Create Guess game window
+    game_window = Game::create();
+
     // Create 24 Game window
     game24_window = Game24Win::create();
 
@@ -65,6 +68,7 @@ MyPanel::MyPanel()
     btncalc->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btncalc_clicked));
     calc_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::calcwin_closed), true);
     btngame->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame_clicked));
+    game_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::gamewin_closed), true);
     btnedit->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnedit_clicked));
     btnviewer->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnviewer_clicked));
     btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnset_clicked));
@@ -89,6 +93,8 @@ void MyPanel::set_parent_window(Gtk::Window &parent)
     file_window.set_transient_for(parent);
     calc_window->set_transient_for(parent);
     runner_window.set_transient_for(parent);
+    game_window->set_transient_for(parent);
+    game24_window->set_transient_for(parent);
 }
 
 void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)
@@ -182,7 +188,19 @@ bool MyPanel::calcwin_closed()
 
 void MyPanel::btngame_clicked()
 {
+    // Show or hide the guess game window
+    window_ctrl(*game_window);
+    imagegame->set_from_icon_name("game_running");
 }
+
+bool MyPanel::gamewin_closed()
+{
+    // Hide the guess game window and reset its icon
+    game_window->set_visible(false);
+    imagegame->set_from_icon_name("game");
+    return true;
+}
+
 
 void MyPanel::btnedit_clicked()
 {
@@ -271,6 +289,8 @@ void MyPanel::padbtn_clicked(guint id)
         instance->imagefiles->set_from_icon_name("file-app_running");
         break;
     case 5: // Guess Game
+        instance->game_window->present();
+        instance->imagegame->set_from_icon_name("game_running");
         break;
     case 6: // Image Viewer
         break;

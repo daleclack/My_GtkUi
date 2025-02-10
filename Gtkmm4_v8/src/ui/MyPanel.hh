@@ -7,6 +7,7 @@
 #include "MyMediaPlayer.hh"
 #include "FileWindow.hh"
 #include "CalcApp.hh"
+#include "Game.hh"
 #include "Game24Win.hh"
 #include "Runner.hh"
 
@@ -48,6 +49,9 @@ private:
     // Calculator
     CalcApp *calc_window;
 
+    // Guess Game
+    Game *game_window;
+
     // 24 Game
     Game24Win *game24_window;
 
@@ -69,6 +73,7 @@ private:
     void btncalc_clicked();
     bool calcwin_closed();
     void btngame_clicked();
+    bool gamewin_closed();
     void btnedit_clicked();
     void btnviewer_clicked();
     void btnset_clicked();

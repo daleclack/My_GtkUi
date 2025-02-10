@@ -8,6 +8,7 @@
     <property name="child">
       <object class="GtkGrid">
       <property name="visible">1</property>
+      <property name="halign">center</property>
         <child>
           <object class="GtkLabel" id="label">
             <property name="label" translatable="1">Select a button</property>
