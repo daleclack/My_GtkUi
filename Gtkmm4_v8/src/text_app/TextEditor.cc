@@ -1,28 +1,28 @@
 #include "TextEditor.hh"
 #include "text_types.hh"
-#include "../json_nlohmann/json.hpp"
+#include "../tomlplusplus/toml.hpp"
 #include <fstream>
 #include <iostream>
 #include <string>
-
-using json = nlohmann::json;
 
 TextEditor::TextEditor()
     : vbox(Gtk::Orientation::VERTICAL, 5),
       hbox(Gtk::Orientation::HORIZONTAL, 5),
       searchbox(Gtk::Orientation::HORIZONTAL, 5),
+      infobar(Gtk::Orientation::HORIZONTAL, 5),
+      info_ok("OK"),
       file_opened(false)
 {
     // Load window config from json file
     int width = 800, height = 450;
-    std::ifstream json_file("text_config.json");
-    if (json_file.is_open())
-    {
-        json data = json::parse(json_file);
-        width = data["width"];
-        height = data["height"];
-    }
-    json_file.close();
+    // std::ifstream json_file("text_config.json");
+    // if (json_file.is_open())
+    // {
+    //     json data = json::parse(json_file);
+    //     width = data["width"];
+    //     height = data["height"];
+    // }
+    // json_file.close();
 
     // Initalize Window
     set_default_size(width, height);
@@ -47,6 +47,7 @@ TextEditor::TextEditor()
     buffer1->signal_changed().connect(sigc::mem_fun(*this, &TextEditor::buffer1_changed));
 
     // Pack Widgets
+    textview1.set_expand(true);
     sw1.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
     sw1.set_child(textview1);
     hbox.append(sw1);
@@ -80,10 +81,11 @@ TextEditor::TextEditor()
     vbox.append(searchbar);
 
     // A InfoBar
-    infobar.add_button("OK", Gtk::ResponseType::OK);
-    infobar.signal_response().connect(sigc::mem_fun(*this, &TextEditor::infobar_response));
-    // infobox = dynamic_cast<Gtk::Box *>(infobar.get_children().front());
-    // infobox->append(label1);
+    infobar.append(label1);
+    infobar.append(info_ok);
+    infobar.set_halign(Gtk::Align::CENTER);
+    info_ok.signal_clicked().connect(sigc::mem_fun(*this, &TextEditor::infobar_response));
+    infobar.set_visible(false);
     vbox.append(infobar);
     vbox.append(hbox);
 
@@ -100,14 +102,14 @@ TextEditor::TextEditor()
     vbox.append(*expender);
 
     // Get alphabet buttons
-    for(int i = 0; i < 26; i++){
+    for (int i = 0; i < 26; i++)
+    {
         char name[10];
         sprintf(name, "btn%d", i);
         btns[i] = expend_builder->get_widget<Gtk::Button>(name);
         btns[i]->signal_clicked().connect(sigc::bind(
             sigc::mem_fun(*this, &TextEditor::key_pressed),
-            btns[i]
-        ));
+            btns[i]));
     }
     btntab->signal_clicked().connect(sigc::mem_fun(*this, &TextEditor::btntab_clicked));
     btnenter->signal_clicked().connect(sigc::mem_fun(*this, &TextEditor::btnenter_clicked));
@@ -119,25 +121,31 @@ TextEditor::TextEditor()
     infobar.hide();
 }
 
-void TextEditor::key_pressed(Gtk::Button *button){
+void TextEditor::key_pressed(Gtk::Button *button)
+{
     auto label = button->get_label();
-    Glib::ustring::size_type pos = 0,len = 1;
+    Glib::ustring::size_type pos = 0, len = 1;
     char buf[2];
-    if(btncaps->get_active() || btnshift->get_active()){
+    if (btncaps->get_active() || btnshift->get_active())
+    {
         btnshift->set_active(false);
-    }else{
+    }
+    else
+    {
         sprintf(buf, "%c", label[0] + 32);
         label.replace(pos, len, buf);
     }
-    //std::cout << label << std::endl;
+    // std::cout << label << std::endl;
     buffer1->insert_at_cursor(label);
 }
 
-void TextEditor::btntab_clicked(){
+void TextEditor::btntab_clicked()
+{
     buffer1->insert_at_cursor("\t");
 }
 
-void TextEditor::btnenter_clicked(){
+void TextEditor::btnenter_clicked()
+{
     buffer1->insert_at_cursor("\n");
 }
 
@@ -167,12 +175,11 @@ void TextEditor::btnenter_clicked(){
 void TextEditor::btnopen_clicked()
 {
     // Create a dialog
-    dialog = Gtk::FileChooserNative::create("Open a text file", *this,
-                                            Gtk::FileChooser::Action::OPEN, "OK", "Cancel");
-
-    dialog->signal_response().connect(sigc::mem_fun(*this, &TextEditor::opendialog_response));
+    dialog = Gtk::FileDialog::create();
+    dialog->set_title("Open a text file");
 
     // Add Filters
+    auto filters = Gio::ListStore<Gtk::FileFilter>::create();
     auto filter = Gtk::FileFilter::create();
     filter->set_name("Text Files");
     if (mimetype_supported())
@@ -187,22 +194,25 @@ void TextEditor::btnopen_clicked()
             filter->add_pattern(glob);
         }
     }
-    dialog->add_filter(filter);
+    filters->append(filter);
+    // dialog->add_filter(filter);
 
     auto filter_any = Gtk::FileFilter::create();
     filter_any->set_name("Any Files");
     filter_any->add_pattern("*");
-    dialog->add_filter(filter_any);
+    filters->append(filter_any);
+    // dialog->add_filter(filter_any);
 
-    dialog->show();
+    dialog->open(sigc::mem_fun(*this, &TextEditor::dialog_open_file));
+    // dialog->show();
 }
 
-void TextEditor::opendialog_response(int response)
+void TextEditor::dialog_open_file(const Glib::RefPtr<Gio::AsyncResult> &result)
 {
-    if (response == Gtk::ResponseType::ACCEPT)
+    try
     {
-        // Load Contents of a file
-        auto file = dialog->get_file();
+        // Open the file and load contents
+        auto file = dialog->open_finish(result);
         curr_filename = file->get_path();
         file_opened = true;
         char *contents;
@@ -211,6 +221,14 @@ void TextEditor::opendialog_response(int response)
         {
             buffer1->set_text(contents);
         }
+    }
+    catch (const Gtk::DialogError &ex)
+    {
+        std::cout << "No file selected." << ex.what() << std::endl;
+    }
+    catch (const Glib::Error &ex)
+    {
+        std::cout << "Error: " << ex.what() << std::endl;
     }
     dialog.reset();
 }
@@ -235,12 +253,12 @@ void TextEditor::btnsave_clicked()
 void TextEditor::btnsaveas_clicked()
 {
     // Create a dialog
-    dialog = Gtk::FileChooserNative::create("Save file", *this,
-                                            Gtk::FileChooser::Action::SAVE, "OK", "Cancel");
-
-    dialog->signal_response().connect(sigc::mem_fun(*this, &TextEditor::savedialog_response));
+    dialog = Gtk::FileDialog::create();
+    dialog->set_title("Save text to a file");
+    // dialog->signal_response().connect(sigc::mem_fun(*this, &TextEditor::savedialog_response));
 
     // Add Filters
+    auto filters = Gio::ListStore<Gtk::FileFilter>::create();
     auto filter = Gtk::FileFilter::create();
     filter->set_name("Text Files");
     if (mimetype_supported())
@@ -255,31 +273,44 @@ void TextEditor::btnsaveas_clicked()
             filter->add_pattern(glob);
         }
     }
-    dialog->add_filter(filter);
+    filters->append(filter);
+    // dialog->add_filter(filter);
 
     auto filter_any = Gtk::FileFilter::create();
     filter_any->set_name("Any Files");
     filter_any->add_pattern("*");
-    dialog->add_filter(filter_any);
+    filters->append(filter_any);
+    // dialog->add_filter(filter_any);
 
-    dialog->show();
+    dialog->save(sigc::mem_fun(*this, &TextEditor::dialog_save_file));
+    // dialog->show();
 }
 
-void TextEditor::savedialog_response(int response)
+void TextEditor::dialog_save_file(const Glib::RefPtr<Gio::AsyncResult> &result)
 {
-    if (response == Gtk::ResponseType::ACCEPT)
+    try
     {
-        // Get Filename
-        auto file = dialog->get_file();
+        // Get FileName
+        auto file = dialog->save_finish(result);
         std::string filename = file->get_path();
+
         // Get Text
         Glib::ustring text;
         text = buffer1->get_text();
+
         // Save to a file
         std::ofstream outfile;
         outfile.open(filename, std::ios_base::out);
         outfile << text;
         outfile.close();
+    }
+    catch (const Gtk::DialogError &ex)
+    {
+        std::cout << "No file selected." << ex.what() << std::endl;
+    }
+    catch (const Glib::Error &ex)
+    {
+        std::cout << "Error: " << ex.what() << std::endl;
     }
     dialog.reset();
 }
@@ -367,30 +398,43 @@ void TextEditor::btncopy_clicked()
 
     // Show InfoBar
     label1.set_label("The Text is copyed");
-    infobar.show();
+    infobar.set_visible(true);
 }
 
 void TextEditor::btnpaste_clicked()
 {
     // Get ClipBoard
     auto refClipboard = textview1.get_display()->get_clipboard();
+
     // auto refClipboard = Gtk::Clipboard::get();
+    refClipboard->read_text_async(sigc::bind(
+        sigc::mem_fun(*this, &TextEditor::clipboard_receive), refClipboard));
     // refClipboard->request_text(sigc::mem_fun(*this, &TextEditor::clipboard_receive));
 }
 
-void TextEditor::clipboard_receive(const Glib::ustring &text)
+void TextEditor::clipboard_receive(const Glib::RefPtr<Gio::AsyncResult> &result,
+                                   const Glib::RefPtr<Gdk::Clipboard> &clipboard)
 {
-    if (buffer1->insert_interactive_at_cursor(text))
+    try
     {
-        // Show InfoBar
-        label1.set_label("The Text is Pasted at cursor position");
-        infobar.show();
+        Glib::ustring text;
+        text = clipboard->read_text_finish(result);
+        if (buffer1->insert_interactive_at_cursor(text))
+        {
+            // Show InfoBar
+            label1.set_label("The Text is Pasted at cursor position");
+            infobar.set_visible(true);
+        }
+        else
+        {
+            // Show InfoBar
+            label1.set_label("Text Paste Error!");
+            infobar.set_visible(true);
+        }
     }
-    else
+    catch (const Glib::Error &ex)
     {
-        // Show InfoBar
-        label1.set_label("Text Paste Error!");
-        infobar.show();
+        std::cout << "Error: " << ex.what() << std::endl;
     }
 }
 
@@ -400,9 +444,9 @@ void TextEditor::btnclose_clicked()
     file_opened = false;
 }
 
-void TextEditor::infobar_response(int response)
+void TextEditor::infobar_response()
 {
-    infobar.hide();
+    infobar.set_visible(false);
 }
 
 void TextEditor::about_activated()

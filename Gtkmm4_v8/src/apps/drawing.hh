@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtkmm.h>
+#include "MyHeader.hh"
 
 // 4 Draw modes: default(free draw), circle, line, rectangle
 enum class DrawMode{
@@ -19,6 +20,9 @@ enum class DrawProcess{
 
 class Drawing : public Gtk::Window
 {
+    // Custom Titlebar
+    MyHeader header;
+    
     // Drawing Mode
     DrawMode drawing_mode;
 

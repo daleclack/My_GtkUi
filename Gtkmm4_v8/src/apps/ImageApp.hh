@@ -2,6 +2,7 @@
 
 #include <gtkmm.h>
 #include "MyImage.hh"
+#include "MyHeader.hh"
 
 class ImageApp : public Gtk::ApplicationWindow
 {
@@ -9,6 +10,9 @@ public:
     ImageApp();
     
 private:
+    // Custom titlebar
+    MyHeader header;
+    
     // Child widgets
     Gtk::ScrolledWindow sw;
     MyImage image_area;
@@ -17,7 +21,7 @@ private:
     Gtk::Scale scale;
     Gtk::Overlay overlay;
     Glib::RefPtr<Gtk::Adjustment> m_adjustment, hadjustment, vadjustment;
-    Glib::RefPtr<Gtk::FileChooserNative> dialog;
+    Glib::RefPtr<Gtk::FileDialog> dialog;
 
     // Gesture control
     Glib::RefPtr<Gtk::GestureDrag> gesture_drag;
@@ -33,7 +37,7 @@ private:
 
     // Signal Handlers
     void btnopen_clicked();
-    void dialog_response(int response_id);
+    void dialog_open_file(const Glib::RefPtr<Gio::AsyncResult>& result);
     void scale_changed();
     void image_zoom_in();
     void image_zoom_out();

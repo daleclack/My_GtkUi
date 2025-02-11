@@ -65,12 +65,15 @@ MyPanel::MyPanel()
     btnfiles->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnfiles_clicked));
     file_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::filewin_closed), true);
     btndraw->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btndraw_clicked));
+    draw_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::drawwin_closed), true);
     btncalc->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btncalc_clicked));
     calc_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::calcwin_closed), true);
     btngame->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame_clicked));
     game_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::gamewin_closed), true);
     btnedit->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnedit_clicked));
+    text_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::editwin_closed), true);
     btnviewer->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnviewer_clicked));
+    image_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::viewerwin_closed), true);
     btnset->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btnset_clicked));
     btngame24->signal_clicked().connect(sigc::mem_fun(*this, &MyPanel::btngame24_clicked));
     game24_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::game24win_closed), true);
@@ -96,6 +99,9 @@ void MyPanel::set_parent_window(Gtk::Window &parent)
     runner_window.set_transient_for(parent);
     game_window->set_transient_for(parent);
     game24_window->set_transient_for(parent);
+    text_window.set_transient_for(parent);
+    image_window.set_transient_for(parent);
+    draw_window.set_transient_for(parent);
 }
 
 void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)

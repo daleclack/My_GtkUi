@@ -17,6 +17,7 @@ Drawing::Drawing()
     set_icon_name("org.gtk.daleclack");
     set_title("Drawing");
     set_default_size(640, 480);
+    header.set_ctrl_window(this);
 
     // Set the buttons grouped and set normal draw mode
     btn_circle.set_group(btn_free);
@@ -178,6 +179,7 @@ void Drawing::dialog_save_file(const Glib::RefPtr<Gio::AsyncResult> &result)
     {
         std::cout << "Error: " << e.what() << std::endl;
     }
+    dialog.reset();
 }
 
 void Drawing::btnfree_clicked()

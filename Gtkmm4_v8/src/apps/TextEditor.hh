@@ -29,14 +29,15 @@ private:
     Gtk::ScrolledWindow sw1;
     Glib::RefPtr<Gtk::TextBuffer> buffer1;
     Gtk::TextView textview1;
-    Gtk::InfoBar infobar;
+    Gtk::Box infobar;
+    Gtk::Button info_ok;
     Gtk::Label label1;
     Gtk::Expander *expender;
     Gtk::Button *btns[26], *btntab, *btnenter;
     Gtk::ToggleButton *btnshift, *btncaps;
 
     // File Dialog
-    Glib::RefPtr<Gtk::FileChooserNative> dialog;
+    Glib::RefPtr<Gtk::FileDialog> dialog;
     Glib::ustring curr_filename;
     bool file_opened;
 
@@ -46,18 +47,19 @@ private:
 
     // File Operation functions
     void btnopen_clicked();
-    void opendialog_response(int response);
+    void dialog_open_file(const Glib::RefPtr<Gio::AsyncResult> &result);
     void btnsave_clicked();
     void btnsaveas_clicked();
-    void savedialog_response(int response);
+    void dialog_save_file(const Glib::RefPtr<Gio::AsyncResult> &result);
 
     // Copy, Paste and text operations
     void btncopy_clicked();
     void btnpaste_clicked();
     void btnclose_clicked();
     void buffer1_changed();
-    void clipboard_receive(const Glib::ustring &text);
-    void infobar_response(int response);
+    void clipboard_receive(const Glib::RefPtr<Gio::AsyncResult> &result,
+                           const Glib::RefPtr<Gdk::Clipboard> &clipboard);
+    void infobar_response();
 
     // Search funtion
     void search_entry_changed();
