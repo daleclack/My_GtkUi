@@ -24,7 +24,7 @@ class Drawing : public Gtk::Window
 
     // Child Widgets
     Gtk::DrawingArea draw_area;
-    Gtk::ColorButton color_btn, fill_btn;
+    Gtk::ColorDialogButton color_btn, fill_btn;
     Gtk::CheckButton fill_check;
     Gtk::Label main_label, size_label;
     Gtk::Box left_box, main_box, btn_box;
@@ -37,8 +37,8 @@ class Drawing : public Gtk::Window
     Cairo::RefPtr<Cairo::ImageSurface> surface;
 
     // Image Save Dialog
-    Glib::RefPtr<Gtk::FileChooserNative> dialog;
-    void dialog_response(int response_id);
+    Glib::RefPtr<Gtk::FileDialog> dialog;
+    void dialog_save_file(const Glib::RefPtr<Gio::AsyncResult> &result);
 
     // Draw Brush Settings
     double brush_size;

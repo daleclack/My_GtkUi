@@ -95,10 +95,14 @@ Drawing::Drawing()
     m_color.set_red(0);
     m_color.set_alpha(1);
     color_btn.set_rgba(m_color);
-    color_btn.signal_color_set().connect(sigc::mem_fun(*this, &Drawing::color_set));
+    auto color_dialog = Gtk::ColorDialog::create();
+    color_btn.set_dialog(color_dialog);
+    // color_btn.signal_color_set().connect(sigc::mem_fun(*this, &Drawing::color_set));
     fill_color = m_color;
     fill_btn.set_rgba(fill_color);
-    fill_btn.signal_color_set().connect(sigc::mem_fun(*this, &Drawing::color_set));
+    auto fill_dialog = Gtk::ColorDialog::create();
+    fill_btn.set_dialog(fill_dialog);
+    // fill_btn.signal_color_set().connect(sigc::mem_fun(*this, &Drawing::color_set));
 
     // Initalial draw
     auto cr = Cairo::Context::create(surface);
@@ -125,49 +129,55 @@ Drawing::Drawing()
 void Drawing::btnsave_clicked()
 {
     // Create a dialog
-    dialog = Gtk::FileChooserNative::create("Save to png file", *this,
-                                            Gtk::FileChooser::Action::SAVE, "OK", "Cancel");
-
-    // Link Signal
-    dialog->signal_response().connect(sigc::mem_fun(*this, &Drawing::dialog_response));
+    dialog = Gtk::FileDialog::create();
+    dialog->set_title("Save to png file");
 
     // Create Filters
-
+    auto filters = Gio::ListStore<Gtk::FileFilter>::create();
     auto filter_png = Gtk::FileFilter::create();
     filter_png->set_name("Png files");
     filter_png->add_pattern("*.png");
-    dialog->add_filter(filter_png);
+    filters->append(filter_png);
 
     auto filter_any = Gtk::FileFilter::create();
     filter_any->set_name("Any Files");
     filter_any->add_pattern("*");
-    dialog->add_filter(filter_any);
+    filters->append(filter_any);
+    dialog->set_filters(filters);
 
-    dialog->show();
+    dialog->save(sigc::mem_fun(*this, &Drawing::dialog_save_file));
+
+    // dialog->show();
 }
 
-void Drawing::dialog_response(int response_id)
+void Drawing::dialog_save_file(const Glib::RefPtr<Gio::AsyncResult> &result)
 {
-    // Save cairo surface to png file
-    if (response_id == Gtk::ResponseType::ACCEPT)
+    try
     {
         // Get file name
-        std::string filename;
-        auto file = dialog->get_file();
-        filename = file->get_path();
+        auto file = dialog->save_finish(result);
+        std::string filename = file->get_path();
 
-        // Auto complete the extension of the image file
+        // Check extension of the file
         size_t length = filename.length();
-        std::string extension = filename.substr(length-3,length-1);
-        std::transform(extension.begin(),extension.end(),extension.begin(),::tolower);
-        if(extension != "png"){
+        std::string extension = filename.substr(length - 3, length - 1);
+        std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+        if (extension != "png")
+        {
             filename += ".png";
         }
 
         // Write surface data to the file
         surface->write_to_png(filename);
     }
-    dialog.reset();
+    catch (Gtk::DialogError &e)
+    {
+        std::cout << "No file selected" << e.what() << std::endl;
+    }
+    catch (Glib::Error &e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
 }
 
 void Drawing::btnfree_clicked()
@@ -218,6 +228,9 @@ void Drawing::draw_event(const Cairo::RefPtr<Cairo::Context> &context, int width
 
 void Drawing::draw_brush(double x, double y, DrawProcess process)
 {
+    // Update color
+    m_color = color_btn.get_rgba();
+
     brush_size = scale.get_value();
     auto cr = Cairo::Context::create(surface);
 
@@ -298,6 +311,10 @@ void Drawing::draw_brush(double x, double y, DrawProcess process)
 
 void Drawing::draw_fill_color(const Cairo::RefPtr<Cairo::Context> &cr)
 {
+    // Update fill color
+    fill_color = fill_btn.get_rgba();
+
+    // Fill Color
     cr->set_source_rgba(fill_color.get_red(), fill_color.get_green(),
                         fill_color.get_blue(), fill_color.get_alpha());
     cr->fill();
