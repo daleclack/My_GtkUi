@@ -7,6 +7,7 @@ class TextEditor : public Gtk::ApplicationWindow
 {
 public:
     TextEditor();
+    bool save_config();
 
 private:
     // Header widgets

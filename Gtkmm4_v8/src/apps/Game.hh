@@ -18,6 +18,7 @@ private:
 
     // Child Widgets
     // Gtk::Window *game_window;
+    Gtk::Grid *main_grid;
     Gtk::Button *win_close, *win_mini;
     Gtk::Button *game_btn[4], *btngo, *btnexit;
     Gtk::Label *game_label;

@@ -6,7 +6,7 @@
     <property name="title" translatable="1">Guess Game</property>
     <property name="destroy-with-parent">1</property>
     <property name="child">
-      <object class="GtkGrid">
+      <object class="GtkGrid" id="main_grid">
       <property name="visible">1</property>
       <property name="halign">center</property>
         <child>

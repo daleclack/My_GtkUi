@@ -14,9 +14,11 @@ MsgDialog::MsgDialog()
 
     // Add message label
     image_icon.set_from_resource("/org/gtk/daleclack/dialog-error.png");
+    image_icon.set_pixel_size(48);
     dialog_box.append(image_icon);
     dialog_box.append(label_msg);
     set_child(dialog_box);
+    dialog_box.set_margin(10);
 
     btn_ok.signal_clicked().connect([this] { close(); });
 }

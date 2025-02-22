@@ -13,8 +13,16 @@ TextEditor::TextEditor()
       info_ok("OK"),
       file_opened(false)
 {
-    // Load window config from json file
+    // Load window config from config file
     int width = 800, height = 450;
+    std::fstream cfg_file("text_config.toml");
+    if (cfg_file.is_open())
+    {
+        auto toml = toml::parse(cfg_file);
+        width = toml.get("width")->as_integer()->get();
+        height = toml.get("height")->as_integer()->get();
+    }
+    cfg_file.close();
     // std::ifstream json_file("text_config.json");
     // if (json_file.is_open())
     // {
@@ -31,7 +39,7 @@ TextEditor::TextEditor()
 
     // Initalize HeaderBar
     menubtn.set_icon_name("open-menu");
-    search_button.set_image_from_icon_name("find");
+    search_button.set_image_from_icon_name("finder-find");
     header.pack_end(menubtn);
     header.pack_end(search_button);
     header.set_ctrl_window(this);
@@ -62,8 +70,8 @@ TextEditor::TextEditor()
     add_action("text_about", sigc::mem_fun(*this, &TextEditor::about_activated));
 
     // Add searchbar and search up and down buttons
-    search_up.set_image_from_icon_name("up");
-    search_down.set_image_from_icon_name("down");
+    search_up.set_image_from_icon_name("filewin-go-up");
+    search_down.set_image_from_icon_name("filewin-go-down");
 
     // Bind property and signals
     search_binding = Glib::Binding::bind_property(search_button.property_active(),
@@ -147,6 +155,29 @@ void TextEditor::btntab_clicked()
 void TextEditor::btnenter_clicked()
 {
     buffer1->insert_at_cursor("\n");
+}
+
+bool TextEditor::save_config()
+{
+    // Get Size of text window
+    int width = get_width();
+    int height = get_height();
+
+    // Create toml data
+    toml::table tbl;
+    tbl.insert_or_assign("width", width);
+    tbl.insert_or_assign("height", height);
+
+    // Save size config to toml file
+    std::fstream outfile;
+    outfile.open("text_config.toml", std::ios_base::out);
+    if (outfile.is_open())
+    {
+        outfile << tbl;
+    }
+    outfile.close();
+
+    return true;
 }
 
 // bool TextEditor::window_delete_event(GdkEventAny *event)
@@ -468,7 +499,7 @@ void TextEditor::about_activated()
                           "comments", "A simple text editor",
                           "authors", authors,
                           "license-type", GTK_LICENSE_GPL_3_0,
-                          "logo-icon-name", "org.gtk.daleclack",
+                          "logo-icon-name", "my_textedit",
                           "title", "About Simple text editor",
                           (char *)NULL);
     // Free memory

@@ -14,6 +14,7 @@ Game::Game(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &tmp_builde
     header.set_ctrl_window(this);
 
     // Get widgets
+    main_grid = game_builder->get_widget<Gtk::Grid>("main_grid");
     btnexit = game_builder->get_widget<Gtk::Button>("btn_exit");
     btngo = game_builder->get_widget<Gtk::Button>("btn_go");
     game_label = game_builder->get_widget<Gtk::Label>("label");
@@ -26,6 +27,9 @@ Game::Game(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &tmp_builde
         game_btn[i]->signal_clicked().connect(sigc::bind(
             sigc::mem_fun(*this, &Game::gamebtn_clicked), &game_index[i]));
     }
+
+    main_grid->set_margin(10);
+
     // Link Signals
     btngo->signal_clicked().connect(sigc::mem_fun(*this, &Game::btngo_clicked));
     btnexit->signal_clicked().connect(sigc::mem_fun(*this, &Game::close));

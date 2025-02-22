@@ -231,6 +231,7 @@ void MyPanel::btnedit_clicked()
 bool MyPanel::editwin_closed()
 {
     // Hide the text editor window and reset its icon
+    text_window.save_config();
     text_window.set_visible(false);
     imageedit->set_from_icon_name("my_textedit");
     return true;
