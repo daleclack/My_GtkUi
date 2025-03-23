@@ -5,7 +5,9 @@
 FileWindow::FileWindow()
     : main_box(Gtk::Orientation::VERTICAL, 5),
       place_box(Gtk::Orientation::HORIZONTAL, 5),
-      views_box(Gtk::Orientation::HORIZONTAL, 5)
+      views_box(Gtk::Orientation::HORIZONTAL, 5),
+      inner_box(Gtk::Orientation::HORIZONTAL, 5),
+      sidebar_box(Gtk::Orientation::VERTICAL, 5)
 {
     set_title("File Manager");
     set_default_icon_name("file-app");
@@ -62,11 +64,21 @@ FileWindow::FileWindow()
     places_list->append(Glib::get_user_special_dir(Glib::UserDirectory::PICTURES));
     places_list->append(Glib::get_user_special_dir(Glib::UserDirectory::VIDEOS));
 
+    // Add a button for the sidebar
+    image_add.set_from_icon_name("list-add");
+    label_add.set_label("Add new location");
+    inner_box.append(image_add);
+    inner_box.append(label_add);
+    sidebar_add.set_child(inner_box);
+    sidebar_add.set_has_frame(false);
+    sidebar_box.append(places_view);
+    sidebar_box.append(sidebar_add);
+
     // Add the places sidebar
     places_selection = Gtk::SingleSelection::create(places_list);
     places_view.set_model(places_selection);
     places_scroller.set_policy(Gtk::PolicyType::NEVER, Gtk::PolicyType::AUTOMATIC);
-    places_scroller.set_child(places_view);
+    places_scroller.set_child(sidebar_box);
 
     // Create factory for places
     places_factory = Gtk::SignalListItemFactory::create();
@@ -104,6 +116,7 @@ FileWindow::FileWindow()
     btn_add.signal_clicked().connect(sigc::mem_fun(*this, &FileWindow::btnadd_clicked));
     btn_del.signal_clicked().connect(sigc::mem_fun(*this, &FileWindow::btndel_clicked));
     btn_up.signal_clicked().connect(sigc::mem_fun(*this, &FileWindow::btnup_clicked));
+    sidebar_add.signal_clicked().connect(sigc::mem_fun(*this, &FileWindow::sidebar_add_clicked));
 }
 
 void FileWindow::btnadd_clicked()
@@ -141,9 +154,41 @@ void FileWindow::btnup_clicked()
 
 void FileWindow::placebtn_clicked(FileBtn *btn)
 {
+    // Update path
     auto path = btn->file_path;
     dir_list->set_file(Gio::File::create_for_path(path));
     place_entry.set_text(path);
+
+    // Update selection
+    places_selection->set_selected(btn->index);
+}
+
+void FileWindow::sidebar_add_clicked()
+{
+    // Open a dialog to select a folder
+    auto dialog = Gtk::FileDialog::create();
+
+    dialog->select_folder(sigc::bind(sigc::mem_fun(*this, &FileWindow::sidebar_open_finish), dialog));
+}
+
+void FileWindow::sidebar_open_finish(const Glib::RefPtr<Gio::AsyncResult> &result,
+                                     Glib::RefPtr<Gtk::FileDialog> &dialog)
+{
+    try{
+        auto file = dialog->select_folder_finish(result);
+        auto path = file->get_path();
+        places_list->append(path);
+        file.reset();
+    }
+    catch (const Gtk::DialogError &ex)
+    {
+        std::cout << "No folder selected." << std::endl;
+    }
+    catch (const Glib::Error &ex)
+    {
+        std::cout << "Error: " << ex.what() << std::endl;
+    }
+    dialog.reset();
 }
 
 void FileWindow::folder_item_activated(guint pos)
@@ -185,11 +230,15 @@ void FileWindow::folder_item_activated(guint pos)
 
 void FileWindow::places_setup(const Glib::RefPtr<Gtk::ListItem> &item)
 {
+    // Get append position
+    guint pos = item->get_position();
     // Create and initalize a button
     auto btn = Gtk::make_managed<FileBtn>(" ");
-    btn->set_halign(Gtk::Align::START);
+    btn->set_halign(Gtk::Align::FILL);
+    btn->set_expand(true);
     auto label = dynamic_cast<Gtk::Label *>(btn->get_child());
     label->set_ellipsize(Pango::EllipsizeMode::END);
+    label->set_halign(Gtk::Align::START);
     label->set_max_width_chars(20);
     item->set_child(*btn);
 }
@@ -216,6 +265,7 @@ void FileWindow::places_bind(const Glib::RefPtr<Gtk::ListItem> &item)
     auto display_name = path.substr(end_pos + 1);
     btn->set_label(display_name);
     btn->file_path = path;
+    btn->index = position;
     btn->signal_clicked().connect(sigc::bind(
         sigc::mem_fun(*this, &FileWindow::placebtn_clicked), btn));
 }

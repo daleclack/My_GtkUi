@@ -15,6 +15,7 @@ public:
     }
 
     Glib::ustring file_path;
+    guint index;
 };
 
 class FileWindow : public Gtk::Window
@@ -45,6 +46,10 @@ private:
     Gtk::Button btn_add, btn_up, btn_del;
 
     // List for sidebar
+    Gtk::Button sidebar_add;
+    Gtk::Box inner_box, sidebar_box;
+    Gtk::Image image_add;
+    Gtk::Label label_add;
     Glib::RefPtr<Gtk::StringList> places_list;
     Glib::RefPtr<Gtk::SingleSelection> places_selection;
     Glib::RefPtr<Gtk::SignalListItemFactory> places_factory;
@@ -87,4 +92,6 @@ private:
     void btnup_clicked();
     void placebtn_clicked(FileBtn *btn);
     void btndel_clicked();
+    void sidebar_add_clicked();
+    void sidebar_open_finish(const Glib::RefPtr<Gio::AsyncResult> &result, Glib::RefPtr<Gtk::FileDialog> &dialog);
 };
