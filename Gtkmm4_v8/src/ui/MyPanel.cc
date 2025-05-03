@@ -87,6 +87,7 @@ MyPanel::MyPanel()
     media_window.signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::mediawin_closed), true);
 }
 
+// Bind preferences window and bind the callback for icon size change
 void MyPanel::set_prefs_win(MyPrefs *prefs)
 {
     prefs_window = prefs;
