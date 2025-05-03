@@ -366,10 +366,19 @@ void MyPrefs::btnremoveall_clicked()
     }
 }
 
+
+void MyPrefs::set_icon_callback(pfun icon_callback)
+{
+    icon_size_callback = icon_callback;
+}
+
 void MyPrefs::scale_size_changed()
 {
     // Update config when icon size changed
     config_save();
+
+    // Update icon size
+    icon_size_callback((guint)scale_size->get_value());
 }
 
 MyPrefs *MyPrefs::create(Gtk::Window &parent)

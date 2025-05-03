@@ -23,6 +23,7 @@ public:
     void set_prefs_win(MyPrefs *prefs);
     void set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider);
     void set_parent_window(Gtk::Window &parent);
+    void set_icon_size(guint icon_size);
     void hide_launchpad();
 
 private:
@@ -36,9 +37,10 @@ private:
 
     // Button and images for the app task manager
     Gtk::Button *btnfiles, *btndraw, *btncalc, *btngame,
-        *btnedit, *btnviewer, *btnset, *btngame24, *btnmine, *btnmedia;
-    Gtk::Image *imagefiles, *imagedraw, *imagecalc, *imagegame,
-        *imageedit, *imageviewer, *imageset, *imagegame24, *imagemine, *imagemedia;
+        *btnedit, *btnviewer, *btnset, *btngame24, *btnmine, *btnmedia, *btntrash;
+    Gtk::Image *imagestart, *imagefiles, *imagedraw, *imagecalc, *imagegame,
+        *imageedit, *imageviewer, *imageset, *imagegame24, *imagemine, 
+        *imagemedia, *imagetrash;
 
     // The App Menu
     AppMenu app_menu;
@@ -103,4 +105,5 @@ private:
     // Static members
     static MyPanel *instance;
     static void padbtn_clicked(guint id);
+    static void iconsize_changed(guint size);
 };

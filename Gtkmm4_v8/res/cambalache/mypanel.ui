@@ -11,7 +11,7 @@
         <child>
           <object class="GtkButton" id="btnstart">
             <property name="child">
-              <object class="GtkImage">
+              <object class="GtkImage" id="imagestart">
                 <property name="icon-name">My_GtkUI</property>
                 <property name="pixel-size">48</property>
               </object>
@@ -170,7 +170,7 @@
         <child>
           <object class="GtkButton" id="btntrash">
             <property name="child">
-              <object class="GtkImage">
+              <object class="GtkImage" id="imagetrash">
                 <property name="icon-name">my_trash</property>
                 <property name="pixel-size">48</property>
               </object>

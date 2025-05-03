@@ -2,7 +2,9 @@
 
 #include <gtkmm.h>
 #include "MyHeader.hh"
-// #include "MainWin.hh"    // can't include this because of circular dependency
+#include "config.hh"
+// #include "MyPanel.hh"
+// #include "MainWin.hh"    // can't include these because of circular dependency
 
 class PrefsBtn : public Gtk::Button
 {
@@ -48,7 +50,9 @@ public:
     static MyPrefs *create(Gtk::Window &parent);
     void background_widget_init(Gtk::Picture *picture);
     bool get_dark_mode() { return dark_mode; }
-    float get_dpi() { return dpi_values[dropdown_dpi.get_selected()]; }
+    float get_dpi_config() { return dpi_values[dropdown_dpi.get_selected()]; }
+    guint get_icon_size() { return (guint)scale_size->get_value(); }
+    void set_icon_callback(pfun icon_callback);
 
 protected:
     // bool on_close_request();
@@ -113,4 +117,7 @@ private:
     // Config control
     void config_load();
     void config_save();
+
+    // Callback function
+    pfun icon_size_callback;
 };

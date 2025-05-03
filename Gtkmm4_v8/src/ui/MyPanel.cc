@@ -39,6 +39,10 @@ MyPanel::MyPanel()
     imagemine = builder->get_widget<Gtk::Image>("imagemine");
     btnmedia = builder->get_widget<Gtk::Button>("btnmedia");
     imagemedia = builder->get_widget<Gtk::Image>("imagemedia");
+    btntrash = builder->get_widget<Gtk::Button>("btntrash");
+    imagetrash = builder->get_widget<Gtk::Image>("imagetrash");
+    imagestart = builder->get_widget<Gtk::Image>("imagestart");
+
 
     // Bind callback for the Apps Menu
     app_menu.set_callback(padbtn_clicked);
@@ -87,7 +91,8 @@ void MyPanel::set_prefs_win(MyPrefs *prefs)
 {
     prefs_window = prefs;
     prefs_window->signal_close_request().connect(sigc::mem_fun(*this, &MyPanel::setwin_closed), true);
-}
+    prefs_window->set_icon_callback(MyPanel::iconsize_changed);
+};
 
 void MyPanel::set_parent_window(Gtk::Window &parent)
 {
@@ -117,6 +122,23 @@ void MyPanel::set_internal_style(const Glib::RefPtr<Gtk::CssProvider> &provider)
                                                  provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     Gtk::StyleProvider::add_provider_for_display(apps_box->get_display(),
                                                  provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
+// Set DPI configuration for icons
+void MyPanel::set_icon_size(guint icon_size)
+{
+    imagestart->set_pixel_size(icon_size);
+    imagefiles->set_pixel_size(icon_size);
+    imagedraw->set_pixel_size(icon_size);
+    imagecalc->set_pixel_size(icon_size);
+    imagegame->set_pixel_size(icon_size);
+    imageedit->set_pixel_size(icon_size);
+    imageviewer->set_pixel_size(icon_size);
+    imageset->set_pixel_size(icon_size);
+    imagegame24->set_pixel_size(icon_size);
+    imagemine->set_pixel_size(icon_size);
+    imagemedia->set_pixel_size(icon_size);
+    imagetrash->set_pixel_size(icon_size);
 }
 
 Gtk::Image *MyPanel::get_prefs_image()
@@ -308,7 +330,13 @@ bool MyPanel::mediawin_closed()
     return true;
 }
 
+// Callback function for icon size change
+void MyPanel::iconsize_changed(guint size)
+{
+    instance->set_icon_size(size);
+}
 
+// Callback function for pad button click
 void MyPanel::padbtn_clicked(guint id)
 {
     // Hide the app menu when a button is clicked

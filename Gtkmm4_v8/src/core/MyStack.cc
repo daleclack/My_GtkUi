@@ -84,6 +84,9 @@ void MyStack::bind_main_background(Gtk::Picture *background)
     // Set the main background widget for the preferences window
     prefs_window->background_widget_init(background);
 
+    // Update dpi config
+    panel1.set_icon_size(prefs_window->get_icon_size());
+
     // Update theme for the finder
     std::vector<Glib::ustring> finder_classes = {"finder_style"};
     topmenu_area->set_css_classes(finder_classes);
