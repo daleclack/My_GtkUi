@@ -79,7 +79,7 @@ void MyStack::show_prefs_win()
 }
 
 // Bind the main background widget
-void MyStack::set_main_background(Gtk::Picture *background)
+void MyStack::bind_main_background(Gtk::Picture *background)
 {
     // Set the main background widget for the preferences window
     prefs_window->background_widget_init(background);

@@ -31,7 +31,7 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     context_menu.present();
 
     main_stack.create_prefs_win(*this);
-    main_stack.set_main_background(main_background);
+    main_stack.bind_main_background(main_background);
 
     // Add gesture for the right click
     gesture_click = Gtk::GestureClick::create();
