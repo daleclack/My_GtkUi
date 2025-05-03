@@ -26,6 +26,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_removeall = ref_builder->get_widget<Gtk::Button>("btn_removeall");
     scale_size = ref_builder->get_widget<Gtk::Scale>("scale_size");
     combo_box = ref_builder->get_widget<Gtk::Box>("combo_box");
+    dpi_box = ref_builder->get_widget<Gtk::Box>("dpi_box");
     radio_default = ref_builder->get_widget<Gtk::CheckButton>("radio_default");
     radio_custom = ref_builder->get_widget<Gtk::CheckButton>("radio_custom");
     spin_width = ref_builder->get_widget<Gtk::SpinButton>("spin_width");
@@ -75,6 +76,15 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     spin_width->set_adjustment(adj_width);
     spin_height->set_adjustment(adj_height);
 
+    // Create dropdown for dpi selection
+    dpi_store = Gtk::StringList::create();
+    for (int i = 0; i < 7; i++)
+    {
+        dpi_store->append(dpi_labels[i]);
+    }
+    dropdown_dpi.set_model(dpi_store);
+    dpi_box->append(dropdown_dpi);
+
     // Bind properties
     Glib::Binding::bind_property(radio_default->property_active(), combo_box->property_sensitive());
     Glib::Binding::bind_property(radio_custom->property_active(), spin_width->property_sensitive());
@@ -105,6 +115,7 @@ void MyPrefs::config_load()
         auto icon_size = toml["main_config"]["icon_size"].as_integer()->get();
         auto size_selected = toml["main_config"]["size_selected"].as_integer()->get();
         bool dark_mode = toml["main_config"]["dark_mode"].as_boolean()->get();
+        int dpi_set = toml["main_config"]["dpi_set"].as_integer()->get();
         if (size_selected < 0)
         {
             radio_custom->set_active();
@@ -134,6 +145,9 @@ void MyPrefs::config_load()
 
         // Load icon size
         scale_size->set_value((double)icon_size);
+
+        // Update DPI Settings
+        dropdown_dpi.set_selected(dpi_set);
     }
     else
     {
@@ -143,6 +157,7 @@ void MyPrefs::config_load()
         radio_default->set_active();
         dropdown_size.set_selected(3);
         switch_dark->set_active(false);
+        dropdown_dpi.set_selected(0);
     }
 
     // Update image
@@ -197,6 +212,9 @@ void MyPrefs::config_save()
         size_selected = -1;
     }
 
+    // Get DPI Config
+    int dpi_selected = dropdown_dpi.get_selected();
+
     // Add a toml table for main configuration
     toml::table main_cfg;
     main_cfg.insert_or_assign("file_paths", file_paths);
@@ -206,6 +224,7 @@ void MyPrefs::config_save()
     main_cfg.insert_or_assign("width", width);
     main_cfg.insert_or_assign("height", height);
     main_cfg.insert_or_assign("dark_mode", dark_mode);
+    main_cfg.insert_or_assign("dpi_set", dpi_selected);
     toml.insert_or_assign("main_config", main_cfg);
 
     // Save the data to file

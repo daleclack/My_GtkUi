@@ -95,14 +95,15 @@ private:
 
     // Constant value for standard dpi and resuolution settings
     const float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
+    const char *dpi_labels[7] = {"100%", "125%", "150%", "175%", "200%", "225%", "250%"};
     const int width_values[13] = {640, 800, 1024, 1280, 1366, 1440, 1600, 1680, 1792, 1896, 1920, 2048, 2560};
     const int height_values[13] = {360, 450, 576, 720, 768, 810, 900, 945, 1008, 1044, 1080, 1152, 1440};
 
     // Child widgets for window size settings
     int width = 1280, height = 720;
-    Gtk::DropDown dropdown_size;
-    Glib::RefPtr<Gtk::StringList> size_store;
-    Gtk::Box *combo_box;
+    Gtk::DropDown dropdown_size, dropdown_dpi;
+    Glib::RefPtr<Gtk::StringList> size_store, dpi_store;
+    Gtk::Box *combo_box, *dpi_box;
     Gtk::CheckButton *radio_default, *radio_custom;
     Gtk::SpinButton *spin_width, *spin_height;
     Glib::RefPtr<Gtk::Adjustment> adj_width, adj_height;
