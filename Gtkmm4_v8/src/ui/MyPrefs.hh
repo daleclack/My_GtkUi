@@ -46,8 +46,9 @@ class MyPrefs : public Gtk::Window
 public:
     MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade);
     static MyPrefs *create(Gtk::Window &parent);
-    void set_background_widget(Gtk::Picture *picture);
+    void background_widget_init(Gtk::Picture *picture);
     bool get_dark_mode() { return dark_mode; }
+    float get_dpi() { return dpi_values[dropdown_dpi.get_selected()]; }
 
 protected:
     // bool on_close_request();

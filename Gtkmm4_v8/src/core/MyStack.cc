@@ -58,7 +58,7 @@ void MyStack::create_prefs_win(Gtk::Window &parent)
     prefs_window = MyPrefs::create(parent);
     panel1.set_prefs_win(prefs_window);
     panel1.set_parent_window(parent);
-    // prefs_window->set_background_widget()
+    // prefs_window->background_widget_init()
 }
 
 MyPrefs *MyStack::get_prefs_win()
@@ -82,7 +82,7 @@ void MyStack::show_prefs_win()
 void MyStack::set_main_background(Gtk::Picture *background)
 {
     // Set the main background widget for the preferences window
-    prefs_window->set_background_widget(background);
+    prefs_window->background_widget_init(background);
 
     // Update theme for the finder
     std::vector<Glib::ustring> finder_classes = {"finder_style"};

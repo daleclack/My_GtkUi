@@ -273,7 +273,8 @@ void MyPrefs::images_view_bind(const Glib::RefPtr<Gtk::ListItem> &item)
     image_btn->set_image_id(position);
 }
 
-void MyPrefs::set_background_widget(Gtk::Picture *picture)
+// Initialize background widget, set the picture and size of the widget
+void MyPrefs::background_widget_init(Gtk::Picture *picture)
 {
     background_widget = picture;
 
