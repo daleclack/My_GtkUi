@@ -380,6 +380,7 @@ void MyPrefs::set_icon_callback(pfun icon_callback)
 
 void MyPrefs::scale_dash_changed()
 {
+    config_load();
     // Update config when icon size changed
     config_save();
 
@@ -396,6 +397,7 @@ void MyPrefs::set_finder_callback(pfun finder_callback)
 
 void MyPrefs::scale_finder_changed()
 {
+    config_load();
     // Update config when icon size changed
     config_save();
 

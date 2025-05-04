@@ -286,6 +286,7 @@ void MyPanel::btnset_clicked()
 
 bool MyPanel::setwin_closed()
 {
+    // prefs_window->config_save();
     prefs_window->set_visible(false);
     imageset->set_from_icon_name("my_prefs");
     return true;

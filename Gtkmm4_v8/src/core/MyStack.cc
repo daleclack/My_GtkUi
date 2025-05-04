@@ -1,6 +1,6 @@
 #include "MyStack.hh"
 
-static MyStack *instance = nullptr;
+MyStack *MyStack::instance = nullptr;
 
 MyStack::MyStack()
     : login_box(Gtk::Orientation::VERTICAL, 5),
@@ -118,7 +118,7 @@ void MyStack::bind_main_background(Gtk::Picture *background)
     // Apply default style
     panel1.set_internal_style(provider);
 
-    // Update finder configs 
+    // Update finder configs
     finder1.update_icons(provider, prefs_window->get_dark_mode());
     finder1.set_icon_size(prefs_window->get_finder_size());
     prefs_window->set_finder_callback(finder_iconsize_changed);

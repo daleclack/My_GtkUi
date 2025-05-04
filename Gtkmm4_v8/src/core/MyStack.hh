@@ -43,5 +43,6 @@ private:
     void login_button_clicked();
 
     // Callback for finder
+    static MyStack *instance;
     static void finder_iconsize_changed(guint size);
 };
