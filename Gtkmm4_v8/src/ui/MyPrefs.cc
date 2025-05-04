@@ -5,6 +5,8 @@
 #include <iostream>
 
 #define INTERNAL_IMAGE_COUNT 6
+#define default_width 640
+#define default_height 360
 
 MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade)
     : Glib::ObjectBase("MyPrefs"),
@@ -34,6 +36,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     spin_height = ref_builder->get_widget<Gtk::SpinButton>("spin_height");
     btnapply = ref_builder->get_widget<Gtk::Button>("btnapply");
     btnGet = ref_builder->get_widget<Gtk::Button>("btnGet");
+    btnapply1 = ref_builder->get_widget<Gtk::Button>("btnapply1");
 
     // Add default images list
     images_store = Gtk::StringList::create();
@@ -96,6 +99,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_remove->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
     btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
     btnapply->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::config_save));
+    btnapply1->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::config_save));
     switch_dark->signal_state_set().connect(sigc::mem_fun(*this, &MyPrefs::switch_state_changed), false);
 }
 
@@ -174,6 +178,9 @@ void MyPrefs::config_load()
         auto path = images_store->get_string(selected);
         background_widget->set_filename(path);
     }
+
+    set_default_size(default_width * dpi_values[dropdown_dpi.get_selected()],
+                     default_height * dpi_values[dropdown_dpi.get_selected()]);
 
     infile.close();
 }
@@ -380,9 +387,9 @@ void MyPrefs::set_icon_callback(pfun icon_callback)
 
 void MyPrefs::scale_dash_changed()
 {
-    config_load();
-    // Update config when icon size changed
-    config_save();
+    // config_load();
+    // // Update config when icon size changed
+    // config_save();
 
     // Update icon size
     icon_size_callback((guint)scale_dash->get_value());
@@ -397,9 +404,9 @@ void MyPrefs::set_finder_callback(pfun finder_callback)
 
 void MyPrefs::scale_finder_changed()
 {
-    config_load();
-    // Update config when icon size changed
-    config_save();
+    // config_load();
+    // // Update config when icon size changed
+    // config_save();
 
     // Update icon size
     finder_size_callback((guint)scale_finder->get_value());

@@ -166,6 +166,28 @@
                         <property name="draw-value">True</property>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkLabel"/>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="hexpand">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btnapply1">
+                            <property name="label">Apply</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">          </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </property>
                 <property name="title">Launcher</property>

@@ -98,6 +98,7 @@ private:
 
     // Child widgets for launcher settings
     Gtk::Scale *scale_dash, *scale_finder;
+    Gtk::Button *btnapply1;
     void scale_dash_changed();
     void scale_finder_changed();
 
