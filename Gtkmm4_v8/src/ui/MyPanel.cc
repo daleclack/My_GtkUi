@@ -335,7 +335,7 @@ bool MyPanel::mediawin_closed()
 void MyPanel::iconsize_changed(guint size)
 {
     instance->set_icon_size(size);
-    // instance->app_menu.set_icon_size(size);
+    instance->app_menu.set_icon_size(size);
 }
 
 // Callback function for pad button click

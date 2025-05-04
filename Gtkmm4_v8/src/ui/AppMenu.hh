@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.hh"
+#include <vector>
 
 // List item for inner app
 class AppItemIn : public Glib::Object
@@ -88,6 +89,11 @@ public:
         internal = true;
     }
 
+    Gtk::Image *get_image_widget()
+    {
+        return &app_icon;
+    }
+
     // Getters
     Glib::RefPtr<Gio::AppInfo> get_app_info() { return app_info; }
     bool is_internal() { return internal; }
@@ -116,6 +122,7 @@ private:
     Gtk::Stack menu_stack;
     Gtk::StackSwitcher menu_switcher;
     Gtk::ScrolledWindow inner_scroll, ext_scroll;
+    std::vector<Gtk::Image*> icon_list;
 
     // List for the inner apps
     Glib::RefPtr<Gio::ListStore<AppItemIn>> inner_list;

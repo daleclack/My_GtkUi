@@ -107,6 +107,10 @@ void AppMenu::inner_bind(const Glib::RefPtr<Gtk::ListItem> &item)
             sigc::mem_fun(*this, &AppMenu::button_clicked), button));
     }
     button->set_app_id(position);
+
+    // Add icon widget to the list
+    // auto image = dynamic_cast<Gtk::Image*>(button->get_child());
+    icon_list.push_back(button->get_image_widget());
 }
 
 void AppMenu::ext_setup(const Glib::RefPtr<Gtk::ListItem> &item)
@@ -131,6 +135,10 @@ void AppMenu::ext_bind(const Glib::RefPtr<Gtk::ListItem> &item)
     button->signal_clicked().connect(sigc::bind(
         sigc::mem_fun(*this, &AppMenu::button_clicked), button));
     button->set_app_info(item1);
+
+    // Add icon widget to the list
+    // auto image = dynamic_cast<Gtk::Image*>(button->get_child());
+    icon_list.push_back(button->get_image_widget());
 }
 
 void AppMenu::button_clicked(AppButton *btn)
@@ -148,7 +156,12 @@ void AppMenu::button_clicked(AppButton *btn)
 }
 
 void AppMenu::set_icon_size(int size)
-{}
+{
+    for (auto &icon : icon_list)
+    {
+        icon->set_pixel_size(size);
+    }
+}
 
 // Set Callback function
 void AppMenu::set_callback(pfun callback)

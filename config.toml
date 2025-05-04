@@ -1,0 +1,10 @@
+[main_config]
+dark_mode = false
+dpi_set = 0
+file_paths = []
+finder_size = 16
+height = 900
+icon_size = 64
+selected_image = 0
+size_selected = 6
+width = 1600
