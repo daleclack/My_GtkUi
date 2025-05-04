@@ -1,5 +1,7 @@
 #include "MyStack.hh"
 
+static MyStack *instance = nullptr;
+
 MyStack::MyStack()
     : login_box(Gtk::Orientation::VERTICAL, 5),
       login_label("dale"),
@@ -45,6 +47,8 @@ MyStack::MyStack()
 
     // Connect signals
     login_button.signal_clicked().connect(sigc::mem_fun(*this, &MyStack::login_button_clicked));
+
+    instance = this;
 }
 
 void MyStack::login_button_clicked()
@@ -82,6 +86,7 @@ void MyStack::show_prefs_win()
 void MyStack::bind_main_background(Gtk::Picture *background)
 {
     // Set the main background widget for the preferences window
+    // prefs_window->set_finder_callback(finder_iconsize_changed);
     prefs_window->background_widget_init(background);
 
     // Update dpi config
@@ -114,6 +119,13 @@ void MyStack::bind_main_background(Gtk::Picture *background)
     // Apply default style
     panel1.set_internal_style(provider);
 
-    // Update finder configs
+    // Update finder configs 
     finder1.update_icons(provider, prefs_window->get_dark_mode());
+    finder1.set_icon_size(prefs_window->get_finder_size());
+    prefs_window->set_finder_callback(finder_iconsize_changed);
+}
+
+void MyStack::finder_iconsize_changed(guint size)
+{
+    instance->finder1.set_icon_size(size);
 }

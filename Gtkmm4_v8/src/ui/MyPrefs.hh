@@ -51,8 +51,10 @@ public:
     void background_widget_init(Gtk::Picture *picture);
     bool get_dark_mode() { return dark_mode; }
     float get_dpi_config() { return dpi_values[dropdown_dpi.get_selected()]; }
-    guint get_icon_size() { return (guint)scale_size->get_value(); }
+    guint get_icon_size() { return (guint)scale_dash->get_value(); }
+    guint get_finder_size() { return (guint)scale_finder->get_value(); }
     void set_icon_callback(pfun icon_callback);
+    void set_finder_callback(pfun finder_callback);
 
 protected:
     // bool on_close_request();
@@ -95,8 +97,9 @@ private:
                             const Glib::RefPtr<Gtk::FileDialog> &file_dialog);
 
     // Child widgets for launcher settings
-    Gtk::Scale *scale_size;
-    void scale_size_changed();
+    Gtk::Scale *scale_dash, *scale_finder;
+    void scale_dash_changed();
+    void scale_finder_changed();
 
     // Constant value for standard dpi and resuolution settings
     const float dpi_values[7] = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5};
@@ -120,4 +123,5 @@ private:
 
     // Callback function
     pfun icon_size_callback;
+    pfun finder_size_callback;
 };

@@ -24,7 +24,8 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_add = ref_builder->get_widget<Gtk::Button>("btn_add");
     btn_remove = ref_builder->get_widget<Gtk::Button>("btn_remove");
     btn_removeall = ref_builder->get_widget<Gtk::Button>("btn_removeall");
-    scale_size = ref_builder->get_widget<Gtk::Scale>("scale_size");
+    scale_dash = ref_builder->get_widget<Gtk::Scale>("scale_dash");
+    scale_finder = ref_builder->get_widget<Gtk::Scale>("scale_finder");
     combo_box = ref_builder->get_widget<Gtk::Box>("combo_box");
     dpi_box = ref_builder->get_widget<Gtk::Box>("dpi_box");
     radio_default = ref_builder->get_widget<Gtk::CheckButton>("radio_default");
@@ -94,7 +95,7 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_add->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnadd_clicked));
     btn_remove->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
     btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
-    scale_size->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_size_changed));
+    scale_dash->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_dash_changed));
     btnapply->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::config_save));
     switch_dark->signal_state_set().connect(sigc::mem_fun(*this, &MyPrefs::switch_state_changed), false);
 }
@@ -116,6 +117,7 @@ void MyPrefs::config_load()
         auto size_selected = toml["main_config"]["size_selected"].as_integer()->get();
         bool dark_mode = toml["main_config"]["dark_mode"].as_boolean()->get();
         int dpi_set = toml["main_config"]["dpi_set"].as_integer()->get();
+        auto finder_size = toml["main_config"]["finder_size"].as_integer()->get();
         if (size_selected < 0)
         {
             radio_custom->set_active();
@@ -144,7 +146,8 @@ void MyPrefs::config_load()
         images_selection->set_selected(selected);
 
         // Load icon size
-        scale_size->set_value((double)icon_size);
+        scale_dash->set_value((double)icon_size);
+        scale_finder->set_value((double)finder_size);
 
         // Update DPI Settings
         dropdown_dpi.set_selected(dpi_set);
@@ -153,11 +156,12 @@ void MyPrefs::config_load()
     {
         // Default selection
         images_selection->set_selected(0);
-        scale_size->set_value(48);
+        scale_dash->set_value(48);
         radio_default->set_active();
         dropdown_size.set_selected(3);
         switch_dark->set_active(false);
         dropdown_dpi.set_selected(0);
+        scale_finder->set_value(16);
     }
 
     // Update image
@@ -195,7 +199,8 @@ void MyPrefs::config_save()
     guint selected = images_selection->get_selected();
 
     // Get icon size config
-    int icon_size = (int)(scale_size->get_value());
+    int icon_size = (int)(scale_dash->get_value());
+    int finder_size = (int)(scale_finder->get_value());
 
     // Get size config
     int size_selected = -1;
@@ -218,6 +223,7 @@ void MyPrefs::config_save()
     // Add a toml table for main configuration
     toml::table main_cfg;
     main_cfg.insert_or_assign("file_paths", file_paths);
+    main_cfg.insert_or_assign("finder_size", finder_size);
     main_cfg.insert_or_assign("selected_image", selected);
     main_cfg.insert_or_assign("icon_size", icon_size);
     main_cfg.insert_or_assign("size_selected", size_selected);
@@ -372,13 +378,29 @@ void MyPrefs::set_icon_callback(pfun icon_callback)
     icon_size_callback = icon_callback;
 }
 
-void MyPrefs::scale_size_changed()
+void MyPrefs::scale_dash_changed()
 {
     // Update config when icon size changed
     config_save();
 
     // Update icon size
-    icon_size_callback((guint)scale_size->get_value());
+    icon_size_callback((guint)scale_dash->get_value());
+}
+
+void MyPrefs::set_finder_callback(pfun finder_callback)
+{
+    // This signal should be connected after the window is shown
+    finder_size_callback = finder_callback;
+    scale_finder->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_finder_changed));
+}
+
+void MyPrefs::scale_finder_changed()
+{
+    // Update config when icon size changed
+    config_save();
+
+    // Update icon size
+    finder_size_callback((guint)scale_finder->get_value());
 }
 
 MyPrefs *MyPrefs::create(Gtk::Window &parent)

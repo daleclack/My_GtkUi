@@ -111,6 +111,24 @@ void MyFinder::update_icons(const Glib::RefPtr<Gtk::CssProvider> &provider, bool
                                                  provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
+// Set icon size for button with only a image
+void MyFinder::set_btn_icon_size(Gtk::Button &button, int size)
+{
+    auto image = dynamic_cast<Gtk::Image*>(button.get_child());
+    image->set_pixel_size(size);
+}
+
+// Update icon size for all buttons
+void MyFinder::set_icon_size(int size)
+{
+    set_btn_icon_size(btn_audio, size);
+    set_btn_icon_size(btn_battery, size);
+    set_btn_icon_size(btn_computer, size);
+    set_btn_icon_size(btn_search, size);
+    set_btn_icon_size(btn_wifi, size);
+    set_btn_icon_size(btn_menu, size);
+}
+
 bool MyFinder::timeout_func()
 {
     time_t rawtime;

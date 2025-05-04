@@ -128,17 +128,38 @@
                     <child>
                       <object class="GtkLabel">
                         <property name="halign">start</property>
-                        <property name="label">Icon Size:</property>
+                        <property name="label">Dash Icon Size:</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkScale" id="scale_size">
+                      <object class="GtkScale" id="scale_dash">
                         <property name="adjustment">
                           <object class="GtkAdjustment">
                             <property name="lower">20.0</property>
                             <property name="page-increment">1.0</property>
                             <property name="upper">120.0</property>
                             <property name="value">48.0</property>
+                          </object>
+                        </property>
+                        <property name="digits">0</property>
+                        <property name="draw-value">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="hexpand">True</property>
+                        <property name="label">Finder Icon Size:</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="scale_finder">
+                        <property name="adjustment">
+                          <object class="GtkAdjustment">
+                            <property name="lower">12.0</property>
+                            <property name="step-increment">1.0</property>
+                            <property name="upper">60.0</property>
+                            <property name="value">16.0</property>
                           </object>
                         </property>
                         <property name="digits">0</property>

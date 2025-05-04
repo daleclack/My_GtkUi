@@ -41,4 +41,7 @@ private:
 
     // Signal handlers
     void login_button_clicked();
+
+    // Callback for finder
+    static void finder_iconsize_changed(guint size);
 };

@@ -12,6 +12,7 @@ public:
     Gtk::Box menu_box;
     MyFinder();
     void update_icons(const Glib::RefPtr<Gtk::CssProvider> &provider, bool dark_mode = false);
+    void set_icon_size(int size);
 
 private:
     Glib::RefPtr<Gtk::Builder> builder;
@@ -25,6 +26,9 @@ private:
     Gtk::StackSwitcher *inner_switcher;
     Gtk::Stack *inner_stack;
     Gtk::Box *inner_box;
+
+    // Useful functions
+    void set_btn_icon_size(Gtk::Button &btn, int size);
 
     sigc::connection timer;
 

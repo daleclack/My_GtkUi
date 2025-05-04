@@ -4,9 +4,9 @@
 <cambalache-project version="0.96.0" target_tk="gtk-4.0">
   <ui filename="mainwin.ui" sha256="cd2f072b5c0dd9e9651727931e278c3f9ce2c426f7ce71e0efaf20ff341021de"/>
   <ui filename="overlaywin.ui" sha256="f53140b513170cb5eb949dac23ec6f0555e992e86de8936676aefef35851f7b6"/>
-  <ui filename="mypanel.ui" sha256="cc1f0e5a4ea87c733db13f7fbd8950191f18fb074a80329560d52ace2eb39f00"/>
+  <ui filename="mypanel.ui" sha256="99860752df2ac818f379b64085c866c81b38c44585ca367c13a485a04bfaa460"/>
   <ui filename="findermenu.ui" sha256="ff745c993698bb22008e36ff6ce3cc0f4026fe70a92eca8bc5fe668d4371c015"/>
-  <ui filename="background.ui" sha256="fe4904479dbd24aec5614299140d7d26c4ae0ba20e72b94218a361f2198a0596"/>
+  <ui filename="background.ui" sha256="c0b725ab965ee2469858e8cdb468ceb4b67774dd3d13f53e2a23119a92fcc5e9"/>
   <ui filename="win_input.ui" sha256="8592f0f9fe89e197cdfb5a2f89fd53fb365b9375b91c0a546dac0a722fcf2d8d"/>
   <ui filename="scoreswin.ui" sha256="88ea81f7897cc470a6eb47e07e5c877f263f644eb7677c658d2593d927102359"/>
 </cambalache-project>
