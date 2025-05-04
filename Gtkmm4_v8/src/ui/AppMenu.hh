@@ -108,6 +108,7 @@ class AppMenu : public Gtk::Box
 public:
     AppMenu();
     void set_callback(pfun callback);
+    void set_icon_size(int size);
 
 private:
     // Child widgets

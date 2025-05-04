@@ -389,7 +389,9 @@ void MyPrefs::scale_dash_changed()
 
 void MyPrefs::set_finder_callback(pfun finder_callback)
 {
-    // This signal should be connected after the widget initialized    scale_finder->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_finder_changed));
+    // This signal should be connected after the widget initialized
+    finder_size_callback = finder_callback;
+    scale_finder->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_finder_changed));
 }
 
 void MyPrefs::scale_finder_changed()

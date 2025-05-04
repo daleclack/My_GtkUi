@@ -126,5 +126,6 @@ void MyStack::bind_main_background(Gtk::Picture *background)
 
 void MyStack::finder_iconsize_changed(guint size)
 {
+    // g_print("Changing finder icon size");
     instance->finder1.set_icon_size(size);
 }

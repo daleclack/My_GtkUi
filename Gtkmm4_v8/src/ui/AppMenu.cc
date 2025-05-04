@@ -147,6 +147,9 @@ void AppMenu::button_clicked(AppButton *btn)
     }
 }
 
+void AppMenu::set_icon_size(int size)
+{}
+
 // Set Callback function
 void AppMenu::set_callback(pfun callback)
 {
