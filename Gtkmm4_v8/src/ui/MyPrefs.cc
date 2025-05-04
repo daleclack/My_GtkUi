@@ -95,7 +95,6 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     btn_add->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnadd_clicked));
     btn_remove->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremove_clicked));
     btn_removeall->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::btnremoveall_clicked));
-    scale_dash->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_dash_changed));
     btnapply->signal_clicked().connect(sigc::mem_fun(*this, &MyPrefs::config_save));
     switch_dark->signal_state_set().connect(sigc::mem_fun(*this, &MyPrefs::switch_state_changed), false);
 }
@@ -372,10 +371,11 @@ void MyPrefs::btnremoveall_clicked()
     }
 }
 
-
 void MyPrefs::set_icon_callback(pfun icon_callback)
 {
+    // This signal should be connected after the widget initialized
     icon_size_callback = icon_callback;
+    scale_dash->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_dash_changed));
 }
 
 void MyPrefs::scale_dash_changed()
@@ -389,9 +389,7 @@ void MyPrefs::scale_dash_changed()
 
 void MyPrefs::set_finder_callback(pfun finder_callback)
 {
-    // This signal should be connected after the window is shown
-    finder_size_callback = finder_callback;
-    scale_finder->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_finder_changed));
+    // This signal should be connected after the widget initialized    scale_finder->signal_value_changed().connect(sigc::mem_fun(*this, &MyPrefs::scale_finder_changed));
 }
 
 void MyPrefs::scale_finder_changed()

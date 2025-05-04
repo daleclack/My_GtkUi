@@ -86,7 +86,6 @@ void MyStack::show_prefs_win()
 void MyStack::bind_main_background(Gtk::Picture *background)
 {
     // Set the main background widget for the preferences window
-    // prefs_window->set_finder_callback(finder_iconsize_changed);
     prefs_window->background_widget_init(background);
 
     // Update dpi config
