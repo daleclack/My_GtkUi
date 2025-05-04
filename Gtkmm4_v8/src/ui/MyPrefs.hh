@@ -49,12 +49,20 @@ public:
     MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade);
     static MyPrefs *create(Gtk::Window &parent);
     void background_widget_init(Gtk::Picture *picture);
+
+    // Getters for config
     bool get_dark_mode() { return dark_mode; }
     float get_dpi_config() { return dpi_values[dropdown_dpi.get_selected()]; }
     guint get_icon_size() { return (guint)scale_dash->get_value(); }
     guint get_finder_size() { return (guint)scale_finder->get_value(); }
+
+    // Callbacks to update icon and finder size
     void set_icon_callback(pfun icon_callback);
     void set_finder_callback(pfun finder_callback);
+
+    // Config control
+    void config_load();
+    void config_save();
 
 protected:
     // bool on_close_request();
@@ -117,10 +125,6 @@ private:
     Gtk::SpinButton *spin_width, *spin_height;
     Glib::RefPtr<Gtk::Adjustment> adj_width, adj_height;
     Gtk::Button *btnGet, *btnapply;
-
-    // Config control
-    void config_load();
-    void config_save();
 
     // Callback function
     pfun icon_size_callback;
