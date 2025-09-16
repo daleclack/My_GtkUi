@@ -4,7 +4,7 @@
 #include "image_types.hh"
 #include <iostream>
 
-#define INTERNAL_IMAGE_COUNT 6
+#define INTERNAL_IMAGE_COUNT 8
 #define default_width 640
 #define default_height 360
 
@@ -42,6 +42,8 @@ MyPrefs::MyPrefs(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refG
     images_store = Gtk::StringList::create();
     images_store->append("/org/gtk/daleclack/c182rg_1.png");
     images_store->append("/org/gtk/daleclack/c182rg_2.png");
+    images_store->append("/org/gtk/daleclack/ct210n_1.png");
+    images_store->append("/org/gtk/daleclack/ct210n_2.png");
     images_store->append("/org/gtk/daleclack/final_approach.png");
     images_store->append("/org/gtk/daleclack/img7.png");
     images_store->append("/org/gtk/daleclack/shizuku.png");
@@ -158,7 +160,7 @@ void MyPrefs::config_load()
     else
     {
         // Default selection
-        images_selection->set_selected(0);
+        images_selection->set_selected(2);
         scale_dash->set_value(48);
         radio_default->set_active();
         dropdown_size.set_selected(3);

@@ -1,6 +1,6 @@
 set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.10.0)
-project(My_GtkUI VERSION 8.3.0)
+project(My_GtkUI VERSION 8.4.0)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../GCR_CMake/macros)
 include(GlibCompileResourcesSupport)
@@ -63,6 +63,8 @@ set(RESOURCE_LIST
     mine_app.css
     c182rg_1.png
     c182rg_2.png
+    ct210n_1.png
+    ct210n_2.png
     final_approach.png
     img7.png
     shizuku.png
