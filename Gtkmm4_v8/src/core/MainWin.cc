@@ -39,6 +39,12 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
     gesture_click->set_button(GDK_BUTTON_SECONDARY);
     gesture_click->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_pressed));
 
+    // Add Gesture for the long press
+    gesture_longpress = Gtk::GestureLongPress::create();
+    main_overlay->add_controller(gesture_longpress);
+    gesture_longpress->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_longpressed));
+    // gesture_longpress->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_pressed));
+
     // Add actions
     add_action("about", sigc::mem_fun(*this, &MainWin::about_activate));
     add_action("back", sigc::mem_fun(*this, &MainWin::back_activate));
@@ -51,6 +57,12 @@ void MainWin::gesture_pressed(int n_press, double x, double y)
     // Show the context menu at the position of the right click.
     context_menu.set_pointing_to(Gdk::Rectangle(x, y, 1, 1));
     context_menu.popup();
+}
+
+void MainWin::gesture_longpressed(double x, double y)
+{
+    // Use the function for right click to show the context menu.
+    gesture_pressed(0, x, y);
 }
 
 MainWin *MainWin::create()

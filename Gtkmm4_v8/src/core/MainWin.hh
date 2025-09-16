@@ -29,6 +29,10 @@ private:
     Glib::RefPtr<Gtk::GestureClick> gesture_click;
     void gesture_pressed(int n_press, double x, double y);
 
+    // Long Press: for touch screens
+    Glib::RefPtr<Gtk::GestureLongPress> gesture_longpress;
+    void gesture_longpressed(double x, double y);
+
     // Other widgets
     MyStack main_stack;
 
