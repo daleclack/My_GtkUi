@@ -41,6 +41,7 @@ MainWin::MainWin(BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &ref_
 
     // Add Gesture for the long press
     gesture_longpress = Gtk::GestureLongPress::create();
+    gesture_longpress->set_delay_factor(1.5);
     main_overlay->add_controller(gesture_longpress);
     gesture_longpress->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_longpressed));
     // gesture_longpress->signal_pressed().connect(sigc::mem_fun(*this, &MainWin::gesture_pressed));
